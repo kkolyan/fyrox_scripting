@@ -37,12 +37,12 @@ public static partial class Log
         }
     }
 
-    [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_log_LiteLog_info(NativeString msg);
 
-    [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_log_LiteLog_warn(NativeString msg);
 
-    [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_log_LiteLog_err(NativeString msg);
 }

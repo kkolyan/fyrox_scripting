@@ -101,7 +101,7 @@ internal partial struct NativeVector2_slice
         }
     }
 
-    [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeVector2_slice fyrox_lite_upload_fyrox_lite_lite_math_PodVector2_slice(NativeVector2_slice managed);
 }
 

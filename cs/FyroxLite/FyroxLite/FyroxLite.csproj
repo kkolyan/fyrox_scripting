@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FyroxLiteInternal\FyroxLiteInternal.csproj" />
     </ItemGroup>
 
 </Project>

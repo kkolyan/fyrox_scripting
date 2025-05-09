@@ -114,7 +114,7 @@ internal partial struct RadialGradient_slice
         }
     }
 
-    [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial RadialGradient_slice fyrox_lite_upload_fyrox_lite_lite_ui_RadialGradient_slice(RadialGradient_slice managed);
 }
 

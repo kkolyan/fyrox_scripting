@@ -6,15 +6,42 @@ namespace FyroxLite;
 
 public partial class FyroxExecutor
 {
-    [LibraryImport("libfyrox_c", EntryPoint = "fyrox_lite_executor_run",
+    [LibraryImport("fyrox_c", EntryPoint = "fyrox_lite_executor_run",
         SetLastError = true)]
     private static partial void RunInternal();
     
-    [LibraryImport("libfyrox_c", EntryPoint = "fyrox_lite_editor_run",
+    [LibraryImport("fyrox_c", EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
     private static partial void RunEditorInternal();
 
-    public static void Run(bool editor = false)
+    public static void RunPlayer()
+    {
+        Run(editor: false);
+    }
+
+    public static void RunEditor()
+    {
+        Run(editor: true);
+    }
+
+    private static void Run(bool editor) {
+        /*
+        necessary to avoid following crash on Windows:
+        thread 'main' panicked at 'OleInitialize failed! Result was: `RPC_E_CHANGED_MODE`.
+        Make sure other crates are not using multithreaded COM library on the same thread or disable drag and drop support.'
+
+        Actually, this can be solved by `[STAThread]` over the Main method, but that's on user side, so let's keep user from such crucial things.
+        */
+
+        var thread = new Thread(() => RunSTA(editor: editor));
+        if (OperatingSystem.IsWindows()){
+            thread.SetApartmentState(ApartmentState.STA);
+        }
+        thread.Start();
+        thread.Join();
+    }
+
+    private static void RunSTA(bool editor)
     {
         ObjectRegistry.InitThread();
         NativeClassId.InitThread();

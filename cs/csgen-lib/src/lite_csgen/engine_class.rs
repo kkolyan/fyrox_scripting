@@ -135,7 +135,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
 
         render(&mut s, r#"
 
-                [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+                [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
                 private static unsafe partial ${return_ty} ${rust_path_escaped}_${name}(${this}${native_input_params});
         "#, [
             ("return_ty", &method.signature.return_ty.as_ref().map(|it| api_types::type_cs(it).to_blittable()).unwrap_or("void".to_string())),

@@ -1,3 +1,2 @@
 ﻿using FyroxLite;
-
-FyroxExecutor.Run();
+FyroxExecutor.RunPlayer();

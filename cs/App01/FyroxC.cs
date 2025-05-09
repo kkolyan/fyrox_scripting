@@ -8,7 +8,7 @@ namespace App01
             Console.WriteLine("I'm a Net Core");
         }
 
-        [LibraryImport("libfyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+        [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
         public static partial void FyroxHello();
     }
 }
