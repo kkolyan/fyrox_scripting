@@ -22,6 +22,7 @@ impl <T: Lang> Reflect for ScriptObject<T> {
                 name: it.name.as_str(),
                 display_name: it.title.as_str(),
                 description: it.name.as_str(),
+                tag: "",
                 type_name: match it.ty {
                     ScriptFieldValueType::bool => std::any::type_name::<bool>(),
                     ScriptFieldValueType::f32 => std::any::type_name::<f32>(),

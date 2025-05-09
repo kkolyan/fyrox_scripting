@@ -33,6 +33,7 @@ pub extern "C" fn fyrox_lite_executor_run() {
             window_attributes,
             vsync: false,
             msaa_sample_count: None,
+            graphics_server_constructor: Default::default(),
         },
     );
 

@@ -59,11 +59,11 @@ impl LiteText {
         with_script_context(|ctx| {
             let mut wb = widget::WidgetBuilder::new();
             if let Some(foreground) = state.foreground {
-                wb = wb.with_foreground(foreground.into());
+                wb = wb.with_foreground(fyrox::gui::brush::Brush::from(foreground).into());
             }
             let mut builder = text::TextBuilder::new(wb);
             if let Some(font_size) = state.font_size {
-                builder = builder.with_font_size(font_size);
+                builder = builder.with_font_size(font_size.into());
             }
             LiteText {
                 handle: builder.build(&mut ctx.ui().first_mut().build_ctx()),
