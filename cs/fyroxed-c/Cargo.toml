@@ -9,4 +9,4 @@ crate-type = ["dylib"]
 [dependencies]
 fyroxed_base = { workspace = true }
 fyrox = { workspace = true }
-fyrox-c-lib = { workspace = true }
+fyrox-c-loader = { workspace = true }

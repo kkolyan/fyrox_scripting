@@ -241,17 +241,6 @@ impl Reflect for PluginScriptList {
     }
 }
 
-#[extend::ext]
-pub impl PluginsRefMut<'_> {
-    fn lua(&self) -> &CPlugin {
-        self.get::<CPlugin>()
-    }
-
-    fn lua_mut(&mut self) -> &mut CPlugin {
-        self.get_mut::<CPlugin>()
-    }
-}
-
 impl DynamicPlugin for CPlugin {
     fn display_name(&self) -> String {
         format!("Lua Plugin (scripts path: {})", self.scripts_dir)

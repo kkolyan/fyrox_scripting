@@ -1210,6 +1210,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "fyrox-c-loader"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "libloading",
+]
+
+[[package]]
 name = "fyrox-core"
 version = "0.36.0"
 dependencies = [
@@ -1468,7 +1476,7 @@ name = "fyroxed-c"
 version = "0.1.0"
 dependencies = [
  "fyrox",
- "fyrox-c-lib",
+ "fyrox-c-loader",
  "fyroxed_base",
 ]
 

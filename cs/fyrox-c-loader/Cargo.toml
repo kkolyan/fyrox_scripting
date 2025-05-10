@@ -1,0 +1,12 @@
+[package]
+name = "fyrox-c-loader"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+fyrox = { workspace = true }
+libloading = "0.8.3"
+
+[features]
+default = ["fyrox/default"]
+dylib-engine = ["fyrox/dylib"]

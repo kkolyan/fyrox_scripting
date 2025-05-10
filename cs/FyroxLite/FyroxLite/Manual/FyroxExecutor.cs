@@ -10,7 +10,7 @@ public partial class FyroxExecutor
         SetLastError = true)]
     private static partial void RunInternal();
     
-    [LibraryImport("fyrox_c", EntryPoint = "fyrox_lite_editor_run",
+    [LibraryImport("fyroxed_c", EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
     private static partial void RunEditorInternal();
 

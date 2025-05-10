@@ -27,6 +27,8 @@ pub(crate) use bindings_manual::*;
 pub(crate) use bindings_lite_2::*;
 pub(crate) use internal_auto::*;
 
+pub use fyrox;
+
 pub(crate) type LangSpecificError = String;
 pub(crate) type UserScriptMessageImpl = UserScriptMessage;
 pub(crate) type UserScriptImpl = UnpackedObject;

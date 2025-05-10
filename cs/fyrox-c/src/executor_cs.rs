@@ -5,8 +5,14 @@ use fyrox::dpi::LogicalSize;
 use fyrox::engine::executor::Executor;
 use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
+use fyrox::plugin::DynamicPlugin;
 use fyrox::window::WindowAttributes;
-use crate::fyrox_c_plugin::CPlugin;
+use fyrox_c_lib::fyrox_c_plugin::CPlugin;
+
+#[no_mangle]
+pub fn fyrox_c_plugin(hot_reload_enabled: bool) -> Box<dyn DynamicPlugin> {
+    Box::new(CPlugin::with_hot_reload(hot_reload_enabled))
+}
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_executor_run() {
@@ -41,11 +47,11 @@ pub extern "C" fn fyrox_lite_executor_run() {
     #[cfg(feature = "dylib")]
     {
         #[cfg(target_os = "windows")]
-        let file_name = "fyrox-lua_dylib.dll";
+        let file_name = "fyrox-c_dylib.dll";
         #[cfg(target_os = "linux")]
-        let file_name = "libfyrox-lua_dylib.so";
+        let file_name = "libfyrox-c_dylib.so";
         #[cfg(target_os = "macos")]
-        let file_name = "libfyrox-lua_dylib.dylib";
+        let file_name = "libfyrox-c_dylib.dylib";
         executor.add_dynamic_plugin(file_name, true, true).unwrap();
     }
 
