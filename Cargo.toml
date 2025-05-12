@@ -18,7 +18,7 @@ members = [
 	"gen-common",
 	"cs/fyrox-c-lib",
 	"cs/fyroxed-c",
-	"cs/fyrox-c-loader",
+	"cs/fyrox-c-loader"
 ]
 resolver = "2"
 exclude = ["mlua"]

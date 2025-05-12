@@ -46,6 +46,19 @@ public partial class FyroxExecutor
         ObjectRegistry.InitThread();
         NativeClassId.InitThread();
         PropertySetters.InitThread();
+
+        if (editor)
+        {
+            foreach (var file in Directory.GetFiles("obj\\Debug\\net8.0"))
+            {
+                if (file.ToLower().EndsWith(".dll"))
+                {
+                    var fullPath = Path.GetFullPath(file);
+                    Console.WriteLine($"Loading game scripts assembly file: {fullPath}");
+                    Assembly.LoadFile(fullPath);
+                }
+            }
+        }
         
         List<NativeScriptMetadata> scripts = new();
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
