@@ -1467,15 +1467,15 @@ impl From<NativeNode> for fyrox_lite::lite_node::LiteNode {
 pub extern "C" fn fyrox_lite_lite_node_LiteNode_as_rigid_body(
     this: NativeNode,
 ) -> NativeRigidBody_optional_result {
-    let ret =
-        fyrox_lite::lite_node::LiteNode::from(this).as_rigid_body::<crate::UserScriptImpl>(());
-    ret.into()
+    todo!()
+    // let ret =
+    //     fyrox_lite::lite_node::LiteNode::from(this).as_rigid_body::<crate::UserScriptImpl>(());
+    // ret.into()
 }
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_lite_node_LiteNode_get_name(this: NativeNode) -> NativeString_result {
-    let ret = fyrox_lite::lite_node::LiteNode::from(this).get_name::<crate::UserScriptImpl>(());
-    ret.into()
+    todo!()
 }
 
 #[no_mangle]
@@ -1520,11 +1520,7 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_send_hierarchical(
     routing: NativeRoutingStrategy,
     payload: UserScriptMessage,
 ) -> () {
-    let routing = routing.into();
-    let payload = payload.into();
-    let ret = fyrox_lite::lite_node::LiteNode::from(this)
-        .send_hierarchical::<crate::UserScriptImpl>(routing, payload);
-    ret.into()
+    todo!()
 }
 
 #[no_mangle]
@@ -1532,10 +1528,7 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_set_local_position(
     this: NativeNode,
     new_pos: *mut NativeVector3,
 ) -> Unit_result {
-    let new_pos = unsafe { *new_pos }.into();
-    let ret = fyrox_lite::lite_node::LiteNode::from(this)
-        .set_local_position::<crate::UserScriptImpl>(new_pos, ());
-    ret.into()
+    todo!()
 }
 
 #[no_mangle]
@@ -1543,16 +1536,12 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_set_local_rotation(
     this: NativeNode,
     value: *mut NativeQuaternion,
 ) -> Unit_result {
-    let value = unsafe { *value }.into();
-    let ret = fyrox_lite::lite_node::LiteNode::from(this)
-        .set_local_rotation::<crate::UserScriptImpl>(value, ());
-    ret.into()
+   todo!()
 }
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_lite_node_LiteNode_subscribe_to(this: NativeNode) -> () {
-    let ret = fyrox_lite::lite_node::LiteNode::from(this).subscribe_to::<crate::UserScriptImpl>(());
-    ret.into()
+    todo!()
 }
 
 #[no_mangle]
@@ -1580,10 +1569,7 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_add_script(
     this: NativeNode,
     class_id: NativeClassId,
 ) -> NativeInstanceId_result {
-    let class_id = class_id.into();
-    let ret = fyrox_lite::lite_node::LiteNode::from(this)
-        .add_script::<crate::UserScriptImpl>(class_id, ());
-    ret.into()
+    todo!()
 }
 
 #[no_mangle]
@@ -1591,10 +1577,7 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_find_script(
     this: NativeNode,
     class_id: NativeClassId,
 ) -> NativeInstanceId_optional_result {
-    let class_id = class_id.into();
-    let ret = fyrox_lite::lite_node::LiteNode::from(this)
-        .find_script::<crate::UserScriptImpl>(class_id, ());
-    ret.into()
+    todo!()
 }
 
 #[no_mangle]
@@ -2816,9 +2799,7 @@ pub struct NativePlugin {
 pub extern "C" fn fyrox_lite_lite_plugin_LitePlugin_get(
     class_id: NativeClassId,
 ) -> NativeInstanceId_result {
-    let class_id = class_id.into();
-    let ret = fyrox_lite::lite_plugin::LitePlugin::get::<crate::UserScriptImpl>(class_id, ());
-    ret.into()
+    todo!()
 }
 
 #[repr(C)]
@@ -2847,11 +2828,7 @@ pub extern "C" fn fyrox_lite_lite_prefab_LitePrefab_instantiate_at(
     position: *mut NativeVector3,
     orientation: *mut NativeQuaternion,
 ) -> NativeNode_result {
-    let position = unsafe { *position }.into();
-    let orientation = unsafe { *orientation }.into();
-    let ret = fyrox_lite::lite_prefab::LitePrefab::from(this)
-        .instantiate_at::<crate::UserScriptImpl>(position, orientation, ());
-    ret.into()
+    todo!()
 }
 
 #[repr(C)]

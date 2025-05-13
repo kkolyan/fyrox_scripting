@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-fyrox = { workspace = true }
-fyrox-lite = { workspace = true }
+fyrox = { workspace = true , features = ["dylib"], default-features = false }
+fyrox-lite = { workspace = true , features = ["dylib"], default-features = false}
 extend = { workspace = true }
 to_vec = { workspace = true }
 convert_case = { workspace = true }

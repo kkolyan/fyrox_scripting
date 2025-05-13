@@ -1,0 +1,10 @@
+[package]
+name = "agent"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+fyrox = { workspace = true, features = ["dylib"], default-features = false }

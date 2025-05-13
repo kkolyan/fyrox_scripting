@@ -21,14 +21,17 @@ mod internal_auto;
 
 pub(crate) use arena::Arena;
 use crate::bindings_manual::UserScriptMessage;
-use crate::c_lang::UnpackedObject;
+// use crate::c_lang::UnpackedObject;
 
 pub(crate) use bindings_manual::*;
 pub(crate) use bindings_lite_2::*;
 pub(crate) use internal_auto::*;
 
-pub use fyrox;
+// pub use fyrox;
 
 pub(crate) type LangSpecificError = String;
 pub(crate) type UserScriptMessageImpl = UserScriptMessage;
-pub(crate) type UserScriptImpl = UnpackedObject;
+// pub(crate) type UserScriptImpl = UnpackedObject;
+
+
+pub fn hello() {}

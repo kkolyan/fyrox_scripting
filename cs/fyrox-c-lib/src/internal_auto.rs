@@ -1038,37 +1038,37 @@ impl NativeInstanceId_result {
             }
         }
     }
-    pub fn into_result(self) -> Result<crate::UserScriptImpl, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok.into())
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
+    // pub fn into_result(self) -> Result<crate::UserScriptImpl, crate::LangSpecificError> {
+    //     unsafe {
+    //         if self.ok != 0 {
+    //             Ok(self.value.ok.into())
+    //         } else {
+    //             Err(self.value.err.into())
+    //         }
+    //     }
+    // }
 }
 
-impl From<Result<crate::UserScriptImpl, crate::LangSpecificError>> for NativeInstanceId_result {
-    fn from(value: Result<crate::UserScriptImpl, crate::LangSpecificError>) -> Self {
-        match value {
-            Ok(it) => Self {
-                ok: 1,
-                value: NativeInstanceId_result_value { ok: it.into() },
-            },
-            Err(err) => Self {
-                ok: 0,
-                value: NativeInstanceId_result_value { err: err.into() },
-            },
-        }
-    }
-}
+// impl From<Result<crate::UserScriptImpl, crate::LangSpecificError>> for NativeInstanceId_result {
+//     fn from(value: Result<crate::UserScriptImpl, crate::LangSpecificError>) -> Self {
+//         match value {
+//             Ok(it) => Self {
+//                 ok: 1,
+//                 value: NativeInstanceId_result_value { ok: it.into() },
+//             },
+//             Err(err) => Self {
+//                 ok: 0,
+//                 value: NativeInstanceId_result_value { err: err.into() },
+//             },
+//         }
+//     }
+// }
 
-impl From<NativeInstanceId_result> for Result<crate::UserScriptImpl, crate::LangSpecificError> {
-    fn from(value: NativeInstanceId_result) -> Self {
-        value.into_result()
-    }
-}
+// impl From<NativeInstanceId_result> for Result<crate::UserScriptImpl, crate::LangSpecificError> {
+//     fn from(value: NativeInstanceId_result) -> Self {
+//         value.into_result()
+//     }
+// }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1077,30 +1077,30 @@ pub struct NativeInstanceId_optional {
     pub has_value: i32,
 }
 
-impl From<Option<crate::UserScriptImpl>> for NativeInstanceId_optional {
-    fn from(value: Option<crate::UserScriptImpl>) -> Self {
-        match value {
-            Some(it) => Self {
-                value: it.into(),
-                has_value: 1,
-            },
-            None => Self {
-                value: unsafe { std::mem::zeroed() },
-                has_value: 0,
-            },
-        }
-    }
-}
-
-impl From<NativeInstanceId_optional> for Option<crate::UserScriptImpl> {
-    fn from(value: NativeInstanceId_optional) -> Self {
-        if value.has_value != 0 {
-            Some(value.value.into())
-        } else {
-            None
-        }
-    }
-}
+// impl From<Option<crate::UserScriptImpl>> for NativeInstanceId_optional {
+//     fn from(value: Option<crate::UserScriptImpl>) -> Self {
+//         match value {
+//             Some(it) => Self {
+//                 value: it.into(),
+//                 has_value: 1,
+//             },
+//             None => Self {
+//                 value: unsafe { std::mem::zeroed() },
+//                 has_value: 0,
+//             },
+//         }
+//     }
+// }
+//
+// impl From<NativeInstanceId_optional> for Option<crate::UserScriptImpl> {
+//     fn from(value: NativeInstanceId_optional) -> Self {
+//         if value.has_value != 0 {
+//             Some(value.value.into())
+//         } else {
+//             None
+//         }
+//     }
+// }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1118,30 +1118,30 @@ impl Default for NativeInstanceId_slice {
     }
 }
 
-impl From<Vec<crate::UserScriptImpl>> for NativeInstanceId_slice {
-    fn from(value: Vec<crate::UserScriptImpl>) -> Self {
-        let len = value.len() as i32;
-        if len == 0 {
-            return Self::default();
-        }
-        let native_vec: Vec<NativeInstanceId> = value.into_iter().map(|it| it.into()).collect();
-        let begin = crate::Arena::allocate_vec(native_vec);
-        Self { begin, len }
-    }
-}
-
-impl From<NativeInstanceId_slice> for Vec<crate::UserScriptImpl> {
-    fn from(value: NativeInstanceId_slice) -> Self {
-        let mut vec = Vec::new();
-        unsafe {
-            for i in 0..value.len {
-                let v = *value.begin.add(i as usize);
-                vec.push(v.into());
-            }
-        }
-        vec
-    }
-}
+// impl From<Vec<crate::UserScriptImpl>> for NativeInstanceId_slice {
+//     fn from(value: Vec<crate::UserScriptImpl>) -> Self {
+//         let len = value.len() as i32;
+//         if len == 0 {
+//             return Self::default();
+//         }
+//         let native_vec: Vec<NativeInstanceId> = value.into_iter().map(|it| it.into()).collect();
+//         let begin = crate::Arena::allocate_vec(native_vec);
+//         Self { begin, len }
+//     }
+// }
+//
+// impl From<NativeInstanceId_slice> for Vec<crate::UserScriptImpl> {
+//     fn from(value: NativeInstanceId_slice) -> Self {
+//         let mut vec = Vec::new();
+//         unsafe {
+//             for i in 0..value.len {
+//                 let v = *value.begin.add(i as usize);
+//                 vec.push(v.into());
+//             }
+//         }
+//         vec
+//     }
+// }
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_upload_crate_UserScriptImpl_slice(
@@ -1455,38 +1455,38 @@ impl NativeInstanceId_optional_result {
             }
         }
     }
-    pub fn into_result(self) -> Result<Option<crate::UserScriptImpl>, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok.into())
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
+    // pub fn into_result(self) -> Result<Option<crate::UserScriptImpl>, crate::LangSpecificError> {
+    //     unsafe {
+    //         if self.ok != 0 {
+    //             Ok(self.value.ok.into())
+    //         } else {
+    //             Err(self.value.err.into())
+    //         }
+    //     }
+    // }
 }
 
-impl From<Result<Option<crate::UserScriptImpl>, crate::LangSpecificError>>
-    for NativeInstanceId_optional_result
-{
-    fn from(value: Result<Option<crate::UserScriptImpl>, crate::LangSpecificError>) -> Self {
-        match value {
-            Ok(it) => Self {
-                ok: 1,
-                value: NativeInstanceId_optional_result_value { ok: it.into() },
-            },
-            Err(err) => Self {
-                ok: 0,
-                value: NativeInstanceId_optional_result_value { err: err.into() },
-            },
-        }
-    }
-}
-
-impl From<NativeInstanceId_optional_result>
-    for Result<Option<crate::UserScriptImpl>, crate::LangSpecificError>
-{
-    fn from(value: NativeInstanceId_optional_result) -> Self {
-        value.into_result()
-    }
-}
+// impl From<Result<Option<crate::UserScriptImpl>, crate::LangSpecificError>>
+//     for NativeInstanceId_optional_result
+// {
+//     fn from(value: Result<Option<crate::UserScriptImpl>, crate::LangSpecificError>) -> Self {
+//         match value {
+//             Ok(it) => Self {
+//                 ok: 1,
+//                 value: NativeInstanceId_optional_result_value { ok: it.into() },
+//             },
+//             Err(err) => Self {
+//                 ok: 0,
+//                 value: NativeInstanceId_optional_result_value { err: err.into() },
+//             },
+//         }
+//     }
+// }
+//
+// impl From<NativeInstanceId_optional_result>
+//     for Result<Option<crate::UserScriptImpl>, crate::LangSpecificError>
+// {
+//     fn from(value: NativeInstanceId_optional_result) -> Self {
+//         value.into_result()
+//     }
+// }

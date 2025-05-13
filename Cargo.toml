@@ -19,7 +19,7 @@ members = [
 	"cs/fyrox-c-lib",
 	"cs/fyroxed-c",
 	"cs/fyrox-c-loader"
-]
+, "cs/fake_cs", "dylib_issue/invoker", "dylib_issue/agent"]
 resolver = "2"
 exclude = ["mlua"]
 
@@ -30,7 +30,7 @@ fyrox-c = { path = "cs/fyrox-c"}
 fyrox-c-lib = { path = "cs/fyrox-c-lib"}
 fyrox-c-loader = { path = "cs/fyrox-c-loader"}
 csgen-lib = { path = "cs/csgen-lib" }
-fyrox-lite = {path = "fyrox-lite"}
+fyrox-lite = {path = "fyrox-lite", default-features = false}
 fyrox-lite-math = {path = "fyrox-lite-math"}
 fyrox-lite-color = {path = "fyrox-lite-color"}
 lite-model = { path = "lite-model" }
@@ -41,9 +41,12 @@ gen-common = { path = "gen-common" }
 # fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 # fyrox-core = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 # fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
-fyrox = {path = "engine/fyrox", default-features = false}
-fyrox-core = {path = "engine/fyrox-core", default-features = false}
-fyroxed_base = {path = "engine/editor", default-features = false}
+# fyrox = {path = "engine/fyrox", default-features = false}
+# fyrox-core = {path = "engine/fyrox-core", default-features = false}
+# fyroxed_base = {path = "engine/editor", default-features = false}
+fyrox = {version = "0.36.2", default-features = false}
+fyrox-core = {version = "0.36.2", default-features = false}
+fyroxed_base = {version = "0.36.2", default-features = false}
 
 serde = "1.0.210"
 serde_json = "1.0.128"

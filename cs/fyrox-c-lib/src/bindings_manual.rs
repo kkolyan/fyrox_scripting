@@ -6,13 +6,13 @@ use std::fmt::{Debug, Formatter};
 use fyrox_lite::{spi::UserScript};
 use fyrox_lite::spi::ClassId;
 use crate::*;
-use crate::scripted_app::{ScriptedApp, APP};
+// use crate::scripted_app::{ScriptedApp, APP};
 use crate::auto_dispose::DisposableHandle;
 
 #[no_mangle]
 ///@owner_class FyroxCApi
 pub extern "C" fn init_fyrox(app: NativeScriptedApp) {
-    APP.set(Some(ScriptedApp::from_native(app)));
+    // APP.set(Some(ScriptedApp::from_native(app)));
 }
 
 /// identifier of some entity allocated on scripting side and managed by scripting engine.
@@ -30,7 +30,8 @@ pub struct NativeClassId {
 
 impl Debug for NativeClassId {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}({})", self.lookup_class_name(), self.value)
+        // write!(f, "{}({})", self.lookup_class_name(), self.value)
+        Ok(())
     }
 }
 
