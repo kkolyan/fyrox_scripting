@@ -10,7 +10,6 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="FyroxLite">
-<!--            <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>-->
             <HintPath>$(ProjectDir)/../../FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll</HintPath>
             <Private>True</Private>
         </Reference>
