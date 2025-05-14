@@ -1,4 +1,0 @@
-[submodule "engine"]
-	path = engine
-	url = git@github.com:kkolyan/Fyrox.git
-	branch = lite
