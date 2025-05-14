@@ -2,37 +2,39 @@
 cd "$(dirname "$0")"
 set -e
 
-rm -rf *.dll
-rm -rf *.exe
-rm -rf *.runtimeconfig.json
+# Go to project root
 
 cd ../../..
 
-./get_std_dll.sh cs/examples/Guards
+# cleanup to detect regression asap
+rm -rf cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/*.dll
+rm -rf cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/*.exe
+rm -rf cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/*.runtimeconfig.json
 
-RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-c -p fyroxed-c
-cp target/debug/fyrox_c.dll cs/examples/Guards
-cp target/debug/fyroxed_c.dll cs/examples/Guards
-
-# debug editor is really slow
-#RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyroxed-c --release
-#cp target/release/fyroxed_c.dll cs/examples/Guards
-
-# when we still need to debug editor
-#RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyroxed-c
-#cp target/debug/fyroxed_c.dll cs/examples/Guards
-
-cp target/debug/deps/fyrox_dylib*.dll cs/examples/Guards
+# build C# parts of Fyrox Lite
 
 cd cs/FyroxLite
 dotnet build
 cd ../..
-cp cs/FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll cs/examples/Guards
-cp cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.dll cs/examples/Guards
-cp cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.exe cs/examples/Guards
-cp cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.runtimeconfig.json cs/examples/Guards
+cp cs/FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+
+# build the C# game code
 
 cd cs/examples/Guards
 dotnet build
+cd ../../..
+cp cs/examples/Guards/bin/Debug/net8.0/FyroxLite.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 
-RUST_BACKTRACE=1 ./FyroxLiteEditor.exe
+# build Rust parts of Fyrox Lite
+
+RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-c -p fyroxed-c
+cp target/debug/fyrox_c.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp target/debug/fyroxed_c.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp target/debug/deps/fyrox_dylib*.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+./get_rust_std.sh cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+
+# Return to game folder
+
+cd cs/examples/Guards
+
+RUST_BACKTRACE=1 ../../../cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.exe
