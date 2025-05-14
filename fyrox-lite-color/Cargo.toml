@@ -5,6 +5,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-fyrox-lite = { path = "../fyrox-lite" }
-fyrox-core = { workspace = true }
+fyrox-lite = { workspace = true }
+fyrox = { workspace = true }
 lite-macro = { workspace = true }
+
+[features]
+default = ["fyrox-lite/default", "fyrox/default"]
+engine-dylib = ["fyrox-lite/engine-dylib", "fyrox/dylib"]

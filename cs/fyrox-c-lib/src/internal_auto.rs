@@ -285,8 +285,19 @@ impl From<u8_slice> for Vec<u8> {
 }
 
 #[no_mangle]
-pub extern "C" fn fyrox_lite_upload_u8_slice(data: u8_slice) -> () {
-    println!("Hi, fyrox_lite_upload_u8_slice exists!");
+pub extern "C" fn fyrox_lite_upload_u8_slice(data: u8_slice) -> u8_slice {
+    let mut vec = Vec::new();
+    unsafe {
+        for i in 0..data.len {
+            let v = *data.begin.add(i as usize);
+            vec.push(v);
+        }
+    }
+    let ptr = crate::Arena::allocate_vec(vec);
+    u8_slice {
+        begin: ptr,
+        len: data.len,
+    }
 }
 
 #[repr(C)]

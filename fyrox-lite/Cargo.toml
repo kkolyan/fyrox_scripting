@@ -10,5 +10,5 @@ lite-macro = { path = "../lite-macro" }
 convert_case = {workspace = true}
 
 [features]
-default = ["fyrox/fyrox-impl"]
-dylib = ["fyrox/dylib"]
+default = ["fyrox/default"]
+engine-dylib = ["fyrox/dylib"]
