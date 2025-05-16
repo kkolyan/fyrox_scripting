@@ -13,14 +13,15 @@
 - [Feedback](#feedback)
 
 ## Overview
-Full Scripting languages support for [Fyrox Engine](https://github.com/FyroxEngine/Fyrox). "Full" means that one can make games with Fyrox without seeing a single Rust line of code, not that it already covers whole Fyrox API. The principle is the same as Godot, Unity or UE allow to make games with GDSript, C# or Blueprints.
+[First-class](# "&quot;First-class&quot; means it's designed to allow one to make games with Fyrox without seeing a single Rust line of code. The principle is the same as Godot, Unity or UE allow to make games with GDSript, C# or Blueprints") `C#` and `Lua` scripting support for [Fyrox Engine](https://github.com/FyroxEngine/Fyrox). 
 
-Project ambition is to make Fyrox a "polyglot", so there is an abstraction over the languages, called Lite API, and a number of implementations for different languages. 
-
-For a proof of concept phase `Lua` was chosen, but there is a plan to adopt some popular statically typed language. `C#` and `Kotlin` are main candidates. `$Lang` alias is used further in text instead of refering to a particular language.
+The project also provides a framework to maintain multiple languages implementation at the cost of one. Engine features are integrated via a language-agnostic Lite API, making them available to all supported scripting languages.
 
 ## Demo
-There is a [demo game](lua/examples/guards) that written in Lua to demonstrate the currently Lua-exposed subset of Fyrox API.
+There is a game that written in different scripting languages to demonstrate the currently Lua-exposed subset of Fyrox API.
+* [demo game in Lua](lua/examples/guards)
+* [the same demo game in C#](cs/examples/Guards)
+* [the same demo reference implementation in Rust (without Fyrox Lite)](https://github.com/kkolyan/fyrox_guards)
 
 ## For users (who make Games)
 
@@ -34,13 +35,13 @@ When this project is released, this is how games should be made:
 6. Run a game using a `Fyrox Executor $Lang` (from the Fyrox Lite Toolkit), if you like to play without editor.
 
 ### Current state
-1. Subset of exposed Fyrox API is pretty limited: input, messages, working with scene graph, prefab instantiation, basic physics, basic UI Text. Check out [Lua Annotations](lua/annotations) for details. Though, that's already enough for gameplay prototyping.
-2. There is only `Lua` language support currently.
+1. Subset of exposed Fyrox API is pretty limited: input, messages, working with scene graph, prefab instantiation, basic physics, basic UI Text. Check out [Lua Annotations](lua/annotations) or  for details. Though, that's already enough for gameplay prototyping.
+2. There is only `Lua` and `C#` languages support currently.
 3. Hot-reload supported for Lua. In-editor hot-reload enabled by default (affects list of scripts and available fields in inspector). In-game hot-reload allows to write a game literally when playing it, but it's fundamentally error-prone and requires a skill to be used with convenience, so it's disabled by default and can be enabled with LuaPlugin constructor parameter. Hot-reload check is triggered when window is switched back to editor (or game, if enabled).
 4. There is no existing pre-built toolkit yet, so editor and executor should be run from the source code (which is pretty easy actually - see instruction below).
 5. There are a lot of temporary limitations, decribed in [known_issues.md](known_issues.md).
  
-### How to use it now
+### How to use it now (Lua)
 1. install Rust (https://www.rust-lang.org/tools/install)
 2. checkout Fyrox Lite `git clone --recursive https://github.com/kkolyan/fyrox_lite_lua` to some directory (let's call it `$FYROX_LITE_HOME`).
 3. let's call a directory with your game project files a `$GAME_PROJECT`.
