@@ -24,7 +24,7 @@ use fyrox::script::Script;
 use fyrox::walkdir::DirEntry;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
-use mlua::Function;
+use mlua::{Function, MultiValue, Table};
 use mlua::IntoLuaMulti;
 use mlua::Lua;
 use mlua::UserDataRef;
@@ -171,6 +171,9 @@ pub(crate) fn create_plugin(scripts_dir: &str, hot_reload_enabled: bool) -> LuaP
     // here and there in Rust. But we need a single Lua VM instance for the whole life
     // of game process, so that's ok to make it 'static.
     let vm = Box::leak(Box::new(Lua::new()));
+
+    expose_os_exit(vm);
+
     LUA.set(Some(vm));
     let lua_version = vm.load("return _VERSION").eval::<mlua::String>().unwrap();
     println!("Lua Version: {}", lua_version.to_str().unwrap_or("unknown"));
@@ -231,6 +234,20 @@ pub(crate) fn create_plugin(scripts_dir: &str, hot_reload_enabled: bool) -> LuaP
         need_reload: false,
         scripts: Default::default(),
     }
+}
+
+// Luau doesn't define it
+fn expose_os_exit(vm: &mut Lua) {
+    let lua_os = vm.globals().get::<_, Table>("os").unwrap();
+    lua_os
+        .set("exit", vm.create_function::<_, (), _>(|_lua, args: MultiValue| {
+            Log::info("os.exit() called by script");
+            let code = args.get(0)
+                .map(|it| it.as_i32().unwrap())
+                .unwrap_or(0);
+            exit(code);
+        }).unwrap())
+        .unwrap();
 }
 
 pub(crate) fn invoke_callback<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(

@@ -23,6 +23,9 @@ function Game:init(scene_path)
 end
 
 function Game:update()
+	if Input:is_key_down(KeyCode.Escape) then
+		os.exit()
+	end
 	self.hud.text_async = string.format("Wounds: %s\nKilled Guards: %s", self.wounds, self.frags)
 end
 
