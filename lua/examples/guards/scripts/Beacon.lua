@@ -4,7 +4,7 @@ Beacon = script_class()
 
 function Beacon:on_update()
     local pos = self.node.global_position
-    table.insert(Plugin:get("Game").beacons, pos)
+    table.insert(GlobalScript:get("Game").beacons, pos)
     print("beacon registered: " .. tostring(self.node));
     self.node:destroy()
 end

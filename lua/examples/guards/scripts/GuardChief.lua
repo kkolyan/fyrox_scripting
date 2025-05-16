@@ -15,7 +15,7 @@ function GuardChief:on_update(ctx)
     if not self.initialized then
         self.initialized = true;
         for i = 1, self.initial_count do
-            local beacons = Plugin:get("Game").beacons
+            local beacons = GlobalScript:get("Game").beacons
             if #beacons > 0 then
                 local position = beacons[math.random(#beacons)]
 

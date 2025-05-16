@@ -36,7 +36,7 @@ public class Player : NodeScript
     {
         if (message is BulletHitMessage hitMessage && hitMessage.Fraction != FractionPlayer)
         {
-            Plugin.Get<Game>().IncWounds();
+            GlobalScript.Get<Game>().IncWounds();
             Console.WriteLine("player wounded!");
         }
     }
@@ -51,7 +51,7 @@ public class Player : NodeScript
         if (!Published)
         {
             Published = true;
-            Plugin.Get<Game>().player = Node;
+            GlobalScript.Get<Game>().player = Node;
         }
 
         if (Input.IsMouseButtonPressed(Input.MouseLeft))

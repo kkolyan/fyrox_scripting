@@ -25,8 +25,19 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
         }
     });
     let mut s = String::new();
-
-    if static_class {
+ 
+    if class.class_name.0 == "GlobalScript" {
+        // do not want to expose "abstract" flag to domain model for the single possible case
+        render(&mut s, r#"
+            // ${rust_path}
+            public abstract partial class ${class}
+            {
+            "#, [
+            ("class", &class.class_name),
+            ("rust_path", &class.rust_struct_path),
+        ]);
+    } 
+    else if static_class {
         render(&mut s, r#"
             // ${rust_path}
             public static partial class ${class}

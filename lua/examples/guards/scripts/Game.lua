@@ -1,4 +1,4 @@
----@class Game : Plugin
+---@class Game : GlobalScript
 ---@field player Node
 ---@field beacons Vector3[]
 ---@field frags number

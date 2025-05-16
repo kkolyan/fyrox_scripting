@@ -139,8 +139,8 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
 
     let parent_class = parent_class.as_deref();
 
-    if parent_class.is_none() || !(parent_class.unwrap() == "Script" || parent_class.unwrap() == "Plugin") {
-        errors.push("parent class is required to be either Script or Plugin".to_string());
+    if parent_class.is_none() || !(parent_class.unwrap() == "Script" || parent_class.unwrap() == "GlobalScript") {
+        errors.push("parent class is required to be either Script or GlobalScript".to_string());
     };
     if parent_class.is_some() && parent_class.unwrap() == "Script" && uuid.is_none() {
         errors.push("uuid tag is required for class extending Script".to_string());
@@ -155,7 +155,7 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
         .collect();
     let kind =  match parent_class.unwrap() {
         "Script" => ScriptKind::Node(uuid.unwrap()),
-        "Plugin" => ScriptKind::Global,
+        "GlobalScript" => ScriptKind::Global,
         unknown => panic!("unknown ScriptKind constant: {:?}", unknown),
     };
     Ok(ScriptMetadata {

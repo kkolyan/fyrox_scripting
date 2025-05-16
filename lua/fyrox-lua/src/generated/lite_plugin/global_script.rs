@@ -21,8 +21,8 @@ use crate::{
     user_data_plus::{FyroxUserData, Traitor, UserDataClass},
 };
 
-impl FyroxUserData for fyrox_lite::lite_plugin::LitePlugin {
-    const CLASS_NAME: &'static str = "Plugin";
+impl FyroxUserData for fyrox_lite::lite_plugin::LiteGlobalScript {
+    const CLASS_NAME: &'static str = "GlobalScript";
 
     fn add_instance_methods<'lua, M: mlua::UserDataMethods<'lua, Traitor<Self>>>(methods: &mut M) {
         methods.add_meta_method(mlua::MetaMethod::ToString.name(), |lua, this, args: ()| {
@@ -35,7 +35,7 @@ impl FyroxUserData for fyrox_lite::lite_plugin::LitePlugin {
         methods.add_method_mut("get", |lua, this, (class_id): (mlua::String)| {
             let class_id = class_id.to_str()?.to_string();
             let _stub = Default::default();
-            let ret = fyrox_lite::lite_plugin::LitePlugin::get::<
+            let ret = fyrox_lite::lite_plugin::LiteGlobalScript::get::<
                 TypedUserData<Traitor<ScriptObject>>,
             >(class_id, _stub);
             let ret = match ret {

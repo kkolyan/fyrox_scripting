@@ -1407,8 +1407,8 @@
     },
     {
       "Engine": {
-        "class_name": "Plugin",
-        "rust_struct_path": "fyrox_lite::lite_plugin::LitePlugin",
+        "class_name": "GlobalScript",
+        "rust_struct_path": "fyrox_lite::lite_plugin::LiteGlobalScript",
         "methods": [
           {
             "instance": false,

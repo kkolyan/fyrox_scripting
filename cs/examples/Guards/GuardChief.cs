@@ -23,7 +23,7 @@ public class GuardChief : NodeScript
             initialized = true;
             for (int i = 1; i <= initial_count; i++)
             {
-                var beacons = Plugin.Get<Game>().beacons;
+                var beacons = GlobalScript.Get<Game>().beacons;
                 if (beacons.Count > 0)
                 {
                     var position = beacons[new Random().Next(beacons.Count)];

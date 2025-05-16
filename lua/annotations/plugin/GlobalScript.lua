@@ -5,17 +5,17 @@
 ---@diagnostic disable: missing-return, lowercase-global, missing-fields
 
 -----------------------------------------------------------
------- fyrox_lite::lite_plugin::LitePlugin
+------ fyrox_lite::lite_plugin::LiteGlobalScript
 -----------------------------------------------------------
 
----@class Plugin_static
-Plugin = {}
+---@class GlobalScript_static
+GlobalScript = {}
 
----@class Plugin
-Plugin_instance = {}
+---@class GlobalScript
+GlobalScript_instance = {}
 
 ---@generic T
 ---@param class_id `T`
 ---@return T
-function Plugin:get(class_id) end
+function GlobalScript:get(class_id) end
 

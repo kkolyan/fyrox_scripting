@@ -65,7 +65,7 @@ end
 
 function Player:on_message(message)
     if message.type == Bullet.HitMessage and message.fraction ~= FRACTION_PLAYER then
-        Plugin:get("Game"):inc_wounds()
+        GlobalScript:get("Game"):inc_wounds()
         print("player wounded!")
     end
 end
@@ -76,7 +76,7 @@ function Player:on_update(dt)
     end
     if not self.published then
         self.published = true;
-        Plugin:get("Game").player = self.node;
+        GlobalScript:get("Game").player = self.node;
     end
 
     if Input:is_mouse_button_pressed(Input.MouseLeft) then

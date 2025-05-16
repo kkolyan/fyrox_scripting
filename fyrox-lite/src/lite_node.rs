@@ -237,7 +237,7 @@ impl LiteNode {
             }
             for script in node.try_get_scripts_mut::<T::ProxyScript>() {
                 let Some(plugin) = &mut ctx.plugins else {
-                    return Err(T::create_error("plugins access not allowed from Plugin scripts"));
+                    return Err(T::create_error("plugins access not allowed from GlobalScript"));
                 };
                 let plugin = plugin.of_type_mut::<T::Plugin>().expect("WTF: Lua plugin unavailable");
                 if let Some(r) = T::extract_from(self.handle, script, &class_id, plugin) {

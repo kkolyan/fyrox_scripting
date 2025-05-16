@@ -2808,16 +2808,16 @@ impl From<NativeRigidBody_optional_result>
 
 #[repr(C)]
 #[derive(Clone, Copy)]
-pub struct NativePlugin {
+pub struct NativeGlobalScript {
     pub handle: NativeHandle,
 }
 
 #[no_mangle]
-pub extern "C" fn fyrox_lite_lite_plugin_LitePlugin_get(
+pub extern "C" fn fyrox_lite_lite_plugin_LiteGlobalScript_get(
     class_id: NativeClassId,
 ) -> NativeInstanceId_result {
     let class_id = class_id.into();
-    let ret = fyrox_lite::lite_plugin::LitePlugin::get::<crate::UserScriptImpl>(class_id, ());
+    let ret = fyrox_lite::lite_plugin::LiteGlobalScript::get::<crate::UserScriptImpl>(class_id, ());
     ret.into()
 }
 

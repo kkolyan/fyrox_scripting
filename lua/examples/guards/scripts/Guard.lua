@@ -23,7 +23,7 @@ end
 
 ---@return boolean
 function Guard:try_attack_player()
-    local player_pos = Plugin:get("Game").player.global_position
+    local player_pos = GlobalScript:get("Game").player.global_position
     local self_pos = self.node.global_position
     local sight_vector = player_pos:sub(self_pos)
 
@@ -81,7 +81,7 @@ function Guard:move_to_waypoint(dt)
 
     end
     if self.current_waypoint == nil then
-        local beacons = Plugin:get("Game").beacons;
+        local beacons = GlobalScript:get("Game").beacons;
         self.current_waypoint = beacons[math.random(#beacons)]
     end
     local pos = self.node.local_position
@@ -119,7 +119,7 @@ end
 function Guard:on_message(message)
     if message.type == Bullet.HitMessage and message.fraction ~= FRACTION_GUARDS then
         self.node:destroy()
-        Plugin:get("Game"):inc_frags()
+        GlobalScript:get("Game"):inc_frags()
         print("guard killed!")
     end
 end

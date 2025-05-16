@@ -1,6 +1,6 @@
 namespace FyroxLite;
 
-public abstract class GlobalScript
+public abstract partial class GlobalScript
 {
     protected internal virtual void OnGlobalUpdate()
     {

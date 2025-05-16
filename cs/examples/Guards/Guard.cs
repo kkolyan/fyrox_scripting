@@ -29,7 +29,7 @@ public class Guard : NodeScript
 
     private bool TryAttackPlayer()
     {
-        var playerPos = Plugin.Get<Game>().player.GlobalPosition;
+        var playerPos = GlobalScript.Get<Game>().player.GlobalPosition;
         var selfPos = Node.GlobalPosition;
         var sightVector = playerPos - selfPos;
 
@@ -94,7 +94,7 @@ public class Guard : NodeScript
 
         if (current_waypoint == null)
         {
-            var beacons = Plugin.Get<Game>().beacons;
+            var beacons = GlobalScript.Get<Game>().beacons;
             current_waypoint = beacons[new Random().Next(beacons.Count)];
         }
 
@@ -137,7 +137,7 @@ public class Guard : NodeScript
         if (message is BulletHitMessage hit && hit.Fraction != FRACTION_GUARDS)
         {
             Node.Destroy();
-            Plugin.Get<Game>().IncFrags();
+            GlobalScript.Get<Game>().IncFrags();
             Console.WriteLine("Guard killed!");
         }
     }

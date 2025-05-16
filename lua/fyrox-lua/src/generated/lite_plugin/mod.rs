@@ -1,1 +1,1 @@
-pub mod plugin;
+pub mod global_script;
