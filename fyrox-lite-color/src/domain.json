@@ -11,7 +11,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: WHITE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: WHITE)"
             }
           },
           {
@@ -20,7 +20,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BLACK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BLACK)"
             }
           },
           {
@@ -29,7 +29,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: RED)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: RED)"
             }
           },
           {
@@ -38,7 +38,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GREEN)"
             }
           },
           {
@@ -47,7 +47,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BLUE)"
             }
           },
           {
@@ -56,7 +56,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: TRANSPARENT)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: TRANSPARENT)"
             }
           },
           {
@@ -65,7 +65,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MAROON)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MAROON)"
             }
           },
           {
@@ -74,7 +74,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_RED)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_RED)"
             }
           },
           {
@@ -83,7 +83,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BROWN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BROWN)"
             }
           },
           {
@@ -92,7 +92,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: FIREBRICK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: FIREBRICK)"
             }
           },
           {
@@ -101,7 +101,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CRIMSON)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CRIMSON)"
             }
           },
           {
@@ -110,7 +110,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: TOMATO)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: TOMATO)"
             }
           },
           {
@@ -119,7 +119,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CORAL)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CORAL)"
             }
           },
           {
@@ -128,7 +128,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: INDIAN_RED)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: INDIAN_RED)"
             }
           },
           {
@@ -137,7 +137,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_CORAL)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_CORAL)"
             }
           },
           {
@@ -146,7 +146,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_SALMON)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_SALMON)"
             }
           },
           {
@@ -155,7 +155,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SALMON)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SALMON)"
             }
           },
           {
@@ -164,7 +164,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_SALMON)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_SALMON)"
             }
           },
           {
@@ -173,7 +173,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ORANGE_RED)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ORANGE_RED)"
             }
           },
           {
@@ -182,7 +182,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_ORANGE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_ORANGE)"
             }
           },
           {
@@ -191,7 +191,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ORANGE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ORANGE)"
             }
           },
           {
@@ -200,7 +200,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GOLD)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GOLD)"
             }
           },
           {
@@ -209,7 +209,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_GOLDEN_ROD)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_GOLDEN_ROD)"
             }
           },
           {
@@ -218,7 +218,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GOLDEN_ROD)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GOLDEN_ROD)"
             }
           },
           {
@@ -227,7 +227,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PALE_GOLDEN_ROD)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PALE_GOLDEN_ROD)"
             }
           },
           {
@@ -236,7 +236,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_KHAKI)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_KHAKI)"
             }
           },
           {
@@ -245,7 +245,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: KHAKI)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: KHAKI)"
             }
           },
           {
@@ -254,7 +254,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: OLIVE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: OLIVE)"
             }
           },
           {
@@ -263,7 +263,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: YELLOW)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: YELLOW)"
             }
           },
           {
@@ -272,7 +272,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: YELLOW_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: YELLOW_GREEN)"
             }
           },
           {
@@ -281,7 +281,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_OLIVE_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_OLIVE_GREEN)"
             }
           },
           {
@@ -290,7 +290,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: OLIVE_DRAB)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: OLIVE_DRAB)"
             }
           },
           {
@@ -299,7 +299,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LAWN_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LAWN_GREEN)"
             }
           },
           {
@@ -308,7 +308,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CHARTREUSE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CHARTREUSE)"
             }
           },
           {
@@ -317,7 +317,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GREEN_YELLOW)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GREEN_YELLOW)"
             }
           },
           {
@@ -326,7 +326,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_GREEN)"
             }
           },
           {
@@ -335,7 +335,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: FOREST_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: FOREST_GREEN)"
             }
           },
           {
@@ -344,7 +344,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIME)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIME)"
             }
           },
           {
@@ -353,7 +353,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIME_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIME_GREEN)"
             }
           },
           {
@@ -362,7 +362,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_GREEN)"
             }
           },
           {
@@ -371,7 +371,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PALE_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PALE_GREEN)"
             }
           },
           {
@@ -380,7 +380,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_SEA_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_SEA_GREEN)"
             }
           },
           {
@@ -389,7 +389,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_SPRING_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_SPRING_GREEN)"
             }
           },
           {
@@ -398,7 +398,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SPRING_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SPRING_GREEN)"
             }
           },
           {
@@ -407,7 +407,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SEA_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SEA_GREEN)"
             }
           },
           {
@@ -416,7 +416,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_AQUA_MARINE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_AQUA_MARINE)"
             }
           },
           {
@@ -425,7 +425,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_SEA_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_SEA_GREEN)"
             }
           },
           {
@@ -434,7 +434,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_SEA_GREEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_SEA_GREEN)"
             }
           },
           {
@@ -443,7 +443,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_SLATE_GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_SLATE_GRAY)"
             }
           },
           {
@@ -452,7 +452,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: TEAL)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: TEAL)"
             }
           },
           {
@@ -461,7 +461,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_CYAN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_CYAN)"
             }
           },
           {
@@ -470,7 +470,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: AQUA)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: AQUA)"
             }
           },
           {
@@ -479,7 +479,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CYAN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CYAN)"
             }
           },
           {
@@ -488,7 +488,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_CYAN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_CYAN)"
             }
           },
           {
@@ -497,7 +497,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_TURQUOISE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_TURQUOISE)"
             }
           },
           {
@@ -506,7 +506,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: TURQUOISE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: TURQUOISE)"
             }
           },
           {
@@ -515,7 +515,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_TURQUOISE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_TURQUOISE)"
             }
           },
           {
@@ -524,7 +524,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PALE_TURQUOISE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PALE_TURQUOISE)"
             }
           },
           {
@@ -533,7 +533,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: AQUA_MARINE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: AQUA_MARINE)"
             }
           },
           {
@@ -542,7 +542,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: POWDER_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: POWDER_BLUE)"
             }
           },
           {
@@ -551,7 +551,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CADET_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CADET_BLUE)"
             }
           },
           {
@@ -560,7 +560,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: STEEL_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: STEEL_BLUE)"
             }
           },
           {
@@ -569,7 +569,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CORN_FLOWER_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CORN_FLOWER_BLUE)"
             }
           },
           {
@@ -578,7 +578,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DEEP_SKY_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DEEP_SKY_BLUE)"
             }
           },
           {
@@ -587,7 +587,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DODGER_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DODGER_BLUE)"
             }
           },
           {
@@ -596,7 +596,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_BLUE)"
             }
           },
           {
@@ -605,7 +605,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SKY_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SKY_BLUE)"
             }
           },
           {
@@ -614,7 +614,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_SKY_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_SKY_BLUE)"
             }
           },
           {
@@ -623,7 +623,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MIDNIGHT_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MIDNIGHT_BLUE)"
             }
           },
           {
@@ -632,7 +632,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: NAVY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: NAVY)"
             }
           },
           {
@@ -641,7 +641,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_BLUE)"
             }
           },
           {
@@ -650,7 +650,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_BLUE)"
             }
           },
           {
@@ -659,7 +659,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ROYAL_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ROYAL_BLUE)"
             }
           },
           {
@@ -668,7 +668,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BLUE_VIOLET)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BLUE_VIOLET)"
             }
           },
           {
@@ -677,7 +677,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: INDIGO)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: INDIGO)"
             }
           },
           {
@@ -686,7 +686,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_SLATE_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_SLATE_BLUE)"
             }
           },
           {
@@ -695,7 +695,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SLATE_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SLATE_BLUE)"
             }
           },
           {
@@ -704,7 +704,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_SLATE_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_SLATE_BLUE)"
             }
           },
           {
@@ -713,7 +713,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_PURPLE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_PURPLE)"
             }
           },
           {
@@ -722,7 +722,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_MAGENTA)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_MAGENTA)"
             }
           },
           {
@@ -731,7 +731,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_VIOLET)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_VIOLET)"
             }
           },
           {
@@ -740,7 +740,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_ORCHID)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_ORCHID)"
             }
           },
           {
@@ -749,7 +749,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_ORCHID)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_ORCHID)"
             }
           },
           {
@@ -758,7 +758,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PURPLE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PURPLE)"
             }
           },
           {
@@ -767,7 +767,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: THISTLE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: THISTLE)"
             }
           },
           {
@@ -776,7 +776,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PLUM)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PLUM)"
             }
           },
           {
@@ -785,7 +785,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: VIOLET)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: VIOLET)"
             }
           },
           {
@@ -794,7 +794,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MAGENTA)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MAGENTA)"
             }
           },
           {
@@ -803,7 +803,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ORCHID)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ORCHID)"
             }
           },
           {
@@ -812,7 +812,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MEDIUM_VIOLET_RED)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MEDIUM_VIOLET_RED)"
             }
           },
           {
@@ -821,7 +821,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PALE_VIOLET_RED)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PALE_VIOLET_RED)"
             }
           },
           {
@@ -830,7 +830,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DEEP_PINK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DEEP_PINK)"
             }
           },
           {
@@ -839,7 +839,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: HOT_PINK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: HOT_PINK)"
             }
           },
           {
@@ -848,7 +848,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_PINK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_PINK)"
             }
           },
           {
@@ -857,7 +857,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PINK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PINK)"
             }
           },
           {
@@ -866,7 +866,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ANTIQUE_WHITE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ANTIQUE_WHITE)"
             }
           },
           {
@@ -875,7 +875,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BEIGE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BEIGE)"
             }
           },
           {
@@ -884,7 +884,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BISQUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BISQUE)"
             }
           },
           {
@@ -893,7 +893,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BLANCHED_ALMOND)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BLANCHED_ALMOND)"
             }
           },
           {
@@ -902,7 +902,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: WHEAT)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: WHEAT)"
             }
           },
           {
@@ -911,7 +911,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CORN_SILK)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CORN_SILK)"
             }
           },
           {
@@ -920,7 +920,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LEMON_CHIFFON)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LEMON_CHIFFON)"
             }
           },
           {
@@ -929,7 +929,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_GOLDEN_ROD_YELLOW)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_GOLDEN_ROD_YELLOW)"
             }
           },
           {
@@ -938,7 +938,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_YELLOW)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_YELLOW)"
             }
           },
           {
@@ -947,7 +947,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SADDLE_BROWN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SADDLE_BROWN)"
             }
           },
           {
@@ -956,7 +956,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SIENNA)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SIENNA)"
             }
           },
           {
@@ -965,7 +965,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: CHOCOLATE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: CHOCOLATE)"
             }
           },
           {
@@ -974,7 +974,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PERU)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PERU)"
             }
           },
           {
@@ -983,7 +983,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SANDY_BROWN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SANDY_BROWN)"
             }
           },
           {
@@ -992,7 +992,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: BURLY_WOOD)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: BURLY_WOOD)"
             }
           },
           {
@@ -1001,7 +1001,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: TAN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: TAN)"
             }
           },
           {
@@ -1010,7 +1010,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ROSY_BROWN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ROSY_BROWN)"
             }
           },
           {
@@ -1019,7 +1019,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MOCCASIN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MOCCASIN)"
             }
           },
           {
@@ -1028,7 +1028,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: NAVAJO_WHITE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: NAVAJO_WHITE)"
             }
           },
           {
@@ -1037,7 +1037,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PEACH_PUFF)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PEACH_PUFF)"
             }
           },
           {
@@ -1046,7 +1046,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MISTY_ROSE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MISTY_ROSE)"
             }
           },
           {
@@ -1055,7 +1055,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LAVENDER_BLUSH)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LAVENDER_BLUSH)"
             }
           },
           {
@@ -1064,7 +1064,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LINEN)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LINEN)"
             }
           },
           {
@@ -1073,7 +1073,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: OLD_LACE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: OLD_LACE)"
             }
           },
           {
@@ -1082,7 +1082,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: PAPAYA_WHIP)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: PAPAYA_WHIP)"
             }
           },
           {
@@ -1091,7 +1091,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SEA_SHELL)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SEA_SHELL)"
             }
           },
           {
@@ -1100,7 +1100,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: MINT_CREAM)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: MINT_CREAM)"
             }
           },
           {
@@ -1109,7 +1109,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SLATE_GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SLATE_GRAY)"
             }
           },
           {
@@ -1118,7 +1118,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_SLATE_GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_SLATE_GRAY)"
             }
           },
           {
@@ -1127,7 +1127,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_STEEL_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_STEEL_BLUE)"
             }
           },
           {
@@ -1136,7 +1136,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LAVENDER)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LAVENDER)"
             }
           },
           {
@@ -1145,7 +1145,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: FLORAL_WHITE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: FLORAL_WHITE)"
             }
           },
           {
@@ -1154,7 +1154,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: ALICE_BLUE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: ALICE_BLUE)"
             }
           },
           {
@@ -1163,7 +1163,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GHOST_WHITE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GHOST_WHITE)"
             }
           },
           {
@@ -1172,7 +1172,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: HONEYDEW)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: HONEYDEW)"
             }
           },
           {
@@ -1181,7 +1181,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: IVORY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: IVORY)"
             }
           },
           {
@@ -1190,7 +1190,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: AZURE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: AZURE)"
             }
           },
           {
@@ -1199,7 +1199,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SNOW)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SNOW)"
             }
           },
           {
@@ -1208,7 +1208,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DIM_GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DIM_GRAY)"
             }
           },
           {
@@ -1217,7 +1217,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GRAY)"
             }
           },
           {
@@ -1226,7 +1226,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: DARK_GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: DARK_GRAY)"
             }
           },
           {
@@ -1235,7 +1235,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: SILVER)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: SILVER)"
             }
           },
           {
@@ -1244,7 +1244,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: LIGHT_GRAY)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: LIGHT_GRAY)"
             }
           },
           {
@@ -1253,7 +1253,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: GAINSBORO)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: GAINSBORO)"
             }
           },
           {
@@ -1262,7 +1262,7 @@
               "Object": "Color"
             },
             "value": {
-              "ComplexExpression": "color_to_lite (fyrox_core :: color :: Color :: WHITE_SMOKE)"
+              "ComplexExpression": "color_to_lite (fyrox :: core :: color :: Color :: WHITE_SMOKE)"
             }
           }
         ]

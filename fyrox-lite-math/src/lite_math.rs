@@ -1,7 +1,7 @@
 
 use std::fmt::{Debug, Display};
 
-use fyrox_core::{
+use fyrox::core::{
     algebra::{Unit, UnitQuaternion, Vector3},
     num_traits::Zero,
 };
@@ -9,7 +9,7 @@ use fyrox_lite::lite_math::{PodQuaternion, PodVector2, PodVector2I, PodVector3};
 use lite_macro::lite_api;
 
 use std::ops::Mul;
-use fyrox_core::algebra::Vector2;
+use fyrox::core::algebra::Vector2;
 
 #[derive(Clone, Copy)]
 pub struct LiteQuaternion(UnitQuaternion<f32>);
