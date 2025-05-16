@@ -14,13 +14,18 @@ namespace FyroxLite;
 public partial struct FeatureId
 {
     public FeatureKind Kind {
+        #region trivial get/set
         get => _kind;
         set => _kind = value;
+        #endregion
     }
     public int Id {
+        #region trivial get/set
         get => _id;
         set => _id = value;
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -28,7 +33,10 @@ public partial struct FeatureId
 //===============================================================
     private FeatureKind _kind;
     private int _id;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct FeatureId_optional
@@ -157,3 +165,4 @@ internal struct FeatureId_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

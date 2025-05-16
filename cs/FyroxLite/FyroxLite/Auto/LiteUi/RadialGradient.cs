@@ -14,13 +14,18 @@ namespace FyroxLite;
 public partial struct RadialGradient
 {
     public Vector2 Center {
+        #region get/set with wrapping/unwrapping
         get => NativeVector2.ToFacade(_center);
         set => _center = NativeVector2.FromFacade(value);
+        #endregion
     }
     public List<GradientPoint> Stops {
+        #region get/set with wrapping/unwrapping
         get => GradientPoint_slice.ToFacade(_stops);
         set => _stops = GradientPoint_slice.FromFacade(value);
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -28,7 +33,10 @@ public partial struct RadialGradient
 //===============================================================
     private NativeVector2 _center;
     private GradientPoint_slice _stops;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct RadialGradient_optional
@@ -157,3 +165,4 @@ internal struct RadialGradient_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

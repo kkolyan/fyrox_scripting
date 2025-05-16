@@ -14,25 +14,36 @@ namespace FyroxLite;
 public partial struct Intersection
 {
     public Node Collider {
+        #region trivial get/set
         get => _collider;
         set => _collider = value;
+        #endregion
     }
     public Vector3 Normal {
+        #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_normal);
         set => _normal = NativeVector3.FromFacade(value);
+        #endregion
     }
     public Vector3 Position {
+        #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_position);
         set => _position = NativeVector3.FromFacade(value);
+        #endregion
     }
     public FeatureId Feature {
+        #region trivial get/set
         get => _feature;
         set => _feature = value;
+        #endregion
     }
     public float Toi {
+        #region trivial get/set
         get => _toi;
         set => _toi = value;
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -43,7 +54,10 @@ public partial struct Intersection
     private NativeVector3 _position;
     private FeatureId _feature;
     private float _toi;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct Intersection_optional
@@ -172,3 +186,4 @@ internal struct Intersection_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

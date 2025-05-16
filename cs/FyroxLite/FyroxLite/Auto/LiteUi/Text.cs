@@ -12,37 +12,47 @@ namespace FyroxLite;
 // fyrox_lite::lite_ui::LiteText
 public partial struct Text : IEquatable<Text>
 {
+    #region internal fields and constructor
     private readonly NativeHandle handle;
 
     internal Text(NativeHandle handle)
     {
         this.handle = handle;
     }
+    #endregion
     public string TextAsync
     {
         set
         {
+            #region native call
             unsafe {
                 var _value = NativeString.FromFacade(value);
                 fyrox_lite_lite_ui_LiteText_set_text_async(this, _value);
             }
+            #endregion
         }
     }
 
     public static Text New(TextBuilder state)
     {
+        #region native call
         unsafe {
             var _state = state;
             var __ret = fyrox_lite_lite_ui_LiteText_new(&_state);
             return __ret;
         }
+        #endregion
     }
+
+    #region native internal methods
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_ui_LiteText_set_text_async(Text self, NativeString text);
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial Text fyrox_lite_lite_ui_LiteText_new(TextBuilder* state);
+    #endregion
+
 
     public bool Equals(Text other)
     {
@@ -69,6 +79,8 @@ public partial struct Text : IEquatable<Text>
         return !left.Equals(right);
     }
 }
+#region internal type wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct Text_optional
@@ -180,3 +192,4 @@ internal struct Text_optional_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

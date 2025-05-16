@@ -14,13 +14,18 @@ namespace FyroxLite;
 public partial struct InteractionGroups
 {
     public int Memberships {
+        #region trivial get/set
         get => _memberships;
         set => _memberships = value;
+        #endregion
     }
     public int Filter {
+        #region trivial get/set
         get => _filter;
         set => _filter = value;
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -28,7 +33,10 @@ public partial struct InteractionGroups
 //===============================================================
     private int _memberships;
     private int _filter;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct InteractionGroups_optional
@@ -157,3 +165,4 @@ internal struct InteractionGroups_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

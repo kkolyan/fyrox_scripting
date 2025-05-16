@@ -14,13 +14,18 @@ namespace FyroxLite;
 public partial struct GradientPoint
 {
     public float Stop {
+        #region trivial get/set
         get => _stop;
         set => _stop = value;
+        #endregion
     }
     public Color Color {
+        #region get/set with wrapping/unwrapping
         get => NativeColor.ToFacade(_color);
         set => _color = NativeColor.FromFacade(value);
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -28,7 +33,10 @@ public partial struct GradientPoint
 //===============================================================
     private float _stop;
     private NativeColor _color;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct GradientPoint_optional
@@ -157,3 +165,4 @@ internal struct GradientPoint_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

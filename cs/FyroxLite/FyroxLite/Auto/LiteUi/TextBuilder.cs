@@ -14,13 +14,18 @@ namespace FyroxLite;
 public partial struct TextBuilder
 {
     public Brush? Foreground {
+        #region get/set with wrapping/unwrapping
         get => Brush_optional.ToFacade(_foreground);
         set => _foreground = Brush_optional.FromFacade(value);
+        #endregion
     }
     public float? FontSize {
+        #region get/set with wrapping/unwrapping
         get => float_optional.ToFacade(_font_size);
         set => _font_size = float_optional.FromFacade(value);
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -28,7 +33,10 @@ public partial struct TextBuilder
 //===============================================================
     private Brush_optional _foreground;
     private float_optional _font_size;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct TextBuilder_optional
@@ -157,3 +165,4 @@ internal struct TextBuilder_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

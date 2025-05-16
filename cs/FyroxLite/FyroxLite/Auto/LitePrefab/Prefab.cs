@@ -12,25 +12,33 @@ namespace FyroxLite;
 // fyrox_lite::lite_prefab::LitePrefab
 public partial struct Prefab : IEquatable<Prefab>
 {
+    #region internal fields and constructor
     private readonly NativeHandle handle;
 
     internal Prefab(NativeHandle handle)
     {
         this.handle = handle;
     }
+    #endregion
 
     public Node InstantiateAt(Vector3 position, Quaternion orientation)
     {
+        #region native call
         unsafe {
             var _position = NativeVector3.FromFacade(position);
             var _orientation = NativeQuaternion.FromFacade(orientation);
             var __ret = fyrox_lite_lite_prefab_LitePrefab_instantiate_at(this, &_position, &_orientation);
             return Node_result.ToFacade(__ret);
         }
+        #endregion
     }
+
+    #region native internal methods
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial Node_result fyrox_lite_lite_prefab_LitePrefab_instantiate_at(Prefab self, NativeVector3* position, NativeQuaternion* orientation);
+    #endregion
+
 
     public bool Equals(Prefab other)
     {
@@ -57,6 +65,8 @@ public partial struct Prefab : IEquatable<Prefab>
         return !left.Equals(right);
     }
 }
+#region internal type wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct Prefab_optional
@@ -168,3 +178,4 @@ internal struct Prefab_optional_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

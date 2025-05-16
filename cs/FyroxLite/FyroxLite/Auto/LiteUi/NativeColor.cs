@@ -18,6 +18,8 @@ internal partial struct NativeColor
     private byte _b;
     private byte _a;
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativeColor_optional
@@ -146,3 +148,4 @@ internal struct NativeColor_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

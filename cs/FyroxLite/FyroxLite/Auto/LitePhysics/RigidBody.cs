@@ -12,23 +12,31 @@ namespace FyroxLite;
 // fyrox_lite::lite_physics::LiteRigidBody
 public partial struct RigidBody : IEquatable<RigidBody>
 {
+    #region internal fields and constructor
     private readonly NativeHandle handle;
 
     internal RigidBody(NativeHandle handle)
     {
         this.handle = handle;
     }
+    #endregion
 
     public void ApplyForce(Vector3 force)
     {
+        #region native call
         unsafe {
             var _force = NativeVector3.FromFacade(force);
             fyrox_lite_lite_physics_LiteRigidBody_apply_force(this, &_force);
         }
+        #endregion
     }
+
+    #region native internal methods
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_physics_LiteRigidBody_apply_force(RigidBody self, NativeVector3* force);
+    #endregion
+
 
     public bool Equals(RigidBody other)
     {
@@ -55,6 +63,8 @@ public partial struct RigidBody : IEquatable<RigidBody>
         return !left.Equals(right);
     }
 }
+#region internal type wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct RigidBody_optional
@@ -166,3 +176,4 @@ internal struct RigidBody_optional_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

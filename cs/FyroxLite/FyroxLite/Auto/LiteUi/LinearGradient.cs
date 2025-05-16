@@ -14,17 +14,24 @@ namespace FyroxLite;
 public partial struct LinearGradient
 {
     public Vector2 From {
+        #region get/set with wrapping/unwrapping
         get => NativeVector2.ToFacade(_from);
         set => _from = NativeVector2.FromFacade(value);
+        #endregion
     }
     public Vector2 To {
+        #region get/set with wrapping/unwrapping
         get => NativeVector2.ToFacade(_to);
         set => _to = NativeVector2.FromFacade(value);
+        #endregion
     }
     public List<GradientPoint> Stops {
+        #region get/set with wrapping/unwrapping
         get => GradientPoint_slice.ToFacade(_stops);
         set => _stops = GradientPoint_slice.FromFacade(value);
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -33,7 +40,10 @@ public partial struct LinearGradient
     private NativeVector2 _from;
     private NativeVector2 _to;
     private GradientPoint_slice _stops;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct LinearGradient_optional
@@ -162,3 +172,4 @@ internal struct LinearGradient_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

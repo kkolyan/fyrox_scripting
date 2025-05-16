@@ -14,25 +14,36 @@ namespace FyroxLite;
 public partial struct RayCastOptions
 {
     public Vector3 RayOrigin {
+        #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_ray_origin);
         set => _ray_origin = NativeVector3.FromFacade(value);
+        #endregion
     }
     public Vector3 RayDirection {
+        #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_ray_direction);
         set => _ray_direction = NativeVector3.FromFacade(value);
+        #endregion
     }
     public float MaxLen {
+        #region trivial get/set
         get => _max_len;
         set => _max_len = value;
+        #endregion
     }
     public InteractionGroups? Groups {
+        #region get/set with wrapping/unwrapping
         get => InteractionGroups_optional.ToFacade(_groups);
         set => _groups = InteractionGroups_optional.FromFacade(value);
+        #endregion
     }
     public bool SortResults {
+        #region get/set with wrapping/unwrapping
         get => NativeBool.ToFacade(_sort_results);
         set => _sort_results = NativeBool.FromFacade(value);
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -43,7 +54,10 @@ public partial struct RayCastOptions
     private float _max_len;
     private InteractionGroups_optional _groups;
     private NativeBool _sort_results;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct RayCastOptions_optional
@@ -172,3 +186,4 @@ internal struct RayCastOptions_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

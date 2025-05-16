@@ -12,4 +12,11 @@ namespace FyroxLite;
 // fyrox_lite::lite_ui::LiteUiNode
 public static partial class UiNode
 {
+
+    #region native internal methods
+    #endregion
+
 }
+#region internal type wrappers
+
+#endregion

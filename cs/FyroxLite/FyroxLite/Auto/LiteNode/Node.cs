@@ -12,195 +12,239 @@ namespace FyroxLite;
 // fyrox_lite::lite_node::LiteNode
 public partial struct Node : IEquatable<Node>
 {
+    #region internal fields and constructor
     private readonly NativeHandle handle;
 
     internal Node(NativeHandle handle)
     {
         this.handle = handle;
     }
+    #endregion
 
     public RigidBody? AsRigidBody()
     {
+        #region native call
         unsafe {
             
             var __ret = fyrox_lite_lite_node_LiteNode_as_rigid_body(this);
             return RigidBody_optional_result.ToFacade(__ret);
         }
+        #endregion
     }
     public string Name
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_name(this);
                 return NativeString_result.ToFacade(__ret);
             }
+            #endregion
         }
     }
     public bool Alive
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_alive(this);
                 return NativeBool.ToFacade(__ret);
             }
+            #endregion
         }
     }
 
     public void Destroy()
     {
+        #region native call
         unsafe {
             
             fyrox_lite_lite_node_LiteNode_destroy(this);
         }
+        #endregion
     }
     public Vector3 GlobalPosition
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_global_position(this);
                 return NativeVector3.ToFacade(__ret);
             }
+            #endregion
         }
     }
     public Vector3 LocalPosition
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_local_position(this);
                 return NativeVector3.ToFacade(__ret);
             }
+            #endregion
         }
         set
         {
+            #region native call
             unsafe {
                 var _value = NativeVector3.FromFacade(value);
                 var __ret = fyrox_lite_lite_node_LiteNode_set_local_position(this, &_value);
                 void_result.ToFacade(__ret);
             }
+            #endregion
         }
     }
     public Quaternion LocalRotation
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_local_rotation(this);
                 return NativeQuaternion.ToFacade(__ret);
             }
+            #endregion
         }
         set
         {
+            #region native call
             unsafe {
                 var _value = NativeQuaternion.FromFacade(value);
                 var __ret = fyrox_lite_lite_node_LiteNode_set_local_rotation(this, &_value);
                 void_result.ToFacade(__ret);
             }
+            #endregion
         }
     }
 
     public void SendHierarchical(RoutingStrategy routing, object payload)
     {
+        #region native call
         unsafe {
             var _routing = routing;
             var _payload = UserScriptMessage.FromFacade(payload);
             fyrox_lite_lite_node_LiteNode_send_hierarchical(this, _routing, _payload);
         }
+        #endregion
     }
 
     public void SubscribeTo()
     {
+        #region native call
         unsafe {
             
             fyrox_lite_lite_node_LiteNode_subscribe_to(this);
         }
+        #endregion
     }
 
     public Node? FindColliderInChildren()
     {
+        #region native call
         unsafe {
             
             var __ret = fyrox_lite_lite_node_LiteNode_find_collider_in_children(this);
             return Node_optional.ToFacade(__ret);
         }
+        #endregion
     }
     public bool Valid
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_valid(this);
                 return NativeBool.ToFacade(__ret);
             }
+            #endregion
         }
     }
     public Node Parent
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_parent(this);
                 return __ret;
             }
+            #endregion
         }
     }
 
     public T AddScript<T>() where T : class
     {
+        #region native call
         unsafe {
             
             var __ret = fyrox_lite_lite_node_LiteNode_add_script(this, NativeClassId.By<T>.Resolve());
             return NativeInstanceId_result.ToFacade(__ret) as T;
         }
+        #endregion
     }
 
     public T? FindScript<T>() where T : class
     {
+        #region native call
         unsafe {
             
             var __ret = fyrox_lite_lite_node_LiteNode_find_script(this, NativeClassId.By<T>.Resolve());
             return NativeInstanceId_optional_result.ToFacade(__ret) as T;
         }
+        #endregion
     }
     public Quaternion GlobalRotation
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_global_rotation(this);
                 return NativeQuaternion.ToFacade(__ret);
             }
+            #endregion
         }
     }
 
     public bool TagIs(string tag)
     {
+        #region native call
         unsafe {
             var _tag = NativeString.FromFacade(tag);
             var __ret = fyrox_lite_lite_node_LiteNode_tag_is(this, _tag);
             return NativeBool.ToFacade(__ret);
         }
+        #endregion
     }
     public string Tag
     {
         get
         {
+            #region native call
             unsafe {
                 var __ret = fyrox_lite_lite_node_LiteNode_get_tag(this);
                 return NativeString.ToFacade(__ret);
             }
+            #endregion
         }
         set
         {
+            #region native call
             unsafe {
                 var _value = NativeString.FromFacade(value);
                 fyrox_lite_lite_node_LiteNode_set_tag(this, _value);
             }
+            #endregion
         }
     }
+
+    #region native internal methods
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial RigidBody_optional_result fyrox_lite_lite_node_LiteNode_as_rigid_body(Node self);
@@ -261,6 +305,8 @@ public partial struct Node : IEquatable<Node>
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial NativeString fyrox_lite_lite_node_LiteNode_get_tag(Node self);
+    #endregion
+
 
     public bool Equals(Node other)
     {
@@ -287,6 +333,8 @@ public partial struct Node : IEquatable<Node>
         return !left.Equals(right);
     }
 }
+#region internal type wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct Node_optional
@@ -398,3 +446,4 @@ internal struct Node_optional_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

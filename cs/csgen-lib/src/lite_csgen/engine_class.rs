@@ -25,7 +25,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
         }
     });
     let mut s = String::new();
- 
+
     if class.class_name.0 == "GlobalScript" {
         // do not want to expose "abstract" flag to domain model for the single possible case
         render(&mut s, r#"
@@ -36,7 +36,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
             ("class", &class.class_name),
             ("rust_path", &class.rust_struct_path),
         ]);
-    } 
+    }
     else if static_class {
         render(&mut s, r#"
             // ${rust_path}
@@ -51,12 +51,15 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
             // ${rust_path}
             public partial struct ${class} : IEquatable<${class}>
             {
+                #region internal fields and constructor
                 private readonly NativeHandle handle;
 
                 internal ${class}(NativeHandle handle)
                 {
                     this.handle = handle;
                 }
+                #endregion
+
             "#, [
             ("class", &class.class_name),
             ("rust_path", &class.rust_struct_path),
@@ -133,6 +136,8 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
         }
         generate_method(&mut s, class, method, ctx);
     }
+    s.push_str("\n
+    #region native internal methods");
     for method in class.methods.iter() {
         let native_input_params = method.signature.params.iter()
             .filter(|it| !matches!(&it.ty, DataType::UserScriptGenericStub))
@@ -157,6 +162,8 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
         ]);
         generate_rust_entry_point(rust, class, method, ctx);
     }
+    s.push_str("
+    #endregion\n");
 
     if !static_class {
         render(&mut s, r#"
@@ -192,11 +199,14 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
             }
         "#, []);
 
+    s.push_str("\n#region internal type wrappers\n");
+
     if !static_class {
         wrappers::generate_optional(&mut s, rust, &DataType::Object(class.class_name.clone()), ctx);
         wrappers::generate_result(&mut s, rust, &DataType::Object(class.class_name.clone()), ctx);
         wrappers::generate_result(&mut s, rust, &DataType::Option(Box::new(DataType::Object(class.class_name.clone()))), ctx);
     }
+    s.push_str("\n#endregion\n");
 
     Module::code(&class.class_name, s)
 }
@@ -230,10 +240,12 @@ fn generate_property(s: &mut String, class: &EngineClass, getter: Option<Getter>
         render(s, r#"
                     get
                     {
+                        #region native call
                         unsafe {
                             var __ret = ${rust_path_escaped}_get_${name}(${this});
                             return ${ret_expr};
                         }
+                        #endregion
                     }
                 "#, [
             ("ret_expr", &if ty_marshalling.is_mapped() { format!("{}.ToFacade(__ret)", ty_marshalling.to_blittable()) } else { "__ret".to_string() }),
@@ -251,6 +263,7 @@ fn generate_property(s: &mut String, class: &EngineClass, getter: Option<Getter>
         render(s, r#"
                     set
                     {
+                        #region native call
                         unsafe {
                             ${conversion};
                             ${ret_var}${rust_path_escaped}_set_${name}(${this}${deref}_value);
@@ -272,6 +285,7 @@ fn generate_property(s: &mut String, class: &EngineClass, getter: Option<Getter>
 
         render(s, r#"
                         }
+                        #endregion
                     }
             "#, []);
     }
@@ -324,11 +338,13 @@ fn generate_method(
 
                 public ${static}${return_ty} ${name}${generics}(${input_params})${generic_where}
                 {
+                    #region native call
                     unsafe {
                         ${converted_params}
                         var __ret = ${rust_path_escaped}_${rust_name}(${this}${output_params});
                         ${return}${ret_expr}${generic_cast};
                     }
+                    #endregion
                 }
             "#, [
             ("static", &if !method.instance { "static " } else { "" }),
@@ -351,10 +367,12 @@ fn generate_method(
 
                 public ${static}void ${name}${generics}(${input_params})
                 {
+                    #region native call
                     unsafe {
                         ${converted_params}
                         ${rust_path_escaped}_${rust_name}(${this}${output_params});
                     }
+                    #endregion
                 }
         "#, [
             ("static", &if !method.instance { "static " } else { "" }),

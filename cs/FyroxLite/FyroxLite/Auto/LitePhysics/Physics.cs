@@ -23,13 +23,22 @@ public static partial class Physics
 
     public static List<Intersection> CastRay(RayCastOptions opts)
     {
+        #region native call
         unsafe {
             var _opts = opts;
             var __ret = fyrox_lite_lite_physics_LitePhysics_cast_ray(&_opts);
             return Intersection_slice.ToFacade(__ret);
         }
+        #endregion
     }
+
+    #region native internal methods
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial Intersection_slice fyrox_lite_lite_physics_LitePhysics_cast_ray(RayCastOptions* opts);
+    #endregion
+
 }
+#region internal type wrappers
+
+#endregion

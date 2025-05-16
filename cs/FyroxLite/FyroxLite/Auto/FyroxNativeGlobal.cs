@@ -14,9 +14,11 @@ using FyroxLite;
 
 internal partial class FyroxNativeGlobal {
     
+    #region native internal method
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static partial void init_fyrox(NativeScriptedApp app);
+    #endregion
 
     internal delegate void_result NodeOnUpdate(NativeInstanceId thiz, float dt);
 

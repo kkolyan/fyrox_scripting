@@ -18,6 +18,8 @@ internal partial struct NativeQuaternion
     private float _k;
     private float _w;
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativeQuaternion_optional
@@ -146,3 +148,4 @@ internal struct NativeQuaternion_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

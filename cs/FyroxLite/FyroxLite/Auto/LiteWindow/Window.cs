@@ -16,13 +16,22 @@ public static partial class Window
     {
         set
         {
+            #region native call
             unsafe {
                 var _value = value;
                 fyrox_lite_lite_window_LiteWindow_set_cursor_grab(_value);
             }
+            #endregion
         }
     }
 
+    #region native internal methods
+
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_window_LiteWindow_set_cursor_grab(CursorGrabMode mode);
+    #endregion
+
 }
+#region internal type wrappers
+
+#endregion

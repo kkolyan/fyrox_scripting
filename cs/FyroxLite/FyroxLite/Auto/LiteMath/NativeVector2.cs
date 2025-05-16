@@ -16,6 +16,8 @@ internal partial struct NativeVector2
     private float _x;
     private float _y;
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativeVector2_optional
@@ -144,3 +146,4 @@ internal struct NativeVector2_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion

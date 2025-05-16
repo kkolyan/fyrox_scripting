@@ -13,22 +13,24 @@ use crate::lite_csgen::gen_rs::RustEmitter;
 pub(crate) fn generate_bindings(class: &StructClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {
     let mut s = String::new();
     let class_name = api_types::type_cs(&DataType::Object(class.class_name.clone())).to_blittable();
+    let is_implemented_externally = api_types::is_implemented_externally(&class.class_name);
     render(&mut s, r#"
             // ${rust_path}
             [StructLayout(LayoutKind.Sequential)]
             ${visibility} partial struct ${class}
             {
     "#, [
-        ("visibility", &if api_types::is_implemented_externally(&class.class_name) {"internal"} else {"public"}),
+        ("visibility", &if is_implemented_externally {"internal"} else {"public"}),
         ("class", &class_name),
         ("rust_path", &class.rust_struct_path)
     ]);
 
-    if !api_types::is_implemented_externally(&class.class_name) {
+    if !is_implemented_externally {
         for field in class.fields.iter() {
             generate_property(&mut s, class, field, ctx);
         }
         s += "
+            #region Native Fields
             //===============================================================
             // private fields for all properties (not only mapped),
             // because it makes ABI much more readable.
@@ -54,16 +56,24 @@ pub(crate) fn generate_bindings(class: &StructClass, ctx: &GenerationContext, ru
 
     rust.emit_statement(rs);
 
+    if !is_implemented_externally {
+
+        render(&mut s, r#"
+            #endregion
+            "#, []);
+    }
+
     render(&mut s, r#"
             }
             "#, []);
-
+    s.push_str("\n#region internal wrappers\n");
     wrappers::generate_optional(&mut s, rust, &DataType::Object(class.class_name.clone()), ctx);
 
     wrappers::generate_slice(&mut s, rust, &DataType::Object(class.class_name.clone()), ctx);
 
     wrappers::generate_result(&mut s, rust, &DataType::Object(class.class_name.clone()), ctx);
 
+    s.push_str("\n#endregion\n");
     Module::code(&class_name, s)
 }
 
@@ -75,8 +85,10 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
         CsType::Blittable(ty) => {
             render(s, r#"
                 public ${type} ${facade_name} {
+                    #region trivial get/set
                     get => ${private_name};
                     set => ${private_name} = value;
+                    #endregion
                 }
                 "#, [
                 ("type", &ty),
@@ -87,8 +99,10 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
         CsType::Mapped { facade, blittable, .. } => {
             render(s, r#"
                 public ${facade_ty} ${facade_name} {
+                    #region get/set with wrapping/unwrapping
                     get => ${blittable_ty}.ToFacade(${private_name});
                     set => ${private_name} = ${blittable_ty}.FromFacade(value);
+                    #endregion
                 }
                 "#, [
                 ("blittable_ty", &blittable),

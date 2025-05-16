@@ -14,17 +14,24 @@ namespace FyroxLite;
 public partial struct Brush
 {
     public Color? SolidColor {
+        #region get/set with wrapping/unwrapping
         get => NativeColor_optional.ToFacade(_solid_color);
         set => _solid_color = NativeColor_optional.FromFacade(value);
+        #endregion
     }
     public LinearGradient? LinearGradient {
+        #region get/set with wrapping/unwrapping
         get => LinearGradient_optional.ToFacade(_linear_gradient);
         set => _linear_gradient = LinearGradient_optional.FromFacade(value);
+        #endregion
     }
     public RadialGradient? RadialGradient {
+        #region get/set with wrapping/unwrapping
         get => RadialGradient_optional.ToFacade(_radial_gradient);
         set => _radial_gradient = RadialGradient_optional.FromFacade(value);
+        #endregion
     }
+#region Native Fields
 //===============================================================
 // private fields for all properties (not only mapped),
 // because it makes ABI much more readable.
@@ -33,7 +40,10 @@ public partial struct Brush
     private NativeColor_optional _solid_color;
     private LinearGradient_optional _linear_gradient;
     private RadialGradient_optional _radial_gradient;
+#endregion
 }
+#region internal wrappers
+
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct Brush_optional
@@ -162,3 +172,4 @@ internal struct Brush_result_value
     [FieldOffset(0)]
     internal NativeString err;
 }
+#endregion
