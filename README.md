@@ -1,6 +1,6 @@
 - [Overview](#overview)
 - [Demo](#demo)
-- [For users (who make Games)](#for-users-who-make-games)
+- [User guide](#user-guide)
 	- [Vision](#vision)
 	- [Current state](#current-state)
 	- [How to use it now](#how-to-use-it-now)
@@ -23,7 +23,8 @@ There is a game that written in different scripting languages to demonstrate the
 * [the same demo game in C#](cs/examples/Guards)
 * [the same demo reference implementation in Rust (without Lite API)](https://github.com/kkolyan/fyrox_guards)
 
-## For users (who make Games)
+## User Guide
+User interaction is in progress now, so there is no guide as such.
 
 ### Vision
 When this project is released, this is how games should be made:
