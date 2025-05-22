@@ -1,4 +1,7 @@
 //! Editor with your game connected to it as a plugin.
+
+use std::ffi::{c_char, CStr};
+use std::path::PathBuf;
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyroxed_base::fyrox::event_loop::EventLoop;
@@ -6,11 +9,13 @@ use fyroxed_base::Editor;
 use fyroxed_base::StartupData;
 
 #[no_mangle]
-pub extern "C" fn fyrox_lite_editor_run() {
+pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char) {
     Log::set_verbosity(MessageKind::Information);
+    let working_dir = CStr::from_ptr(working_dir).to_str().expect("failed to parse working directory argument");
     let event_loop = EventLoop::new().unwrap();
+    println!("Using working dir: {}", working_dir);
     let mut editor = Editor::new(Some(StartupData {
-        working_directory: Default::default(),
+        working_directory: PathBuf::from(working_dir),
         scenes: vec!["data/scene.rgs".into()],
     }));
 

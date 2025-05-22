@@ -12,19 +12,19 @@ public partial class FyroxExecutor
     
     [LibraryImport("fyroxed_c", EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
-    private static partial void RunEditorInternal();
+    private static partial void RunEditorInternal(IntPtr workingDirectory);
 
     public static void RunPlayer()
     {
         Run(editor: false);
     }
 
-    public static void RunEditor()
+    public static void RunEditor(string editorWorkingDir)
     {
-        Run(editor: true);
+        Run(editor: true, editorWorkingDir: editorWorkingDir);
     }
 
-    private static void Run(bool editor) {
+    private static void Run(bool editor, string? editorWorkingDir = null) {
         /*
         necessary to avoid following crash on Windows:
         thread 'main' panicked at 'OleInitialize failed! Result was: `RPC_E_CHANGED_MODE`.
@@ -33,7 +33,7 @@ public partial class FyroxExecutor
         Actually, this can be solved by `[STAThread]` over the Main method, but that's on user side, so let's keep user from such crucial things.
         */
 
-        var thread = new Thread(() => RunSTA(editor: editor));
+        var thread = new Thread(() => RunSTA(editor: editor, editorWorkingDir: editorWorkingDir));
         if (OperatingSystem.IsWindows()){
             thread.SetApartmentState(ApartmentState.STA);
         }
@@ -41,7 +41,7 @@ public partial class FyroxExecutor
         thread.Join();
     }
 
-    private static void RunSTA(bool editor)
+    private static void RunSTA(bool editor, string? editorWorkingDir)
     {
         ObjectRegistry.InitThread();
         NativeClassId.InitThread();
@@ -49,7 +49,7 @@ public partial class FyroxExecutor
 
         if (editor)
         {
-            foreach (var file in Directory.GetFiles("obj\\Debug\\net8.0"))
+            foreach (var file in Directory.GetFiles(editorWorkingDir + "\\obj\\Debug\\net8.0"))
             {
                 if (file.ToLower().EndsWith(".dll"))
                 {
@@ -115,7 +115,11 @@ public partial class FyroxExecutor
 
         if (editor)
         {
-            RunEditorInternal();
+            var fullPath = Path.GetFullPath(editorWorkingDir);
+            Console.WriteLine($"Working directory: {fullPath}");
+            var workingDirCString = Marshal.StringToHGlobalAnsi(fullPath);
+            RunEditorInternal(workingDirCString);
+            Marshal.FreeHGlobal(workingDirCString);
         }
         else
         {

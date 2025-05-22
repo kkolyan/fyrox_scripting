@@ -33,8 +33,4 @@ cp target/debug/fyroxed_c.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 cp target/debug/deps/fyrox_dylib*.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 ./get_rust_std.sh cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 
-# Return to game folder
-
-cd cs/examples/Guards
-
-RUST_BACKTRACE=1 ../../../cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.exe
+RUST_BACKTRACE=1 cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.exe cs/examples/Guards
