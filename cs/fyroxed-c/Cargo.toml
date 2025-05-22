@@ -10,3 +10,4 @@ crate-type = ["cdylib"]
 fyroxed_base = { workspace = true, features = ["dylib_engine"], default-features = false }
 fyrox = { workspace = true, features = ["dylib"], default-features = false }
 fyrox-c-loader = { workspace = true }
+native-dialog = "0.9.0"

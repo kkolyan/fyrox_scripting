@@ -9,22 +9,13 @@ public partial class FyroxExecutor
     [LibraryImport("fyrox_c", EntryPoint = "fyrox_lite_executor_run",
         SetLastError = true)]
     private static partial void RunInternal();
-    
+
     [LibraryImport("fyroxed_c", EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
     private static partial void RunEditorInternal(IntPtr workingDirectory);
 
     public static void RunPlayer()
     {
-        Run(editor: false);
-    }
-
-    public static void RunEditor(string editorWorkingDir)
-    {
-        Run(editor: true, editorWorkingDir: editorWorkingDir);
-    }
-
-    private static void Run(bool editor, string? editorWorkingDir = null) {
         /*
         necessary to avoid following crash on Windows:
         thread 'main' panicked at 'OleInitialize failed! Result was: `RPC_E_CHANGED_MODE`.
@@ -33,15 +24,22 @@ public partial class FyroxExecutor
         Actually, this can be solved by `[STAThread]` over the Main method, but that's on user side, so let's keep user from such crucial things.
         */
 
-        var thread = new Thread(() => RunSTA(editor: editor, editorWorkingDir: editorWorkingDir));
-        if (OperatingSystem.IsWindows()){
+        var thread = new Thread(() => Run(editor: false, editorWorkingDir: null));
+        if (OperatingSystem.IsWindows())
+        {
             thread.SetApartmentState(ApartmentState.STA);
         }
+
         thread.Start();
         thread.Join();
     }
 
-    private static void RunSTA(bool editor, string? editorWorkingDir)
+    public static void RunEditor(string? editorWorkingDir)
+    {
+        Run(editor: true, editorWorkingDir: editorWorkingDir);
+    }
+
+    private static void Run(bool editor, string? editorWorkingDir)
     {
         ObjectRegistry.InitThread();
         NativeClassId.InitThread();
@@ -49,17 +47,21 @@ public partial class FyroxExecutor
 
         if (editor)
         {
-            foreach (var file in Directory.GetFiles(editorWorkingDir + "\\obj\\Debug\\net8.0"))
+            var binDir = $@"{editorWorkingDir}\bin\Debug\net8.0";
+            if (Path.Exists(binDir))
             {
-                if (file.ToLower().EndsWith(".dll"))
+                foreach (var file in Directory.GetFiles(binDir))
                 {
-                    var fullPath = Path.GetFullPath(file);
-                    Console.WriteLine($"Loading game scripts assembly file: {fullPath}");
-                    Assembly.LoadFile(fullPath);
+                    if (file.ToLower().EndsWith(".dll"))
+                    {
+                        var fullPath = Path.GetFullPath(file);
+                        Console.WriteLine($"Loading game scripts assembly file: {fullPath}");
+                        Assembly.LoadFile(fullPath);
+                    }
                 }
             }
         }
-        
+
         List<NativeScriptMetadata> scripts = new();
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
         {
@@ -74,14 +76,14 @@ public partial class FyroxExecutor
                 if (type.IsAssignableTo(typeof(GlobalScript)))
                 {
                     Console.WriteLine($"registering global script {type.FullName}");
-                    
+
                     RegisterScript(type, scripts, Guid.NewGuid(), NativeScriptKind.Global);
                 }
 
                 if (type.IsAssignableTo(typeof(NodeScript)))
                 {
                     Console.WriteLine($"registering node script {type.FullName}");
-                    
+
                     var uuidAttr = type.GetCustomAttribute<UuidAttribute>();
                     if (uuidAttr == null)
                     {
@@ -92,6 +94,7 @@ public partial class FyroxExecutor
                 }
             }
         }
+
         Console.WriteLine("initializing callbacks");
 
         FyroxNativeGlobal.init_fyrox(new NativeScriptedApp
@@ -135,13 +138,15 @@ public partial class FyroxExecutor
         var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
         foreach (var field in fieldInfos)
         {
-            var hideInInspector = kind == NativeScriptKind.Global || field.GetCustomAttribute<HideInInspectorAttribute>() != null;
+            var hideInInspector = kind == NativeScriptKind.Global ||
+                                  field.GetCustomAttribute<HideInInspectorAttribute>() != null;
             var transient = field.GetCustomAttribute<TransientAttribute>() != null;
 //            Console.WriteLine($"registering property {field.Name}. transient: {transient}, hidden: {hideInInspector}");
             if (hideInInspector && transient)
             {
                 continue;
             }
+
             var (fieldType, fieldSetter) = ExtractFieldType(field);
             properties.Add(new NativeScriptProperty
             {
@@ -153,7 +158,7 @@ public partial class FyroxExecutor
             });
             propertySetters.Add(field.Name, (fieldType, (o, value) => fieldSetter(o, field, value)));
         }
-                    
+
         PropertySetters.Register(type, propertySetters);
 
         var metadata = new NativeScriptMetadata

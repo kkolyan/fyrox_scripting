@@ -1,12 +1,32 @@
 //! Editor with your game connected to it as a plugin.
 
-use std::ffi::{c_char, CStr};
+use std::ffi::{c_char, CStr, CString};
 use std::path::PathBuf;
+use std::str::FromStr;
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyroxed_base::fyrox::event_loop::EventLoop;
 use fyroxed_base::Editor;
 use fyroxed_base::StartupData;
+use native_dialog::DialogBuilder;
+
+#[no_mangle]
+pub extern "C" fn ask_user_for_project_directory() -> *const u8 {
+    let result = DialogBuilder::file()
+        .set_title("Fyrox Editor with C# scripting: choose project directory")
+        .open_single_dir()
+        .show();
+
+    let path = result.unwrap();
+    let Some(path) = path else {
+        return std::ptr::null();
+    };
+    CString::from_str(path.to_str().unwrap()).unwrap()
+        .as_bytes_with_nul()
+        .to_vec()
+        .leak()
+        .as_ptr()
+}
 
 #[no_mangle]
 pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char) {
