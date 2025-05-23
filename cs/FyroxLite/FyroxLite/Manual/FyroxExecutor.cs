@@ -54,6 +54,19 @@ public partial class FyroxExecutor
                 {
                     if (file.ToLower().EndsWith(".dll"))
                     {
+                        var name = Path.GetFileName(file);
+                        if (name == "fyrox_c.dll")
+                        {
+                            continue;
+                        }
+                        if (name.StartsWith("fyrox_dylib-"))
+                        {
+                            continue;
+                        }
+                        if (name.StartsWith("std-"))
+                        {
+                            continue;
+                        }
                         var fullPath = Path.GetFullPath(file);
                         Console.WriteLine($"Loading game scripts assembly file: {fullPath}");
                         Assembly.LoadFile(fullPath);

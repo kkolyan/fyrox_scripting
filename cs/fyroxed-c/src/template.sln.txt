@@ -1,0 +1,15 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{$solution_uuid}") = "${project_name}", "${project_name}.csproj", "{${project_uuid}}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{${project_uuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{${project_uuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{${project_uuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{${project_uuid}}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
