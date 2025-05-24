@@ -38,6 +38,12 @@ internal partial struct NativeClassId : IEquatable<NativeClassId>
         _byId ??= new Dictionary<NativeClassId, Type>();
     }
 
+    public static void Clear()
+    {
+        _byType.Clear();
+        _byId.Clear();
+    }
+
     internal static void Register(Type type, NativeClassId id)
     {
         _byType.GetInRightThread()[type] = id;

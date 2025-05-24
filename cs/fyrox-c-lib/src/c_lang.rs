@@ -45,7 +45,7 @@ impl Lang for CCompatibleLang {
         let uuid = uuid_of_script(script);
         APP.with_borrow(|app| {
             let app = app.as_ref().unwrap();
-            let metadata = app.scripts.get(&uuid).unwrap();
+            let metadata = app.scripts_metadata.as_ref().unwrap().scripts.get(&uuid).unwrap();
             let mut state = Vec::new();
 
             for (i, prop) in metadata.md.fields.iter().enumerate() {

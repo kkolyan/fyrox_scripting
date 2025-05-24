@@ -1,10 +1,14 @@
+use std::ffi::{c_char, CString};
+use std::path::PathBuf;
+use std::ptr::null;
+use std::str::FromStr;
 use fyrox::plugin::{DynamicPlugin, Plugin};
 
-type CPluginEntryPoint = fn(hot_reload_enabled: bool) -> Box<dyn DynamicPlugin>;
+type CPluginEntryPoint = fn(reloadable_assembly_path: *const c_char) -> Box<dyn DynamicPlugin>;
 
 pub struct DynamicPluginProxy(Box<dyn DynamicPlugin>);
 
-pub fn fyrox_c_plugin(hot_reload_enabled: bool) -> DynamicPluginProxy {
+pub fn fyrox_c_plugin(reloadable_assembly_path: Option<PathBuf>) -> DynamicPluginProxy {
 
     #[cfg(target_os = "windows")]
     let file_name = "fyrox_c.dll";
@@ -20,7 +24,14 @@ pub fn fyrox_c_plugin(hot_reload_enabled: bool) -> DynamicPluginProxy {
         let entry = lib
             .get::<CPluginEntryPoint>("fyrox_c_plugin".as_bytes())
             .map_err(|e| e.to_string()).unwrap();
-        DynamicPluginProxy(entry(hot_reload_enabled))
+        match reloadable_assembly_path {
+            None => DynamicPluginProxy(entry(null())),
+            Some(reloadable_assembly_path) => {
+                let path = reloadable_assembly_path.to_str().unwrap();
+                let path = CString::from_str(path).unwrap();
+                DynamicPluginProxy(entry(path.as_ptr()))
+            }
+        }
     }
 }
 
@@ -43,6 +54,10 @@ impl DynamicPlugin for DynamicPluginProxy {
 
     fn is_loaded(&self) -> bool {
         self.0.is_loaded()
+    }
+    
+    fn prepare_to_reload(&mut self) {
+        self.0.prepare_to_reload()
     }
 
     fn reload(&mut self, fill_and_register: &mut dyn FnMut(&mut dyn Plugin) -> Result<(), String>) -> Result<(), String> {

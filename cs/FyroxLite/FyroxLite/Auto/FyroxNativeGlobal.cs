@@ -17,8 +17,12 @@ internal partial class FyroxNativeGlobal {
     #region native internal method
 
     [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
-    internal static partial void init_fyrox(NativeScriptedApp app);
+    internal static partial void init_fyrox(NativeScriptAppFunctions app);
     #endregion
+
+    internal delegate NativeString_optional GetScriptsAssemblyPath();
+
+    internal delegate NativeScriptMetadata_slice GetScriptsMetadata();
 
     internal delegate void_result NodeOnUpdate(NativeInstanceId thiz, float dt);
 

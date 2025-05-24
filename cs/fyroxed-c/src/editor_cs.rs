@@ -45,8 +45,8 @@ pub extern "C" fn ask_user_for_project_directory() -> *const u8 {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char) {
-    Log::set_verbosity(MessageKind::Information);
+pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assembly_path: *const c_char) {
+    Log::set_verbosity(MessageKind::Warning);
     let working_dir = CStr::from_ptr(working_dir).to_str().expect("failed to parse working directory argument");
     let event_loop = EventLoop::new().unwrap();
     println!("Using working dir: {}", working_dir);
@@ -57,7 +57,7 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char) {
     };
     let _ = open::that(solution_file);
     let mut editor = Editor::new(Some(StartupData {
-        working_directory: working_dir,
+        working_directory: working_dir.clone(),
         scenes: vec!["data/scene.rgs".into()],
     }));
 
@@ -76,12 +76,13 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char) {
     // Static linking.
     #[cfg(not(feature = "dylib"))]
     {
-        let plugin = fyrox_c_loader::fyrox_c_plugin(true);
+        let assembly_path = CStr::from_ptr(assembly_path).to_str().unwrap();
+        let plugin = fyrox_c_loader::fyrox_c_plugin(Some(assembly_path.into()));
         if let Err(err) = editor.add_dynamic_plugin_custom(plugin) {
             Log::err(err);
         }
 
-        // editor.add_editor_plugin(LuaPluginRefreshOnFocus);
+        // editor.add_editor_plugin(CSharpPluginRefreshOnFocus);
     }
 
     editor.run(event_loop)
@@ -125,14 +126,14 @@ fn ensure_project_files(working_dir: &Path) -> Option<PathBuf> {
     Some(sln_path.into())
 }
 // #[cfg(not(feature = "dylib"))]
-// struct LuaPluginRefreshOnFocus;
-
+// struct CSharpPluginRefreshOnFocus;
+// 
 // #[cfg(not(feature = "dylib"))]
-// impl EditorPlugin for LuaPluginRefreshOnFocus {
-//
+// impl EditorPlugin for CSharpPluginRefreshOnFocus {
+// 
 //     fn on_resumed(&mut self, #[allow(unused_variables)] editor: &mut Editor) {
 //         for it in editor.engine.plugins_mut() {
-//             if let Some(it) = it.cast_mut::<fyrox_lua::LuaPlugin>() {
+//             if let Some(it) = it.cast_mut::<CPlugin>() {
 //                 it.check_for_script_changes();
 //             }
 //         }

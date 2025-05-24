@@ -29,6 +29,10 @@ internal static class PropertySetters
     {
         _byType ??= new Dictionary<Type, Dictionary<string, (NativeValueType, SetPropertyDelegate)>?>();   
     }
+    public static void Clear()
+    {
+        _byType.Clear();
+    }
 
     internal static void Register(Type type, Dictionary<string, (NativeValueType, SetPropertyDelegate)> propertySetters)
     {

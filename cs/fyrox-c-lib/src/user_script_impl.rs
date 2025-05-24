@@ -55,8 +55,9 @@ impl UserScript for UnpackedObject {
     fn new_instance(node: Handle<Node>, class: &Self::ClassId) -> Result<Self, Self::LangSpecificError> {
         APP.with_borrow(|it| {
             let app = it.as_ref().unwrap();
-            let uuid = app.uuid_by_class.get(class).unwrap();
-            let md = app.scripts.get(uuid).unwrap();
+            let scripts_metadata = app.scripts_metadata.as_ref().unwrap();
+            let uuid = scripts_metadata.uuid_by_class.get(class).unwrap();
+            let md = scripts_metadata.scripts.get(uuid).unwrap();
             let instance_id = (app.functions.create_script_instance)(md.id, Default::default(), Some(node.into()).into()).into_result_shallow()?;
             Ok(UnpackedObject {
                 uuid: *uuid,
@@ -96,8 +97,9 @@ impl ClassId for NativeClassId {
     fn lookup_class_name(&self) -> String {
         APP.with_borrow(|app| {
             let app = app.as_ref().unwrap();
-            let uuid = app.uuid_by_class.get(self).unwrap();
-            let x = app.scripts.get(uuid).unwrap();
+            let scripts_metadata = app.scripts_metadata.as_ref().unwrap();
+            let uuid = scripts_metadata.uuid_by_class.get(self).unwrap();
+            let x = scripts_metadata.scripts.get(uuid).unwrap();
             x.md.class.clone()
         })
     }

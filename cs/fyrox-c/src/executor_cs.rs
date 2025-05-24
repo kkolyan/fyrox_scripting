@@ -1,4 +1,7 @@
 //! Executor with your game connected to it as a plugin.
+
+use std::ffi::{c_char, CStr};
+use std::path::PathBuf;
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyrox::dpi::LogicalSize;
@@ -8,11 +11,6 @@ use fyrox::event_loop::EventLoop;
 use fyrox::plugin::DynamicPlugin;
 use fyrox::window::WindowAttributes;
 use fyrox_c_lib::fyrox_c_plugin::CPlugin;
-
-#[no_mangle]
-pub fn fyrox_c_plugin(hot_reload_enabled: bool) -> Box<dyn DynamicPlugin> {
-    Box::new(CPlugin::with_hot_reload(hot_reload_enabled))
-}
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_executor_run() {
@@ -58,7 +56,7 @@ pub extern "C" fn fyrox_lite_executor_run() {
     // Static linking.
     #[cfg(not(feature = "dylib"))]
     {
-        executor.add_dynamic_plugin_custom(CPlugin::with_hot_reload(false));
+        executor.add_dynamic_plugin_custom(CPlugin::new(None));
     }
 
     executor.run()

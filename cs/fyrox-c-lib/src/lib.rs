@@ -16,6 +16,7 @@ mod utils;
 mod auto_dispose;
 
 mod internal_auto;
+mod lazy_watcher;
 
 pub(crate) use arena::Arena;
 use crate::bindings_manual::UserScriptMessage;

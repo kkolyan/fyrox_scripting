@@ -12,6 +12,5 @@ namespace FyroxLite;
 
 [StructLayout(LayoutKind.Sequential)]
 internal unsafe partial struct NativeScriptedApp {
-    internal NativeScriptMetadata_slice scripts;
     internal NativeScriptAppFunctions functions;
 }

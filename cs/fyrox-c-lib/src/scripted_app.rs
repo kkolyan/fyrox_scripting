@@ -28,14 +28,29 @@ pub struct CScriptMetadata {
 }
 
 pub struct ScriptedApp {
-    pub scripts: HashMap<Uuid, CScriptMetadata>,
-    pub uuid_by_class: HashMap<NativeClassId, Uuid>,
+    pub scripts_metadata: Option<ScriptsMetadata>,
     pub functions: NativeScriptAppFunctions,
 }
 
+
+pub struct ScriptsMetadata {
+    pub scripts: HashMap<Uuid, CScriptMetadata>,
+    pub uuid_by_class: HashMap<NativeClassId, Uuid>,
+}
+
+
 impl ScriptedApp {
-    pub fn from_native(app: NativeScriptedApp) -> Self {
-        let scripts: Vec<_> = app.scripts.into();
+    pub fn from_functions(functions: NativeScriptAppFunctions) -> Self {
+        ScriptedApp {
+            scripts_metadata: None,
+            functions,
+        }
+    }
+
+    pub fn load_scripts_metadata(&mut self) {
+        let scripts = (self.functions.get_scripts_metadata)();
+
+        let scripts: Vec<_> = scripts.into();
         let scripts: HashMap<Uuid, CScriptMetadata> = scripts.into_iter()
             .map(|native_class| {
                 let uuid = Uuid::parse_str(String::from(native_class.uuid).as_str()).unwrap();
@@ -57,11 +72,8 @@ impl ScriptedApp {
         let uuid_by_class = scripts.iter()
             .map(|(uuid, md)| (md.id, *uuid))
             .collect();
-        ScriptedApp {
-            uuid_by_class,
-            scripts,
-            functions: app.functions,
-        }
+
+        self.scripts_metadata = Some(ScriptsMetadata { scripts, uuid_by_class });
     }
 }
 

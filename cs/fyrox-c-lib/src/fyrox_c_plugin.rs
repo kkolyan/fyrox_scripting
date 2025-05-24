@@ -1,5 +1,10 @@
+use crate::arena::Arena;
+use crate::auto_dispose::AutoDispose;
+use crate::c_lang::UnpackedObject;
+use crate::errors::ResultTcrateLangSpecificErrorExt;
 use crate::external_script_proxy::invoke_callback;
 use crate::external_script_proxy::ExternalScriptProxy;
+use crate::lazy_watcher::LazyWatcher;
 use crate::scripted_app::APP;
 use fyrox::core::log::Log;
 use fyrox::core::notify::EventKind;
@@ -14,23 +19,18 @@ use fyrox::plugin::Plugin;
 use fyrox::plugin::PluginContext;
 use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::constructor::ScriptConstructor;
-use fyrox::script::PluginsRefMut;
 use fyrox::script::Script;
-use fyrox::walkdir::WalkDir;
+use fyrox_lite::lite_input::Input;
 use fyrox_lite::script_metadata::{ScriptDefinition, ScriptKind};
 use fyrox_lite::script_object::ScriptObject;
 use fyrox_lite::script_object_residence::ScriptResidence;
 use fyrox_lite::wrapper_reflect;
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::fmt::Debug;
-use std::slice::{from_raw_parts, from_raw_parts_mut};
+use std::ops::DerefMut;
+use std::path::PathBuf;
 use std::sync::Arc;
-use fyrox_lite::lite_input::Input;
-use crate::arena::Arena;
-use crate::internal_auto::{i32_result, i32_result_value};
-use crate::c_lang::{ UnpackedObject};
-use crate::errors::ResultTcrateLangSpecificErrorExt;
-use crate::auto_dispose::{AutoDispose};
+use std::time::Duration;
 
 #[derive(Visit, Reflect)]
 pub struct CPlugin {
@@ -40,11 +40,7 @@ pub struct CPlugin {
 
     #[visit(skip)]
     #[reflect(hidden)]
-    pub scripts_dir: String,
-
-    #[visit(skip)]
-    #[reflect(hidden)]
-    pub need_reload: bool,
+    pub need_reload: Cell<bool>,
 
     pub scripts: RefCell<PluginScriptList>,
 
@@ -55,7 +51,7 @@ pub struct CPlugin {
 
 pub enum HotReload {
     Disabled,
-    Enabled { watcher: FileSystemWatcher },
+    Enabled { watcher: RefCell<LazyWatcher> },
 }
 
 impl Debug for CPlugin {
@@ -68,51 +64,79 @@ impl Debug for CPlugin {
 }
 
 impl CPlugin {
-    pub fn with_hot_reload(hot_reload_enabled: bool) -> Self {
-        Self::new("scripts", hot_reload_enabled)
-    }
-
-    pub fn new(scripts_dir: &str, hot_reload_enabled: bool) -> Self {
+    pub fn new(reloadable_assembly_path: Option<PathBuf>) -> Self {
         Self {
             failed: false,
-            scripts_dir: scripts_dir.to_string(),
-            need_reload: false,
+            need_reload: Default::default(),
             scripts: RefCell::new(Default::default()),
-            hot_reload: HotReload::Disabled,
+            hot_reload: reloadable_assembly_path
+                .map(|path| {
+                    println!("trying to initialize watcher for file: {}", path.to_str().unwrap());
+                    HotReload::Enabled {
+                        watcher: RefCell::new(LazyWatcher::TryingToInitialize {
+                            path,
+                            duration: Duration::from_millis(500),
+                        })
+                    }
+                })
+                .unwrap_or(HotReload::Disabled),
         }
     }
 
     pub fn check_for_script_changes(&mut self) {
+        todo!()
+    }
+
+    pub fn is_candidate_for_reload(&self) -> bool {
         let HotReload::Enabled { watcher } = &self.hot_reload else {
-            return;
+            return false;
+        };
+        let mut watcher = watcher.borrow_mut();
+        let watcher = watcher.deref_mut();
+        if let LazyWatcher::TryingToInitialize { path, duration } = watcher {
+            let w = FileSystemWatcher::new(&path, *duration);
+            if let Ok(w) = w {
+                println!("assembly file detected, creating watcher: {}", path.to_str().unwrap());
+                *watcher = LazyWatcher::Initialized(w);
+                return true;
+            } else {
+                println!("failed to initialize watcher: {:?}", w.err().unwrap());
+            }
+            return false;
+        }
+        let LazyWatcher::Initialized(watcher) = watcher else {
+            return false;
         };
         let mut reload = false;
         while let Some(event) = watcher.try_get_event() {
             Log::info(format!("FS watcher event: {event:?}"));
             match &event.kind {
                 EventKind::Create(_) | EventKind::Modify(_) | EventKind::Remove(_) => {
+                    println!("assembly file change detected");
                     reload = true;
                 }
                 _ => {}
             }
         }
-        if reload {
-            self.need_reload = true;
-        }
+        reload
     }
 }
 
 impl Default for CPlugin {
     fn default() -> Self {
-        Self::new("scripts", true)
+        todo!()
     }
 }
 
 impl Plugin for CPlugin {
     fn register(&self, context: PluginRegistrationContext) {
+        APP.with_borrow_mut(|app| {
+            let app = app.as_mut().unwrap();
+            app.load_scripts_metadata();
+        });
         APP.with_borrow(|app| {
             let app = app.as_ref().unwrap();
-            for md in app.scripts.values() {
+            for md in app.scripts_metadata.as_ref().unwrap().scripts.values() {
                 let def = Arc::new(ScriptDefinition {
                     metadata: md.md.clone(),
                     assembly_name: self.assembly_name(),
@@ -161,7 +185,6 @@ impl Plugin for CPlugin {
                 }
             }
         });
-        for entry in WalkDir::new(&self.scripts_dir).into_iter().flatten() {}
     }
 
     fn init(&mut self, scene_path: Option<&str>, mut context: PluginContext) {
@@ -243,11 +266,14 @@ impl Reflect for PluginScriptList {
 
 impl DynamicPlugin for CPlugin {
     fn display_name(&self) -> String {
-        format!("Lua Plugin (scripts path: {})", self.scripts_dir)
+        format!("C# Plugin")
     }
 
     fn is_reload_needed_now(&self) -> bool {
-        self.need_reload
+        if !self.need_reload.get() {
+            self.need_reload.set(self.is_candidate_for_reload());
+        }
+        self.need_reload.get()
     }
 
     fn as_loaded_ref(&self) -> &dyn Plugin {
@@ -263,17 +289,15 @@ impl DynamicPlugin for CPlugin {
     }
 
     fn prepare_to_reload(&mut self) {
-        self.need_reload = false;
-        Log::info(format!("reloading external C-compatible scripts"));
+        self.need_reload.set(false);
     }
 
     fn reload(
         &mut self,
         fill_and_register: &mut dyn FnMut(&mut dyn Plugin) -> Result<(), String>,
     ) -> Result<(), String> {
+        Log::info("Reloading C# scripts");
         self.scripts.borrow_mut().inner_mut().clear();
-        let result = fill_and_register(self);
-
-        result
+        fill_and_register(self)
     }
 }

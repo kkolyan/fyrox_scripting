@@ -11,8 +11,8 @@ use crate::auto_dispose::DisposableHandle;
 
 #[no_mangle]
 ///@owner_class FyroxCApi
-pub extern "C" fn init_fyrox(app: NativeScriptedApp) {
-    APP.set(Some(ScriptedApp::from_native(app)));
+pub extern "C" fn init_fyrox(app: NativeScriptAppFunctions) {
+    APP.set(Some(ScriptedApp::from_functions(app)));
 }
 
 /// identifier of some entity allocated on scripting side and managed by scripting engine.
@@ -219,13 +219,14 @@ pub enum NativeScriptKind {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct NativeScriptedApp {
-    pub scripts: NativeScriptMetadata_slice,
     pub functions: NativeScriptAppFunctions,
 }
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
 pub struct NativeScriptAppFunctions {
+    pub get_scripts_assembly_path: GetScriptsAssemblyPath,
+    pub get_scripts_metadata: GetScriptsMetadata,
     pub on_init: NodeOnInit,
     pub on_start: NodeOnStart,
     pub on_deinit: NodeOnDeinit,
@@ -252,6 +253,8 @@ impl DisposableHandle for UserScriptMessage {
     }
 }
 
+pub type GetScriptsAssemblyPath = extern "C" fn() -> NativeString_optional;
+pub type GetScriptsMetadata = extern "C" fn() -> NativeScriptMetadata_slice;
 pub type NodeOnUpdate = extern "C" fn(thiz: NativeInstanceId, dt: f32) -> Unit_result;
 pub type NodeOnInit = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;
 pub type NodeOnDeinit = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;
