@@ -9,8 +9,8 @@
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="FyroxLite">
-            <HintPath>${editor_installation_path}/FyroxLite.dll</HintPath>
+        <Reference Include="FyroxLiteCs">
+            <HintPath>${editor_installation_path}/FyroxLiteCs.dll</HintPath>
             <Private>True</Private>
         </Reference>
         <Content Include="${editor_installation_path}/std-*.dll">

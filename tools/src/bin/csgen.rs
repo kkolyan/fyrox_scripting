@@ -15,7 +15,7 @@ fn main() {
     facade_cs.mods.extend(internal_cs.mods);
     facade_cs.mods.extend(manuals.mods);
 
-    csgen_lib::lite_csgen::write_cs::write_cs("cs/FyroxLite/FyroxLite/Auto", facade_cs);
+    csgen_lib::lite_csgen::write_cs::write_cs("cs/FyroxLiteCs/FyroxLiteCs/Auto", facade_cs);
     write_rs_to_file("cs/fyrox-lite-cs-lib/src/bindings_lite_2.rs", facade_rs);
     write_rs_to_file("cs/fyrox-lite-cs-lib/src/internal_auto.rs", internal_rs);
 

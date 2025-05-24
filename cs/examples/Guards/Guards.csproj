@@ -9,8 +9,8 @@
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="FyroxLite">
-            <HintPath>$(ProjectDir)/../../FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll</HintPath>
+        <Reference Include="FyroxLiteCs">
+            <HintPath>$(ProjectDir)/../../FyroxLiteCs/FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs.dll</HintPath>
             <Private>True</Private>
         </Reference>
     </ItemGroup>

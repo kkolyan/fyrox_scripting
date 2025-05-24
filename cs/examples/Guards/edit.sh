@@ -7,30 +7,30 @@ set -e
 cd ../../..
 
 # cleanup to detect regression asap
-rm -rf cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/*.dll
-rm -rf cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/*.exe
-rm -rf cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/*.runtimeconfig.json
+rm -rf cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/*.dll
+rm -rf cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/*.exe
+rm -rf cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/*.runtimeconfig.json
 
 # build C# parts of Fyrox Lite
 
-cd cs/FyroxLite
+cd cs/FyroxLiteCs
 dotnet build
 cd ../..
-cp cs/FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp cs/FyroxLiteCs/FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 
 # build the C# game code
 
 cd cs/examples/Guards
 dotnet build
 cd ../../..
-cp cs/examples/Guards/bin/Debug/net8.0/FyroxLite.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp cs/examples/Guards/bin/Debug/net8.0/FyroxLiteCs.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 
 # build Rust parts of Fyrox Lite
 
 RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-lite-cs -p fyroxed-cs
-cp target/debug/fyrox_lite_cs.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
-cp target/debug/fyroxed_cs.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
-cp target/debug/deps/fyrox_dylib*.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
-./get_rust_std.sh cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp target/debug/fyrox_lite_cs.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cp target/debug/fyroxed_cs.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cp target/debug/deps/fyrox_dylib*.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+./get_rust_std.sh cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 
-RUST_BACKTRACE=1 cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/FyroxLiteEditor.exe cs/examples/Guards
+RUST_BACKTRACE=1 cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.exe cs/examples/Guards

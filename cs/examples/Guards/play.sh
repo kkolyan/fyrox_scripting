@@ -13,7 +13,7 @@ rm -rf cs/examples/Guards/bin/Debug/net8.0/*.runtimeconfig.json
 
 # build C# parts of Fyrox Lite
 
-cd cs/FyroxLite
+cd cs/FyroxLiteCs
 dotnet build
 cd ../..
 
@@ -23,7 +23,7 @@ cd cs/examples/Guards
 dotnet build
 cd ../../..
 
-cp cs/FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll cs/examples/Guards/bin/Debug/net8.0/
+cp cs/FyroxLiteCs/FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs.dll cs/examples/Guards/bin/Debug/net8.0/
 
 # build Rust parts of Fyrox Lite
 
