@@ -46,10 +46,10 @@ public partial struct Text : IEquatable<Text>
 
     #region native internal methods
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_ui_LiteText_set_text_async(Text self, NativeString text);
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial Text fyrox_lite_lite_ui_LiteText_new(TextBuilder* state);
     #endregion
 

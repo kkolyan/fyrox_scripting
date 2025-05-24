@@ -13,12 +13,11 @@ members = [
 	"lite-model",
 	"lite-parser",
 	"tools",
-	"cs/fyrox-c",
+	"cs/fyrox-lite-cs",
 	"cs/csgen-lib",
 	"gen-common",
-	"cs/fyrox-c-lib",
-	"cs/fyroxed-c",
-	"cs/fyrox-c-loader",
+	"cs/fyrox-lite-cs-lib",
+	"cs/fyroxed-cs",
 ]
 resolver = "2"
 exclude = ["mlua"]
@@ -26,9 +25,8 @@ exclude = ["mlua"]
 [workspace.dependencies]
 luagen-lib = { path = "lua/luagen-lib" }
 fyrox-lua = { path = "lua/fyrox-lua"}
-fyrox-c = { path = "cs/fyrox-c"}
-fyrox-c-lib = { path = "cs/fyrox-c-lib"}
-fyrox-c-loader = { path = "cs/fyrox-c-loader"}
+fyrox-lite-cs = { path = "cs/fyrox-lite-cs" }
+fyrox-lite-cs-lib = { path = "cs/fyrox-lite-cs-lib"}
 csgen-lib = { path = "cs/csgen-lib" }
 fyrox-lite = {path = "fyrox-lite", default-features = false}
 fyrox-lite-math = {path = "fyrox-lite-math", default-features = false}

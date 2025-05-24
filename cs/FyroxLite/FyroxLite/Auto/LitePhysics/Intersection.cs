@@ -143,7 +143,7 @@ internal partial struct Intersection_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial Intersection_slice fyrox_lite_upload_fyrox_lite_lite_physics_LiteIntersection_slice(Intersection_slice managed);
 }
 

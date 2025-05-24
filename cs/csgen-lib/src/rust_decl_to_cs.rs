@@ -150,7 +150,7 @@ fn convert_function(s: &mut String, item: &syn::ItemFn, custom_type_names: &Hash
         r#"
                     #region native internal method
 
-                    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+                    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
                     internal static partial ${fn};
                     #endregion
         "#,

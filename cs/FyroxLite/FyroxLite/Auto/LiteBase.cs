@@ -134,7 +134,7 @@ internal partial struct NativeBool_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeBool_slice fyrox_lite_upload_bool_slice(NativeBool_slice managed);
 }
 
@@ -262,7 +262,7 @@ internal partial struct byte_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial byte_slice fyrox_lite_upload_u8_slice(byte_slice managed);
 }
 
@@ -390,7 +390,7 @@ internal partial struct int_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial int_slice fyrox_lite_upload_i32_slice(int_slice managed);
 }
 
@@ -518,7 +518,7 @@ internal partial struct long_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial long_slice fyrox_lite_upload_i64_slice(long_slice managed);
 }
 
@@ -646,7 +646,7 @@ internal partial struct float_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial float_slice fyrox_lite_upload_f32_slice(float_slice managed);
 }
 
@@ -774,7 +774,7 @@ internal partial struct double_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial double_slice fyrox_lite_upload_f64_slice(double_slice managed);
 }
 
@@ -902,7 +902,7 @@ internal partial struct NativeString_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeString_slice fyrox_lite_upload_String_slice(NativeString_slice managed);
 }
 
@@ -1030,7 +1030,7 @@ internal partial struct NativeInstanceId_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeInstanceId_slice fyrox_lite_upload_crate_UserScriptImpl_slice(NativeInstanceId_slice managed);
 }
 
@@ -1087,7 +1087,7 @@ internal partial struct NativeScriptMetadata_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeScriptMetadata_slice fyrox_lite_upload_NativeScriptMetadata_slice(NativeScriptMetadata_slice managed);
 }
 
@@ -1144,7 +1144,7 @@ internal partial struct NativeScriptProperty_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeScriptProperty_slice fyrox_lite_upload_NativeScriptProperty_slice(NativeScriptProperty_slice managed);
 }
 
@@ -1201,7 +1201,7 @@ internal partial struct NativeValue_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeValue_slice fyrox_lite_upload_NativeValue_slice(NativeValue_slice managed);
 }
 
@@ -1289,7 +1289,7 @@ internal partial struct NativePropertyValue_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativePropertyValue_slice fyrox_lite_upload_NativePropertyValue_slice(NativePropertyValue_slice managed);
 }
 

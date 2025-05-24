@@ -25,7 +25,7 @@ public static partial class Scene
 
     #region native internal methods
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_scene_LiteScene_load_async(NativeString scene_path);
     #endregion
 

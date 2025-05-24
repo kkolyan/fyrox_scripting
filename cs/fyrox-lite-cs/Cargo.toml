@@ -1,8 +1,11 @@
 [package]
-name = "fyrox-c-loader"
+name = "fyrox-lite-cs"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
 
 [dependencies]
 fyrox = { workspace = true, features = ["dylib"], default-features = false }
-libloading = "0.8.3"
+fyrox-lite-cs-lib = { workspace = true }

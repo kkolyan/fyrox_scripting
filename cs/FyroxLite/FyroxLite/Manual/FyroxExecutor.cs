@@ -6,11 +6,11 @@ namespace FyroxLite;
 
 public partial class FyroxExecutor
 {
-    [LibraryImport("fyrox_c", EntryPoint = "fyrox_lite_executor_run",
+    [LibraryImport("fyrox_lite_cs", EntryPoint = "fyrox_lite_executor_run",
         SetLastError = true)]
     private static partial void RunInternal();
 
-    [LibraryImport("fyroxed_c", EntryPoint = "fyrox_lite_editor_run",
+    [LibraryImport("fyroxed_cs", EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
     private static partial void RunEditorInternal(IntPtr workingDirectory, IntPtr assemblyPath);
 

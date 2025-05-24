@@ -1,5 +1,5 @@
 [package]
-name = "fyroxed-c"
+name = "fyroxed-cs"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 [dependencies]
 fyroxed_base = { workspace = true, features = ["dylib_engine"], default-features = false }
 fyrox = { workspace = true, features = ["dylib"], default-features = false }
-fyrox-c-loader = { workspace = true }
+libloading = "0.8.3"
 native-dialog = "0.9.0"
 uuid = { workspace = true, features = ["v4"] }
 open = "5.3.2"

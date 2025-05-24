@@ -1256,34 +1256,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fyrox-c"
-version = "0.1.0"
-dependencies = [
- "fyrox",
- "fyrox-c-lib",
-]
-
-[[package]]
-name = "fyrox-c-lib"
-version = "0.1.0"
-dependencies = [
- "convert_case",
- "extend",
- "fyrox",
- "fyrox-lite",
- "send_wrapper",
- "to_vec",
-]
-
-[[package]]
-name = "fyrox-c-loader"
-version = "0.1.0"
-dependencies = [
- "fyrox",
- "libloading",
-]
-
-[[package]]
 name = "fyrox-core"
 version = "0.36.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1431,6 +1403,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "fyrox-lite-cs"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "fyrox-lite-cs-lib",
+]
+
+[[package]]
+name = "fyrox-lite-cs-lib"
+version = "0.1.0"
+dependencies = [
+ "convert_case",
+ "extend",
+ "fyrox",
+ "fyrox-lite",
+ "send_wrapper",
+ "to_vec",
+]
+
+[[package]]
 name = "fyrox-lite-math"
 version = "0.1.0"
 dependencies = [
@@ -1557,12 +1549,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "fyroxed-c"
+name = "fyroxed-cs"
 version = "0.1.0"
 dependencies = [
  "fyrox",
- "fyrox-c-loader",
  "fyroxed_base",
+ "libloading",
  "native-dialog",
  "open",
  "uuid",

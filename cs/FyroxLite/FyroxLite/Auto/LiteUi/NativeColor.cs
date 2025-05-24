@@ -105,7 +105,7 @@ internal partial struct NativeColor_slice
         }
     }
 
-    [LibraryImport("fyrox_c", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeColor_slice fyrox_lite_upload_fyrox_lite_lite_ui_Color_slice(NativeColor_slice managed);
 }
 

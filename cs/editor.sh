@@ -20,11 +20,11 @@ cp cs/FyroxLite/FyroxLite/bin/Debug/net8.0/FyroxLite.dll cs/FyroxLite/FyroxLiteE
 
 # build Rust parts of Fyrox Lite
 
-RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-c -p fyroxed-c
-cp target/debug/fyrox_c.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
-cp target/debug/fyrox_c.pdb cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
-cp target/debug/fyroxed_c.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
-cp target/debug/fyroxed_c.pdb cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-lite-cs -p fyroxed-cs
+cp target/debug/fyrox_lite_cs.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp target/debug/fyrox_lite_cs.pdb cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp target/debug/fyroxed_cs.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
+cp target/debug/fyroxed_cs.pdb cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 cp target/debug/deps/fyrox_dylib*.dll cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 cp target/debug/deps/fyrox_dylib*.pdb cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/
 ./get_rust_std.sh cs/FyroxLite/FyroxLiteEditor/bin/Debug/net8.0/

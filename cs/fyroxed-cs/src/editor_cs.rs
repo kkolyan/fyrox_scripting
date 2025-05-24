@@ -12,6 +12,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use uuid::Uuid;
+use crate::fyrox_c_loader;
 
 #[no_mangle]
 pub extern "C" fn ask_user_for_project_directory() -> *const u8 {

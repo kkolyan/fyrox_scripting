@@ -22,7 +22,7 @@ pub(crate) fn print_backtrace_and_exit() -> ! {
     for i in 0..backtrace_lines.len() / 2 {
         frames.push(format!("\n{}\n{}", backtrace_lines[i * 2], backtrace_lines[i * 2 + 1]));
     }
-    let frames = frames.into_iter().filter(|it| it.contains("fyrox_c::")).to_vec();
+    let frames = frames.into_iter().filter(|it| it.contains("fyrox_lite_cs::")).to_vec();
     println!("\nRust backtrace:\n{}", frames.join("\n"));
     exit(666);
 }

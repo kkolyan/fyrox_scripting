@@ -11,7 +11,7 @@ pub struct DynamicPluginProxy(Box<dyn DynamicPlugin>);
 pub fn fyrox_c_plugin(reloadable_assembly_path: Option<PathBuf>) -> DynamicPluginProxy {
 
     #[cfg(target_os = "windows")]
-    let file_name = "fyrox_c.dll";
+    let file_name = "fyrox_lite_cs.dll";
     #[cfg(target_os = "linux")]
     let file_name = "libfyrox_c.so";
     #[cfg(target_os = "macos")]

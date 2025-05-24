@@ -1,2 +1,2 @@
 #!/bin/sh
-cargo build -p fyrox-c && dotnet run
+cargo build -p fyrox-lite-cs && dotnet run

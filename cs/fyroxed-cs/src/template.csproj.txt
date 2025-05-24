@@ -21,7 +21,7 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>false</Pack>
         </Content>
-        <Content Include="${editor_installation_path}/fyrox_c.dll">
+        <Content Include="${editor_installation_path}/fyrox_lite_cs.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>false</Pack>
         </Content>

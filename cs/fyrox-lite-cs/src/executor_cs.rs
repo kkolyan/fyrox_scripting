@@ -10,7 +10,7 @@ use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
 use fyrox::plugin::DynamicPlugin;
 use fyrox::window::WindowAttributes;
-use fyrox_c_lib::fyrox_c_plugin::CPlugin;
+use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_executor_run() {

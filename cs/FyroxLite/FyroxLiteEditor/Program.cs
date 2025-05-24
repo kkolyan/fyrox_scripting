@@ -4,7 +4,7 @@ using FyroxLite;
 public partial class Program
 {
     
-    [LibraryImport("fyroxed_c", EntryPoint = "ask_user_for_project_directory",
+    [LibraryImport("fyroxed_cs", EntryPoint = "ask_user_for_project_directory",
         SetLastError = true)]
     private static partial IntPtr AskUserForProjectDirectory();
     
