@@ -26,6 +26,6 @@ public partial class Program
         {
             workingDir = args[0];
         }
-        FyroxExecutor.RunEditor(workingDir);
+        FyroxEd.RunEditor(workingDir);
     }
 }

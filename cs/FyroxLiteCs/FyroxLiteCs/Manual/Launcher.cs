@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace FyroxLite;
 
-public partial class FyroxExecutor
+public partial class Launcher
 {
     [LibraryImport("fyrox_lite_cs", EntryPoint = "fyrox_lite_executor_run",
         SetLastError = true)]
@@ -14,7 +14,7 @@ public partial class FyroxExecutor
         SetLastError = true)]
     private static partial void RunEditorInternal(IntPtr workingDirectory, IntPtr assemblyPath);
 
-    public static void RunPlayer()
+    public static void RunGame()
     {
         /*
         necessary to avoid following crash on Windows:
@@ -34,12 +34,7 @@ public partial class FyroxExecutor
         thread.Join();
     }
 
-    public static void RunEditor(string? editorWorkingDir)
-    {
-        Run(editor: true, editorWorkingDir: editorWorkingDir, playerAssembly: null);
-    }
-
-    private static void Run(bool editor, string? editorWorkingDir, Assembly? playerAssembly)
+    internal static void Run(bool editor, string? editorWorkingDir, Assembly? playerAssembly)
     {
         ObjectRegistry.InitThread();
         NativeClassId.InitThread();
