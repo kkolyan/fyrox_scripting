@@ -29,8 +29,11 @@ cp cs/examples/Guards/bin/Debug/net8.0/FyroxLiteCs.dll cs/FyroxLiteCs/FyroxEdCs/
 
 RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-lite-cs -p fyroxed-cs
 cp target/debug/fyrox_lite_cs.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cp target/debug/fyrox_lite_cs.pdb cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 cp target/debug/fyroxed_cs.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cp target/debug/fyroxed_cs.pdb cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 cp target/debug/deps/fyrox_dylib*.dll cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cp target/debug/deps/fyrox_dylib*.pdb cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 ./get_rust_std.sh cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 
 RUST_BACKTRACE=1 cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.exe cs/examples/Guards

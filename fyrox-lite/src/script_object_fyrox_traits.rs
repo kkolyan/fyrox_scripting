@@ -2,8 +2,32 @@ use std::any::TypeId;
 
 use fyrox::{asset::Resource, core::{algebra::{UnitQuaternion, Vector3}, pool::Handle, reflect::{FieldInfo, Reflect}}, gui::UiNode, resource::model::Model, scene::node::Node};
 use fyrox::core::algebra::Vector2;
-use crate::{reflect_base, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, ScriptObject}};
+use crate::{reflect_base, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, NodeScriptObject}};
+use crate::global_script_object::ScriptObject;
 
+impl <T: Lang> Reflect for NodeScriptObject<T> {
+    reflect_base!();
+
+    fn fields_info(&self, func: &mut dyn FnMut(&[FieldInfo])) {
+        self.obj.fields_info(func);
+    }
+
+    fn fields(&self, func: &mut dyn FnMut(&[&dyn Reflect])) {
+        self.obj.fields(func);
+    }
+
+    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [&mut dyn Reflect])) {
+        self.obj.fields_mut(func);
+    }
+
+    fn field(&self, name: &str, func: &mut dyn FnMut(Option<&dyn Reflect>)) {
+        self.obj.field(name, func);
+    }
+
+    fn field_mut(&mut self, name: &str, func: &mut dyn FnMut(Option<&mut dyn Reflect>)) {
+        self.obj.field_mut(name, func);
+    }
+}
 
 impl <T: Lang> Reflect for ScriptObject<T> {
     reflect_base!();
@@ -18,7 +42,7 @@ impl <T: Lang> Reflect for ScriptObject<T> {
             .enumerate()
             .filter(|(_i, it)| !it.private)
             .map(|(i, it)| FieldInfo {
-                owner_type_id: TypeId::of::<ScriptObject<T> >(),
+                owner_type_id: TypeId::of::<NodeScriptObject<T> >(),
                 name: it.name.as_str(),
                 display_name: it.title.as_str(),
                 description: it.name.as_str(),

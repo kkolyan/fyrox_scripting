@@ -18,6 +18,7 @@ members = [
 	"gen-common",
 	"cs/fyrox-lite-cs-lib",
 	"cs/fyroxed-cs",
+	"error",
 ]
 resolver = "2"
 exclude = ["mlua"]
@@ -35,6 +36,7 @@ lite-model = { path = "lite-model" }
 lite-parser = { path = "lite-parser" }
 lite-macro = { path = "lite-macro" }
 gen-common = { path = "gen-common" }
+error = { path = "error" }
 
 # fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 # fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }

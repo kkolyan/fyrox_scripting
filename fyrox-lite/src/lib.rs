@@ -18,5 +18,7 @@ pub mod script_object_residence;
 pub mod externalizable;
 pub(crate) mod resource_registry;
 pub mod lite_input;
+pub mod global_script_object_residence;
+pub mod global_script_object;
 
 pub use crate::spi::LiteDataType;

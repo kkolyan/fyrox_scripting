@@ -1,6 +1,4 @@
-use std::backtrace::Backtrace;
-use std::process::exit;
-use to_vec::ToVec;
+use error::abort_with_backtrace;
 
 #[extend::ext]
 pub impl<T> Result<T, crate::LangSpecificError> {
@@ -8,21 +6,8 @@ pub impl<T> Result<T, crate::LangSpecificError> {
         match self {
             Ok(it) => Some(it),
             Err(err) => {
-                println!("\nScripting Runtime Error:\n{}", err);
-                print_backtrace_and_exit();
+                abort_with_backtrace!("\nScripting Runtime Error:\n{}", err);
             }
         }
     }
-}
-
-pub(crate) fn print_backtrace_and_exit() -> ! {
-    let backtrace = Backtrace::capture().to_string();
-    let backtrace_lines = backtrace.lines().to_vec();
-    let mut frames = Vec::new();
-    for i in 0..backtrace_lines.len() / 2 {
-        frames.push(format!("\n{}\n{}", backtrace_lines[i * 2], backtrace_lines[i * 2 + 1]));
-    }
-    let frames = frames.into_iter().filter(|it| it.contains("fyrox_lite_cs::")).to_vec();
-    println!("\nRust backtrace:\n{}", frames.join("\n"));
-    exit(666);
 }

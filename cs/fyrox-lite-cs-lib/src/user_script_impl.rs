@@ -57,8 +57,9 @@ impl UserScript for UnpackedObject {
             let app = it.as_ref().unwrap();
             let scripts_metadata = app.scripts_metadata.as_ref().unwrap();
             let uuid = scripts_metadata.uuid_by_class.get(class).unwrap();
-            let md = scripts_metadata.scripts.get(uuid).unwrap();
+            let md = scripts_metadata.node_scripts.get(uuid).unwrap();
             let instance_id = (app.functions.create_script_instance)(md.id, Default::default(), Some(node.into()).into()).into_result_shallow()?;
+            assert!(!app.is_editor, "is not expected to happen in editor");
             Ok(UnpackedObject {
                 uuid: *uuid,
                 class: md.id,
@@ -99,7 +100,7 @@ impl ClassId for NativeClassId {
             let app = app.as_ref().unwrap();
             let scripts_metadata = app.scripts_metadata.as_ref().unwrap();
             let uuid = scripts_metadata.uuid_by_class.get(self).unwrap();
-            let x = scripts_metadata.scripts.get(uuid).unwrap();
+            let x = scripts_metadata.node_scripts.get(uuid).unwrap();
             x.md.class.clone()
         })
     }

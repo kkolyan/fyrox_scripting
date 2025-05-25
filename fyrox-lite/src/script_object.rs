@@ -13,27 +13,31 @@ use fyrox::{
     scene::node::Node,
 };
 use fyrox::core::algebra::Vector2;
+use crate::global_script_object::ScriptObject;
 use crate::lite_node::LiteNode;
 use super::script_metadata::{ScriptDefinition, ScriptFieldValueType};
 
 /// Useful for persisting script data, but for some languages could be used as a runtime type
 #[derive(Clone)]
-pub struct ScriptObject<T: Lang> {
+pub struct NodeScriptObject<T: Lang> {
     pub node: Handle<Node>,
-    pub def: Arc<ScriptDefinition>,
-    pub values: Vec<ScriptFieldValue<T>>,
+    pub obj: ScriptObject<T>,
 }
 
 pub trait Lang: Debug + Clone + 'static {
     type String<'a>;
     type RuntimePin: Clone + Debug + Visit + Default;
     type UnpackedScriptObject: Visit + Debug;
+    type UnpackedGlobalScriptObject: Visit + Debug;
 
     fn drop_runtime_pin(runtime_pin: &mut Self::RuntimePin);
     fn clone_runtime_pin(runtime_pin: &Self::RuntimePin) -> Self::RuntimePin;
     fn drop_script_object_to_prevent_delayed_destructor(_script: &mut Self::UnpackedScriptObject) {}
+    fn drop_script_object_to_prevent_delayed_destructor_global(_script: &mut Self::UnpackedGlobalScriptObject) {}
     fn id_of(script: &Self::UnpackedScriptObject) -> Uuid;
-    fn unpack_script(script: &ScriptObject<Self>) -> Result<Self::UnpackedScriptObject, String>;
+    fn id_of_global(script: &Self::UnpackedGlobalScriptObject) -> Uuid;
+    fn unpack_node_script(script: &NodeScriptObject<Self>) -> Result<Self::UnpackedScriptObject, String>;
+    fn unpack_global_script(script: &ScriptObject<Self>) -> Result<Self::UnpackedGlobalScriptObject, String>;
 }
 
 #[allow(non_camel_case_types)]
@@ -57,59 +61,17 @@ pub enum ScriptFieldValue<T: Lang> {
     RuntimePin(T::RuntimePin),
 }
 
-impl<T: Lang> Debug for ScriptObject<T> {
+impl<T: Lang> Debug for NodeScriptObject<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class_name = self.def.metadata.class.clone();
-        let mut fields = Vec::new();
-        for (i, field) in self.def.metadata.fields.iter().enumerate() {
-            fields.push(format!(
-                "{} ({:?}): {:?}",
-                field.name, field.ty, self.values[i]
-            ));
-        }
-        write!(f, "{}{{ {} }}", class_name, fields.join(", "))
+        self.obj.fmt(f)
     }
 }
 
-impl<T: Lang> Drop for ScriptObject<T> {
-    fn drop(&mut self) {
-        for it in self.values.iter_mut() {
-            if let ScriptFieldValue::RuntimePin(it) = it {
-                T::drop_runtime_pin(it);
-            }
-        }
-    }
-}
-
-impl<T: Lang> ScriptObject<T> {
+impl<T: Lang> NodeScriptObject<T> {
     pub fn new(def: &Arc<ScriptDefinition>) -> Self {
-        ScriptObject {
+        NodeScriptObject {
             node: Default::default(),
-            def: def.clone(),
-            values: def
-                .metadata
-                .fields
-                .iter()
-                .map(|it| match &it.ty {
-                    ScriptFieldValueType::String => ScriptFieldValue::String(Default::default()),
-                    ScriptFieldValueType::Node => ScriptFieldValue::Node(Default::default()),
-                    ScriptFieldValueType::Prefab => ScriptFieldValue::Prefab(Default::default()),
-                    ScriptFieldValueType::UiNode => ScriptFieldValue::Node(Default::default()),
-                    ScriptFieldValueType::Vector3 => ScriptFieldValue::Vector3(Default::default()),
-                    ScriptFieldValueType::Vector2 => ScriptFieldValue::Vector2(Default::default()),
-                    ScriptFieldValueType::Vector2I => ScriptFieldValue::Vector2I(Default::default()),
-                    ScriptFieldValueType::Quaternion => {
-                        ScriptFieldValue::Quaternion(Default::default())
-                    }
-                    ScriptFieldValueType::RuntimePin => ScriptFieldValue::RuntimePin(T::RuntimePin::default()),
-                    ScriptFieldValueType::bool => ScriptFieldValue::bool(Default::default()),
-                    ScriptFieldValueType::f32 => ScriptFieldValue::f32(Default::default()),
-                    ScriptFieldValueType::f64 => ScriptFieldValue::f64(Default::default()),
-                    ScriptFieldValueType::i16 => ScriptFieldValue::i16(Default::default()),
-                    ScriptFieldValueType::i32 => ScriptFieldValue::i32(Default::default()),
-                    ScriptFieldValueType::i64 => ScriptFieldValue::i64(Default::default()),
-                })
-                .collect(),
+            obj: ScriptObject::new(def)
         }
     }
 }

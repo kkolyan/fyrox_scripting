@@ -22,7 +22,7 @@ use fyrox::script::constructor::ScriptConstructor;
 use fyrox::script::Script;
 use fyrox_lite::lite_input::Input;
 use fyrox_lite::script_metadata::{ScriptDefinition, ScriptKind};
-use fyrox_lite::script_object::ScriptObject;
+use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::script_object_residence::ScriptResidence;
 use fyrox_lite::wrapper_reflect;
 use std::cell::{Cell, RefCell};
@@ -31,6 +31,9 @@ use std::ops::DerefMut;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
+use fyrox_lite::global_script_object::ScriptObject;
+use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
+use crate::external_global_script_proxy::ExternalGlobalScriptProxy;
 
 #[derive(Visit, Reflect)]
 pub struct CPlugin {
@@ -42,7 +45,7 @@ pub struct CPlugin {
     #[reflect(hidden)]
     pub need_reload: Cell<bool>,
 
-    pub scripts: RefCell<PluginScriptList>,
+    pub scripts: RefCell<GlobalScriptList>,
 
     #[visit(skip)]
     #[reflect(hidden)]
@@ -81,10 +84,6 @@ impl CPlugin {
                 })
                 .unwrap_or(HotReload::Disabled),
         }
-    }
-
-    pub fn check_for_script_changes(&mut self) {
-        todo!()
     }
 
     pub fn is_candidate_for_reload(&self) -> bool {
@@ -136,53 +135,48 @@ impl Plugin for CPlugin {
         });
         APP.with_borrow(|app| {
             let app = app.as_ref().unwrap();
-            for md in app.scripts_metadata.as_ref().unwrap().scripts.values() {
+            for md in app.scripts_metadata.as_ref().unwrap().node_scripts.values() {
                 let def = Arc::new(ScriptDefinition {
                     metadata: md.md.clone(),
                     assembly_name: self.assembly_name(),
                 });
                 let name = def.metadata.class.clone();
                 let class = md.id;
-                match md.md.kind {
-                    ScriptKind::Node(uuid) => {
-                        context
-                            .serialization_context
-                            .script_constructors
-                            .add_custom(
-                                uuid,
-                                ScriptConstructor {
+
+                println!("adding script constructor {}: {}", &name, md.md.uuid);
+                context
+                    .serialization_context
+                    .script_constructors
+                    .add_custom(
+                        md.md.uuid,
+                        ScriptConstructor {
+                            name: name.to_string(),
+                            source_path: "",
+                            assembly_name: self.assembly_name(),
+                            constructor: Box::new(move || {
+                                Script::new(ExternalScriptProxy {
                                     name: name.to_string(),
-                                    source_path: "",
-                                    assembly_name: self.assembly_name(),
-                                    constructor: Box::new(move || {
-                                        Script::new(ExternalScriptProxy {
-                                            name: name.to_string(),
-                                            class,
-                                            data: ScriptResidence::Packed(ScriptObject::new(&def)),
-                                        })
-                                    }),
-                                },
-                            )
-                            .unwrap();
-                    }
-                    ScriptKind::Global => {
-                        if let Some(instance) = (app.functions.create_script_instance)(class, Default::default(), None.into())
-                            .into_result_shallow()
-                            .handle_scripting_error()
-                        {
-                            let mut plugin_scripts = self.scripts.borrow_mut();
-                            plugin_scripts.inner_mut().push(ExternalScriptProxy {
-                                name: name.to_string(),
-                                class,
-                                data: ScriptResidence::Unpacked(UnpackedObject {
-                                    uuid: Default::default(),
                                     class,
-                                    instance: AutoDispose::new(instance),
-                                }),
-                            });
-                        }
-                    }
-                }
+                                    data: ScriptResidence::Packed(NodeScriptObject::new(&def)),
+                                })
+                            }),
+                        },
+                    )
+                    .unwrap();
+            }
+            for md in app.scripts_metadata.as_ref().unwrap().global_scripts.values() {
+                let mut plugin_scripts = self.scripts.borrow_mut();
+                let def = Arc::new(ScriptDefinition {
+                    metadata: md.md.clone(),
+                    assembly_name: self.assembly_name(),
+                });
+                let name = def.metadata.class.clone();
+                let class = md.id;
+                plugin_scripts.inner_mut().push(ExternalGlobalScriptProxy {
+                    name: name.to_string(),
+                    class,
+                    data: GlobalScriptResidence::Packed(ScriptObject::new(&def)),
+                });
             }
         });
     }
@@ -190,7 +184,7 @@ impl Plugin for CPlugin {
     fn init(&mut self, scene_path: Option<&str>, mut context: PluginContext) {
         Input::init_thread_local_state();
         for script in self.scripts.borrow_mut().0.iter_mut() {
-            script.data.ensure_unpacked(&mut self.failed, Default::default());
+            script.data.ensure_unpacked(&mut self.failed);
             invoke_callback(&mut context, |app| {
                 let scene_path = scene_path.map(|it| it.to_string()).into();
                 let id = script.data.inner_unpacked().unwrap().instance.inner();
@@ -202,7 +196,7 @@ impl Plugin for CPlugin {
 
     fn update(&mut self, context: &mut PluginContext) {
         for script in self.scripts.borrow_mut().0.iter_mut() {
-            script.data.ensure_unpacked(&mut self.failed, Default::default());
+            script.data.ensure_unpacked(&mut self.failed);
             invoke_callback(context, |app| {
                 (app.functions.on_game_update)(script.data.inner_unpacked().unwrap().instance.inner()).into_result().handle_scripting_error();
             });
@@ -220,18 +214,18 @@ impl Plugin for CPlugin {
 }
 
 #[derive(Debug, Default, Clone)]
-pub struct PluginScriptList(Vec<ExternalScriptProxy>);
+pub struct GlobalScriptList(Vec<ExternalGlobalScriptProxy>);
 
-impl PluginScriptList {
-    pub fn inner(&self) -> &Vec<ExternalScriptProxy> {
+impl GlobalScriptList {
+    pub fn inner(&self) -> &Vec<ExternalGlobalScriptProxy> {
         &self.0
     }
-    pub fn inner_mut(&mut self) -> &mut Vec<ExternalScriptProxy> {
+    pub fn inner_mut(&mut self) -> &mut Vec<ExternalGlobalScriptProxy> {
         &mut self.0
     }
 }
 
-impl Visit for PluginScriptList {
+impl Visit for GlobalScriptList {
     fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {
         let mut guard = visitor.enter_region(name)?;
 
@@ -242,7 +236,7 @@ impl Visit for PluginScriptList {
     }
 }
 
-impl Reflect for PluginScriptList {
+impl Reflect for GlobalScriptList {
     wrapper_reflect! {0}
 
     fn source_path() -> &'static str
@@ -289,6 +283,7 @@ impl DynamicPlugin for CPlugin {
     }
 
     fn prepare_to_reload(&mut self) {
+        Log::info("prepare_to_reload");
         self.need_reload.set(false);
     }
 

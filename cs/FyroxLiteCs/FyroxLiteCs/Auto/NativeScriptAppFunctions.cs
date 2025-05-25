@@ -12,12 +12,6 @@ namespace FyroxLite;
 
 [StructLayout(LayoutKind.Sequential)]
 internal unsafe partial struct NativeScriptAppFunctions {
-    private IntPtr _get_scripts_assembly_path;
-    internal FyroxNativeGlobal.GetScriptsAssemblyPath get_scripts_assembly_path
-    {
-        get => Marshal.GetDelegateForFunctionPointer<FyroxNativeGlobal.GetScriptsAssemblyPath>(_get_scripts_assembly_path);
-        set => _get_scripts_assembly_path = Marshal.GetFunctionPointerForDelegate(value);
-    }
     private IntPtr _get_scripts_metadata;
     internal FyroxNativeGlobal.GetScriptsMetadata get_scripts_metadata
     {

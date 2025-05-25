@@ -20,6 +20,6 @@ pub use fyrox_lua_plugin::LuaPlugin;
 pub(crate) mod script_object {
     use crate::lua_lang::LuaLang;
 
-    pub type ScriptObject = fyrox_lite::script_object::ScriptObject<LuaLang>;
+    pub type ScriptObject = fyrox_lite::script_object::NodeScriptObject<LuaLang>;
     pub type ScriptFieldValue = fyrox_lite::script_object::ScriptFieldValue<LuaLang>;
 }

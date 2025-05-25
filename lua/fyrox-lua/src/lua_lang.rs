@@ -63,8 +63,8 @@ impl Lang for LuaLang {
         uuid_of_script(&script.0.borrow().unwrap())
     }
 
-    fn unpack_script(
-        script: &fyrox_lite::script_object::ScriptObject<Self>,
+    fn unpack_node_script(
+        script: &fyrox_lite::script_object::NodeScriptObject<Self>,
     ) -> Result<Self::UnpackedScriptObject, String> {
         let so = lua_vm()
             .create_userdata(Traitor::new(script.clone()))

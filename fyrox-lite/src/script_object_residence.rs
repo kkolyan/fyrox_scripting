@@ -7,21 +7,19 @@ use fyrox::core::visitor::Visitor;
 use fyrox::core::Uuid;
 use std::fmt::Debug;
 use std::fmt::Formatter;
-use std::ops::DerefMut;
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
-use crate::lite_node::LiteNode;
-use crate::script_metadata::ScriptKind;
+use crate::global_script_object::ScriptObject;
 use crate::script_object::Lang;
 use crate::script_object::ScriptFieldValue;
-use crate::script_object::ScriptObject;
+use crate::script_object::NodeScriptObject;
 
 /// Initially, when script is loaded from file (scene or save game), it's in "packed" mode.
 /// First time this script receives `on_update` callback, it's converted to "unpacked", by
 /// transfering state into UserData managed by Lua VM. Thoughm serialization should work fine,
 /// because Visit is implemented in both modes.
 pub enum ScriptResidence<T: Lang> {
-    Packed(ScriptObject<T>),
+    Packed(NodeScriptObject<T>),
     Unpacked(T::UnpackedScriptObject),
 }
 
@@ -50,11 +48,11 @@ impl<T: Lang> ScriptResidence<T> {
             let data = match self {
                 ScriptResidence::Packed(it) => {
                     it.node = node;
-                    let so = T::unpack_script(it);
+                    let so = T::unpack_node_script(it);
                     match so {
                         Ok(it) => it,
                         Err(err) => {
-                            Log::err(format!("failed to unpack script: {:?}", err));
+                            Log::err(format!("failed to unpack node script: {:?}", err));
                             *failed = true;
                             return;
                         }
@@ -66,7 +64,7 @@ impl<T: Lang> ScriptResidence<T> {
         }
     }
 
-    pub fn with_script_object<R>(&self, f: impl FnOnce(&ScriptObject<T>) -> R) -> R {
+    pub fn with_script_object<R>(&self, f: impl FnOnce(&NodeScriptObject<T>) -> R) -> R {
         match self {
             ScriptResidence::Packed(it) => f(it),
             ScriptResidence::Unpacked(it) => todo!(),
@@ -74,7 +72,7 @@ impl<T: Lang> ScriptResidence<T> {
         }
     }
 
-    pub fn with_script_object_mut<R>(&mut self, f: impl FnOnce(&mut ScriptObject<T>) -> R) -> R {
+    pub fn with_script_object_mut<R>(&mut self, f: impl FnOnce(&mut NodeScriptObject<T>) -> R) -> R {
         match self {
             ScriptResidence::Packed(it) => f(it),
             ScriptResidence::Unpacked(it) => todo!(),
@@ -84,17 +82,14 @@ impl<T: Lang> ScriptResidence<T> {
     
     pub fn id(&self) -> Uuid {
         match self {
-            ScriptResidence::Packed(it) => uuid_of_script(it),
+            ScriptResidence::Packed(it) => uuid_of_script(&it.obj),
             ScriptResidence::Unpacked(it) => T::id_of(it),
         }
     }
 }
 
 pub fn uuid_of_script<T: Lang>(script: &ScriptObject<T>) -> Uuid {
-    match script.def.metadata.kind {
-        ScriptKind::Node(uuid) => uuid,
-        ScriptKind::Global => panic!("not expected to be called for GlobalScript"),
-    }
+    script.def.metadata.uuid
 }
 
 impl<T: Lang> Debug for ScriptResidence<T> {
@@ -140,6 +135,12 @@ impl<T: Lang> Visit for ScriptResidence<T> {
     }
 }
 
+
+impl<T: Lang> Visit for NodeScriptObject<T> {
+    fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {
+        self.obj.visit(name, visitor)
+    }
+}
 
 impl<T: Lang> Visit for ScriptObject<T> {
     fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {

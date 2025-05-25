@@ -22,7 +22,15 @@ public static class ScriptsMetadataExtractor
             {
                 Console.WriteLine($"registering global script {type.FullName}");
 
-                RegisterScript(type, scripts, Guid.NewGuid(), NativeScriptKind.Global);
+                // var uuidAttr = type.GetCustomAttribute<UuidAttribute>();
+                // if (uuidAttr == null)
+                // {
+                //     throw new Exception($"Invalid script {type}: [Uuid] attribute required for Node scripts");
+                // }
+                //
+                // var uuid = uuidAttr.Uuid;
+                var uuid = Guid.NewGuid();
+                RegisterScript(type, scripts, uuid, NativeScriptKind.Global);
             }
 
             if (type.IsAssignableTo(typeof(NodeScript)))

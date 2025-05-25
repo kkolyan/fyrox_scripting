@@ -7,17 +7,20 @@ use fyrox::{
         Uuid,
     },
 };
+use fyrox::scene::node::Node;
+use fyrox::script::ScriptMessagePayload;
+use error::abort_with_backtrace;
 use fyrox_lite::{
-    externalizable::Externalizable, lite_prefab::LitePrefab, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, ScriptObject}, script_object_residence::uuid_of_script
+    externalizable::Externalizable, lite_prefab::LitePrefab, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, NodeScriptObject}, script_object_residence::uuid_of_script
 };
-
+use fyrox_lite::global_script_object::ScriptObject;
 use crate::{bindings_manual::{
     NativeHandle, NativeValue,
 }, scripted_app::APP, UserScriptImpl};
-use crate::bindings_lite_2::{NativePrefab, NativeQuaternion, NativeVector2, NativeVector2I, NativeVector3};
+use crate::bindings_lite_2::{NativeQuaternion, NativeVector2, NativeVector2I, NativeVector3};
 use crate::bindings_manual::{NativeClassId, NativeInstanceId, NativePropertyValue, NativeString, NativeValueType};
-use crate::errors::print_backtrace_and_exit;
 use crate::auto_dispose::AutoDispose;
+use crate::scripted_app::{CScriptMetadata, ScriptedApp, ScriptsMetadata};
 
 #[derive(Debug, Clone)]
 pub struct CCompatibleLang;
@@ -28,6 +31,7 @@ impl Lang for CCompatibleLang {
     type RuntimePin = NativeRuntimePin;
 
     type UnpackedScriptObject = UserScriptImpl;
+    type UnpackedGlobalScriptObject = UserScriptImpl;
 
     fn drop_runtime_pin(_runtime_pin: &mut Self::RuntimePin) {
         todo!("is not needed without Hot reload")
@@ -37,32 +41,50 @@ impl Lang for CCompatibleLang {
         todo!("is not needed without Hot reload")
     }
 
-    fn id_of(script: &Self::UnpackedScriptObject) -> fyrox::core::Uuid {
+    fn id_of(script: &Self::UnpackedScriptObject) -> Uuid {
         script.uuid
     }
 
-    fn unpack_script(script: &ScriptObject<Self>) -> Result<Self::UnpackedScriptObject, String> {
-        let uuid = uuid_of_script(script);
-        APP.with_borrow(|app| {
-            let app = app.as_ref().unwrap();
-            let metadata = app.scripts_metadata.as_ref().unwrap().scripts.get(&uuid).unwrap();
-            let mut state = Vec::new();
-
-            for (i, prop) in metadata.md.fields.iter().enumerate() {
-                let value = &script.values[i];
-                let name = prop.name.clone().into();
-
-                let value = convert_value(name, value, prop.ty);
-                state.push(value);
-            }
-            let instance = (app.functions.create_script_instance)(metadata.id, state.into(), Some(script.node.into()).into()).into_result_shallow()?;
-            Ok(UnpackedObject {
-                uuid,
-                class: metadata.id,
-                instance: AutoDispose::new(instance),
-            })
-        })
+    fn id_of_global(script: &Self::UnpackedGlobalScriptObject) -> Uuid {
+        script.uuid
     }
+
+    fn unpack_node_script(script: &NodeScriptObject<Self>) -> Result<Self::UnpackedScriptObject, String> {
+        unpack_script(&script.obj, Some(script.node), |md, uuid| md.node_scripts.get(&uuid).unwrap().id)
+    }
+
+    fn unpack_global_script(script: &ScriptObject<Self>) -> Result<Self::UnpackedGlobalScriptObject, String> {
+        unpack_script(&script, None, |md, uuid| md.global_scripts.get(&uuid).unwrap().id)
+    }
+}
+
+fn unpack_script(script: &ScriptObject<CCompatibleLang>, node: Option<Handle<Node>>, get_metadata: impl FnOnce(&ScriptsMetadata, Uuid) -> NativeClassId) -> Result<UserScriptImpl, String> {
+    let uuid = uuid_of_script(script);
+    APP.with_borrow(|app| {
+        let app = app.as_ref().unwrap();
+        let native_class_id = get_metadata(app.scripts_metadata.as_ref().unwrap(), uuid);
+        let mut state = Vec::new();
+        
+        for (i, prop) in script.def.metadata.fields.iter().enumerate() {
+            let value = &script.values[i];
+            let name = prop.name.clone().into();
+
+            let value = convert_value(name, value, prop.ty);
+            state.push(value);
+        }
+        let instance = (app.functions.create_script_instance)(
+            native_class_id,
+            state.into(),
+            node
+                .map(|it| it.into())
+                .into()
+        ).into_result_shallow()?;
+        Ok(UnpackedObject {
+            uuid,
+            class: native_class_id,
+            instance: AutoDispose::new(instance),
+        })
+    })
 }
 
 fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, ty: ScriptFieldValueType) -> NativePropertyValue {
@@ -214,8 +236,7 @@ impl From<UnpackedObject> for NativeInstanceId {
 
 impl From<NativeInstanceId> for UnpackedObject {
     fn from(_value: NativeInstanceId) -> Self {
-        println!("call of Rust-implemented script methods is not implemented yet");
-        print_backtrace_and_exit();
+        abort_with_backtrace!("call of Rust-implemented script methods is not implemented yet");
     }
 }
 
@@ -225,7 +246,6 @@ impl Visit for UnpackedObject {
         _name: &str,
         _visitor: &mut fyrox::core::visitor::Visitor,
     ) -> fyrox::core::visitor::VisitResult {
-        println!("is not needed without Hot reload");
-        print_backtrace_and_exit();
+        abort_with_backtrace!("is not needed without Hot reload");
     }
 }

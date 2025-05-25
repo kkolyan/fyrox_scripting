@@ -9,11 +9,6 @@ internal static class ScriptsMetadataManager
     internal static string? EditorWorkingDir;
     private static FyroxLoadContext? _loadContext;
 
-    internal static NativeString_optional GetScriptsAssemblyPath()
-    {
-        return NativeString_optional.FromFacade(GetScriptsAssemblyPathInternal());
-    }
-
     internal static string? GetScriptsAssemblyPathInternal()
     {
         if (EditorWorkingDir == null)
@@ -36,6 +31,8 @@ internal static class ScriptsMetadataManager
                 GC.WaitForPendingFinalizers();
                 _loadContext = null;
             }
+            
+            Console.WriteLine($"Current path is {Path.GetFullPath(".")}");
 
             var assemblyPath = GetScriptsAssemblyPathInternal();
             Console.WriteLine($"Loading game scripts assembly file: {assemblyPath}");
@@ -53,6 +50,7 @@ internal static class ScriptsMetadataManager
             }
             else
             {
+                Console.WriteLine($"Assembly file doesn't exist: {assemblyPath}");
                 scripts = new List<NativeScriptMetadata>();
             }
         }
@@ -61,6 +59,7 @@ internal static class ScriptsMetadataManager
             scripts = ScriptsMetadataExtractor.ScanAssemblyForScripts(PlayerAssembly);
         }
 
+        Console.WriteLine($"Returning {scripts.Count} scripts");
         return NativeScriptMetadata_slice.FromFacade(scripts);
     }
 }

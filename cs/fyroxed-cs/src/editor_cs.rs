@@ -117,7 +117,7 @@ fn ensure_project_files(working_dir: &Path) -> Option<PathBuf> {
         .replace("${project_uuid}", project_uuid.to_string().to_uppercase().as_str())
         .replace("${project_name}", dir_name)
         ;
-    fs::write(format!("{}/Program.cs", working_dir.to_str().unwrap()), "FyroxLite.FyroxExecutor.RunPlayer();").unwrap();
+    fs::write(format!("{}/Program.cs", working_dir.to_str().unwrap()), "FyroxLite.Launcher.RunGame();").unwrap();
     fs::write(format!("{}/{}.csproj", working_dir.to_str().unwrap(), dir_name), csproj).unwrap();
 
     let sln_path = format!("{}/{}.sln", working_dir.to_str().unwrap(), dir_name);

@@ -1,2 +1,1 @@
-﻿using FyroxLite;
-FyroxExecutor.RunPlayer();
+﻿FyroxLite.Launcher.RunGame();

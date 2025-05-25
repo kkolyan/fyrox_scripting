@@ -45,26 +45,28 @@ public partial class Launcher
             throw new Exception($"either of {nameof(editorWorkingDir)} or {playerAssembly} should be supplied");
         }
 
-        ScriptsMetadataManager.EditorWorkingDir = editorWorkingDir;
+        ScriptsMetadataManager.EditorWorkingDir = editorWorkingDir == null ? null : Path.GetFullPath(editorWorkingDir);
         ScriptsMetadataManager.PlayerAssembly = playerAssembly;
 
         Console.WriteLine("initializing callbacks");
 
-        FyroxNativeGlobal.init_fyrox(new NativeScriptAppFunctions
-        {
-            get_scripts_assembly_path = ScriptsMetadataManager.GetScriptsAssemblyPath,
-            get_scripts_metadata = ScriptsMetadataManager.GetScriptsMetadata,
-            on_init = FyroxImpls.on_init,
-            on_start = FyroxImpls.on_start,
-            on_deinit = FyroxImpls.on_deinit,
-            on_update = FyroxImpls.on_update,
-            on_message = FyroxImpls.on_message,
-            on_game_init = FyroxImpls.on_game_init,
-            on_game_update = FyroxImpls.on_game_update,
-            create_script_instance = FyroxImpls.create_script_instance,
-            dispose_message = FyroxImpls.dispose_message,
-            dispose_script = FyroxImpls.dispose_script,
-        });
+        FyroxNativeGlobal.init_fyrox_lite(
+            new NativeScriptAppFunctions
+            {
+                get_scripts_metadata = ScriptsMetadataManager.GetScriptsMetadata,
+                on_init = FyroxImpls.on_init,
+                on_start = FyroxImpls.on_start,
+                on_deinit = FyroxImpls.on_deinit,
+                on_update = FyroxImpls.on_update,
+                on_message = FyroxImpls.on_message,
+                on_game_init = FyroxImpls.on_game_init,
+                on_game_update = FyroxImpls.on_game_update,
+                create_script_instance = FyroxImpls.create_script_instance,
+                dispose_message = FyroxImpls.dispose_message,
+                dispose_script = FyroxImpls.dispose_script,
+            }, 
+            is_editor: NativeBool.FromFacade(editor)
+        );
         Console.WriteLine("running main loop");
 
         if (editor)

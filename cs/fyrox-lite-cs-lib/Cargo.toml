@@ -10,3 +10,4 @@ extend = { workspace = true }
 to_vec = { workspace = true }
 convert_case = { workspace = true }
 send_wrapper = { workspace = true }
+error = { workspace = true }

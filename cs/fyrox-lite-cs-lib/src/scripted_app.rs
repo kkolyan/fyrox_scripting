@@ -1,16 +1,13 @@
-use std::{cell::RefCell, collections::HashMap, ffi::CStr};
+use std::{cell::RefCell, collections::HashMap};
 
 use convert_case::Casing;
 use fyrox::core::Uuid;
 use fyrox_lite::script_metadata::{
-    ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata,
+    ScriptField, ScriptFieldValueType, ScriptMetadata,
 };
 use to_vec::ToVec;
 
-use crate::bindings_manual::{
-    NativeClassId, NativeScriptAppFunctions, NativeScriptKind, NativeScriptMetadata,
-    NativeScriptedApp, NativeValueType,
-};
+use crate::bindings_manual::{NativeBool, NativeClassId, NativeScriptAppFunctions, NativeScriptKind, NativeScriptMetadata, NativeValueType};
 
 // TODO replace with SendWrapper
 thread_local! {
@@ -27,23 +24,32 @@ pub struct CScriptMetadata {
     pub has_on_message: bool,
 }
 
+pub struct CGlobalScriptMetadata {
+    pub id: NativeClassId,
+    pub md: ScriptMetadata,
+    pub has_on_init: bool,
+    pub has_on_update: bool,
+}
+
 pub struct ScriptedApp {
+    pub is_editor: bool,
     pub scripts_metadata: Option<ScriptsMetadata>,
     pub functions: NativeScriptAppFunctions,
 }
 
-
 pub struct ScriptsMetadata {
-    pub scripts: HashMap<Uuid, CScriptMetadata>,
+    pub node_scripts: HashMap<Uuid, CScriptMetadata>,
+    pub global_scripts: HashMap<Uuid, CGlobalScriptMetadata>,
     pub uuid_by_class: HashMap<NativeClassId, Uuid>,
 }
 
 
 impl ScriptedApp {
-    pub fn from_functions(functions: NativeScriptAppFunctions) -> Self {
+    pub fn new(init_params: NativeScriptAppFunctions, is_editor: NativeBool) -> Self {
         ScriptedApp {
+            is_editor: is_editor.into(),
             scripts_metadata: None,
-            functions,
+            functions: init_params,
         }
     }
 
@@ -51,29 +57,44 @@ impl ScriptedApp {
         let scripts = (self.functions.get_scripts_metadata)();
 
         let scripts: Vec<_> = scripts.into();
-        let scripts: HashMap<Uuid, CScriptMetadata> = scripts.into_iter()
-            .map(|native_class| {
-                let uuid = Uuid::parse_str(String::from(native_class.uuid).as_str()).unwrap();
-                let script = extract_for_def(&native_class);
-                (
-                    uuid,
-                    CScriptMetadata {
-                        id: native_class.id,
-                        md: script,
-                        has_on_init: true,
-                        has_on_start: true,
-                        has_on_deinit: true,
-                        has_on_update: true,
-                        has_on_message: true,
-                    },
-                )
-            })
-            .collect();
-        let uuid_by_class = scripts.iter()
+        let mut global_scripts: HashMap<Uuid, CGlobalScriptMetadata> = Default::default();
+        let mut node_scripts: HashMap<Uuid, CScriptMetadata> = Default::default();
+        for native_class in scripts {
+            let uuid = Uuid::parse_str(String::from(native_class.uuid).as_str()).unwrap();
+            let md = extract_for_def(&native_class);
+            match native_class.kind {
+                NativeScriptKind::Node => {
+                    node_scripts.insert(
+                        uuid,
+                        CScriptMetadata {
+                            id: native_class.id,
+                            md,
+                            has_on_init: true,
+                            has_on_start: true,
+                            has_on_deinit: true,
+                            has_on_update: true,
+                            has_on_message: true,
+                        },
+                    );
+                }
+                NativeScriptKind::Global => {
+                    global_scripts.insert(
+                        uuid,
+                        CGlobalScriptMetadata {
+                            id: native_class.id,
+                            md,
+                            has_on_init: true,
+                            has_on_update: true,
+                        },
+                    );
+                }
+            }
+        }
+        let uuid_by_class = node_scripts.iter()
             .map(|(uuid, md)| (md.id, *uuid))
             .collect();
 
-        self.scripts_metadata = Some(ScriptsMetadata { scripts, uuid_by_class });
+        self.scripts_metadata = Some(ScriptsMetadata { node_scripts, uuid_by_class, global_scripts });
     }
 }
 
@@ -117,12 +138,7 @@ pub fn extract_for_def(md: &NativeScriptMetadata) -> ScriptMetadata {
         .collect();
     ScriptMetadata {
         class,
-        kind: match md.kind {
-            NativeScriptKind::Node => ScriptKind::Node(
-                Uuid::parse_str(&uuid).unwrap(),
-            ),
-            NativeScriptKind::Global => ScriptKind::Global,
-        },
+        uuid: Uuid::parse_str(&uuid).unwrap(),
         fields,
         field_name_to_index,
     }

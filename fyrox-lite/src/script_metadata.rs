@@ -12,14 +12,14 @@ pub struct ScriptDefinition {
 #[derive(Debug, Clone)]
 pub struct ScriptMetadata {
     pub class: String,
-    pub kind: ScriptKind,
+    pub uuid: Uuid,
     pub fields: Vec<ScriptField>,
     pub field_name_to_index: HashMap<String, usize>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ScriptKind {
-    Node(Uuid),
+    Node,
     Global,
 }
 

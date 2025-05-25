@@ -974,6 +974,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "error"
+version = "0.1.0"
+dependencies = [
+ "to_vec",
+]
+
+[[package]]
 name = "executor-lua"
 version = "0.1.0"
 dependencies = [
@@ -1388,6 +1395,7 @@ name = "fyrox-lite"
 version = "0.1.0"
 dependencies = [
  "convert_case",
+ "error",
  "extend",
  "fyrox",
  "lite-macro",
@@ -1415,6 +1423,7 @@ name = "fyrox-lite-cs-lib"
 version = "0.1.0"
 dependencies = [
  "convert_case",
+ "error",
  "extend",
  "fyrox",
  "fyrox-lite",
