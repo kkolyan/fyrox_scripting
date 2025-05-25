@@ -154,12 +154,13 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
         .map(|(i, v)| (v.name.clone(), i))
         .collect();
     let kind =  match parent_class.unwrap() {
-        "Script" => ScriptKind::Node(uuid.unwrap()),
+        "Script" => ScriptKind::Node,
         "GlobalScript" => ScriptKind::Global,
         unknown => panic!("unknown ScriptKind constant: {:?}", unknown),
     };
     Ok(ScriptMetadata {
         class: class.unwrap(),
+        uuid: uuid.expect("missing uuid"),
         kind,
         fields,
         field_name_to_index,

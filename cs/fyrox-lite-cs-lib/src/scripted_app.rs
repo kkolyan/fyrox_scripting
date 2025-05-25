@@ -2,9 +2,7 @@ use std::{cell::RefCell, collections::HashMap};
 
 use convert_case::Casing;
 use fyrox::core::Uuid;
-use fyrox_lite::script_metadata::{
-    ScriptField, ScriptFieldValueType, ScriptMetadata,
-};
+use fyrox_lite::script_metadata::{ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata};
 use to_vec::ToVec;
 
 use crate::bindings_manual::{NativeBool, NativeClassId, NativeScriptAppFunctions, NativeScriptKind, NativeScriptMetadata, NativeValueType};
@@ -139,6 +137,10 @@ pub fn extract_for_def(md: &NativeScriptMetadata) -> ScriptMetadata {
     ScriptMetadata {
         class,
         uuid: Uuid::parse_str(&uuid).unwrap(),
+        kind: match md.kind {
+            NativeScriptKind::Node => ScriptKind::Node,
+            NativeScriptKind::Global => ScriptKind::Global,
+        },
         fields,
         field_name_to_index,
     }

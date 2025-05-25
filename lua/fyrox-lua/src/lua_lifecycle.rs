@@ -5,14 +5,14 @@ use crate::fyrox_lua_plugin::HotReload;
 use crate::fyrox_lua_plugin::LuaPlugin;
 use crate::fyrox_lua_plugin::PluginScriptList;
 use crate::generated::registry::register_classes;
-use crate::lua_lang::UnpackedScriptObjectVisit;
+use crate::lua_lang::{LuaLang, UnpackedScriptObjectVisit};
 use crate::lua_script_metadata::parse_file;
 use crate::lua_utils::log_error;
 use crate::script_class::ScriptClass;
 use crate::script_metadata::ScriptDefinition;
 use crate::script_metadata::ScriptKind;
 use crate::script_metadata::ScriptMetadata;
-use crate::script_object::ScriptObject;
+use crate::script_object::NodeScriptObject;
 use crate::script_object_residence::ScriptResidence;
 use crate::typed_userdata::TypedUserData;
 use crate::user_data_plus::Traitor;
@@ -36,6 +36,10 @@ use std::ops::Deref;
 use std::process::exit;
 use std::sync::Arc;
 use std::time::Duration;
+use fyrox_lite::global_script_object::ScriptObject;
+use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
+use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
+use crate::user_script_impl::UserScriptProxy;
 
 thread_local! {
     static LOADING_CLASS_NAME: RefCell<Option<String>> = Default::default();
@@ -124,16 +128,16 @@ pub(crate) fn load_script(
     class.def = Some(definition.clone());
 
     match definition.metadata.kind {
-        ScriptKind::Node(uuid) => {
+        ScriptKind::Node => {
             let addition_result = context
                 .serialization_context
                 .script_constructors
                 .add_custom(
-                    uuid,
+                    definition.metadata.uuid,
                     ScriptConstructor {
                         constructor: Box::new(move || {
                             Script::new(ExternalScriptProxy {
-                                data: ScriptResidence::Packed(ScriptObject::new(&definition)),
+                                data: ScriptResidence::Packed(NodeScriptObject::new(&definition)),
                                 name: definition.metadata.class.to_string(),
                             })
                         }),
@@ -147,15 +151,9 @@ pub(crate) fn load_script(
             }
         }
         ScriptKind::Global => {
-            plugin_scripts.inner_mut().push(ExternalScriptProxy {
+            plugin_scripts.inner_mut().push(ExternalGlobalScriptProxy {
                 name: name.to_string(),
-                data: ScriptResidence::Unpacked(UnpackedScriptObjectVisit(SendWrapper::new(
-                    TypedUserData::new(
-                        lua_vm()
-                            .create_userdata(Traitor::new(ScriptObject::new(&definition)))
-                            .unwrap(),
-                    ),
-                ))),
+                data: GlobalScriptResidence::Packed(ScriptObject::new(&definition)),
             });
         }
     }
@@ -250,21 +248,45 @@ fn expose_os_exit(vm: &mut Lua) {
         .unwrap();
 }
 
-pub(crate) fn invoke_callback<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(
+pub(crate) fn invoke_callback_global<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(
+    data: &mut GlobalScriptResidence<LuaLang>,
+    ctx: &mut dyn UnsafeAsUnifiedContext<'a, 'b, 'c>,
+    callback_name: &str,
+    args: impl FnOnce() -> mlua::Result<A>,
+) {
+    let script_object_ud = TypedUserData::clone(
+        &data
+            .inner_unpacked()
+            .expect("WTF, it's guaranteed to be unpacked here")
+            .0,
+    );
+    invoke_callback_internal(script_object_ud, ctx, callback_name, args)
+}
+
+pub(crate) fn invoke_callback_node<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(
     data: &mut ScriptResidence,
     ctx: &mut dyn UnsafeAsUnifiedContext<'a, 'b, 'c>,
     callback_name: &str,
     args: impl FnOnce() -> mlua::Result<A>,
 ) {
-    without_script_context(ctx, || {
-        let script_object_ud = TypedUserData::clone(
-            &data
-                .inner_unpacked()
-                .expect("WTF, it's guaranteed to be unpacked here")
-                .0,
-        );
+    let script_object_ud = TypedUserData::clone(
+        &data
+            .inner_unpacked()
+            .expect("WTF, it's guaranteed to be unpacked here")
+            .0,
+    );
+    invoke_callback_internal(script_object_ud, ctx, callback_name, args)
+}
 
-        let class_name = script_object_ud.borrow().unwrap().def.metadata.class.clone();
+pub(crate) fn invoke_callback_internal<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(
+    script_object_ud: TypedUserData<'lua, UserScriptProxy>,
+    ctx: &mut dyn UnsafeAsUnifiedContext<'a, 'b, 'c>,
+    callback_name: &str,
+    args: impl FnOnce() -> mlua::Result<A>,
+) {
+    without_script_context(ctx, || {
+
+        let class_name = script_object_ud.borrow().unwrap().as_script_object().def.metadata.class.clone();
         // TODO optimize me
         let class = LUA
             .with_borrow(|it| it.unwrap())

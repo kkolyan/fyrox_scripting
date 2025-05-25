@@ -10,7 +10,7 @@ use gen_common::{
 use gen_common::properties::{Getter, Setter};
 use super::expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua};
 
-pub const USER_SCRIPT_IMPL: &str = "TypedUserData<Traitor<ScriptObject>>";
+pub const USER_SCRIPT_IMPL: &str = "TypedUserData<UserScriptProxy>";
 
 pub fn generate_methods(
     s: &mut String,

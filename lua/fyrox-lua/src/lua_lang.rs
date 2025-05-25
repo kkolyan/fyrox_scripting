@@ -5,11 +5,12 @@ use fyrox::core::{visitor::Visit, Uuid};
 use fyrox_lite::{script_object::Lang, script_object_residence::uuid_of_script};
 use mlua::{Table, Value};
 use send_wrapper::SendWrapper;
-
 use crate::{
-    lua_lifecycle::lua_vm, script_object::ScriptObject, script_object_residence::ScriptResidence,
+    lua_lifecycle::lua_vm, script_object::NodeScriptObject, script_object_residence::ScriptResidence,
     typed_userdata::TypedUserData, user_data_plus::Traitor,
 };
+use crate::script_object::ScriptObject;
+use crate::user_script_impl::UserScriptProxy;
 
 #[derive(Debug, Clone)]
 pub struct LuaLang;
@@ -18,6 +19,7 @@ impl Lang for LuaLang {
     type String<'a> = mlua::String<'a>;
     type RuntimePin = Option<String>;
     type UnpackedScriptObject = UnpackedScriptObjectVisit;
+    type UnpackedGlobalScriptObject = UnpackedScriptObjectVisit;
 
     fn drop_runtime_pin(runtime_pin: &mut Self::RuntimePin) {
         let Some(runtime_pin) = runtime_pin else {
@@ -55,20 +57,41 @@ impl Lang for LuaLang {
         // take ScriptObject out of Lua VM and destroy it right now to prevent nested destructors
         // to be invoked at random moment in future by Lua GC, anth thus ruin Hit Reload
         if let Ok(it) = TypedUserData::take(script.0.deref_mut()) {
-            let _s: ScriptObject = it.into_inner();
+            let _s: NodeScriptObject = it.to_node().unwrap();
         }
+    }
+    fn drop_script_object_to_prevent_delayed_destructor_global(script: &mut Self::UnpackedGlobalScriptObject) {
+        // take ScriptObject out of Lua VM and destroy it right now to prevent nested destructors
+        // to be invoked at random moment in future by Lua GC, anth thus ruin Hit Reload
+        if let Ok(it) = TypedUserData::take(script.0.deref_mut()) {
+            let _s: ScriptObject = it.to_global().unwrap();
+        }
+
     }
 
     fn id_of(script: &Self::UnpackedScriptObject) -> Uuid {
-        uuid_of_script(&script.0.borrow().unwrap())
+        uuid_of_script(&script.0.borrow().unwrap().as_node().unwrap().obj)
+    }
+
+    fn id_of_global(script: &Self::UnpackedGlobalScriptObject) -> Uuid {
+        uuid_of_script(&script.0.borrow().unwrap().as_global().unwrap())
     }
 
     fn unpack_node_script(
         script: &fyrox_lite::script_object::NodeScriptObject<Self>,
     ) -> Result<Self::UnpackedScriptObject, String> {
         let so = lua_vm()
-            .create_userdata(Traitor::new(script.clone()))
-            .map(TypedUserData::<Traitor<ScriptObject>>::new)
+            .create_userdata(UserScriptProxy::Node(script.clone()))
+            .map(TypedUserData::<UserScriptProxy>::new)
+            .map(SendWrapper::new)
+            .map(UnpackedScriptObjectVisit);
+        so.map_err(|it| it.to_string())
+    }
+
+    fn unpack_global_script(script: &fyrox_lite::global_script_object::ScriptObject<Self>) -> Result<Self::UnpackedGlobalScriptObject, String> {
+        let so = lua_vm()
+            .create_userdata(UserScriptProxy::Global(script.clone()))
+            .map(TypedUserData::<UserScriptProxy>::new)
             .map(SendWrapper::new)
             .map(UnpackedScriptObjectVisit);
         so.map_err(|it| it.to_string())
@@ -76,7 +99,7 @@ impl Lang for LuaLang {
 }
 
 pub struct UnpackedScriptObjectVisit(
-    pub SendWrapper<TypedUserData<'static, Traitor<ScriptObject>>>,
+    pub SendWrapper<TypedUserData<'static, UserScriptProxy>>,
 );
 
 impl Debug for UnpackedScriptObjectVisit {
@@ -91,6 +114,11 @@ impl Visit for UnpackedScriptObjectVisit {
         name: &str,
         visitor: &mut fyrox::core::visitor::Visitor,
     ) -> fyrox::core::visitor::VisitResult {
-        self.0.borrow_mut().unwrap().visit(name, visitor)
+        let mut ref_mut = self.0.borrow_mut().unwrap();
+        match ref_mut.deref_mut() {
+            UserScriptProxy::Global(it) => it.visit(name, visitor),
+            UserScriptProxy::Node(it) => it.visit(name, visitor),
+        }
+        
     }
 }

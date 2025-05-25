@@ -1,3 +1,4 @@
+---@uuid f5f9c3b0-5e5b-4cf3-ae27-649ba3a7b56a
 ---@class Game : GlobalScript
 ---@field player Node
 ---@field beacons Vector3[]

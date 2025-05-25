@@ -19,6 +19,7 @@ use crate::{
     script_object::ScriptObject,
     typed_userdata::TypedUserData,
     user_data_plus::{FyroxUserData, Traitor, UserDataClass},
+    user_script_impl::UserScriptProxy,
 };
 
 impl FyroxUserData for fyrox_lite::lite_prefab::LitePrefab {
@@ -39,7 +40,7 @@ impl FyroxUserData for fyrox_lite::lite_prefab::LitePrefab {
                 let position = position.borrow()?.inner().clone().into();
                 let orientation = orientation.borrow()?.inner().clone().into();
                 let _stub = Default::default();
-                let ret = this.instantiate_at::<TypedUserData<Traitor<ScriptObject>>>(
+                let ret = this.instantiate_at::<TypedUserData<UserScriptProxy>>(
                     position,
                     orientation,
                     _stub,

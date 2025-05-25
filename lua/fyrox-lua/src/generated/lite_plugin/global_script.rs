@@ -19,6 +19,7 @@ use crate::{
     script_object::ScriptObject,
     typed_userdata::TypedUserData,
     user_data_plus::{FyroxUserData, Traitor, UserDataClass},
+    user_script_impl::UserScriptProxy,
 };
 
 impl FyroxUserData for fyrox_lite::lite_plugin::LiteGlobalScript {
@@ -36,7 +37,7 @@ impl FyroxUserData for fyrox_lite::lite_plugin::LiteGlobalScript {
             let class_id = class_id.to_str()?.to_string();
             let _stub = Default::default();
             let ret = fyrox_lite::lite_plugin::LiteGlobalScript::get::<
-                TypedUserData<Traitor<ScriptObject>>,
+                TypedUserData<UserScriptProxy>,
             >(class_id, _stub);
             let ret = match ret {
                 Ok(ret) => ret,

@@ -13,6 +13,7 @@ pub struct ScriptDefinition {
 pub struct ScriptMetadata {
     pub class: String,
     pub uuid: Uuid,
+    pub kind: ScriptKind,
     pub fields: Vec<ScriptField>,
     pub field_name_to_index: HashMap<String, usize>,
 }

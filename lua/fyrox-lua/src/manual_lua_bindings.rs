@@ -3,8 +3,9 @@ use fyrox_lite::{lite_node::LiteNode, lite_prefab::LitePrefab, lite_ui::LiteUiNo
 use fyrox_lite_math::lite_math::{LiteQuaternion, LiteVector2, LiteVector2I, LiteVector3};
 use mlua::{MetaMethod, String as LuaString, Table, UserData, UserDataRef, Value};
 
-use crate::{debug::VerboseLuaValue, lua_error, lua_utils::{OptionX, ValueX}, script_class::ScriptClass, script_object::{ScriptFieldValue, ScriptObject}, user_data_plus::{FyroxUserData, Traitor}};
+use crate::{debug::VerboseLuaValue, lua_error, lua_utils::{OptionX, ValueX}, script_class::ScriptClass, script_object::{ScriptFieldValue, NodeScriptObject}, user_data_plus::{FyroxUserData, Traitor}};
 use crate::lua_lang::LuaLang;
+use crate::user_script_impl::UserScriptProxy;
 
 impl UserData for ScriptClass {
     fn add_methods<'lua, M: mlua::UserDataMethods<'lua, Self>>(methods: &mut M) {
@@ -31,15 +32,22 @@ impl UserData for ScriptClass {
 }
 
 
-impl UserData for Traitor<ScriptObject> {
+impl UserData for UserScriptProxy {
     fn add_fields<'lua, F: mlua::UserDataFields<'lua, Self>>(fields: &mut F) {
         fields.add_field_method_get("node", |_lua, this| {
-            Ok(Traitor::new(LiteNode::new(this.node)))
+            match this {
+                UserScriptProxy::Global(_) => {
+                    Err(lua_error!("field not found: \"node\""))
+                }
+                UserScriptProxy::Node(this) => {
+                    Ok(Traitor::new(LiteNode::new(this.node)))
+                }
+            }
         });
     }
     fn add_methods<'lua, M: mlua::UserDataMethods<'lua, Self>>(methods: &mut M) {
         methods.add_meta_method(MetaMethod::ToString.name(), |_lua, this, _args: ()| {
-            Ok(format!("{:?}", this))
+            Ok(format!("{:?}", this.as_script_object()))
         });
         methods.add_meta_function(
             MetaMethod::Index.name(),
@@ -49,15 +57,16 @@ impl UserData for Traitor<ScriptObject> {
                     return this.raw_get(key);
                 }
                 if let Value::UserData(this) = &this {
-                    if let Ok(this) = this.borrow::<Traitor<ScriptObject>>() {
+                    if let Ok(this) = this.borrow::<UserScriptProxy>() {
                         let field_name = key.to_string_lossy();
                         let field_index = this
+                            .as_script_object()
                             .def
                             .metadata
                             .field_name_to_index
                             .get(field_name.as_ref());
                         if let Some(field_index) = field_index {
-                            let value = &this.values[*field_index];
+                            let value = &this.as_script_object().values[*field_index];
                             let result = match value {
                                 ScriptFieldValue::f32(it) => Value::Number(*it as f64),
                                 ScriptFieldValue::f64(it) => Value::Number(*it),
@@ -105,7 +114,7 @@ impl UserData for Traitor<ScriptObject> {
 
                         let class = lua
                             .globals()
-                            .get::<_, Option<UserDataRef<ScriptClass>>>(this.def.metadata.class.as_str())?;
+                            .get::<_, Option<UserDataRef<ScriptClass>>>(this.as_script_object().def.metadata.class.as_str())?;
                         if let Some(class) = class {
                             let value = class.table.get(field_name.as_ref());
                             if let Some(value) = value {
@@ -116,7 +125,7 @@ impl UserData for Traitor<ScriptObject> {
                         }
                         return Err(lua_error!(
                             "cannot index {} with \"{}\": no such method or field",
-                            this.def.metadata.class,
+                            this.as_script_object().def.metadata.class,
                             key.to_string_lossy()
                         ));
                     }
@@ -133,10 +142,11 @@ impl UserData for Traitor<ScriptObject> {
                 }
                 if let Value::UserData(this) = &this {
                     // working with script instances
-                    if let Ok(mut this) = this.borrow_mut::<Traitor<ScriptObject>>() {
+                    if let Ok(mut this) = this.borrow_mut::<UserScriptProxy>() {
                         let field_name = key.to_string_lossy();
-                        let class = this.def.metadata.class.clone();
+                        let class = this.as_script_object().def.metadata.class.clone();
                         let field_index = *this
+                            .as_script_object()
                             .def
                             .metadata
                             .field_name_to_index
@@ -144,7 +154,7 @@ impl UserData for Traitor<ScriptObject> {
                             .lua_ok_or_else(|| {
                                 lua_error!("unknown field {}.`{}`", class, field_name)
                             })?;
-                        let value_storage = &mut this.values[field_index];
+                        let value_storage = &mut this.as_script_object_mut().values[field_index];
                         match value_storage {
                             ScriptFieldValue::f32(it) => {
                                 *it = value.as_f64_tolerant().ok_or_else(|| {

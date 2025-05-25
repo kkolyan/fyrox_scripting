@@ -1,6 +1,6 @@
 use crate::external_script_proxy::ExternalScriptProxy;
-use crate::lua_lifecycle::create_plugin;
-use crate::lua_lifecycle::invoke_callback;
+use crate::lua_lifecycle::{create_plugin, invoke_callback_global};
+use crate::lua_lifecycle::invoke_callback_node;
 use crate::lua_lifecycle::load_script;
 use crate::lua_lifecycle::lua_vm;
 use fyrox::core::log::Log;
@@ -23,6 +23,7 @@ use mlua::Value;
 use std::cell::RefCell;
 use std::fmt::Debug;
 use fyrox_lite::lite_input::Input;
+use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
 
 #[derive(Visit, Reflect)]
 pub struct LuaPlugin {
@@ -39,6 +40,7 @@ pub struct LuaPlugin {
     #[reflect(hidden)]
     pub need_reload: bool,
 
+    #[reflect(hidden)]
     pub scripts: RefCell<PluginScriptList>,
 
     #[visit(skip)]
@@ -107,11 +109,12 @@ impl Plugin for LuaPlugin {
         }
     }
 
-    fn init(&mut self, scene_path: Option<&str>, mut context: PluginContext) {
+    fn init(&mut self, scene_path: Option<&str>, mut ctx: PluginContext) {
         Input::init_thread_local_state();
 
         for script in self.scripts.borrow_mut().0.iter_mut() {
-            invoke_callback(&mut script.data,&mut context, "init", || {
+            script.data.ensure_unpacked(&mut self.failed);
+            invoke_callback_global(&mut script.data, &mut ctx, "init", || {
                 if let Some(scene_path) = scene_path {
                     Ok(Value::String(lua_vm().create_string(scene_path)?))
                 } else {
@@ -123,7 +126,8 @@ impl Plugin for LuaPlugin {
 
     fn update(&mut self, context: &mut PluginContext) {
         for script in self.scripts.borrow_mut().0.iter_mut() {
-            invoke_callback(&mut script.data, context, "update", || Ok(()));
+            script.data.ensure_unpacked(&mut self.failed);
+            invoke_callback_global(&mut script.data, context, "update", || Ok(()));
         }
     }
 
@@ -147,13 +151,13 @@ impl Plugin for LuaPlugin {
 }
 
 #[derive(Debug, Default, Clone)]
-pub struct PluginScriptList(Vec<ExternalScriptProxy>);
+pub struct PluginScriptList(Vec<ExternalGlobalScriptProxy>);
 
 impl PluginScriptList {
-    pub fn inner(&self) -> &Vec<ExternalScriptProxy> {
+    pub fn inner(&self) -> &Vec<ExternalGlobalScriptProxy> {
         &self.0
     }
-    pub fn inner_mut(&mut self) -> &mut Vec<ExternalScriptProxy> {
+    pub fn inner_mut(&mut self) -> &mut Vec<ExternalGlobalScriptProxy> {
         &mut self.0
     }
 }
@@ -169,27 +173,27 @@ impl Visit for PluginScriptList {
     }
 }
 
-impl Reflect for PluginScriptList {
-    wrapper_reflect! {0}
-
-    fn source_path() -> &'static str
-    where
-        Self: Sized,
-    {
-        file!()
-    }
-
-    fn assembly_name(&self) -> &'static str {
-        env!("CARGO_PKG_NAME")
-    }
-
-    fn type_assembly_name() -> &'static str
-    where
-        Self: Sized,
-    {
-        env!("CARGO_PKG_NAME")
-    }
-}
+// impl Reflect for PluginScriptList {
+//     wrapper_reflect! {0}
+//
+//     fn source_path() -> &'static str
+//     where
+//         Self: Sized,
+//     {
+//         file!()
+//     }
+//
+//     fn assembly_name(&self) -> &'static str {
+//         env!("CARGO_PKG_NAME")
+//     }
+//
+//     fn type_assembly_name() -> &'static str
+//     where
+//         Self: Sized,
+//     {
+//         env!("CARGO_PKG_NAME")
+//     }
+// }
 
 #[extend::ext]
 pub impl PluginsRefMut<'_> {

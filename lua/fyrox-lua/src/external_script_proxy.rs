@@ -1,6 +1,6 @@
 use super::script_object_residence::ScriptResidence;
 use crate::fyrox_lua_plugin::PluginsRefMut_Ext;
-use crate::lua_lifecycle::invoke_callback;
+use crate::lua_lifecycle::invoke_callback_node;
 use crate::user_data_plus::Traitor;
 use fyrox::core::reflect::prelude::*;
 use fyrox::core::type_traits::prelude::*;
@@ -24,7 +24,7 @@ pub struct ExternalScriptProxy {
 impl ScriptTrait for ExternalScriptProxy {
     fn on_init(&mut self, ctx: &mut ScriptContext) {
         self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
-        invoke_callback(
+        invoke_callback_node(
             &mut self.data,
             ctx,
             "on_init",
@@ -34,7 +34,7 @@ impl ScriptTrait for ExternalScriptProxy {
 
     fn on_start(&mut self, ctx: &mut ScriptContext) {
         self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
-        invoke_callback(
+        invoke_callback_node(
             &mut self.data,
             ctx,
             "on_start",
@@ -43,7 +43,7 @@ impl ScriptTrait for ExternalScriptProxy {
     }
 
     fn on_deinit(&mut self, ctx: &mut fyrox::script::ScriptDeinitContext) {
-        invoke_callback(
+        invoke_callback_node(
             &mut self.data,
             ctx,
             "on_deinit",
@@ -54,7 +54,7 @@ impl ScriptTrait for ExternalScriptProxy {
     fn on_update(&mut self, ctx: &mut ScriptContext) {
         self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
         let dt = ctx.dt;
-        invoke_callback(
+        invoke_callback_node(
             &mut self.data,
             ctx,
             "on_update",
@@ -69,7 +69,7 @@ impl ScriptTrait for ExternalScriptProxy {
     ) {
         if let Some(lua_message) = message.downcast_ref::<Traitor<SendWrapper<Value>>>() {
             self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
-            invoke_callback(
+            invoke_callback_node(
                 &mut self.data,
                 ctx,
                 "on_message",

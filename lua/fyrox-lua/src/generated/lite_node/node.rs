@@ -19,6 +19,7 @@ use crate::{
     script_object::ScriptObject,
     typed_userdata::TypedUserData,
     user_data_plus::{FyroxUserData, Traitor, UserDataClass},
+    user_script_impl::UserScriptProxy,
 };
 
 impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
@@ -40,7 +41,7 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
 
         methods.add_method_mut("as_rigid_body", |lua, this, (): ()| {
             let _stub = Default::default();
-            let ret = this.as_rigid_body::<TypedUserData<Traitor<ScriptObject>>>(_stub);
+            let ret = this.as_rigid_body::<TypedUserData<UserScriptProxy>>(_stub);
             let ret = match ret {
                 Ok(ret) => {
                     if let Some(ret) = ret {
@@ -72,15 +73,15 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
                 let payload = Traitor::new(send_wrapper::SendWrapper::new(unsafe {
                     std::mem::transmute::<mlua::Value<'_>, mlua::Value<'static>>(payload)
                 }));
-                let ret = this
-                    .send_hierarchical::<TypedUserData<Traitor<ScriptObject>>>(routing, payload);
+                let ret =
+                    this.send_hierarchical::<TypedUserData<UserScriptProxy>>(routing, payload);
                 let ret = ret;
                 Ok(ret)
             },
         );
         methods.add_method_mut("subscribe_to", |lua, this, (): ()| {
             let _stub = Default::default();
-            let ret = this.subscribe_to::<TypedUserData<Traitor<ScriptObject>>>(_stub);
+            let ret = this.subscribe_to::<TypedUserData<UserScriptProxy>>(_stub);
             let ret = ret;
             Ok(ret)
         });
@@ -96,7 +97,7 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
         methods.add_method_mut("add_script", |lua, this, (class_id): (mlua::String)| {
             let class_id = class_id.to_str()?.to_string();
             let _stub = Default::default();
-            let ret = this.add_script::<TypedUserData<Traitor<ScriptObject>>>(class_id, _stub);
+            let ret = this.add_script::<TypedUserData<UserScriptProxy>>(class_id, _stub);
             let ret = match ret {
                 Ok(ret) => ret,
                 Err(err) => return Err(err),
@@ -106,7 +107,7 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
         methods.add_method_mut("find_script", |lua, this, (class_id): (mlua::String)| {
             let class_id = class_id.to_str()?.to_string();
             let _stub = Default::default();
-            let ret = this.find_script::<TypedUserData<Traitor<ScriptObject>>>(class_id, _stub);
+            let ret = this.find_script::<TypedUserData<UserScriptProxy>>(class_id, _stub);
             let ret = match ret {
                 Ok(ret) => {
                     if let Some(ret) = ret {
@@ -132,7 +133,7 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
     }
     fn add_instance_fields<'lua, F: mlua::UserDataFields<'lua, Traitor<Self>>>(fields: &mut F) {
         fields.add_field_method_get("name", |lua, this| {
-            let value = this.get_name::<TypedUserData<Traitor<ScriptObject>>>(());
+            let value = this.get_name::<TypedUserData<UserScriptProxy>>(());
             Ok(match value {
                 Ok(value) => value,
                 Err(err) => return Err(err),
@@ -181,7 +182,7 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
         fields.add_field_method_set(
             "local_position",
             |lua, this, value: TypedUserData<Traitor<fyrox_lite_math::lite_math::LiteVector3>>| {
-                this.set_local_position::<TypedUserData<Traitor<ScriptObject>>>(
+                this.set_local_position::<TypedUserData<UserScriptProxy>>(
                     value.borrow()?.inner().clone().into(),
                     (),
                 );
@@ -189,7 +190,7 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
             },
         );
         fields.add_field_method_set("local_rotation", |lua, this, value: TypedUserData<Traitor<fyrox_lite_math::lite_math::LiteQuaternion>>| {
-                    this.set_local_rotation::<TypedUserData<Traitor<ScriptObject>>>(value.borrow()?.inner().clone().into(), ());
+                    this.set_local_rotation::<TypedUserData<UserScriptProxy>>(value.borrow()?.inner().clone().into(), ());
                     Ok(())
                 });
         fields.add_field_method_set("tag", |lua, this, value: mlua::String| {

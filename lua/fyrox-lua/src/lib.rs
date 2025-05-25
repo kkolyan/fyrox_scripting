@@ -14,12 +14,15 @@ pub(crate) mod typed_userdata;
 pub(crate) mod user_data_plus;
 pub(crate) mod user_script_impl;
 pub(crate) mod lua_script_metadata;
+mod user_script_impl_fyrox_traits;
+mod global_external_script_proxy;
 
 pub use fyrox_lua_plugin::LuaPlugin;
 
 pub(crate) mod script_object {
     use crate::lua_lang::LuaLang;
 
-    pub type ScriptObject = fyrox_lite::script_object::NodeScriptObject<LuaLang>;
+    pub type NodeScriptObject = fyrox_lite::script_object::NodeScriptObject<LuaLang>;
+    pub type ScriptObject = fyrox_lite::global_script_object::ScriptObject<LuaLang>;
     pub type ScriptFieldValue = fyrox_lite::script_object::ScriptFieldValue<LuaLang>;
 }

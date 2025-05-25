@@ -27,6 +27,7 @@ pub fn generate_engine_class_bindings(class: &EngineClass, ctx: &GenerationConte
             user_data_plus::{FyroxUserData, Traitor, UserDataClass},
             script_object::ScriptObject,
             typed_userdata::TypedUserData,
+            user_script_impl::UserScriptProxy,
         };
 
         impl FyroxUserData for ${rust_struct_path} {
