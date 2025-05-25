@@ -1,10 +1,10 @@
 
 [workspace]
 members = [
-    "langs/lua/editor-lua",
-    "langs/lua/executor-lua",
+	"langs/lua/fyroxed-lua",
+	"langs/lua/fyrox-lite-lua",
     "langs/lua/luagen-lib",
-    "langs/lua/fyrox-lua",
+	"langs/lua/fyrox-lite-lua-lib",
 	"fyrox-lite",
 	"lite-macro",
 	"lite-macro-lib",
@@ -25,7 +25,7 @@ exclude = ["mlua"]
 
 [workspace.dependencies]
 luagen-lib = { path = "langs/lua/luagen-lib" }
-fyrox-lua = { path = "langs/lua/fyrox-lua" }
+fyrox-lite-lua-lib = { path = "langs/lua/fyrox-lite-lua-lib" }
 fyrox-lite-cs = { path = "langs/cs/fyrox-lite-cs" }
 fyrox-lite-cs-lib = { path = "langs/cs/fyrox-lite-cs-lib" }
 csgen-lib = { path = "langs/cs/csgen-lib" }

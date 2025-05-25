@@ -13,7 +13,7 @@ pub fn write_annotations(annotations: HierarchicalCodeBase) {
 }
 
 pub fn write_bindings(bindings: HierarchicalCodeBase) {
-    let target_path = "langs/lua/fyrox-lua/src/generated";
+    let target_path = "langs/lua/fyrox-lite-lua-lib/src/generated";
     println!("clearing {}", target_path);
     let _ = fs::remove_dir_all(target_path);
     println!("writing bindings to {}", target_path);

@@ -917,15 +917,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "75b325c5dbd37f80359721ad39aca5a29fb04c89279657cffdda8736d0c0b9d2"
 
 [[package]]
-name = "editor-lua"
-version = "0.1.0"
-dependencies = [
- "fyrox",
- "fyrox-lua",
- "fyroxed_base",
-]
-
-[[package]]
 name = "either"
 version = "1.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -978,16 +969,6 @@ name = "error"
 version = "0.1.0"
 dependencies = [
  "to_vec",
-]
-
-[[package]]
-name = "executor-lua"
-version = "0.1.0"
-dependencies = [
- "fyrox",
- "fyrox-lua",
- "puffin",
- "puffin_http",
 ]
 
 [[package]]
@@ -1432,16 +1413,17 @@ dependencies = [
 ]
 
 [[package]]
-name = "fyrox-lite-math"
+name = "fyrox-lite-lua"
 version = "0.1.0"
 dependencies = [
  "fyrox",
- "fyrox-lite",
- "lite-macro",
+ "fyrox-lite-lua-lib",
+ "puffin",
+ "puffin_http",
 ]
 
 [[package]]
-name = "fyrox-lua"
+name = "fyrox-lite-lua-lib"
 version = "0.1.0"
 dependencies = [
  "convert_case",
@@ -1452,6 +1434,15 @@ dependencies = [
  "fyrox-lite-math",
  "mlua",
  "send_wrapper",
+]
+
+[[package]]
+name = "fyrox-lite-math"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "fyrox-lite",
+ "lite-macro",
 ]
 
 [[package]]
@@ -1567,6 +1558,15 @@ dependencies = [
  "native-dialog",
  "open",
  "uuid",
+]
+
+[[package]]
+name = "fyroxed-lua"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "fyrox-lite-lua-lib",
+ "fyroxed_base",
 ]
 
 [[package]]

@@ -29,7 +29,7 @@ fn main() {
     // Static linking.
     #[cfg(not(feature = "dylib"))]
     {
-        if let Err(err) = editor.add_dynamic_plugin_custom(fyrox_lua::LuaPlugin::with_hot_reload(true)) {
+        if let Err(err) = editor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::with_hot_reload(true)) {
             Log::err(err);
         }
 
@@ -47,7 +47,7 @@ impl EditorPlugin for LuaPluginRefreshOnFocus {
 
     fn on_resumed(&mut self, #[allow(unused_variables)] editor: &mut Editor) {
         for it in editor.engine.plugins_mut() {
-            if let Some(it) = it.cast_mut::<fyrox_lua::LuaPlugin>() {
+            if let Some(it) = it.cast_mut::<fyrox_lite_lua_lib::LuaPlugin>() {
                 it.check_for_script_changes();
             }
         }

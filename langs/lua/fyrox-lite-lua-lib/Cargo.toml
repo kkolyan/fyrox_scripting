@@ -1,5 +1,5 @@
 [package]
-name = "fyrox-lua"
+name = "fyrox-lite-lua-lib"
 version = "0.1.0"
 edition = "2021"
 

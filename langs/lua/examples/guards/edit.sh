@@ -1,3 +1,3 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-cargo run --release -p editor-lua --manifest-path ../../../../Cargo.toml
+cargo run --release -p fyroxed-lua --manifest-path ../../../../Cargo.toml
