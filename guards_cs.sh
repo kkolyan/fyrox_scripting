@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-./cs/examples/Guards/play.sh
+./langs/cs/examples/Guards/play.sh

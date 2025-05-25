@@ -19,8 +19,8 @@ This project also provides a framework to maintain multiple languages implementa
 
 ## Demo
 There is a game that written in different scripting languages to demonstrate the currently Lua-exposed subset of Fyrox API.
-* [demo game in Lua](lua/examples/guards)
-* [the same demo game in C#](cs/examples/Guards)
+* [demo game in Lua](langs/lua/examples/guards)
+* [the same demo game in C#](langs/cs/examples/Guards)
 * [the same demo reference implementation in Rust (without Lite API)](https://github.com/kkolyan/fyrox_guards)
 
 ## User Guide
@@ -36,7 +36,7 @@ When this project is released, this is how games should be made:
 6. Run a game using a `Fyrox Executor $Lang` (from the Fyrox Lite Toolkit), if you like to play without editor.
 
 ### Current state
-1. Subset of exposed Fyrox API is pretty limited: input, messages, working with scene graph, prefab instantiation, basic physics, basic UI Text. Check out [Lua Annotations](lua/annotations) or  for details. Though, that's already enough for gameplay prototyping.
+1. Subset of exposed Fyrox API is pretty limited: input, messages, working with scene graph, prefab instantiation, basic physics, basic UI Text. Check out [Lua Annotations](langs/lua/annotations) or  for details. Though, that's already enough for gameplay prototyping.
 2. There is only `Lua` and `C#` languages support currently.
 3. Hot-reload supported for Lua. In-editor hot-reload enabled by default (affects list of scripts and available fields in inspector). In-game hot-reload allows to write a game literally when playing it, but it's fundamentally error-prone and requires a skill to be used with convenience, so it's disabled by default and can be enabled with LuaPlugin constructor parameter. Hot-reload check is triggered when window is switched back to editor (or game, if enabled).
 4. There is no existing pre-built toolkit yet, so editor and executor should be run from the source code (which is pretty easy actually - see instruction below).
@@ -51,13 +51,13 @@ When this project is released, this is how games should be made:
 6. Run game without editor: `cargo run --release -p executor-lua --manifest-path $FYROX_LITE_HOME/Cargo.toml`.
 
 ### How to write scripts in Lua
-Check out [demo game](lua/examples/guards).
+Check out [demo game](langs/lua/examples/guards).
 
 There are two kind of scripts:
-1. Node scripts (for instance [Bullet.lua](lua/examples/guards/scripts/Bullet.lua)), that in general replicates [Fyrox Scripts](https://fyrox-book.github.io/scripting/script.html). They can be attached to nodes in scene editor and configured via inspector.
-2. Global scripts (for instance [Game.lua](lua/examples/guards/scripts/Game.lua)). These scripts purpose to load scene initially and share global state between node scripts. It is somewhat close to [Fyrox Plugin](https://fyrox-book.github.io/scripting/plugin.html), but without technical things like scripts registration.
+1. Node scripts (for instance [Bullet.lua](langs/lua/examples/guards/scripts/Bullet.lua)), that in general replicates [Fyrox Scripts](https://fyrox-book.github.io/scripting/script.html). They can be attached to nodes in scene editor and configured via inspector.
+2. Global scripts (for instance [Game.lua](langs/lua/examples/guards/scripts/Game.lua)). These scripts purpose to load scene initially and share global state between node scripts. It is somewhat close to [Fyrox Plugin](https://fyrox-book.github.io/scripting/plugin.html), but without technical things like scripts registration.
 
-The [Lua Annotations](lua/annotations), besides being documentation of sorts, also proides intellisense for VSCode (code completion, type checking). Be sure they are in scope of your project for this to work. Note that even though annotations are Lua files, they are not supposed to be executed, so do not place them in `scripts` directory.
+The [Lua Annotations](langs/lua/annotations), besides being documentation of sorts, also proides intellisense for VSCode (code completion, type checking). Be sure they are in scope of your project for this to work. Note that even though annotations are Lua files, they are not supposed to be executed, so do not place them in `scripts` directory.
 
 ## For contributors
 

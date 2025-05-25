@@ -12,8 +12,8 @@ Explored Fyrox APIs:
 # How to run a game
 ```sh
 git clone --recursive https://github.com/kkolyan/fyrox_lite
-chmod +x lua/examples/guards/play.sh
-./cs/examples/Guards/play.sh
+chmod +x langs/lua/examples/guards/play.sh
+./langs/cs/examples/Guards/play.sh
 ```
 
 # How to play

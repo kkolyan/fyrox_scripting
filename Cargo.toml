@@ -1,10 +1,10 @@
 
 [workspace]
 members = [
-	"lua/editor-lua",
-	"lua/executor-lua",
-	"lua/luagen-lib",
-	"lua/fyrox-lua",
+    "langs/lua/editor-lua",
+    "langs/lua/executor-lua",
+    "langs/lua/luagen-lib",
+    "langs/lua/fyrox-lua",
 	"fyrox-lite",
 	"lite-macro",
 	"lite-macro-lib",
@@ -13,22 +13,22 @@ members = [
 	"lite-model",
 	"lite-parser",
 	"tools",
-	"cs/fyrox-lite-cs",
-	"cs/csgen-lib",
+    "langs/cs/fyrox-lite-cs",
+    "langs/cs/csgen-lib",
 	"gen-common",
-	"cs/fyrox-lite-cs-lib",
-	"cs/fyroxed-cs",
+    "langs/cs/fyrox-lite-cs-lib",
+    "langs/cs/fyroxed-cs",
 	"error",
 ]
 resolver = "2"
 exclude = ["mlua"]
 
 [workspace.dependencies]
-luagen-lib = { path = "lua/luagen-lib" }
-fyrox-lua = { path = "lua/fyrox-lua"}
-fyrox-lite-cs = { path = "cs/fyrox-lite-cs" }
-fyrox-lite-cs-lib = { path = "cs/fyrox-lite-cs-lib"}
-csgen-lib = { path = "cs/csgen-lib" }
+luagen-lib = { path = "langs/lua/luagen-lib" }
+fyrox-lua = { path = "langs/lua/fyrox-lua" }
+fyrox-lite-cs = { path = "langs/cs/fyrox-lite-cs" }
+fyrox-lite-cs-lib = { path = "langs/cs/fyrox-lite-cs-lib" }
+csgen-lib = { path = "langs/cs/csgen-lib" }
 fyrox-lite = {path = "fyrox-lite", default-features = false}
 fyrox-lite-math = {path = "fyrox-lite-math", default-features = false}
 fyrox-lite-color = {path = "fyrox-lite-color", default-features = false}
