@@ -1,41 +1,31 @@
 {
   "classes": [
     {
-      "Engine": {
-        "class_name": "Prefab",
-        "rust_struct_path": "fyrox_lite::lite_prefab::LitePrefab",
-        "methods": [
+      "Struct": {
+        "class_name": "Brush",
+        "rust_struct_path": "fyrox_lite::lite_ui::Brush",
+        "fields": [
           {
-            "instance": true,
-            "method_name": "instantiate_at",
-            "signature": {
-              "params": [
-                {
-                  "name": "position",
-                  "ty": {
-                    "Object": "Vector3"
-                  },
-                  "variadic": false
-                },
-                {
-                  "name": "orientation",
-                  "ty": {
-                    "Object": "Quaternion"
-                  },
-                  "variadic": false
-                },
-                {
-                  "name": "_stub",
-                  "ty": "UserScriptGenericStub",
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Result": {
-                  "ok": {
-                    "Object": "Node"
-                  }
-                }
+            "name": "solid_color",
+            "ty": {
+              "Option": {
+                "Object": "Color"
+              }
+            }
+          },
+          {
+            "name": "linear_gradient",
+            "ty": {
+              "Option": {
+                "Object": "LinearGradient"
+              }
+            }
+          },
+          {
+            "name": "radial_gradient",
+            "ty": {
+              "Option": {
+                "Object": "RadialGradient"
               }
             }
           }
@@ -43,71 +33,25 @@
       }
     },
     {
-      "Engine": {
-        "class_name": "Log",
-        "rust_struct_path": "fyrox_lite::lite_log::LiteLog",
-        "methods": [
+      "Struct": {
+        "class_name": "Color",
+        "rust_struct_path": "fyrox_lite::lite_ui::Color",
+        "fields": [
           {
-            "instance": false,
-            "method_name": "info",
-            "signature": {
-              "params": [
-                {
-                  "name": "msg",
-                  "ty": "String",
-                  "variadic": false
-                }
-              ]
-            }
+            "name": "r",
+            "ty": "Byte"
           },
           {
-            "instance": false,
-            "method_name": "warn",
-            "signature": {
-              "params": [
-                {
-                  "name": "msg",
-                  "ty": "String",
-                  "variadic": false
-                }
-              ]
-            }
+            "name": "g",
+            "ty": "Byte"
           },
           {
-            "instance": false,
-            "method_name": "err",
-            "signature": {
-              "params": [
-                {
-                  "name": "msg",
-                  "ty": "String",
-                  "variadic": false
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Engine": {
-        "class_name": "Window",
-        "rust_struct_path": "fyrox_lite::lite_window::LiteWindow",
-        "methods": [
+            "name": "b",
+            "ty": "Byte"
+          },
           {
-            "instance": false,
-            "method_name": "set_cursor_grab",
-            "signature": {
-              "params": [
-                {
-                  "name": "mode",
-                  "ty": {
-                    "Object": "CursorGrabMode"
-                  },
-                  "variadic": false
-                }
-              ]
-            }
+            "name": "a",
+            "ty": "Byte"
           }
         ]
       }
@@ -125,149 +69,6 @@
           },
           {
             "tag": "Locked"
-          }
-        ]
-      }
-    },
-    {
-      "Engine": {
-        "class_name": "Scene",
-        "rust_struct_path": "fyrox_lite::lite_scene::LiteScene",
-        "methods": [
-          {
-            "instance": false,
-            "method_name": "load_async",
-            "signature": {
-              "params": [
-                {
-                  "name": "scene_path",
-                  "ty": "String",
-                  "variadic": false
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Engine": {
-        "class_name": "Physics",
-        "rust_struct_path": "fyrox_lite::lite_physics::LitePhysics",
-        "methods": [
-          {
-            "instance": false,
-            "method_name": "cast_ray",
-            "signature": {
-              "params": [
-                {
-                  "name": "opts",
-                  "ty": {
-                    "Object": "RayCastOptions"
-                  },
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Vec": {
-                  "Object": "Intersection"
-                }
-              }
-            }
-          }
-        ],
-        "constants": [
-          {
-            "const_name": "EXCLUDE_FIXED",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "1 << 1"
-            }
-          },
-          {
-            "const_name": "EXCLUDE_KINEMATIC",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "1 << 2"
-            }
-          },
-          {
-            "const_name": "EXCLUDE_DYNAMIC",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "1 << 3"
-            }
-          },
-          {
-            "const_name": "EXCLUDE_SENSORS",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "1 << 4"
-            }
-          },
-          {
-            "const_name": "EXCLUDE_SOLIDS",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "1 << 5"
-            }
-          },
-          {
-            "const_name": "ONLY_DYNAMIC",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "LitePhysics :: EXCLUDE_FIXED | LitePhysics :: EXCLUDE_KINEMATIC"
-            }
-          },
-          {
-            "const_name": "ONLY_KINEMATIC",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_FIXED"
-            }
-          },
-          {
-            "const_name": "ONLY_FIXED",
-            "ty": "I32",
-            "value": {
-              "ComplexExpression": "LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_KINEMATIC"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Intersection",
-        "rust_struct_path": "fyrox_lite::lite_physics::LiteIntersection",
-        "fields": [
-          {
-            "name": "collider",
-            "ty": {
-              "Object": "Node"
-            }
-          },
-          {
-            "name": "normal",
-            "ty": {
-              "Object": "Vector3"
-            }
-          },
-          {
-            "name": "position",
-            "ty": {
-              "Object": "Vector3"
-            }
-          },
-          {
-            "name": "feature",
-            "ty": {
-              "Object": "FeatureId"
-            }
-          },
-          {
-            "name": "toi",
-            "ty": "F32"
           }
         ]
       }
@@ -311,75 +112,49 @@
       }
     },
     {
-      "Struct": {
-        "class_name": "RayCastOptions",
-        "rust_struct_path": "fyrox_lite::lite_physics::LiteRayCastOptions",
-        "fields": [
-          {
-            "name": "ray_origin",
-            "ty": {
-              "Object": "Vector3"
-            }
-          },
-          {
-            "name": "ray_direction",
-            "ty": {
-              "Object": "Vector3"
-            }
-          },
-          {
-            "name": "max_len",
-            "ty": "F32"
-          },
-          {
-            "name": "groups",
-            "ty": {
-              "Option": {
-                "Object": "InteractionGroups"
-              }
-            }
-          },
-          {
-            "name": "sort_results",
-            "ty": "Bool"
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "InteractionGroups",
-        "rust_struct_path": "fyrox_lite::lite_physics::LiteInteractionGroups",
-        "fields": [
-          {
-            "name": "memberships",
-            "ty": "I32"
-          },
-          {
-            "name": "filter",
-            "ty": "I32"
-          }
-        ]
-      }
-    },
-    {
       "Engine": {
-        "class_name": "RigidBody",
-        "rust_struct_path": "fyrox_lite::lite_physics::LiteRigidBody",
+        "class_name": "GlobalScript",
+        "rust_struct_path": "fyrox_lite::lite_plugin::LiteGlobalScript",
         "methods": [
           {
-            "instance": true,
-            "method_name": "apply_force",
+            "instance": false,
+            "method_name": "get",
             "signature": {
               "params": [
                 {
-                  "name": "force",
-                  "ty": {
-                    "Object": "Vector3"
-                  },
+                  "name": "class_id",
+                  "ty": "ClassName",
+                  "variadic": false
+                },
+                {
+                  "name": "_stub",
+                  "ty": "UserScriptGenericStub",
                   "variadic": false
                 }
-              ]
+              ],
+              "return_ty": {
+                "Result": {
+                  "ok": "UserScript"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "GradientPoint",
+        "rust_struct_path": "fyrox_lite::lite_ui::GradientPoint",
+        "fields": [
+          {
+            "name": "stop",
+            "ty": "F32"
+          },
+          {
+            "name": "color",
+            "ty": {
+              "Object": "Color"
             }
           }
         ]
@@ -544,6 +319,58 @@
                 "Number": "4"
               }
             }
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "InteractionGroups",
+        "rust_struct_path": "fyrox_lite::lite_physics::LiteInteractionGroups",
+        "fields": [
+          {
+            "name": "memberships",
+            "ty": "I32"
+          },
+          {
+            "name": "filter",
+            "ty": "I32"
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "Intersection",
+        "rust_struct_path": "fyrox_lite::lite_physics::LiteIntersection",
+        "fields": [
+          {
+            "name": "collider",
+            "ty": {
+              "Object": "Node"
+            }
+          },
+          {
+            "name": "normal",
+            "ty": {
+              "Object": "Vector3"
+            }
+          },
+          {
+            "name": "position",
+            "ty": {
+              "Object": "Vector3"
+            }
+          },
+          {
+            "name": "feature",
+            "ty": {
+              "Object": "FeatureId"
+            }
+          },
+          {
+            "name": "toi",
+            "ty": "F32"
           }
         ]
       }
@@ -1139,129 +966,6 @@
       }
     },
     {
-      "Engine": {
-        "class_name": "UiNode",
-        "rust_struct_path": "fyrox_lite::lite_ui::LiteUiNode"
-      }
-    },
-    {
-      "Engine": {
-        "class_name": "Text",
-        "rust_struct_path": "fyrox_lite::lite_ui::LiteText",
-        "methods": [
-          {
-            "instance": true,
-            "method_name": "set_text_async",
-            "signature": {
-              "params": [
-                {
-                  "name": "text",
-                  "ty": "String",
-                  "variadic": false
-                }
-              ]
-            }
-          },
-          {
-            "instance": false,
-            "method_name": "new",
-            "signature": {
-              "params": [
-                {
-                  "name": "state",
-                  "ty": {
-                    "Object": "TextBuilder"
-                  },
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Object": "Text"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Color",
-        "rust_struct_path": "fyrox_lite::lite_ui::Color",
-        "fields": [
-          {
-            "name": "r",
-            "ty": "Byte"
-          },
-          {
-            "name": "g",
-            "ty": "Byte"
-          },
-          {
-            "name": "b",
-            "ty": "Byte"
-          },
-          {
-            "name": "a",
-            "ty": "Byte"
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "TextBuilder",
-        "rust_struct_path": "fyrox_lite::lite_ui::TextBuilder",
-        "fields": [
-          {
-            "name": "foreground",
-            "ty": {
-              "Option": {
-                "Object": "Brush"
-              }
-            }
-          },
-          {
-            "name": "font_size",
-            "ty": {
-              "Option": "F32"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Brush",
-        "rust_struct_path": "fyrox_lite::lite_ui::Brush",
-        "fields": [
-          {
-            "name": "solid_color",
-            "ty": {
-              "Option": {
-                "Object": "Color"
-              }
-            }
-          },
-          {
-            "name": "linear_gradient",
-            "ty": {
-              "Option": {
-                "Object": "LinearGradient"
-              }
-            }
-          },
-          {
-            "name": "radial_gradient",
-            "ty": {
-              "Option": {
-                "Object": "RadialGradient"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
       "Struct": {
         "class_name": "LinearGradient",
         "rust_struct_path": "fyrox_lite::lite_ui::LinearGradient",
@@ -1290,147 +994,47 @@
       }
     },
     {
-      "Struct": {
-        "class_name": "RadialGradient",
-        "rust_struct_path": "fyrox_lite::lite_ui::RadialGradient",
-        "fields": [
-          {
-            "name": "center",
-            "ty": {
-              "Object": "Vector2"
-            }
-          },
-          {
-            "name": "stops",
-            "ty": {
-              "Vec": {
-                "Object": "GradientPoint"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "GradientPoint",
-        "rust_struct_path": "fyrox_lite::lite_ui::GradientPoint",
-        "fields": [
-          {
-            "name": "stop",
-            "ty": "F32"
-          },
-          {
-            "name": "color",
-            "ty": {
-              "Object": "Color"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Vector3",
-        "rust_struct_path": "fyrox_lite::lite_math::PodVector3",
-        "fields": [
-          {
-            "name": "x",
-            "ty": "F32"
-          },
-          {
-            "name": "y",
-            "ty": "F32"
-          },
-          {
-            "name": "z",
-            "ty": "F32"
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Vector2",
-        "rust_struct_path": "fyrox_lite::lite_math::PodVector2",
-        "fields": [
-          {
-            "name": "x",
-            "ty": "F32"
-          },
-          {
-            "name": "y",
-            "ty": "F32"
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Vector2I",
-        "rust_struct_path": "fyrox_lite::lite_math::PodVector2I",
-        "fields": [
-          {
-            "name": "x",
-            "ty": "I32"
-          },
-          {
-            "name": "y",
-            "ty": "I32"
-          }
-        ]
-      }
-    },
-    {
-      "Struct": {
-        "class_name": "Quaternion",
-        "rust_struct_path": "fyrox_lite::lite_math::PodQuaternion",
-        "fields": [
-          {
-            "name": "i",
-            "ty": "F32"
-          },
-          {
-            "name": "j",
-            "ty": "F32"
-          },
-          {
-            "name": "k",
-            "ty": "F32"
-          },
-          {
-            "name": "w",
-            "ty": "F32"
-          }
-        ]
-      }
-    },
-    {
       "Engine": {
-        "class_name": "GlobalScript",
-        "rust_struct_path": "fyrox_lite::lite_plugin::LiteGlobalScript",
+        "class_name": "Log",
+        "rust_struct_path": "fyrox_lite::lite_log::LiteLog",
         "methods": [
           {
             "instance": false,
-            "method_name": "get",
+            "method_name": "info",
             "signature": {
               "params": [
                 {
-                  "name": "class_id",
-                  "ty": "ClassName",
+                  "name": "msg",
+                  "ty": "String",
                   "variadic": false
-                },
+                }
+              ]
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "warn",
+            "signature": {
+              "params": [
                 {
-                  "name": "_stub",
-                  "ty": "UserScriptGenericStub",
+                  "name": "msg",
+                  "ty": "String",
                   "variadic": false
                 }
-              ],
-              "return_ty": {
-                "Result": {
-                  "ok": "UserScript"
+              ]
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "err",
+            "signature": {
+              "params": [
+                {
+                  "name": "msg",
+                  "ty": "String",
+                  "variadic": false
                 }
-              }
+              ]
             }
           }
         ]
@@ -1728,6 +1332,239 @@
       }
     },
     {
+      "Engine": {
+        "class_name": "Physics",
+        "rust_struct_path": "fyrox_lite::lite_physics::LitePhysics",
+        "methods": [
+          {
+            "instance": false,
+            "method_name": "cast_ray",
+            "signature": {
+              "params": [
+                {
+                  "name": "opts",
+                  "ty": {
+                    "Object": "RayCastOptions"
+                  },
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Vec": {
+                  "Object": "Intersection"
+                }
+              }
+            }
+          }
+        ],
+        "constants": [
+          {
+            "const_name": "EXCLUDE_FIXED",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "1 << 1"
+            }
+          },
+          {
+            "const_name": "EXCLUDE_KINEMATIC",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "1 << 2"
+            }
+          },
+          {
+            "const_name": "EXCLUDE_DYNAMIC",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "1 << 3"
+            }
+          },
+          {
+            "const_name": "EXCLUDE_SENSORS",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "1 << 4"
+            }
+          },
+          {
+            "const_name": "EXCLUDE_SOLIDS",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "1 << 5"
+            }
+          },
+          {
+            "const_name": "ONLY_DYNAMIC",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "LitePhysics :: EXCLUDE_FIXED | LitePhysics :: EXCLUDE_KINEMATIC"
+            }
+          },
+          {
+            "const_name": "ONLY_KINEMATIC",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_FIXED"
+            }
+          },
+          {
+            "const_name": "ONLY_FIXED",
+            "ty": "I32",
+            "value": {
+              "ComplexExpression": "LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_KINEMATIC"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Prefab",
+        "rust_struct_path": "fyrox_lite::lite_prefab::LitePrefab",
+        "methods": [
+          {
+            "instance": true,
+            "method_name": "instantiate_at",
+            "signature": {
+              "params": [
+                {
+                  "name": "position",
+                  "ty": {
+                    "Object": "Vector3"
+                  },
+                  "variadic": false
+                },
+                {
+                  "name": "orientation",
+                  "ty": {
+                    "Object": "Quaternion"
+                  },
+                  "variadic": false
+                },
+                {
+                  "name": "_stub",
+                  "ty": "UserScriptGenericStub",
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Result": {
+                  "ok": {
+                    "Object": "Node"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "Quaternion",
+        "rust_struct_path": "fyrox_lite::lite_math::PodQuaternion",
+        "fields": [
+          {
+            "name": "i",
+            "ty": "F32"
+          },
+          {
+            "name": "j",
+            "ty": "F32"
+          },
+          {
+            "name": "k",
+            "ty": "F32"
+          },
+          {
+            "name": "w",
+            "ty": "F32"
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "RadialGradient",
+        "rust_struct_path": "fyrox_lite::lite_ui::RadialGradient",
+        "fields": [
+          {
+            "name": "center",
+            "ty": {
+              "Object": "Vector2"
+            }
+          },
+          {
+            "name": "stops",
+            "ty": {
+              "Vec": {
+                "Object": "GradientPoint"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "RayCastOptions",
+        "rust_struct_path": "fyrox_lite::lite_physics::LiteRayCastOptions",
+        "fields": [
+          {
+            "name": "ray_origin",
+            "ty": {
+              "Object": "Vector3"
+            }
+          },
+          {
+            "name": "ray_direction",
+            "ty": {
+              "Object": "Vector3"
+            }
+          },
+          {
+            "name": "max_len",
+            "ty": "F32"
+          },
+          {
+            "name": "groups",
+            "ty": {
+              "Option": {
+                "Object": "InteractionGroups"
+              }
+            }
+          },
+          {
+            "name": "sort_results",
+            "ty": "Bool"
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "RigidBody",
+        "rust_struct_path": "fyrox_lite::lite_physics::LiteRigidBody",
+        "methods": [
+          {
+            "instance": true,
+            "method_name": "apply_force",
+            "signature": {
+              "params": [
+                {
+                  "name": "force",
+                  "ty": {
+                    "Object": "Vector3"
+                  },
+                  "variadic": false
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "Enum": {
         "class_name": "RoutingStrategy",
         "rust_struct_path": "fyrox_lite::lite_node::LiteRoutingStrategy",
@@ -1737,6 +1574,169 @@
           },
           {
             "tag": "Down"
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Scene",
+        "rust_struct_path": "fyrox_lite::lite_scene::LiteScene",
+        "methods": [
+          {
+            "instance": false,
+            "method_name": "load_async",
+            "signature": {
+              "params": [
+                {
+                  "name": "scene_path",
+                  "ty": "String",
+                  "variadic": false
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Text",
+        "rust_struct_path": "fyrox_lite::lite_ui::LiteText",
+        "methods": [
+          {
+            "instance": true,
+            "method_name": "set_text_async",
+            "signature": {
+              "params": [
+                {
+                  "name": "text",
+                  "ty": "String",
+                  "variadic": false
+                }
+              ]
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "new",
+            "signature": {
+              "params": [
+                {
+                  "name": "state",
+                  "ty": {
+                    "Object": "TextBuilder"
+                  },
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Text"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "TextBuilder",
+        "rust_struct_path": "fyrox_lite::lite_ui::TextBuilder",
+        "fields": [
+          {
+            "name": "foreground",
+            "ty": {
+              "Option": {
+                "Object": "Brush"
+              }
+            }
+          },
+          {
+            "name": "font_size",
+            "ty": {
+              "Option": "F32"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "UiNode",
+        "rust_struct_path": "fyrox_lite::lite_ui::LiteUiNode"
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "Vector2",
+        "rust_struct_path": "fyrox_lite::lite_math::PodVector2",
+        "fields": [
+          {
+            "name": "x",
+            "ty": "F32"
+          },
+          {
+            "name": "y",
+            "ty": "F32"
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "Vector2I",
+        "rust_struct_path": "fyrox_lite::lite_math::PodVector2I",
+        "fields": [
+          {
+            "name": "x",
+            "ty": "I32"
+          },
+          {
+            "name": "y",
+            "ty": "I32"
+          }
+        ]
+      }
+    },
+    {
+      "Struct": {
+        "class_name": "Vector3",
+        "rust_struct_path": "fyrox_lite::lite_math::PodVector3",
+        "fields": [
+          {
+            "name": "x",
+            "ty": "F32"
+          },
+          {
+            "name": "y",
+            "ty": "F32"
+          },
+          {
+            "name": "z",
+            "ty": "F32"
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Window",
+        "rust_struct_path": "fyrox_lite::lite_window::LiteWindow",
+        "methods": [
+          {
+            "instance": false,
+            "method_name": "set_cursor_grab",
+            "signature": {
+              "params": [
+                {
+                  "name": "mode",
+                  "ty": {
+                    "Object": "CursorGrabMode"
+                  },
+                  "variadic": false
+                }
+              ]
+            }
           }
         ]
       }

@@ -1,6 +1,6 @@
 use std::fs;
 
-use lite_model::Domain;
+use lite_model::{Class, Domain, EnumValue};
 
 use crate::{load_path::load_path, resolve_classes::resolve_classes};
 
@@ -24,6 +24,7 @@ pub fn parse_domain_metadata(crate_name: &str) -> Domain {
     }
 
     resolve_classes(&mut domain, &mut aliases);
+    domain.classes.sort_by_key(|it| it.class_name().0.clone());
     let s = serde_json::to_string_pretty(&domain).unwrap();
     let deserialized : Domain = serde_json::from_str(s.as_str()).unwrap();
     assert_eq!(domain, deserialized);

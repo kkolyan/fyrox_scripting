@@ -13,6 +13,7 @@ pub fn generate_registry(ctx: &GenerationContext) -> Module {
     "#,
         [],
     );
+    s.push('\n');
     for class in ctx.domain.classes.iter() {
         let provides_class = match class {
             Class::Engine(_) => true,

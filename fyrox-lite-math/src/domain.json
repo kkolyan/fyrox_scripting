@@ -94,209 +94,6 @@
     },
     {
       "Engine": {
-        "class_name": "Vector3",
-        "rust_struct_path": "fyrox_lite_math::lite_math::LiteVector3",
-        "methods": [
-          {
-            "instance": true,
-            "method_name": "get_x",
-            "signature": {
-              "return_ty": "F32"
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "get_y",
-            "signature": {
-              "return_ty": "F32"
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "get_z",
-            "signature": {
-              "return_ty": "F32"
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "set_x",
-            "signature": {
-              "params": [
-                {
-                  "name": "value",
-                  "ty": "F32",
-                  "variadic": false
-                }
-              ]
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "set_y",
-            "signature": {
-              "params": [
-                {
-                  "name": "value",
-                  "ty": "F32",
-                  "variadic": false
-                }
-              ]
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "set_z",
-            "signature": {
-              "params": [
-                {
-                  "name": "value",
-                  "ty": "F32",
-                  "variadic": false
-                }
-              ]
-            }
-          },
-          {
-            "instance": false,
-            "method_name": "get_X",
-            "signature": {
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": false,
-            "method_name": "get_Y",
-            "signature": {
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": false,
-            "method_name": "get_Z",
-            "signature": {
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": false,
-            "method_name": "get_ZERO",
-            "signature": {
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": false,
-            "method_name": "new",
-            "signature": {
-              "params": [
-                {
-                  "name": "x",
-                  "ty": "F32",
-                  "variadic": false
-                },
-                {
-                  "name": "y",
-                  "ty": "F32",
-                  "variadic": false
-                },
-                {
-                  "name": "z",
-                  "ty": "F32",
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "mul",
-            "signature": {
-              "params": [
-                {
-                  "name": "o",
-                  "ty": "F32",
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "add",
-            "signature": {
-              "params": [
-                {
-                  "name": "o",
-                  "ty": {
-                    "Object": "Vector3"
-                  },
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "normalize",
-            "signature": {
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "sub",
-            "signature": {
-              "params": [
-                {
-                  "name": "o",
-                  "ty": {
-                    "Object": "Vector3"
-                  },
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Object": "Vector3"
-              }
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "magnitude",
-            "signature": {
-              "return_ty": "F32"
-            }
-          },
-          {
-            "instance": true,
-            "method_name": "normalize_inplace",
-            "signature": {}
-          }
-        ]
-      }
-    },
-    {
-      "Engine": {
         "class_name": "Vector2",
         "rust_struct_path": "fyrox_lite_math::lite_math::LiteVector2",
         "methods": [
@@ -572,6 +369,209 @@
                 "Object": "Vector2I"
               }
             }
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Vector3",
+        "rust_struct_path": "fyrox_lite_math::lite_math::LiteVector3",
+        "methods": [
+          {
+            "instance": true,
+            "method_name": "get_x",
+            "signature": {
+              "return_ty": "F32"
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "get_y",
+            "signature": {
+              "return_ty": "F32"
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "get_z",
+            "signature": {
+              "return_ty": "F32"
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "set_x",
+            "signature": {
+              "params": [
+                {
+                  "name": "value",
+                  "ty": "F32",
+                  "variadic": false
+                }
+              ]
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "set_y",
+            "signature": {
+              "params": [
+                {
+                  "name": "value",
+                  "ty": "F32",
+                  "variadic": false
+                }
+              ]
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "set_z",
+            "signature": {
+              "params": [
+                {
+                  "name": "value",
+                  "ty": "F32",
+                  "variadic": false
+                }
+              ]
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "get_X",
+            "signature": {
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "get_Y",
+            "signature": {
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "get_Z",
+            "signature": {
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "get_ZERO",
+            "signature": {
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": false,
+            "method_name": "new",
+            "signature": {
+              "params": [
+                {
+                  "name": "x",
+                  "ty": "F32",
+                  "variadic": false
+                },
+                {
+                  "name": "y",
+                  "ty": "F32",
+                  "variadic": false
+                },
+                {
+                  "name": "z",
+                  "ty": "F32",
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "mul",
+            "signature": {
+              "params": [
+                {
+                  "name": "o",
+                  "ty": "F32",
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "add",
+            "signature": {
+              "params": [
+                {
+                  "name": "o",
+                  "ty": {
+                    "Object": "Vector3"
+                  },
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "normalize",
+            "signature": {
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "sub",
+            "signature": {
+              "params": [
+                {
+                  "name": "o",
+                  "ty": {
+                    "Object": "Vector3"
+                  },
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "magnitude",
+            "signature": {
+              "return_ty": "F32"
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "normalize_inplace",
+            "signature": {}
           }
         ]
       }
