@@ -143,7 +143,7 @@ internal partial struct RayCastOptions_slice
         }
     }
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial RayCastOptions_slice fyrox_lite_upload_fyrox_lite_lite_physics_LiteRayCastOptions_slice(RayCastOptions_slice managed);
 }
 

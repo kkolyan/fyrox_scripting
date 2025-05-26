@@ -35,7 +35,7 @@ public partial struct Prefab : IEquatable<Prefab>
 
     #region native internal methods
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial Node_result fyrox_lite_lite_prefab_LitePrefab_instantiate_at(Prefab self, NativeVector3* position, NativeQuaternion* orientation);
     #endregion
 

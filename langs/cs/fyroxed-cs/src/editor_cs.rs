@@ -12,7 +12,7 @@ use std::{env, fs};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use uuid::Uuid;
-use crate::fyrox_c_loader;
+use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
 
 #[no_mangle]
 pub extern "C" fn ask_user_for_project_directory() -> *const u8 {
@@ -81,7 +81,7 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assem
     #[cfg(not(feature = "dylib"))]
     {
         let assembly_path = CStr::from_ptr(assembly_path).to_str().unwrap();
-        let plugin = fyrox_c_loader::fyrox_c_plugin(Some(assembly_path.into()));
+        let plugin = CPlugin::new(Some(assembly_path.into()));
         if let Err(err) = editor.add_dynamic_plugin_custom(plugin) {
             Log::err(err);
         }

@@ -27,13 +27,8 @@ cp langs/cs/examples/Guards/bin/Debug/net8.0/FyroxLiteCs.dll langs/cs/FyroxLiteC
 
 # build Rust parts of Fyrox Lite
 
-RUSTFLAGS='-C prefer-dynamic=yes' cargo build -p fyrox-lite-cs -p fyroxed-cs
-cp target/debug/fyrox_lite_cs.dll langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
-cp target/debug/fyrox_lite_cs.pdb langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cargo build -p fyrox-lite-cs -p fyroxed-cs
 cp target/debug/fyroxed_cs.dll langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 cp target/debug/fyroxed_cs.pdb langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
-cp target/debug/deps/fyrox_dylib*.dll langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
-cp target/debug/deps/fyrox_dylib*.pdb langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
-./get_rust_std.sh langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
 
 RUST_BACKTRACE=1 langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.exe langs/cs/examples/Guards

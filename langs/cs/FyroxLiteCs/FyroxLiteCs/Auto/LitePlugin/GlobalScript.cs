@@ -26,7 +26,7 @@ public abstract partial class GlobalScript
 
     #region native internal methods
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial NativeInstanceId_result fyrox_lite_lite_plugin_LiteGlobalScript_get(NativeClassId class_id);
     #endregion
 

@@ -105,7 +105,7 @@ internal partial struct NativeQuaternion_slice
         }
     }
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial NativeQuaternion_slice fyrox_lite_upload_fyrox_lite_lite_math_PodQuaternion_slice(NativeQuaternion_slice managed);
 }
 

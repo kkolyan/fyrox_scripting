@@ -129,7 +129,7 @@ internal partial struct Brush_slice
         }
     }
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial Brush_slice fyrox_lite_upload_fyrox_lite_lite_ui_Brush_slice(Brush_slice managed);
 }
 

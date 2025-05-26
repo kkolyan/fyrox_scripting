@@ -13,14 +13,6 @@
             <HintPath>${editor_installation_path}/FyroxLiteCs.dll</HintPath>
             <Private>True</Private>
         </Reference>
-        <Content Include="${editor_installation_path}/std-*.dll">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <Pack>false</Pack>
-        </Content>
-        <Content Include="${editor_installation_path}/fyrox_dylib-*.dll">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <Pack>false</Pack>
-        </Content>
         <Content Include="${editor_installation_path}/fyrox_lite_cs.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>false</Pack>

@@ -243,7 +243,7 @@ pub fn generate_slice(mut s: &mut String, rust: &mut RustEmitter, wrapped_type: 
                     }
                 }
 
-                [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+                [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
                 internal static unsafe partial ${blittable}_slice fyrox_lite_upload_${class_lite_escaped}_slice(${blittable}_slice managed);
             }
     "#, [

@@ -16,7 +16,7 @@ internal partial class FyroxNativeGlobal {
     
     #region native internal method
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static partial void init_fyrox_lite(NativeScriptAppFunctions app, NativeBool is_editor);
     #endregion
 

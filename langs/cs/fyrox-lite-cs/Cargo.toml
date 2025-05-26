@@ -7,5 +7,5 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-fyrox = { workspace = true, features = ["dylib"], default-features = false }
-fyrox-lite-cs-lib = { workspace = true }
+fyrox = { workspace = true, default-features = true }
+fyrox-lite-cs-lib = { workspace = true, default-features = true }

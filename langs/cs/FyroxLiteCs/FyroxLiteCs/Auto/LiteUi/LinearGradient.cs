@@ -129,7 +129,7 @@ internal partial struct LinearGradient_slice
         }
     }
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial LinearGradient_slice fyrox_lite_upload_fyrox_lite_lite_ui_LinearGradient_slice(LinearGradient_slice managed);
 }
 

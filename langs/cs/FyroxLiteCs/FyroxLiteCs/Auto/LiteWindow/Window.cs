@@ -27,7 +27,7 @@ public static partial class Window
 
     #region native internal methods
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_window_LiteWindow_set_cursor_grab(CursorGrabMode mode);
     #endregion
 

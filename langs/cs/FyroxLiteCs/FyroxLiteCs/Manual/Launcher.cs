@@ -6,11 +6,12 @@ namespace FyroxLite;
 
 public partial class Launcher
 {
-    [LibraryImport("fyrox_lite_cs", EntryPoint = "fyrox_lite_executor_run",
+    
+    [LibraryImport(FyroxDll.Name, EntryPoint = "fyrox_lite_executor_run",
         SetLastError = true)]
     private static partial void RunInternal();
 
-    [LibraryImport("fyroxed_cs", EntryPoint = "fyrox_lite_editor_run",
+    [LibraryImport(FyroxDll.Name, EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
     private static partial void RunEditorInternal(IntPtr workingDirectory, IntPtr assemblyPath);
 

@@ -122,7 +122,7 @@ internal partial struct TextBuilder_slice
         }
     }
 
-    [LibraryImport("fyrox_lite_cs", StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     internal static unsafe partial TextBuilder_slice fyrox_lite_upload_fyrox_lite_lite_ui_TextBuilder_slice(TextBuilder_slice managed);
 }
 
