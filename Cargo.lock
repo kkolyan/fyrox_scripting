@@ -1624,6 +1624,7 @@ dependencies = [
 name = "fyroxed-cs"
 version = "0.1.0"
 dependencies = [
+ "dunce",
  "fyrox",
  "fyroxed_base",
  "libloading",

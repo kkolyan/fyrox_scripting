@@ -21,7 +21,10 @@ members = [
 	"error",
 ]
 resolver = "2"
-exclude = ["mlua", "engine"]
+exclude = [
+	# to workaround "rust-lld: error: too many exported symbols (got 95799, max 65535)"
+	"engine",
+]
 
 [workspace.dependencies]
 luagen-lib = { path = "langs/lua/luagen-lib" }

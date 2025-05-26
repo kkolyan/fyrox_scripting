@@ -56,9 +56,8 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assem
         println!("ensure_project_files returned false");
         return;
     };
-    // Fyrox do it to, but only Message::Configure (after Fyrox dialog with user about working dir),
-    // which works bad with ResourceRegistry, which is initialized before this event.
-    // Anyway we use our own dialog, so setting this here solves all problems
+    // Fyrox has some places that rely on `env::current_dir == working_dir`. To avoid potential
+    // issues just make them the same
     env::set_current_dir(&working_dir).unwrap();
     // let _ = open::that(solution_file);
     let mut editor = Editor::new(Some(StartupData {
