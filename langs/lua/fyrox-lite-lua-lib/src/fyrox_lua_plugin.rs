@@ -22,6 +22,7 @@ use fyrox_lite::wrapper_reflect;
 use mlua::Value;
 use std::cell::RefCell;
 use std::fmt::Debug;
+use std::path::PathBuf;
 use fyrox_lite::lite_input::Input;
 use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
 
@@ -63,11 +64,8 @@ impl Debug for LuaPlugin {
 }
 
 impl LuaPlugin {
-    pub fn with_hot_reload(hot_reload_enabled: bool) -> Self {
-        Self::new("scripts", hot_reload_enabled)
-    }
 
-    pub fn new(scripts_dir: &str, hot_reload_enabled: bool) -> Self {
+    pub fn new(scripts_dir: PathBuf, hot_reload_enabled: bool) -> Self {
         create_plugin(scripts_dir, hot_reload_enabled)
     }
 
@@ -93,7 +91,7 @@ impl LuaPlugin {
 
 impl Default for LuaPlugin {
     fn default() -> Self {
-        Self::new("scripts", true)
+        Self::new("scripts".into(), true)
     }
 }
 

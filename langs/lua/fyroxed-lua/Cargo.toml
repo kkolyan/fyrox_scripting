@@ -8,6 +8,7 @@ edition = "2021"
 fyrox = { workspace = true }
 fyroxed_base = { workspace = true }
 fyrox-lite-lua-lib = { workspace = true, optional = true}
+dunce = "1.0.5"
 
 [features]
 default = ["fyrox-lite-lua-lib", "fyroxed_base/default"]

@@ -1,3 +1,5 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-cargo run --release -p fyroxed-lua --manifest-path ../../../../Cargo.toml
+cd ../../../..
+cargo build -p fyroxed-lua
+./target/debug/fyroxed-lua.exe langs/lua/examples/guards

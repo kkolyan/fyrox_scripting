@@ -33,6 +33,7 @@ use mlua::Value;
 use send_wrapper::SendWrapper;
 use std::cell::RefCell;
 use std::ops::Deref;
+use std::path::PathBuf;
 use std::process::exit;
 use std::sync::Arc;
 use std::time::Duration;
@@ -164,7 +165,7 @@ pub(crate) fn load_script(
     ));
 }
 
-pub(crate) fn create_plugin(scripts_dir: &str, hot_reload_enabled: bool) -> LuaPlugin {
+pub(crate) fn create_plugin(scripts_dir: PathBuf, hot_reload_enabled: bool) -> LuaPlugin {
     // mlua has approach with lifetimes that makes very difficult storing Lua types
     // here and there in Rust. But we need a single Lua VM instance for the whole life
     // of game process, so that's ok to make it 'static.
@@ -181,12 +182,15 @@ pub(crate) fn create_plugin(scripts_dir: &str, hot_reload_enabled: bool) -> LuaP
         .set("PINS", vm.create_table().unwrap())
         .unwrap();
 
+    let scripts_dir_lua_comp = scripts_dir.display().to_string().replace("\\", "/");
+    let setting_package_path = format!(
+        "package.path = '{}/?.lua;{}/?/init.lua'",
+        scripts_dir_lua_comp, scripts_dir_lua_comp
+    );
+    println!("Lua: {}", &setting_package_path);
     log_error(
         "set 'package.path'",
-        vm.load(format!(
-            "package.path = '{}/?.lua;{}/?/init.lua'",
-            scripts_dir, scripts_dir
-        ))
+        vm.load(setting_package_path)
         .eval::<()>(),
     );
 
@@ -220,9 +224,11 @@ pub(crate) fn create_plugin(scripts_dir: &str, hot_reload_enabled: bool) -> LuaP
 
     register_classes(vm);
 
+    println!("creating watcher for {}", scripts_dir.display());
+
     LuaPlugin {
         failed: false,
-        scripts_dir: scripts_dir.into(),
+        scripts_dir: scripts_dir.display().to_string(),
         hot_reload: match hot_reload_enabled {
             true => HotReload::Enabled {
                 watcher: FileSystemWatcher::new(scripts_dir, Duration::from_millis(500)).unwrap(),
