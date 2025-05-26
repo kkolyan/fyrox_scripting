@@ -8,7 +8,7 @@ use fyroxed_base::StartupData;
 use native_dialog::DialogBuilder;
 use native_dialog::MessageLevel::Warning;
 use std::ffi::{c_char, CStr, CString};
-use std::fs;
+use std::{env, fs};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use uuid::Uuid;
@@ -49,14 +49,18 @@ pub extern "C" fn ask_user_for_project_directory() -> *const u8 {
 pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assembly_path: *const c_char) {
     Log::set_verbosity(MessageKind::Warning);
     let working_dir = CStr::from_ptr(working_dir).to_str().expect("failed to parse working directory argument");
+    let working_dir = dunce::canonicalize(working_dir).unwrap();
     let event_loop = EventLoop::new().unwrap();
-    println!("Using working dir: {}", working_dir);
-    let working_dir = PathBuf::from(working_dir);
+    println!("Using working dir: {}", working_dir.display());
     let Some(solution_file) = ensure_project_files(&working_dir) else {
         println!("ensure_project_files returned false");
         return;
     };
-    let _ = open::that(solution_file);
+    // Fyrox do it to, but only Message::Configure (after Fyrox dialog with user about working dir),
+    // which works bad with ResourceRegistry, which is initialized before this event.
+    // Anyway we use our own dialog, so setting this here solves all problems
+    env::set_current_dir(&working_dir).unwrap();
+    // let _ = open::that(solution_file);
     let mut editor = Editor::new(Some(StartupData {
         working_directory: working_dir.clone(),
         scenes: vec!["data/scene.rgs".into()],

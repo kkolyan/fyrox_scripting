@@ -376,7 +376,7 @@ __ROOT__[]
 											{
 												ScriptData[Initialized<bool:false>]
 												{
-													Data[Sensitivity<f32:0.004>Power<f32:150>InitialBulletVelocity<f32:20>ShootingRange<f32:1000>ReloadDelaySec<f32:0.7>ReloadSec<f32:0>Published<bool:false>]
+													Data[Sensitivity<f64:0.004>Power<f64:150>InitialBulletVelocity<f64:20>ShootingRange<f64:1000>ReloadDelaySec<f64:0.7>ReloadSec<f64:0>Published<bool:false>]
 													{
 														Camera[Index<u32:5>Generation<u32:1>]{}
 														Bullet[IsSome<u8:1>]
@@ -693,7 +693,7 @@ __ROOT__[]
 										{
 											ScriptData[Initialized<bool:false>]
 											{
-												Data[InitialCount<u64:12>Initialized<bool:false>FrameSkippedForBeacons<bool:false>]
+												Data[InitialCount<f64:12>Initialized<bool:false>FrameSkippedForBeacons<bool:false>]
 												{
 													GaurdPrefab[IsSome<u8:1>]
 													{
@@ -4087,7 +4087,7 @@ __ROOT__[]
 											{
 												Data[]
 												{
-													Params[Velocity<vec3f32:0; 0; 0>RemainingSec<f32:0>]
+													Params[Velocity<vec3f32:0; 0; 0>RemainingSec<f64:0>]
 													{
 														AuthorCollider[Index<u32:0>Generation<u32:0>]{}
 													}
