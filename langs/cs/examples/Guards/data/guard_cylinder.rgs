@@ -68,7 +68,7 @@ __ROOT__[]
 											{
 												ScriptData[Initialized<bool:false>]
 												{
-													Data[ReloadingSec<f32:1>ReloadDelaySec<f32:1.5>GunHeight<f32:0>SwitchWaypointTimeoutSec<f32:3>WaypointSec<f32:0>InitialBulletVelocity<f32:15>AttackRange<f32:100>BeaconReachedDistance<f32:2>MovePower<f32:150>]
+													Data[ReloadingSec<f32:1>ReloadDelaySec<str:"1.5">GunHeight<str:"0">SwitchWaypointTimeoutSec<str:"3">WaypointSec<str:"0">InitialBulletVelocity<str:"15">AttackRange<str:"100">BeaconReachedDistance<str:"2">MovePower<str:"150">]
 													{
 														CurrentWaypoint[IsSome<u8:0>]{}
 														Collider[Index<u32:0>Generation<u32:0>]{}

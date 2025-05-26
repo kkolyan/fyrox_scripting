@@ -148,13 +148,14 @@ impl<T: Lang> Visit for ScriptObject<T> {
 
         let mut guard = visitor.enter_region(name)?;
 
-        macro_rules! visit_as_f64 {
+        // let's store all numbers as str, to allow user easily change type.
+        macro_rules! visit_as_str {
             ($var:expr, $field_name:expr, $guard:expr, $ty:ty) => {
                 {
-                    let mut s = *$var as f64;
+                    let mut s = $var.to_string();
                     let result = s.visit($field_name, &mut $guard);
                     if reading {
-                       *$var = s as $ty;
+                       *$var = s.parse::<$ty>()?;
                     }
                     result
                 }
@@ -176,11 +177,11 @@ impl<T: Lang> Visit for ScriptObject<T> {
                 ScriptFieldValue::Quaternion(it) => it.visit(field_name, &mut guard),
                 ScriptFieldValue::RuntimePin(it) => it.visit(field_name, &mut guard),
                 ScriptFieldValue::bool(it) => it.visit(field_name, &mut guard),
-                ScriptFieldValue::f32(it) => visit_as_f64!(it, field_name, guard, f32),
-                ScriptFieldValue::f64(it) => visit_as_f64!(it, field_name, guard, f64),
-                ScriptFieldValue::i16(it) => visit_as_f64!(it, field_name, guard, i16),
-                ScriptFieldValue::i32(it) => visit_as_f64!(it, field_name, guard, i32),
-                ScriptFieldValue::i64(it) => visit_as_f64!(it, field_name, guard, i64),
+                ScriptFieldValue::f32(it) => visit_as_str!(it, field_name, guard, f32),
+                ScriptFieldValue::f64(it) => visit_as_str!(it, field_name, guard, f64),
+                ScriptFieldValue::i16(it) => visit_as_str!(it, field_name, guard, i16),
+                ScriptFieldValue::i32(it) => visit_as_str!(it, field_name, guard, i32),
+                ScriptFieldValue::i64(it) => visit_as_str!(it, field_name, guard, i64),
             };
             if let Err(err) = &result {
                 Log::warn(format!("skipping deserialization of field `{}::{}` ({:?}) due to error: {}", it.def.metadata.class, field_name, it.values[i], err).as_str());
