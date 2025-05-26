@@ -1,3 +1,4 @@
-#[target.x86_64-pc-windows-msvc]
-#linker = "rust-lld.exe"
-#rustflags = ["-Zshare-generics=n"]
+# to avoid "LINK : fatal error LNK1189: library limit of 65535 objects exceeded␍"
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"
+rustflags = ["-Zshare-generics=n"]

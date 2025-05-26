@@ -2,7 +2,7 @@ use std::any::TypeId;
 use fyrox::asset::Resource;
 use fyrox::core::algebra::{UnitQuaternion, Vector2, Vector3};
 use fyrox::core::pool::Handle;
-use fyrox::core::reflect::{FieldInfo, Reflect};
+use fyrox::core::reflect::{FieldMut, FieldRef, Reflect};
 use fyrox::gui::UiNode;
 use fyrox::resource::model::Model;
 use fyrox::scene::node::Node;
@@ -15,21 +15,16 @@ use crate::user_script_impl::UserScriptProxy;
 impl Reflect for UserScriptProxy {
     reflect_base!();
 
-    fn fields_info(&self, func: &mut dyn FnMut(&[FieldInfo])) {
+    fyrox_lite::reflect_base_lite!();
+
+    fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
         match self {
-            UserScriptProxy::Global(it) => it.fields_info(func),
-            UserScriptProxy::Node(it) => it.fields_info(func),
+            UserScriptProxy::Global(it) => it.fields_ref(func),
+            UserScriptProxy::Node(it) => it.fields_ref(func),
         }
     }
 
-    fn fields(&self, func: &mut dyn FnMut(&[&dyn Reflect])) {
-        match self {
-            UserScriptProxy::Global(it) => it.fields(func),
-            UserScriptProxy::Node(it) => it.fields(func),
-        }
-    }
-
-    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [&mut dyn Reflect])) {
+    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
         match self {
             UserScriptProxy::Global(it) => it.fields_mut(func),
             UserScriptProxy::Node(it) => it.fields_mut(func),

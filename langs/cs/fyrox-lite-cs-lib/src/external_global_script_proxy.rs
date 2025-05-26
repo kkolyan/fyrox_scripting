@@ -107,15 +107,13 @@ impl Visit for ExternalGlobalScriptProxy {
 impl Reflect for ExternalGlobalScriptProxy {
     reflect_base!();
 
-    fn fields_info(&self, func: &mut dyn FnMut(&[FieldInfo])) {
-        self.data.with_script_object(|it| it.fields_info(func))
+    fyrox_lite::reflect_base_lite!();
+
+    fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
+        self.data.with_script_object(|it| it.fields_ref(func))
     }
 
-    fn fields(&self, func: &mut dyn FnMut(&[&dyn Reflect])) {
-        self.data.with_script_object(|it| it.fields(func))
-    }
-
-    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [&mut dyn Reflect])) {
+    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
         self.data.with_script_object_mut(|it| it.fields_mut(func))
     }
 

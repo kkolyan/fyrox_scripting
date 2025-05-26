@@ -127,6 +127,12 @@ impl Default for CPlugin {
     }
 }
 
+impl Clone for CPlugin {
+    fn clone(&self) -> Self {
+        todo!()
+    }
+}
+
 impl Plugin for CPlugin {
     fn register(&self, context: PluginRegistrationContext) {
         APP.with_borrow_mut(|app| {
@@ -238,24 +244,6 @@ impl Visit for GlobalScriptList {
 
 impl Reflect for GlobalScriptList {
     wrapper_reflect! {0}
-
-    fn source_path() -> &'static str
-    where
-        Self: Sized,
-    {
-        file!()
-    }
-
-    fn assembly_name(&self) -> &'static str {
-        env!("CARGO_PKG_NAME")
-    }
-
-    fn type_assembly_name() -> &'static str
-    where
-        Self: Sized,
-    {
-        env!("CARGO_PKG_NAME")
-    }
 }
 
 impl DynamicPlugin for CPlugin {

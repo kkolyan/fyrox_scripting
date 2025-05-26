@@ -1,0 +1,12 @@
+{
+    "037dffb4-2854-4ffa-ac59-3c18742c5298": "data/bullet.rgs",
+    "1812898a-c63e-49ed-8fca-11ec175ef400": "data/guard_cylinder.rgs",
+    "3f585199-11d3-4512-b2c0-410859e73cdd": "data/block_16x4.rgs",
+    "56d1156e-bd11-43dc-9bfa-6715ff61f80b": "data/beacon.rgs",
+    "627e254c-6b2f-4cae-a548-42b0b17a27e0": "data/block_2x4.rgs",
+    "7781e905-9567-4c5c-859e-15a0d7120c03": "data/square_ball.rgs",
+    "846c8ef1-92ac-403a-82bf-4c72c945fb65": "data/ball.rgs",
+    "921e9807-f360-4e04-9cb5-4d9501b56e4a": "data/scene.rgs",
+    "c3614d39-9b05-4af9-b505-36654dfa0592": "data/scene-lua.rgs",
+    "d84b04db-3cda-420f-9c3c-a21a7ccd7754": "data/scene.rgs",
+}

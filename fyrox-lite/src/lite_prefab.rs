@@ -26,10 +26,7 @@ impl Debug for LitePrefab {
         let Some(resource) = &self.resource else {
             return write!(f, "None")
         };
-        match resource.header().kind.path() {
-            Some(it) => write!(f, "Prefab({:?})", it),
-            None => write!(f, "Prefab()"),
-        }
+        write!(f, "Prefab({:?})", resource.header().kind)
     }
 }
 

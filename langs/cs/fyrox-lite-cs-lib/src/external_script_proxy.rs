@@ -9,7 +9,7 @@ use fyrox_lite::reflect_base;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
 use fyrox_lite::script_object_residence::ScriptResidence;
-use std::any::Any;
+use std::any::{Any, TypeId};
 use std::fmt::Debug;
 use crate::bindings_manual::{NativeClassId, UserScriptMessage};
 use crate::c_lang::CCompatibleLang;
@@ -106,15 +106,13 @@ impl Visit for ExternalScriptProxy {
 impl Reflect for ExternalScriptProxy {
     reflect_base!();
 
-    fn fields_info(&self, func: &mut dyn FnMut(&[FieldInfo])) {
-        self.data.with_script_object(|it| it.fields_info(func))
+    fyrox_lite::reflect_base_lite!();
+
+    fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
+        self.data.with_script_object(|it| it.fields_ref(func))
     }
 
-    fn fields(&self, func: &mut dyn FnMut(&[&dyn Reflect])) {
-        self.data.with_script_object(|it| it.fields(func))
-    }
-
-    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [&mut dyn Reflect])) {
+    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
         self.data.with_script_object_mut(|it| it.fields_mut(func))
     }
 

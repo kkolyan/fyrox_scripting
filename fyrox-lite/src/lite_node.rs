@@ -1,3 +1,4 @@
+use std::any::TypeId;
 use crate::externalizable::Externalizable;
 use crate::lite_math::{PodQuaternion, PodVector3};
 use crate::spi::{ClassId, UserScript};
@@ -306,40 +307,61 @@ impl Visit for LiteNode {
 }
 
 impl Reflect for LiteNode {
-    wrapper_reflect!(handle);
-
-    fn source_path() -> &'static str
-    where
-        Self: Sized,
-    {
-        file!()
-    }
-
-    fn assembly_name(&self) -> &'static str {
-        env!("CARGO_PKG_NAME")
-    }
-
-    fn type_assembly_name() -> &'static str
-    where
-        Self: Sized,
-    {
-        env!("CARGO_PKG_NAME")
-    }
+    crate::wrapper_reflect!(handle);
 }
 
 #[macro_export]
+macro_rules! reflect_base_lite {
+    () => {
+        fn query_derived_types(&self) -> &'static [core::any::TypeId] {
+            Self::derived_types()
+        }
+
+        fn derived_types() -> &'static [core::any::TypeId] {
+            &[]
+        }
+
+        fn try_clone_box(&self) -> Option<Box<dyn Reflect>> {
+            Some(Box::new(self.clone()))
+        }
+    }
+}
+#[macro_export]
 macro_rules! wrapper_reflect {
     ($ident:tt) => {
+
+        fn source_path() -> &'static str
+        where
+            Self: Sized,
+        {
+            file!()
+        }
+
+        fn assembly_name(&self) -> &'static str {
+            env!("CARGO_PKG_NAME")
+        }
+
+        fn type_assembly_name() -> &'static str
+        where
+            Self: Sized,
+        {
+            env!("CARGO_PKG_NAME")
+        }
+
         fn type_name(&self) -> &'static str {
-            self.$ident.type_name()
+            Reflect::type_name(&self.$ident)
         }
 
         fn doc(&self) -> &'static str {
             self.$ident.doc()
         }
 
-        fn fields_info(&self, func: &mut dyn FnMut(&[FieldInfo])) {
-            self.$ident.fields_info(func)
+        fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
+            self.$ident.fields_ref(func)
+        }
+
+        fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
+            self.$ident.fields_mut(func)
         }
 
         fn into_any(self: Box<Self>) -> Box<dyn std::any::Any> {
@@ -410,6 +432,18 @@ macro_rules! wrapper_reflect {
 
         fn as_hash_map_mut(&mut self, func: &mut dyn FnMut(Option<&mut dyn ReflectHashMap>)) {
             self.$ident.as_hash_map_mut(func)
+        }
+
+        fn query_derived_types(&self) -> &'static [core::any::TypeId] {
+            self.$ident.query_derived_types()
+        }
+
+        fn derived_types() -> &'static [core::any::TypeId] {
+            &[]
+        }
+
+        fn try_clone_box(&self) -> Option<Box<dyn Reflect>> {
+            Some(Box::new(self.clone()))
         }
     };
 }

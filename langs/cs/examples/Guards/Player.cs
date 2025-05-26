@@ -10,7 +10,6 @@ public class Player : NodeScript
     private float initial_bullet_velocity;
     private float shooting_range;
     private float reload_delay_sec;
-    private bool HeavyShit;
 
     [HideInInspector] [Transient] private float ReloadSec;
 

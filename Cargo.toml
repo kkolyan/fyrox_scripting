@@ -21,7 +21,7 @@ members = [
 	"error",
 ]
 resolver = "2"
-exclude = ["mlua"]
+exclude = ["mlua", "engine"]
 
 [workspace.dependencies]
 luagen-lib = { path = "langs/lua/luagen-lib" }

@@ -91,7 +91,14 @@ impl LuaPlugin {
 
 impl Default for LuaPlugin {
     fn default() -> Self {
-        Self::new("scripts".into(), true)
+        todo!()
+        // Self::new("scripts".into(), true)
+    }
+}
+
+impl Clone for LuaPlugin {
+    fn clone(&self) -> Self {
+        todo!()
     }
 }
 
