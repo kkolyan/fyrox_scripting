@@ -38,10 +38,10 @@ lite-macro = { path = "lite-macro" }
 gen-common = { path = "gen-common" }
 error = { path = "error" }
 
-#fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
-#fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
-fyrox = {path = "engine/fyrox", default-features = false}
-fyroxed_base = {path = "engine/editor", default-features = false}
+fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false, branch = "master" }
+fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false, branch = "master" }
+#fyrox = {path = "engine/fyrox", default-features = false}
+#fyroxed_base = {path = "engine/editor", default-features = false}
 #fyrox = {version = "0.36.2", default-features = false}
 #fyroxed_base = {version = "0.36.2", default-features = false}
 
@@ -74,3 +74,7 @@ inherits = "release"
 # compile your game in debug mode, which is much faster (at least x3), than release.
 [profile.dev.package."*"]
 opt-level = 3
+
+# Enable a small amount of optimization in the dev profile.
+[profile.dev]
+opt-level = 1
