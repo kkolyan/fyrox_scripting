@@ -18,7 +18,7 @@ use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
 pub extern "C" fn ask_user_for_project_directory() -> *const u8 {
     loop {
         let result = DialogBuilder::file()
-            .set_title("Fyrox Editor with C# scripting: choose project directory")
+            .set_title("Fyrox C# SDK: choose project directory")
             .open_single_dir()
             .show();
 
@@ -93,38 +93,36 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assem
 }
 
 fn ensure_project_files(working_dir: &Path) -> Option<PathBuf> {
-    println!("Using working dir: {}", working_dir.display());
-    let existing_solution = fs::read_dir(working_dir).unwrap().flatten()
-        .find(|it| it.file_name().to_string_lossy().ends_with(".sln"));
-    if let Some(existing_solution) = existing_solution {
-        return Some(existing_solution.path());
-    };
-    let confirm = DialogBuilder::message()
-        .set_level(Warning)
-        .set_title("Fyrox Editor with C# scripting")
-        .set_text(format!("There is no C# project in {:?}. Create new C# project here?", working_dir.as_os_str()))
-        .confirm()
-        .show()
-        .unwrap();
-    if !confirm {
-        return None;
-    }
     let dir_name = working_dir.file_name().unwrap().to_str().unwrap();
-    let solution_uuid = Uuid::new_v4();
-    let project_uuid = Uuid::new_v4();
+    let sln_path = format!("{}/{}.sln", working_dir.to_str().unwrap(), dir_name);
+    
+    if !fs::exists(&sln_path).unwrap() {
+        let confirm = DialogBuilder::message()
+            .set_level(Warning)
+            .set_title("Fyrox C# SDK")
+            .set_text(format!("There is no C# project in {:?}. Create new C# project here?", working_dir.as_os_str()))
+            .confirm()
+            .show()
+            .unwrap();
+        if !confirm {
+            return None;
+        }
+        
+        let solution_uuid = Uuid::new_v4();
+        let project_uuid = Uuid::new_v4();
+        let sln = include_str!("template.sln.txt")
+            .replace("${solution_uuid}", solution_uuid.to_string().to_uppercase().as_str())
+            .replace("${project_uuid}", project_uuid.to_string().to_uppercase().as_str())
+            .replace("${project_name}", dir_name)
+            ;
+
+        fs::write(&sln_path, sln).unwrap();
+        fs::write(format!("{}/Program.cs", working_dir.to_str().unwrap()), include_str!("Program.cs.txt")).unwrap();
+    }
 
     let csproj = include_str!("template.csproj.txt")
-        .replace("${editor_installation_path}", std::env::current_exe().unwrap().parent().unwrap().to_str().unwrap());
-    let sln = include_str!("template.sln.txt")
-        .replace("${solution_uuid}", solution_uuid.to_string().to_uppercase().as_str())
-        .replace("${project_uuid}", project_uuid.to_string().to_uppercase().as_str())
-        .replace("${project_name}", dir_name)
-        ;
-    fs::write(format!("{}/Program.cs", working_dir.to_str().unwrap()), "FyroxLite.Launcher.RunGame();").unwrap();
+        .replace("${editor_installation_path}", env::current_exe().unwrap().parent().unwrap().to_str().unwrap());
     fs::write(format!("{}/{}.csproj", working_dir.to_str().unwrap(), dir_name), csproj).unwrap();
-
-    let sln_path = format!("{}/{}.sln", working_dir.to_str().unwrap(), dir_name);
-    fs::write(&sln_path, sln).unwrap();
 
     open::that(&sln_path).unwrap();
     Some(sln_path.into())

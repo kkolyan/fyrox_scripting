@@ -1,5 +1,10 @@
-﻿
+﻿##################################################################
+#### This file is generated automatically by Fyrox C# SDK      ###
+#### To generate it again - delete and restart Fyrox C# Editor ###
+##################################################################
+
 Microsoft Visual Studio Solution File, Format Version 12.00
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guards", "Guards.csproj", "{EDA3CE45-5B01-4309-9050-4099CDBB4B07}"
 EndProject
 Global

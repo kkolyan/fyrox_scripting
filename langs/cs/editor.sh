@@ -2,28 +2,38 @@
 cd "$(dirname "$0")"
 set -e
 
-# Go to project root
+INSTALL_DIR=target/fyrox_cs_sdk
 
+# Go to project root
 cd ../..
 
-# cleanup to detect regression asap
-rm -rf langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/*.dll
-rm -rf langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/*.exe
-rm -rf langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/*.runtimeconfig.json
+# remove installation to detect possible regression asap
+rm -rf $INSTALL_DIR
+mkdir -p $INSTALL_DIR
 
-# build Rust parts of Fyrox Lite
-
-mkdir -p langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+# build Rust parts of Fyrox C# SDK
 
 cargo build -p fyroxed-cs
-cp target/debug/fyroxed_cs.dll langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
-cp target/debug/fyroxed_cs.pdb langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cp target/debug/fyroxed_cs.dll $INSTALL_DIR
+cp target/debug/fyroxed_cs.pdb $INSTALL_DIR
 
-# build C# parts of Fyrox Lite
+# build C# parts of editor runtime
 
-cd langs/cs/FyroxLiteCs
-dotnet build -p:FyroxEditorSymbol=FYROX_EDITOR
-cd ../../..
-#cp langs/cs/FyroxLiteCs/FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs.dll langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/
+cd langs/cs/FyroxLiteCs/FyroxEdCs
+#dotnet build -p:FyroxCsSdkInstallDir=$INSTALL_DIR
+dotnet build
+cd ../../../..
+cp langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.dll $INSTALL_DIR
+cp langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.pdb $INSTALL_DIR
+cp langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.exe $INSTALL_DIR
+cp langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.runtimeconfig.json $INSTALL_DIR
 
-RUST_BACKTRACE=1 langs/cs/FyroxLiteCs/FyroxEdCs/bin/Debug/net8.0/FyroxEdCs.exe
+# build C# parts of game runtime
+
+cd langs/cs/FyroxLiteCs/FyroxLiteCs
+dotnet build
+cd ../../../..
+cp langs/cs/FyroxLiteCs/FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs.dll $INSTALL_DIR
+cp langs/cs/FyroxLiteCs/FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs.pdb $INSTALL_DIR
+
+RUST_BACKTRACE=1 $INSTALL_DIR/FyroxEdCs.exe
