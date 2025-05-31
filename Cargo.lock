@@ -1262,7 +1262,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fyrox-dylib",
  "fyrox-impl",
@@ -1270,7 +1270,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-animation"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fxhash",
  "fyrox-core",
@@ -1282,7 +1282,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-autotile"
-version = "0.36.0"
+version = "1.0.0-rc.1"
 dependencies = [
  "fxhash",
  "nalgebra 0.33.1",
@@ -1291,7 +1291,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-build-tools"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fyrox-core",
  "fyrox-resource",
@@ -1301,7 +1301,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-core"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "android-activity",
  "arrayvec",
@@ -1313,7 +1313,7 @@ dependencies = [
  "futures",
  "fxhash",
  "fyrox-core-derive",
- "fyrox-math 0.36.2",
+ "fyrox-math 1.0.0-rc.1",
  "instant",
  "js-sys",
  "lazy_static",
@@ -1335,7 +1335,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-core-derive"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "convert_case",
  "darling",
@@ -1347,14 +1347,14 @@ dependencies = [
 
 [[package]]
 name = "fyrox-dylib"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fyrox-impl",
 ]
 
 [[package]]
 name = "fyrox-graph"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fxhash",
  "fyrox-core",
@@ -1363,7 +1363,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-graphics"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "bytemuck",
  "fyrox-core",
@@ -1374,7 +1374,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-graphics-gl"
-version = "0.36.0"
+version = "1.0.0-rc.1"
 dependencies = [
  "fxhash",
  "fyrox-core",
@@ -1391,7 +1391,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-impl"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "approx",
  "base64 0.22.1",
@@ -1510,7 +1510,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-material"
-version = "0.36.0"
+version = "1.0.0-rc.1"
 dependencies = [
  "fxhash",
  "fyrox-core",
@@ -1542,7 +1542,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-math"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "arrayvec",
  "bytemuck",
@@ -1554,7 +1554,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-resource"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fxhash",
  "fyrox-core",
@@ -1566,7 +1566,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-sound"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "fyrox-core",
  "fyrox-resource",
@@ -1581,7 +1581,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-texture"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "ddsfile",
  "fast_image_resize",
@@ -1598,7 +1598,7 @@ dependencies = [
 
 [[package]]
 name = "fyrox-ui"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "bytemuck",
  "copypasta",
@@ -1645,7 +1645,7 @@ dependencies = [
 
 [[package]]
 name = "fyroxed_base"
-version = "0.36.2"
+version = "1.0.0-rc.1"
 dependencies = [
  "cargo_metadata",
  "fyrox",
