@@ -52,12 +52,7 @@ internal static class ScriptsMetadataManager
             }
             else
             {
-                Log.Err("============================");
-                Log.Err("C# assembly file not found.");
-                Log.Err("Please compile your C# project.");
-                Log.Err("Until then You may see obscure errors in console, and some Fyrox function may not work.");
-                Log.Err("============================");
-                
+                Console.WriteLine($"Assembly file not found");
                 scripts = new List<NativeScriptMetadata>();
             }
         }

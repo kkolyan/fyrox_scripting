@@ -12,6 +12,7 @@ use std::{env, fs};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use fyrox_build_tools::{BuildProfile, CommandDescriptor};
+use fyroxed_base::plugin::EditorPlugin;
 use fyroxed_base::settings::Settings;
 use uuid::Uuid;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
@@ -93,7 +94,7 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assem
             Log::err(err);
         }
 
-        // editor.add_editor_plugin(CSharpPluginRefreshOnFocus);
+        editor.add_editor_plugin(CSharpPluginRefreshOnFocus);
     }
 
     editor.run(event_loop)
@@ -161,17 +162,16 @@ fn ensure_project_files(working_dir: &Path) -> Option<PathBuf> {
     open::that(&sln_path).unwrap();
     Some(sln_path.into())
 }
-// #[cfg(not(feature = "dylib"))]
-// struct CSharpPluginRefreshOnFocus;
-// 
-// #[cfg(not(feature = "dylib"))]
-// impl EditorPlugin for CSharpPluginRefreshOnFocus {
-// 
-//     fn on_resumed(&mut self, #[allow(unused_variables)] editor: &mut Editor) {
-//         for it in editor.engine.plugins_mut() {
-//             if let Some(it) = it.cast_mut::<CPlugin>() {
-//                 it.check_for_script_changes();
-//             }
-//         }
-//     }
-// }
+#[cfg(not(feature = "dylib"))]
+struct CSharpPluginRefreshOnFocus;
+
+#[cfg(not(feature = "dylib"))]
+impl EditorPlugin for CSharpPluginRefreshOnFocus {
+    fn on_update(&mut self, editor: &mut Editor) {
+        for it in editor.engine.plugins_mut() {
+            if let Some(it) = it.cast_mut::<CPlugin>() {
+                it.check_for_script_changes();
+            }
+        }
+    }
+}

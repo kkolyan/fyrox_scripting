@@ -43,7 +43,7 @@ pub struct CPlugin {
 
     #[visit(skip)]
     #[reflect(hidden)]
-    pub need_reload: Cell<bool>,
+    pub need_reload: bool,
 
     pub scripts: RefCell<GlobalScriptList>,
 
@@ -54,7 +54,10 @@ pub struct CPlugin {
 
 pub enum HotReload {
     Disabled,
-    Enabled { watcher: RefCell<LazyWatcher> },
+    Enabled {
+        watcher: RefCell<LazyWatcher>,
+        missing_assembly_last_logged_at: Cell<SystemTime>,
+    },
 }
 
 impl Debug for CPlugin {
@@ -80,7 +83,8 @@ impl CPlugin {
                             path,
                             duration: Duration::from_millis(500),
                             last_checked_at: SystemTime::UNIX_EPOCH,
-                        })
+                        }),
+                        missing_assembly_last_logged_at: Cell::new(SystemTime::UNIX_EPOCH),
                     }
                 })
                 .unwrap_or(HotReload::Disabled),
@@ -88,7 +92,7 @@ impl CPlugin {
     }
 
     pub fn is_candidate_for_reload(&self) -> bool {
-        let HotReload::Enabled { watcher } = &self.hot_reload else {
+        let HotReload::Enabled { watcher, missing_assembly_last_logged_at } = &self.hot_reload else {
             return false;
         };
         let mut watcher = watcher.borrow_mut();
@@ -97,7 +101,7 @@ impl CPlugin {
             let last_check_sec_ago = last_checked_at.elapsed()
                 .map(|it| it.as_secs_f32())
                 .unwrap_or_else(|it| -it.duration().as_secs_f32());
-            if last_check_sec_ago < 3.0 {
+            if last_check_sec_ago < 1.0 {
                 return false;
             }
             *last_checked_at = SystemTime::now();
@@ -107,7 +111,7 @@ impl CPlugin {
                 *watcher = LazyWatcher::Initialized(w);
                 return true;
             } else {
-                println!("failed to initialize watcher for path {}: {:?}", &path.display(), w.err().unwrap());
+                log_missing_assembly(missing_assembly_last_logged_at);
             }
             return false;
         }
@@ -127,6 +131,26 @@ impl CPlugin {
         }
         reload
     }
+
+    pub fn check_for_script_changes(&mut self) {
+        self.need_reload = self.is_candidate_for_reload();
+    }
+}
+
+fn log_missing_assembly(missing_assembly_last_logged_at: &Cell<SystemTime>) {
+    let last_logged_sec_ago = missing_assembly_last_logged_at.get().elapsed()
+        .map(|it| it.as_secs_f32())
+        .unwrap_or_else(|it| -it.duration().as_secs_f32());
+    if last_logged_sec_ago < 6.0 {
+        return;
+    }
+    missing_assembly_last_logged_at.set(SystemTime::now());
+    Log::err("
+============================
+C# assembly file not found.
+Please compile your C# project.
+Until then You may see obscure errors in console, some Fyrox function may not work.
+============================");
 }
 
 impl Default for CPlugin {
@@ -243,6 +267,11 @@ impl Visit for GlobalScriptList {
     fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {
         let mut guard = visitor.enter_region(name)?;
 
+        if APP.with_borrow(|app| app.as_ref().unwrap().is_editor) {
+            // prevent visitor errors outside the opened scene
+            return Ok(());
+        }
+
         for item in self.inner_mut().iter_mut() {
             item.data.visit(item.name.as_str(), &mut guard)?;
         }
@@ -260,10 +289,7 @@ impl DynamicPlugin for CPlugin {
     }
 
     fn is_reload_needed_now(&self) -> bool {
-        if !self.need_reload.get() {
-            self.need_reload.set(self.is_candidate_for_reload());
-        }
-        self.need_reload.get()
+        self.need_reload
     }
 
     fn as_loaded_ref(&self) -> &dyn Plugin {
@@ -280,7 +306,7 @@ impl DynamicPlugin for CPlugin {
 
     fn prepare_to_reload(&mut self) {
         Log::info("prepare_to_reload");
-        self.need_reload.set(false);
+        self.need_reload = false;
     }
 
     fn reload(
