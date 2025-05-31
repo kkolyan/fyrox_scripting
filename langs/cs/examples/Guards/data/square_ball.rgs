@@ -252,7 +252,7 @@ __ROOT__[]
 																	}
 																	ResourceBindings[Count<u32:9>]
 																	{
-																		Item0[Key<str:"roughnessTexture">]
+																		Item0[Key<str:"heightTexture">]
 																		{
 																			Value[Id<u32:0>]
 																			{
@@ -351,7 +351,17 @@ __ROOT__[]
 																				}
 																			}
 																		}
-																		Item7[Key<str:"diffuseTexture">]
+																		Item7[Key<str:"roughnessTexture">]
+																		{
+																			Value[Id<u32:0>]
+																			{
+																				0[]
+																				{
+																					Value[IsSome<u8:0>]{}
+																				}
+																			}
+																		}
+																		Item8[Key<str:"diffuseTexture">]
 																		{
 																			Value[Id<u32:0>]
 																			{
@@ -370,16 +380,6 @@ __ROOT__[]
 																							}
 																						}
 																					}
-																				}
-																			}
-																		}
-																		Item8[Key<str:"heightTexture">]
-																		{
-																			Value[Id<u32:0>]
-																			{
-																				0[]
-																				{
-																					Value[IsSome<u8:0>]{}
 																				}
 																			}
 																		}

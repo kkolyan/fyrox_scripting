@@ -70,8 +70,6 @@ __ROOT__[]
 												{
 													Data[ReloadDelaySec<str:"1.5">GunHeight<str:"0">SwitchWaypointTimeoutSec<str:"3">InitialBulletVelocity<str:"15">AttackRange<str:"100">BeaconReachedDistance<str:"2">MovePower<str:"150">]
 													{
-														CurrentWaypoint[IsSome<u8:0>]{}
-														Collider[Index<u32:0>Generation<u32:0>]{}
 														BulletPrefab[IsSome<u8:1>]
 														{
 															Data[]
@@ -278,42 +276,13 @@ __ROOT__[]
 																	}
 																	ResourceBindings[Count<u32:9>]
 																	{
-																		Item0[Key<str:"properties">]
+																		Item0[Key<str:"roughnessTexture">]
 																		{
-																			Value[Id<u32:1>]
+																			Value[Id<u32:0>]
 																			{
 																				0[]
 																				{
-																					Properties[Count<u32:6>]
-																					{
-																						Item0[Key<str:"diffuseColor">]
-																						{
-																							Value[Id<u32:19>]
-																							{
-																								0[R<u8:255>G<u8:255>B<u8:255>A<u8:255>]{}
-																							}
-																						}
-																						Item1[Key<str:"texCoordScale">]
-																						{
-																							Value[Id<u32:6>0<vec2f32:1; 1>]{}
-																						}
-																						Item2[Key<str:"layerIndex">]
-																						{
-																							Value[Id<u32:4>0<u32:0>]{}
-																						}
-																						Item3[Key<str:"emissionStrength">]
-																						{
-																							Value[Id<u32:8>0<vec3f32:2; 2; 2>]{}
-																						}
-																						Item4[Key<str:"parallaxScale">]
-																						{
-																							Value[Id<u32:0>0<f32:0.08>]{}
-																						}
-																						Item5[Key<str:"parallaxCenter">]
-																						{
-																							Value[Id<u32:0>0<f32:0>]{}
-																						}
-																					}
+																					Value[IsSome<u8:0>]{}
 																				}
 																			}
 																		}
@@ -357,7 +326,46 @@ __ROOT__[]
 																				}
 																			}
 																		}
-																		Item5[Key<str:"diffuseTexture">]
+																		Item5[Key<str:"properties">]
+																		{
+																			Value[Id<u32:1>]
+																			{
+																				0[]
+																				{
+																					Properties[Count<u32:6>]
+																					{
+																						Item0[Key<str:"diffuseColor">]
+																						{
+																							Value[Id<u32:19>]
+																							{
+																								0[R<u8:255>G<u8:255>B<u8:255>A<u8:255>]{}
+																							}
+																						}
+																						Item1[Key<str:"texCoordScale">]
+																						{
+																							Value[Id<u32:6>0<vec2f32:1; 1>]{}
+																						}
+																						Item2[Key<str:"layerIndex">]
+																						{
+																							Value[Id<u32:4>0<u32:0>]{}
+																						}
+																						Item3[Key<str:"emissionStrength">]
+																						{
+																							Value[Id<u32:8>0<vec3f32:2; 2; 2>]{}
+																						}
+																						Item4[Key<str:"parallaxScale">]
+																						{
+																							Value[Id<u32:0>0<f32:0.08>]{}
+																						}
+																						Item5[Key<str:"parallaxCenter">]
+																						{
+																							Value[Id<u32:0>0<f32:0>]{}
+																						}
+																					}
+																				}
+																			}
+																		}
+																		Item6[Key<str:"diffuseTexture">]
 																		{
 																			Value[Id<u32:0>]
 																			{
@@ -379,7 +387,7 @@ __ROOT__[]
 																				}
 																			}
 																		}
-																		Item6[Key<str:"aoTexture">]
+																		Item7[Key<str:"aoTexture">]
 																		{
 																			Value[Id<u32:0>]
 																			{
@@ -389,17 +397,7 @@ __ROOT__[]
 																				}
 																			}
 																		}
-																		Item7[Key<str:"heightTexture">]
-																		{
-																			Value[Id<u32:0>]
-																			{
-																				0[]
-																				{
-																					Value[IsSome<u8:0>]{}
-																				}
-																			}
-																		}
-																		Item8[Key<str:"roughnessTexture">]
+																		Item8[Key<str:"heightTexture">]
 																		{
 																			Value[Id<u32:0>]
 																			{
