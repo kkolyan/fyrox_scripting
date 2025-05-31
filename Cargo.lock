@@ -1626,6 +1626,7 @@ version = "0.1.0"
 dependencies = [
  "dunce",
  "fyrox",
+ "fyrox-build-tools",
  "fyrox-lite-cs-lib",
  "fyroxed_base",
  "native-dialog",

@@ -9,6 +9,7 @@ crate-type = ["cdylib"]
 [dependencies]
 fyroxed_base = { workspace = true, default-features = true }
 fyrox = { workspace = true }
+fyrox-build-tools = { workspace = true }
 fyrox-lite-cs-lib = { workspace = true, default-features = true }
 native-dialog = "0.9.0"
 uuid = { workspace = true, features = ["v4"] }

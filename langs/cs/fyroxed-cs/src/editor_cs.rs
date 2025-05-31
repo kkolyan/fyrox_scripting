@@ -11,6 +11,8 @@ use std::ffi::{c_char, CStr, CString};
 use std::{env, fs};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
+use fyrox_build_tools::{BuildProfile, CommandDescriptor};
+use fyroxed_base::settings::Settings;
 use uuid::Uuid;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
 
@@ -60,10 +62,15 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assem
     // issues just make them the same
     env::set_current_dir(&working_dir).unwrap();
     // let _ = open::that(solution_file);
-    let mut editor = Editor::new(Some(StartupData {
-        working_directory: working_dir.clone(),
-        scenes: vec!["data/scene.rgs".into()],
-    }));
+    let settings = ensure_cs_profiles(&working_dir);
+
+    let mut editor = Editor::new_with_settings(
+        Some(StartupData {
+            working_directory: working_dir.clone(),
+            scenes: vec!["data/scene.rgs".into()],
+        }),
+        settings,
+    );
 
     // Dynamic linking with hot reloading.
     #[cfg(feature = "dylib")]
@@ -90,6 +97,33 @@ pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assem
     }
 
     editor.run(event_loop)
+}
+
+fn ensure_cs_profiles(_working_dir: &PathBuf) -> Settings {
+    let (mut settings, loaded) = match Settings::load() {
+        Ok(it) => (it, true),
+        Err(_) => (Settings::default(), false),
+    };
+    settings.build.profiles.clear();
+    settings.build.profiles.push(BuildProfile {
+        name: "C# Project".to_string(),
+        build_commands: vec![
+            CommandDescriptor {
+                command: "dotnet".to_string(),
+                args: vec!["build".to_string()],
+                environment_variables: vec![],
+            }
+        ],
+        run_command: CommandDescriptor {
+            command: "dotnet".to_string(),
+            args: vec!["run".to_string()],
+            environment_variables: vec![],
+        },
+    });
+    if loaded {
+        settings.force_save();
+    }
+    settings
 }
 
 fn ensure_project_files(working_dir: &Path) -> Option<PathBuf> {

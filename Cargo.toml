@@ -47,10 +47,13 @@ error = { path = "error" }
 
 #fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
+#fyrox-build-tools = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 fyrox = {path = "engine/fyrox", default-features = false}
 fyroxed_base = {path = "engine/editor", default-features = false}
+fyrox-build-tools = {path = "engine/fyrox-build-tools", default-features = false}
 #fyrox = {version = "0.36.2", default-features = false}
 #fyroxed_base = {version = "0.36.2", default-features = false}
+#fyrox-build-tools = {version = "0.36.2", default-features = false}
 
 serde = "1.0.210"
 serde_json = "1.0.128"
