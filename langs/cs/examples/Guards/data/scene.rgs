@@ -376,7 +376,7 @@ __ROOT__[]
 											{
 												ScriptData[Initialized<bool:false>]
 												{
-													Data[Sensitivity<str:"0.004">Power<str:"150">InitialBulletVelocity<str:"20">ShootingRange<str:"1000">ReloadDelaySec<str:"0.7">Published<bool:false>]
+													Data[Sensitivity<str:"0.004">Power<str:"150">InitialBulletVelocity<str:"20">ShootingRange<str:"1000">ReloadDelaySec<str:"0.7">]
 													{
 														Camera[Index<u32:5>Generation<u32:1>]{}
 														Bullet[IsSome<u8:1>]
@@ -392,7 +392,6 @@ __ROOT__[]
 																}
 															}
 														}
-														Collider[Index<u32:0>Generation<u32:0>]{}
 													}
 												}
 											}
@@ -693,7 +692,7 @@ __ROOT__[]
 										{
 											ScriptData[Initialized<bool:false>]
 											{
-												Data[InitialCount<u64:12>Initialized<bool:false>FrameSkippedForBeacons<bool:false>]
+												Data[InitialCount<str:"12">]
 												{
 													GaurdPrefab[IsSome<u8:1>]
 													{
@@ -4085,12 +4084,9 @@ __ROOT__[]
 										{
 											ScriptData[Initialized<bool:false>]
 											{
-												Data[]
+												Data[Velocity<vec3f32:0; 0; 0>RemainingSec<str:"0">Fraction<str:"0">]
 												{
-													Params[Velocity<vec3f32:0; 0; 0>RemainingSec<str:"0">Fraction<str:"0">""]
-													{
-														AuthorCollider[Index<u32:0>Generation<u32:0>]{}
-													}
+													AuthorCollider[Index<u32:0>Generation<u32:0>]{}
 												}
 											}
 										}
@@ -4985,7 +4981,7 @@ __ROOT__[]
 						{
 							ArcData[Paused<bool:false>]
 							{
-								Listener[Basis<mat3:-1; 0; 0; 0; 1; 0; 0; 0; 1>Position<vec3f32:0; 1; -3>]{}
+								Listener[Basis<mat3:-1; 0; 0; 0; 1; 0; 0; 0; 1>Position<vec3f32:-3.7999997; 1.6; -1>]{}
 								Sources[]
 								{
 									Records[Length<u32:0>]{}

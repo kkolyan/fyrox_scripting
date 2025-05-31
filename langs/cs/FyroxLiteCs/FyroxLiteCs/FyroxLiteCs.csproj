@@ -7,4 +7,8 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'FyroxEdCs'">
+        <DefineConstants>FYROX_EDITOR</DefineConstants>
+    </PropertyGroup>
+
 </Project>

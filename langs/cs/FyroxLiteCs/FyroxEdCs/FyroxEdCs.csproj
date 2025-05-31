@@ -7,16 +7,16 @@
         <Nullable>enable</Nullable>
         <InvariantGlobalization>true</InvariantGlobalization>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <DefineConstants>FYROX_EDITOR</DefineConstants>
     </PropertyGroup>
 
+<!--    <ItemGroup>-->
+<!--        <ProjectReference Include="..\FyroxLiteCs\FyroxLiteCs.csproj" />-->
+<!--    </ItemGroup>-->
     <ItemGroup>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Include="..\FyroxLiteCs\src\**\*.cs">
-        <Link>**\*.cs</Link>
-      </Compile>
+        <Reference Include="FyroxLiteCs">
+            <HintPath>$(ProjectDir)/../FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs_FyroxEdCs.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
     </ItemGroup>
 
 </Project>

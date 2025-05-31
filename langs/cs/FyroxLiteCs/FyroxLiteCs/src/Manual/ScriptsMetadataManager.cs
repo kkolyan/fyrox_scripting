@@ -24,6 +24,7 @@ internal static class ScriptsMetadataManager
         List<NativeScriptMetadata> scripts;
         if (EditorWorkingDir != null)
         {
+            Console.WriteLine($"{nameof(EditorWorkingDir)} defined, scanning external assembly");
             if (_loadContext != null)
             {
                 _loadContext.Unload();
@@ -56,6 +57,7 @@ internal static class ScriptsMetadataManager
         }
         else
         {
+            Console.WriteLine($"{nameof(EditorWorkingDir)} is not defined, scanning own assembly");
             scripts = ScriptsMetadataExtractor.ScanAssemblyForScripts(PlayerAssembly);
         }
 

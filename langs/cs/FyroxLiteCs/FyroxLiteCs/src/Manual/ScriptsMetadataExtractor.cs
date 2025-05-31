@@ -17,8 +17,10 @@ public static class ScriptsMetadataExtractor
             {
                 continue;
             }
+            
+            
 
-            if (type.IsAssignableTo(typeof(GlobalScript)))
+            if (type.BaseType.Name == "GlobalScript")
             {
                 Console.WriteLine($"registering global script {type.FullName}");
 
@@ -33,7 +35,7 @@ public static class ScriptsMetadataExtractor
                 RegisterScript(type, scripts, uuid, NativeScriptKind.Global);
             }
 
-            if (type.IsAssignableTo(typeof(NodeScript)))
+            if (type.BaseType.Name == "NodeScript")
             {
                 Console.WriteLine($"registering node script {type.FullName}");
 
