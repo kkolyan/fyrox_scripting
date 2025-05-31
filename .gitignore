@@ -1,15 +1,7 @@
 .idea
 /target
 *.log
-/settings.ron
 /bindgen/expand
 .vscode
 /langs/lua/examples/guards/fyrox-lite.lua
-/langs/cs/*/bin
-/langs/cs/*/obj
-/langs/cs/FyroxLiteCs/*/bin
-/langs/cs/FyroxLiteCs/*/obj
-/langs/cs/examples/*/bin
-/langs/cs/examples/*/obj
-*.sln.DotSettings.user
 settings.ron
