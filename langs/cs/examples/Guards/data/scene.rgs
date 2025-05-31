@@ -376,7 +376,7 @@ __ROOT__[]
 											{
 												ScriptData[Initialized<bool:false>]
 												{
-													Data[Sensitivity<str:"0.004">Power<str:"150">InitialBulletVelocity<str:"20">ShootingRange<str:"1000">ReloadDelaySec<str:"0.7">]
+													Data[Sensitivity<str:"0.004">Power<str:"150">InitialBulletVelocity<str:"20">ShootingRange<str:"1000">ReloadDelaySec<str:"0.7">Published<bool:false>]
 													{
 														Camera[Index<u32:5>Generation<u32:1>]{}
 														Bullet[IsSome<u8:1>]
@@ -385,13 +385,14 @@ __ROOT__[]
 															{
 																State[Id<u64:7>]
 																{
-																	ArcData[ResourceUuid<uuid:905510d9-cea5-4e0a-8532-bce8e7aa75ec>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
+																	ArcData[ResourceUuid<uuid:37c7c48b-abbe-4eec-a958-3376a98146e5>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
 																	{
 																		Kind[Id<u32:1>]{}
 																	}
 																}
 															}
 														}
+														Collider[Index<u32:0>Generation<u32:0>]{}
 													}
 												}
 											}
@@ -692,7 +693,7 @@ __ROOT__[]
 										{
 											ScriptData[Initialized<bool:false>]
 											{
-												Data[InitialCount<str:"12">]
+												Data[InitialCount<u64:12>Initialized<bool:false>FrameSkippedForBeacons<bool:false>]
 												{
 													GaurdPrefab[IsSome<u8:1>]
 													{
@@ -700,7 +701,7 @@ __ROOT__[]
 														{
 															State[Id<u64:8>]
 															{
-																ArcData[ResourceUuid<uuid:2c4aeef5-d76f-4cee-aeb0-fcda51e42415>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
+																ArcData[ResourceUuid<uuid:b8c35021-0eb0-4ab3-8645-cad274c053b2>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
 																{
 																	Kind[Id<u32:1>]{}
 																}
@@ -817,7 +818,7 @@ __ROOT__[]
 										{
 											State[Id<u64:9>]
 											{
-												ArcData[ResourceUuid<uuid:a1048f17-3d10-4c7a-be83-90876d4d764e>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
+												ArcData[ResourceUuid<uuid:d17c1429-b572-4aaa-bf03-777e50d1cd64>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
 												{
 													Kind[Id<u32:1>]{}
 												}
@@ -1406,7 +1407,7 @@ __ROOT__[]
 										{
 											State[Id<u64:10>]
 											{
-												ArcData[ResourceUuid<uuid:1f9e02fc-909a-414d-8515-a2292a8b5008>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
+												ArcData[ResourceUuid<uuid:9a3abfd9-ae12-4f65-9d0e-2cf4cee0e8dd>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
 												{
 													Kind[Id<u32:1>]{}
 												}
@@ -4084,9 +4085,12 @@ __ROOT__[]
 										{
 											ScriptData[Initialized<bool:false>]
 											{
-												Data[Velocity<vec3f32:0; 0; 0>RemainingSec<str:"0">Fraction<str:"0">]
+												Data[]
 												{
-													AuthorCollider[Index<u32:0>Generation<u32:0>]{}
+													Params[Velocity<vec3f32:0; 0; 0>RemainingSec<str:"0">Fraction<str:"0">""]
+													{
+														AuthorCollider[Index<u32:0>Generation<u32:0>]{}
+													}
 												}
 											}
 										}
@@ -4234,7 +4238,7 @@ __ROOT__[]
 										{
 											State[Id<u64:11>]
 											{
-												ArcData[ResourceUuid<uuid:e2b0f733-2dde-4704-8ed9-29d83b798e1e>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
+												ArcData[ResourceUuid<uuid:2db4a742-9be3-4285-b723-cfaa6fe0c5d1>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
 												{
 													Kind[Id<u32:1>]{}
 												}

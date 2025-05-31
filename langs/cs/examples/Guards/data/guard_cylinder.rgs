@@ -78,7 +78,7 @@ __ROOT__[]
 															{
 																State[Id<u64:1>]
 																{
-																	ArcData[ResourceUuid<uuid:905510d9-cea5-4e0a-8532-bce8e7aa75ec>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
+																	ArcData[ResourceUuid<uuid:37c7c48b-abbe-4eec-a958-3376a98146e5>TypeUuid<uuid:44cd768f-b4ca-4804-a98c-0adf85577ada>]
 																	{
 																		Kind[Id<u32:1>]{}
 																	}
