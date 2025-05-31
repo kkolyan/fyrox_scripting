@@ -30,7 +30,7 @@ use std::fmt::Debug;
 use std::ops::DerefMut;
 use std::path::PathBuf;
 use std::sync::Arc;
-use std::time::Duration;
+use std::time::{Duration, SystemTime};
 use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 use crate::external_global_script_proxy::ExternalGlobalScriptProxy;
@@ -79,6 +79,7 @@ impl CPlugin {
                         watcher: RefCell::new(LazyWatcher::TryingToInitialize {
                             path,
                             duration: Duration::from_millis(500),
+                            last_checked_at: SystemTime::UNIX_EPOCH,
                         })
                     }
                 })
@@ -92,14 +93,21 @@ impl CPlugin {
         };
         let mut watcher = watcher.borrow_mut();
         let watcher = watcher.deref_mut();
-        if let LazyWatcher::TryingToInitialize { path, duration } = watcher {
+        if let LazyWatcher::TryingToInitialize { path, duration, last_checked_at } = watcher {
+            let last_check_sec_ago = last_checked_at.elapsed()
+                .map(|it| it.as_secs_f32())
+                .unwrap_or_else(|it| -it.duration().as_secs_f32());
+            if last_check_sec_ago < 3.0 {
+                return false;
+            }
+            *last_checked_at = SystemTime::now();
             let w = FileSystemWatcher::new(&path, *duration);
             if let Ok(w) = w {
                 println!("assembly file detected, creating watcher: {}", path.to_str().unwrap());
                 *watcher = LazyWatcher::Initialized(w);
                 return true;
             } else {
-                println!("failed to initialize watcher: {:?}", w.err().unwrap());
+                println!("failed to initialize watcher for path {}: {:?}", &path.display(), w.err().unwrap());
             }
             return false;
         }
