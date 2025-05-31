@@ -1,0 +1,15 @@
+[package]
+name = "guards-vanilla-executor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fyrox = { workspace = true }
+guards-vanilla-game = { path = "../game", optional = true }
+puffin = {version = "0.19.0", optional = true}
+puffin_http = {version = "0.16.0", optional = true}
+
+[features]
+default = ["guards-vanilla-game"]
+dylib = ["fyrox/dylib"]
+profiling = ["dep:puffin", "dep:puffin_http"]

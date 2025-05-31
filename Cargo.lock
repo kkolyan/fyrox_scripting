@@ -1843,6 +1843,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "guards-vanilla-editor"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "fyroxed_base",
+ "guards-vanilla-game",
+]
+
+[[package]]
+name = "guards-vanilla-executor"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "guards-vanilla-game",
+ "puffin",
+ "puffin_http",
+]
+
+[[package]]
+name = "guards-vanilla-game"
+version = "0.1.0"
+dependencies = [
+ "extend",
+ "fyrox",
+ "profiling",
+]
+
+[[package]]
+name = "guards-vanilla-game_dylib"
+version = "0.1.0"
+dependencies = [
+ "guards-vanilla-game",
+]
+
+[[package]]
 name = "half"
 version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3374,6 +3409,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "43d84d1d7a6ac92673717f9f6d1518374ef257669c24ebc5ac25d5033828be58"
 dependencies = [
  "profiling-procmacros",
+ "puffin",
 ]
 
 [[package]]
