@@ -1,8 +1,9 @@
-############################################################################################
-#### This file is generated automatically by Fyrox C# SDK when project opened first time ###
-############################################################################################
-
 Microsoft Visual Studio Solution File, Format Version 12.00
+##################################################################
+#### This file is generated automatically by Fyrox C# SDK      ###
+#### To generate it again - delete and restart Fyrox C# Editor ###
+##################################################################
+
 Project("{$solution_uuid}") = "${project_name}", "${project_name}.csproj", "{${project_uuid}}"
 EndProject
 Global
