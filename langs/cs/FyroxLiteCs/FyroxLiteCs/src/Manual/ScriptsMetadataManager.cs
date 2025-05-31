@@ -36,6 +36,7 @@ internal static class ScriptsMetadataManager
             Console.WriteLine($"Current path is {Path.GetFullPath(".")}");
 
             var assemblyPath = GetScriptsAssemblyPathInternal();
+            Log.Info($"Loading C# assembly file at {assemblyPath}");
             Console.WriteLine($"Loading game scripts assembly file: {assemblyPath}");
             if (Path.Exists(assemblyPath))
             {
@@ -51,7 +52,12 @@ internal static class ScriptsMetadataManager
             }
             else
             {
-                Console.WriteLine($"Assembly file doesn't exist: {assemblyPath}");
+                Log.Err("============================");
+                Log.Err("C# assembly file not found.");
+                Log.Err("Please compile your C# project.");
+                Log.Err("Until then You may see obscure errors in console, and some Fyrox function may not work.");
+                Log.Err("============================");
+                
                 scripts = new List<NativeScriptMetadata>();
             }
         }
