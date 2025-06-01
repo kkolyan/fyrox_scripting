@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FyroxLiteCs", "FyroxLiteCs\FyroxLiteCs.csproj", "{440868BA-6472-49A7-B877-710267FA51FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fyrox_lite_cs_netcore", "fyrox_lite_cs_netcore\fyrox_lite_cs_netcore.csproj", "{440868BA-6472-49A7-B877-710267FA51FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FyroxEdCs", "FyroxEdCs\FyroxEdCs.csproj", "{4D986C52-C802-4528-AB64-425F1C5E2358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fyroxed_cs_netcore", "fyroxed_cs_netcore\fyroxed_cs_netcore.csproj", "{4D986C52-C802-4528-AB64-425F1C5E2358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

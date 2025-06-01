@@ -13,6 +13,7 @@ public class Guard : NodeScript
     private float attack_range;
     private float beacon_reached_distance;
     private float move_power;
+    private float move_power1;
  
     [HideInInspector] [Transient] private float reloading_sec;   
     [HideInInspector] [Transient] private float waypoint_sec;

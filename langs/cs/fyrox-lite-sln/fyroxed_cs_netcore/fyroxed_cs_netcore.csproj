@@ -10,11 +10,11 @@
     </PropertyGroup>
 
 <!--    <ItemGroup>-->
-<!--        <ProjectReference Include="..\FyroxLiteCs\FyroxLiteCs.csproj" />-->
+<!--        <ProjectReference Include="..\fyrox_lite_cs_netcore\fyrox_lite_cs_netcore.csproj" />-->
 <!--    </ItemGroup>-->
     <ItemGroup>
         <Reference Include="FyroxLiteCs">
-            <HintPath>$(ProjectDir)/../FyroxLiteCs/bin/Debug/net8.0/FyroxLiteCs_FyroxEdCs.dll</HintPath>
+            <HintPath>$(ProjectDir)/../fyrox_lite_cs_netcore/bin/Debug/net8.0/fyrox_lite_cs_netcore_4editor.dll</HintPath>
             <Private>True</Private>
         </Reference>
     </ItemGroup>

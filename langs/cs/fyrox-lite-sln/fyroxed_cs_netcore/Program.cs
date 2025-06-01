@@ -33,7 +33,7 @@ public partial class Program
     private static void RunEditor(string? workingDir)
     {
         var executableDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        var assemblyPath = $"{executableDir}/FyroxLiteCs_FyroxEdCs.dll";
+        var assemblyPath = $"{executableDir}/fyrox_lite_cs_netcore_4editor.dll";
         var entryClassName = "FyroxLite.FyroxEd";
         var entryPointClass = Assembly
                                   .LoadFile(assemblyPath)
