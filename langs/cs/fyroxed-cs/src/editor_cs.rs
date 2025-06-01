@@ -153,6 +153,13 @@ fn ensure_project_files(working_dir: &Path) -> Option<PathBuf> {
 
         fs::write(&sln_path, sln).unwrap();
         fs::write(format!("{}/Program.cs", working_dir.to_str().unwrap()), include_str!("Program.cs.txt")).unwrap();
+
+        let run = include_str!("Debug.run.xml.txt")
+            .replace("${project_name}", dir_name)
+        ;
+        let _ = fs::create_dir_all(format!("{}/.run", working_dir.to_str().unwrap()));
+        fs::write(format!("{}/.run/Debug.run.xml", working_dir.to_str().unwrap()), run).unwrap();
+
     }
 
     let csproj = include_str!("template.csproj.txt")
