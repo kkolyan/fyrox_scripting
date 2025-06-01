@@ -7,14 +7,14 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-if [ ! -e "$1" ]; then
+if [ -e "$1" ]; then
   echo "Error: specified path points to existing file or directory. Non-existing path required" >&2
   exit 1
 fi
 
 INSTALL_DIR=$(realpath $1)
 
-mkdir -p "$(dirname "$INSTALL_DIR")"
+mkdir -p "$INSTALL_DIR"
 
 # build Rust parts of Fyrox C# SDK
 

@@ -22,7 +22,7 @@ members = [
 	"lite-parser",
 	"tools",
 	"gen-common",
-	"error",
+	"error", "ask_user",
 ]
 resolver = "2"
 exclude = [
@@ -44,6 +44,7 @@ lite-parser = { path = "lite-parser" }
 lite-macro = { path = "lite-macro" }
 gen-common = { path = "gen-common" }
 error = { path = "error" }
+ask_user = { path = "ask_user" }
 
 #fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }

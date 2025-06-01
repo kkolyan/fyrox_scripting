@@ -1,7 +1,5 @@
 # About
-Rudimental Game made with Fyrox Engine and https://github.com/kkolyan/fyrox_lite.
-
-C# port of https://github.com/kkolyan/fyrox_guards
+Rudimental 3D shooter Game made with Fyrox Engine and [C# scripting support](https://github.com/kkolyan/fyrox_lite).
 
 Explored Fyrox APIs:
 * Node graph.

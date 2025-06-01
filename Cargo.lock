@@ -207,6 +207,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d92bec98840b8f03a5ff5413de5293bfcd8bf96467cf5452609f939ec6f5de16"
 
 [[package]]
+name = "ask_user"
+version = "0.1.0"
+dependencies = [
+ "native-dialog",
+]
+
+[[package]]
 name = "atomic-waker"
 version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1476,16 +1483,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fyrox-lite-lua"
-version = "0.1.0"
-dependencies = [
- "fyrox",
- "fyrox-lite-lua-lib",
- "puffin",
- "puffin_http",
-]
-
-[[package]]
 name = "fyrox-lite-lua-lib"
 version = "0.1.0"
 dependencies = [
@@ -1621,9 +1618,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "fyrox_lite_lua"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+ "fyrox-lite-lua-lib",
+ "puffin",
+ "puffin_http",
+]
+
+[[package]]
 name = "fyroxed-cs"
 version = "0.1.0"
 dependencies = [
+ "ask_user",
  "dunce",
  "fyrox",
  "fyrox-build-tools",
@@ -1632,16 +1640,6 @@ dependencies = [
  "native-dialog",
  "open",
  "uuid",
-]
-
-[[package]]
-name = "fyroxed-lua"
-version = "0.1.0"
-dependencies = [
- "dunce",
- "fyrox",
- "fyrox-lite-lua-lib",
- "fyroxed_base",
 ]
 
 [[package]]
@@ -1665,6 +1663,18 @@ dependencies = [
  "strum_macros",
  "toml",
  "toml_edit 0.22.14",
+]
+
+[[package]]
+name = "fyroxed_lua"
+version = "0.1.0"
+dependencies = [
+ "ask_user",
+ "dunce",
+ "fyrox",
+ "fyrox-build-tools",
+ "fyrox-lite-lua-lib",
+ "fyroxed_base",
 ]
 
 [[package]]

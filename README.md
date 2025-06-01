@@ -13,6 +13,8 @@ Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.h
 * No additional SDKs required.
 * Run game from either Fyrox Editor or command line.
 
+[Fyrox Lua SDK Guide](guide_lua.md)
+
 ### Supported platforms
 Currently, I test project only on Windows. Fyrox [supports a lot of platforms](https://fyrox-book.github.io/introduction/requirements.html), so that's short-term limitation. Editor and game support for MacOSX and Linux support will be soon.
 

@@ -4,9 +4,11 @@ use std::env;
 use std::path::{Path, PathBuf};
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
+use fyrox_build_tools::{BuildProfile, CommandDescriptor};
 use fyroxed_base::fyrox::event_loop::EventLoop;
 use fyroxed_base::plugin::EditorPlugin;
 use fyroxed_base::Editor;
+use fyroxed_base::settings::Settings;
 use fyroxed_base::StartupData;
 
 fn main() {
@@ -15,16 +17,30 @@ fn main() {
     let project_dir: PathBuf = if args.len() > 1 {
         PathBuf::from(&args[1])
     } else {
-        Default::default()
+        let s = ask_user::ask_user_for_directory("Fyrox Lua SDK: choose project directory");
+        match s {
+            None => {
+                return;
+            }
+            Some(s) => s.into()
+        }
     };
     let project_dir = dunce::canonicalize(project_dir).unwrap();
+    env::set_current_dir(&project_dir).unwrap();
+
     println!("project directory: {}", project_dir.display());
+
+    let settings = ensure_lua_profiles(&project_dir);
+
     Log::set_verbosity(MessageKind::Warning);
     let event_loop = EventLoop::new().unwrap();
-    let mut editor = Editor::new(Some(StartupData {
-        working_directory: project_dir.clone(),
-        scenes: vec!["data/scene.rgs".into()],
-    }));
+    let mut editor = Editor::new_with_settings(
+        Some(StartupData {
+            working_directory: project_dir.clone(),
+            scenes: vec!["data/scene.rgs".into()],
+        }),
+        settings
+    );
 
     // Dynamic linking with hot reloading.
     #[cfg(feature = "dylib")]
@@ -53,6 +69,34 @@ fn main() {
     }
 
     editor.run(event_loop)
+}
+
+fn ensure_lua_profiles(_working_dir: &PathBuf) -> Settings {
+    let (mut settings, loaded) = match Settings::load() {
+        Ok(it) => (it, true),
+        Err(_) => (Settings::default(), false),
+    };
+    settings.build.profiles.clear();
+    let sdk_dir = env::current_exe().unwrap().parent().unwrap().to_path_buf();
+    settings.build.profiles.push(BuildProfile {
+        name: "Lua Project".to_string(),
+        build_commands: vec![
+            CommandDescriptor {
+                command: format!("cmd"),
+                args: vec!["/C".to_string(), "echo".to_string()],
+                environment_variables: vec![],
+            }
+        ],
+        run_command: CommandDescriptor {
+            command: format!("{}/fyrox_lite_lua.exe", sdk_dir.display()),
+            args: vec![],
+            environment_variables: vec![],
+        },
+    });
+    if loaded {
+        settings.force_save();
+    }
+    settings
 }
 
 #[cfg(not(feature = "dylib"))]
