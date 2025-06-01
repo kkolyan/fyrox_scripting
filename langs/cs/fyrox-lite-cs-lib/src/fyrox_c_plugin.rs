@@ -1,10 +1,8 @@
 use crate::arena::Arena;
-use crate::auto_dispose::AutoDispose;
-use crate::c_lang::UnpackedObject;
 use crate::errors::ResultTcrateLangSpecificErrorExt;
+use crate::external_global_script_proxy::ExternalGlobalScriptProxy;
 use crate::external_script_proxy::invoke_callback;
 use crate::external_script_proxy::ExternalScriptProxy;
-use crate::lazy_watcher::LazyWatcher;
 use crate::scripted_app::APP;
 use fyrox::core::log::Log;
 use fyrox::core::notify::EventKind;
@@ -20,20 +18,18 @@ use fyrox::plugin::PluginContext;
 use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::constructor::ScriptConstructor;
 use fyrox::script::Script;
+use fyrox_lite::global_script_object::ScriptObject;
+use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 use fyrox_lite::lite_input::Input;
-use fyrox_lite::script_metadata::{ScriptDefinition, ScriptKind};
+use fyrox_lite::script_metadata::ScriptDefinition;
 use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::script_object_residence::ScriptResidence;
 use fyrox_lite::wrapper_reflect;
-use std::cell::{Cell, RefCell};
+use std::cell::RefCell;
 use std::fmt::Debug;
-use std::ops::DerefMut;
 use std::path::PathBuf;
 use std::sync::Arc;
-use std::time::{Duration, SystemTime};
-use fyrox_lite::global_script_object::ScriptObject;
-use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
-use crate::external_global_script_proxy::ExternalGlobalScriptProxy;
+use std::time::Duration;
 
 #[derive(Visit, Reflect)]
 pub struct CPlugin {
@@ -55,8 +51,7 @@ pub struct CPlugin {
 pub enum HotReload {
     Disabled,
     Enabled {
-        watcher: RefCell<LazyWatcher>,
-        missing_assembly_last_logged_at: Cell<SystemTime>,
+        watcher: FileSystemWatcher,
     },
 }
 
@@ -79,12 +74,7 @@ impl CPlugin {
                 .map(|path| {
                     println!("trying to initialize watcher for file: {}", path.to_str().unwrap());
                     HotReload::Enabled {
-                        watcher: RefCell::new(LazyWatcher::TryingToInitialize {
-                            path,
-                            duration: Duration::from_millis(500),
-                            last_checked_at: SystemTime::UNIX_EPOCH,
-                        }),
-                        missing_assembly_last_logged_at: Cell::new(SystemTime::UNIX_EPOCH),
+                        watcher: FileSystemWatcher::new(&path, Duration::from_millis(500)).unwrap()
                     }
                 })
                 .unwrap_or(HotReload::Disabled),
@@ -92,30 +82,7 @@ impl CPlugin {
     }
 
     pub fn is_candidate_for_reload(&self) -> bool {
-        let HotReload::Enabled { watcher, missing_assembly_last_logged_at } = &self.hot_reload else {
-            return false;
-        };
-        let mut watcher = watcher.borrow_mut();
-        let watcher = watcher.deref_mut();
-        if let LazyWatcher::TryingToInitialize { path, duration, last_checked_at } = watcher {
-            let last_check_sec_ago = last_checked_at.elapsed()
-                .map(|it| it.as_secs_f32())
-                .unwrap_or_else(|it| -it.duration().as_secs_f32());
-            if last_check_sec_ago < 1.0 {
-                return false;
-            }
-            *last_checked_at = SystemTime::now();
-            let w = FileSystemWatcher::new(&path, *duration);
-            if let Ok(w) = w {
-                println!("assembly file detected, creating watcher: {}", path.to_str().unwrap());
-                *watcher = LazyWatcher::Initialized(w);
-                return true;
-            } else {
-                log_missing_assembly(missing_assembly_last_logged_at);
-            }
-            return false;
-        }
-        let LazyWatcher::Initialized(watcher) = watcher else {
+        let HotReload::Enabled { watcher } = &self.hot_reload else {
             return false;
         };
         let mut reload = false;
@@ -135,22 +102,6 @@ impl CPlugin {
     pub fn check_for_script_changes(&mut self) {
         self.need_reload = self.is_candidate_for_reload();
     }
-}
-
-fn log_missing_assembly(missing_assembly_last_logged_at: &Cell<SystemTime>) {
-    let last_logged_sec_ago = missing_assembly_last_logged_at.get().elapsed()
-        .map(|it| it.as_secs_f32())
-        .unwrap_or_else(|it| -it.duration().as_secs_f32());
-    if last_logged_sec_ago < 6.0 {
-        return;
-    }
-    missing_assembly_last_logged_at.set(SystemTime::now());
-    Log::err("
-============================
-C# assembly file not found.
-Please compile your C# project.
-Until then You may see obscure errors in console, some Fyrox function may not work.
-============================");
 }
 
 impl Default for CPlugin {

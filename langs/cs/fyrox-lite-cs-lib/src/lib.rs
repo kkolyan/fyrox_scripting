@@ -16,7 +16,6 @@ mod utils;
 mod auto_dispose;
 
 mod internal_auto;
-mod lazy_watcher;
 pub(crate) mod external_global_script_proxy;
 
 pub(crate) use arena::Arena;

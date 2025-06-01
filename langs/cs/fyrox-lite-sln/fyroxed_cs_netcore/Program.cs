@@ -6,6 +6,10 @@ public partial class Program
     [LibraryImport("fyroxed_cs", EntryPoint = "ask_user_for_project_directory",
         SetLastError = true)]
     private static partial IntPtr AskUserForProjectDirectory();
+    
+    [LibraryImport("fyroxed_cs", EntryPoint = "prepare_project_directory",
+        SetLastError = true)]
+    private static partial int PrepareProjectDirectory(IntPtr workingDir);
 
     [STAThread]
     public static void Main(string[] args)
@@ -25,6 +29,16 @@ public partial class Program
         else
         {
             workingDir = args[0];
+        }
+
+        {
+            var projectDirectoryPtr = Marshal.StringToHGlobalAnsi(workingDir);
+            var result = PrepareProjectDirectory(projectDirectoryPtr);
+            if (result == 0)
+            {
+                Console.WriteLine("failed to prepare project directory");
+                return;
+            }
         }
 
         RunEditor(workingDir);
