@@ -2,5 +2,5 @@
 cd "$(dirname "$0")"
 set -e
 
-cd showcase/guards-vanilla
+cd showcase/guards_vanilla
 cargo run -p guards-vanilla-editor --manifest-path ../../Cargo.toml
