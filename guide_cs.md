@@ -10,6 +10,8 @@ Currently, it needs to be built from sources and only on Windows (temporary limi
 
 # How to use
 
+Install [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer) (later versions probably will work fine too, but not tested).
+
 Select a project directory where you'll keep scripts and other resources. Double-click on `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` and choose that directory. 
 
 Minimal C# project files will be created automatically and C# project will be automatically compiled.
