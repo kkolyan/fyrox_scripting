@@ -2,4 +2,6 @@
 /obj
 /bin
 /settings.ron
-*.sln.DotSettings.user
+/*.sln.DotSettings.user
+/*.csproj
+/*.sln
