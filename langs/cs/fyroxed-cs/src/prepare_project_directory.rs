@@ -1,5 +1,4 @@
 use native_dialog::{DialogBuilder, MessageLevel};
-use native_dialog::MessageLevel::Warning;
 use std::ffi::{c_char, CStr};
 use std::path::{Path, PathBuf};
 use std::{env, fs};
@@ -7,37 +6,43 @@ use std::process::{Command, Stdio};
 use uuid::Uuid;
 
 #[no_mangle]
-pub extern "C" fn prepare_project_directory(working_dir: *const c_char) -> i32 {
+pub extern "C" fn prepare_project_directory(working_dir: *const c_char, is_cli: i32) -> i32 {
     let working_dir = unsafe { CStr::from_ptr(working_dir) };
     let working_dir = PathBuf::from(working_dir.to_str().unwrap());
 
     println!("setting env::current_dir to: {}", working_dir.display());
     env::set_current_dir(&working_dir).unwrap();
 
-    if !ensure_project_files(&working_dir) {
+    let is_cli = is_cli != 0;
+
+    if !ensure_project_files(&working_dir, is_cli) {
         println!("ensure_project_files failed");
         return 0;
     }
 
-    if !ensure_assembly(&working_dir) {
+    if !ensure_assembly(&working_dir, is_cli) {
         return 0;
     }
 
     1
 }
 
-fn ensure_assembly(working_dir: &Path) -> bool {
+fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
     let assembly_name = working_dir.file_name().unwrap().to_str().unwrap();
     let assembly_path = format!("{}/bin/Debug/net8.0/{assembly_name}.dll", working_dir.display());
     println!("expected assembly location: {}", assembly_name);
     while !fs::exists(&assembly_path).unwrap() {
         println!("compiling C# assembly at {}", env::current_dir().unwrap().display());
         let Ok(spawn) = Command::new("dotnet")
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
+            .stdout(if is_cli { Stdio::inherit() } else { Stdio::piped() })
+            .stderr(if is_cli { Stdio::inherit() } else { Stdio::piped() })
             .args(["build"])
             .spawn() else
         {
+            if is_cli {
+                println!("Failed to run `dotnet` command. Please install .NET 8.0 or later.");
+                return false;
+            }
             if !ask_user_for_confirmation(format!("Failed to run `dotnet` command. Please install .NET 8.0 or later. Try again?")) {
                 return false;
             }
@@ -64,12 +69,20 @@ fn ensure_assembly(working_dir: &Path) -> bool {
                 if let Err(err) = fs::write(log_file, &combined) {
                     println!("failed to write log: {}\n{}", err, String::from_utf8_lossy(&combined));
                 }
+                if is_cli {
+                    println!("failed to compile C# project.");
+                    return false;
+                }
                 if !ask_user_for_confirmation(format!("failed to compile C# project: See `{log_file}` for details. Try again?")) {
                     return false;
                 }
                 continue;
             }
             Err(err) => {
+                if is_cli {
+                    println!("failed to compile C# project due to {}", err);
+                    return false;
+                }
                 if !ask_user_for_confirmation(format!("failed to compile C# project: {err}. Try again?")) {
                     return false;
                 }
@@ -90,23 +103,19 @@ fn ask_user_for_confirmation(msg: String) -> bool {
         .unwrap()
 }
 
-fn ensure_project_files(working_dir: &Path) -> bool {
+fn ensure_project_files(working_dir: &Path, is_cli: bool) -> bool {
     let dir_name = working_dir.file_name().unwrap().to_str().unwrap();
     let sln_path = format!("{}/{}.sln", working_dir.to_str().unwrap(), dir_name);
 
     if !fs::exists(&sln_path).unwrap() {
-        let confirm = DialogBuilder::message()
-            .set_level(Warning)
-            .set_title("Fyrox C# SDK")
-            .set_text(format!(
+        if !is_cli {
+            let confirm = ask_user_for_confirmation(format!(
                 "There is no C# project in {:?}. Create new C# project here?",
                 working_dir.as_os_str()
-            ))
-            .confirm()
-            .show()
-            .unwrap();
-        if !confirm {
-            return false;
+            ));
+            if !confirm {
+                return false;
+            }
         }
 
         let solution_uuid = Uuid::new_v4();

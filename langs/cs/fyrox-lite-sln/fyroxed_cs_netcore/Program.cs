@@ -9,14 +9,16 @@ public partial class Program
     
     [LibraryImport("fyroxed_cs", EntryPoint = "prepare_project_directory",
         SetLastError = true)]
-    private static partial int PrepareProjectDirectory(IntPtr workingDir);
+    private static partial int PrepareProjectDirectory(IntPtr workingDir, int isCli);
 
     [STAThread]
     public static void Main(string[] args)
     {
         string? workingDir;
+        bool isCli;
         if (args.Length < 1)
         {
+            isCli = false;
             var projectDirectoryPtr = AskUserForProjectDirectory();
             if (projectDirectoryPtr == IntPtr.Zero)
             {
@@ -28,12 +30,13 @@ public partial class Program
         }
         else
         {
-            workingDir = args[0];
+            isCli = true;
+            workingDir = Path.GetFullPath(args[0]).TrimEnd('/').TrimEnd('\\');
         }
 
         {
             var projectDirectoryPtr = Marshal.StringToHGlobalAnsi(workingDir);
-            var result = PrepareProjectDirectory(projectDirectoryPtr);
+            var result = PrepareProjectDirectory(projectDirectoryPtr, isCli ? 1 : 0);
             if (result == 0)
             {
                 Console.WriteLine("failed to prepare project directory");

@@ -27,4 +27,4 @@ mkdir -p $INSTALL_DIR
 ## NetCore executable of editor
 ./langs/cs/fyrox-lite-sln/fyroxed_cs_netcore/install.sh $INSTALL_DIR
 
-RUST_BACKTRACE=1 $INSTALL_DIR/fyroxed_cs_netcore.exe
+RUST_BACKTRACE=1 $INSTALL_DIR/fyroxed_cs_netcore.exe $*
