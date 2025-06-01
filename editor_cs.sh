@@ -6,7 +6,6 @@ INSTALL_DIR=$(realpath target/fyrox_cs_sdk)
 
 # remove installation to detect possible regression asap
 rm -rf $INSTALL_DIR
-mkdir -p $INSTALL_DIR
 
 ./install_sdk_cs.sh $INSTALL_DIR
 
