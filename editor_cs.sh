@@ -8,6 +8,6 @@ INSTALL_DIR=$(realpath target/fyrox_cs_sdk)
 rm -rf $INSTALL_DIR
 mkdir -p $INSTALL_DIR
 
-install_sdk_cs.sh $INSTALL_DIR
+./install_sdk_cs.sh $INSTALL_DIR
 
 RUST_BACKTRACE=1 $INSTALL_DIR/fyroxed_cs_netcore.exe $*

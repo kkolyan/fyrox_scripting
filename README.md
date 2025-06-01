@@ -6,10 +6,15 @@ Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.h
 * Requires [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer).
 * Run and compile game from either Fyrox Editor or any IDE (with debug support)
 
+[Fyrox C# SDK Guide](guide_cs.md)
+
 ### Fyrox / Lua
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [Lua](https://learnxinyminutes.com/lua/) scripting support.
 * No additional SDKs required.
 * Run game from either Fyrox Editor or command line.
+
+### Supported platforms
+Currently, I test project only on Windows. Fyrox [supports a lot of platforms](https://fyrox-book.github.io/introduction/requirements.html), so that's short-term limitation. Editor and game support for MacOSX and Linux support will be soon.
 
 ### Simplified API
 Scripting languages access Fyrox via a simplified API.

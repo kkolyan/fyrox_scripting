@@ -10,6 +10,10 @@ pub extern "C" fn prepare_project_directory(working_dir: *const c_char, is_cli: 
     let working_dir = unsafe { CStr::from_ptr(working_dir) };
     let working_dir = PathBuf::from(working_dir.to_str().unwrap());
 
+    if !fs::exists(&working_dir).unwrap() {
+        fs::create_dir_all(&working_dir).unwrap();
+    }
+
     println!("setting env::current_dir to: {}", working_dir.display());
     env::set_current_dir(&working_dir).unwrap();
 

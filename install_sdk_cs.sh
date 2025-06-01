@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-if [ -e "$1" ]; then
+if [ ! -e "$1" ]; then
   echo "Error: specified path points to existing file or directory. Non-existing path required" >&2
   exit 1
 fi

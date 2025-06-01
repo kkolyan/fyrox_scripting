@@ -14,6 +14,9 @@
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
     <ItemGroup>
+        <Using Include="FyroxLite" />
+    </ItemGroup>
+    <ItemGroup>
         <Reference Include="fyrox_lite_cs_netcore">
             <HintPath>${editor_installation_path}/fyrox_lite_cs_netcore.dll</HintPath>
             <Private>True</Private>

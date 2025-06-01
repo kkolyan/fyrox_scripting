@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using FyroxLite;
 
 [Uuid("12371d19-9f1a-4286-8486-add4ebaadaec")]
 public class Bullet : NodeScript
