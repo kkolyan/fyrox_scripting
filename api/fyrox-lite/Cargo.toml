@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 fyrox = { workspace = true }
 extend = "1.2.0"
-lite-macro = { path = "../lite-macro" }
+lite-macro = { workspace = true}
 convert_case = {workspace = true}
 error = {workspace = true}
 

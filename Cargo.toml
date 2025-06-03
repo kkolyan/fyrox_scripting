@@ -1,28 +1,29 @@
 
 [workspace]
 members = [
-	"langs/lua/fyroxed-lua",
-	"langs/lua/fyrox-lite-lua",
-    "langs/lua/luagen-lib",
-	"langs/lua/fyrox-lite-lua-lib",
-	"langs/cs/fyrox-lite-cs",
+	"api/fyrox-lite",
+	"api/fyrox-lite-math",
+	"api/fyrox-lite-color",
+	"internal/lite-macro",
+	"internal/lite-macro-lib",
+	"internal/lite-model",
+	"internal/lite-parser",
+	"internal/gen-common",
+	"internal/error",
+	"internal/ask_user",
 	"langs/cs/csgen-lib",
+	"langs/cs/fyrox-lite-cs",
 	"langs/cs/fyrox-lite-cs-lib",
 	"langs/cs/fyroxed-cs",
-    "showcase/guards_vanilla/editor",
-    "showcase/guards_vanilla/executor",
-    "showcase/guards_vanilla/game",
-    "showcase/guards_vanilla/game-dylib",
-	"fyrox-lite",
-	"lite-macro",
-	"lite-macro-lib",
-	"fyrox-lite-math",
-	"fyrox-lite-color",
-	"lite-model",
-	"lite-parser",
+	"langs/lua/fyrox-lite-lua",
+	"langs/lua/fyrox-lite-lua-lib",
+	"langs/lua/fyroxed-lua",
+	"langs/lua/luagen-lib",
+	"showcase/guards_vanilla/editor",
+	"showcase/guards_vanilla/executor",
+	"showcase/guards_vanilla/game",
+	"showcase/guards_vanilla/game-dylib",
 	"tools",
-	"gen-common",
-	"error", "ask_user",
 ]
 resolver = "2"
 exclude = [
@@ -36,15 +37,15 @@ fyrox-lite-lua-lib = { path = "langs/lua/fyrox-lite-lua-lib" }
 fyrox-lite-cs = { path = "langs/cs/fyrox-lite-cs" }
 fyrox-lite-cs-lib = { path = "langs/cs/fyrox-lite-cs-lib" }
 csgen-lib = { path = "langs/cs/csgen-lib" }
-fyrox-lite = {path = "fyrox-lite", default-features = false}
-fyrox-lite-math = {path = "fyrox-lite-math", default-features = false}
-fyrox-lite-color = {path = "fyrox-lite-color", default-features = false}
-lite-model = { path = "lite-model" }
-lite-parser = { path = "lite-parser" }
-lite-macro = { path = "lite-macro" }
-gen-common = { path = "gen-common" }
-error = { path = "error" }
-ask_user = { path = "ask_user" }
+fyrox-lite = {path = "api/fyrox-lite", default-features = false}
+fyrox-lite-math = {path = "api/fyrox-lite-math", default-features = false}
+fyrox-lite-color = {path = "api/fyrox-lite-color", default-features = false}
+lite-model = { path = "internal/lite-model" }
+lite-parser = { path = "internal/lite-parser" }
+lite-macro = { path = "internal/lite-macro" }
+gen-common = { path = "internal/gen-common" }
+error = { path = "internal/error" }
+ask_user = { path = "internal/ask_user" }
 
 #fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
