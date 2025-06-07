@@ -36,10 +36,12 @@ impl Domain {
 impl Domain {
     pub fn merge_all(domains: impl IntoIterator<Item=Domain>) -> Self {
         let mut classes = Vec::new();
+        let mut packages = Vec::new();
         for domain in domains {
             classes.extend(domain.classes);
+            packages.extend(domain.packages);
         }
-        Self {classes}
+        Self { packages, classes}
     }
 }
 

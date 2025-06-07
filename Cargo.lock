@@ -2485,6 +2485,7 @@ dependencies = [
 name = "lite-parser"
 version = "0.1.0"
 dependencies = [
+ "itertools 0.13.0",
  "lite-model",
  "proc-macro2",
  "quote",
@@ -2585,6 +2586,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ea1f30cedd69f0a2954655f7188c6a834246d2bcf1e315e2ac40c4b24dc9519"
 dependencies = [
  "cfg-if",
+]
+
+[[package]]
+name = "md-gen-lib"
+version = "0.1.0"
+dependencies = [
+ "convert_case",
+ "gen-common",
+ "itertools 0.13.0",
+ "lite-model",
+ "to_vec",
 ]
 
 [[package]]
@@ -4602,6 +4614,7 @@ dependencies = [
  "lite-model",
  "lite-parser",
  "luagen-lib",
+ "md-gen-lib",
 ]
 
 [[package]]

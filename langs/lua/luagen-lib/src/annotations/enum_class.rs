@@ -1,12 +1,13 @@
 use core::panic;
 
+use gen_common::writelnu;
 use lite_model::{
     EnumClass, EnumValue,
 };
 use to_vec::ToVec;
 
 use crate::{
-    annotations::type_to_lua::type_rust_to_lua, writelnu
+    annotations::type_to_lua::type_rust_to_lua
 };
 
 pub fn generate_enum(s: &mut String, class: &EnumClass) {

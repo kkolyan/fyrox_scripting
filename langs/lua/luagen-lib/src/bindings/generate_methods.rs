@@ -1,13 +1,13 @@
 use std::borrow::Cow;
 
-use lite_model::{DataType, EngineClass, Method, Param};
+use lite_model::{DataType, EngineClass};
 use to_vec::ToVec;
 
 use gen_common::{
     context::GenerationContext,
     templating::render,
 };
-use gen_common::properties::{Getter, Setter};
+use gen_common::properties::{is_regular};
 use super::expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua};
 
 pub const USER_SCRIPT_IMPL: &str = "TypedUserData<UserScriptProxy>";
@@ -115,14 +115,3 @@ pub fn generate_methods(
     }
 }
 
-pub(crate) fn is_setter(method: &Method) -> bool {
-    Setter::try_from(method).is_some()
-}
-
-pub(crate) fn is_getter(method: &Method) -> bool {
-    Getter::try_from(method).is_some()
-}
-
-pub(crate) fn is_regular(method: &Method) -> bool {
-    !is_setter(method) && !is_getter(method)
-}

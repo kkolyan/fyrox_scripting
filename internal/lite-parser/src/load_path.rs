@@ -3,9 +3,10 @@ use std::{collections::HashMap, fs, path::Path, str::FromStr};
 use crate::{
     extract_engine_class::extract_engine_class_and_inject_assertions, extract_pod_enum::extract_pod_enum, extract_pod_struct::extract_pod_struct, lite_api_attr::LiteApiAttr, RustSymbol
 };
-use lite_model::{Class, Domain};
+use lite_model::{Class, Domain, Package};
 use proc_macro2::{Span, TokenStream};
 use syn::{parse2, spanned::Spanned};
+use crate::doc_attr::extract_doc;
 
 pub fn load_path(
     crate_name: &str,
@@ -29,6 +30,8 @@ pub fn load_path(
         format!("{}::{}", root_mod_name, mod_name)
     };
     println!("mod name: {}", mod_name);
+    
+    let mut definitions_found = 0;
 
     for item in file.items {
         match item {
@@ -45,6 +48,7 @@ pub fn load_path(
                             RustSymbol(rust_name.to_string().clone()),
                         );
                         domain.classes.push(Class::Engine(class));
+                        definitions_found += 1;
                     }
                 }
             }
@@ -58,6 +62,7 @@ pub fn load_path(
                             RustSymbol(rust_name.to_string().clone()),
                         );
                         domain.classes.push(Class::Struct(class));
+                        definitions_found += 1;
                     }
                 }
             }
@@ -71,11 +76,18 @@ pub fn load_path(
                             RustSymbol(rust_name.to_string().clone()),
                         );
                         domain.classes.push(Class::Enum(class));
+                        definitions_found += 1;
                     }
                 }
             }
             _ => {}
         }
+    }
+    if definitions_found > 0 {
+        domain.packages.push(Package {
+            name: mod_name,
+            description: extract_doc(&file.attrs),
+        })
     }
 }
 

@@ -14,6 +14,18 @@ pub struct Setter {
     pub has_result: bool,
 }
 
+pub fn is_setter(method: &Method) -> bool {
+    Setter::try_from(method).is_some()
+}
+
+pub fn is_getter(method: &Method) -> bool {
+    Getter::try_from(method).is_some()
+}
+
+pub fn is_regular(method: &Method) -> bool {
+    !is_setter(method) && !is_getter(method)
+}
+
 impl Setter {
     pub fn try_from(method: &Method) -> Option<Setter> {
         let MethodResult { may_fail, success_type: returns_value } = analyze_method_result(method);

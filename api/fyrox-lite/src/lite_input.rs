@@ -1,3 +1,5 @@
+//! User input utilities
+
 use std::cell::RefCell;
 use std::collections::{HashSet};
 use fyrox::event::{DeviceEvent, ElementState, Event, MouseButton, MouseScrollDelta, WindowEvent};
@@ -26,16 +28,18 @@ fn with_input<R: Sized>(f: &mut dyn FnMut(&mut Input) -> R) -> R {
         f(it.as_mut().expect("Input system wasn't initialized"))
     })
 }
-
+/// Utility class to poll player input events
 #[allow(non_upper_case_globals)]
 #[lite_api]
 impl Input {
+    /// Left Mouse Button ID
     pub const MouseLeft: i32 = 0;
     pub const MouseRight: i32 = 1;
     pub const MouseMiddle: i32 = 2;
     pub const MouseBack: i32 = 3;
     pub const MouseForward: i32 = 4;
 
+    /// is mouse button with ID `button` is in pressed state?
     pub fn is_mouse_button_down(button: i32) -> bool {
         with_input(&mut |input| input.mouse_button_down.contains(&button))
     }

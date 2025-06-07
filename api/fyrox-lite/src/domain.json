@@ -1,4 +1,46 @@
 {
+  "packages": [
+    {
+      "name": "fyrox_lite::lite_input",
+      "description": "User input utilities"
+    },
+    {
+      "name": "fyrox_lite::lite_log",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_math",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_node",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_physics",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_plugin",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_prefab",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_scene",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_ui",
+      "description": ""
+    },
+    {
+      "name": "fyrox_lite::lite_window",
+      "description": ""
+    }
+  ],
   "classes": [
     {
       "Struct": {
@@ -11,7 +53,8 @@
               "Option": {
                 "Object": "Color"
               }
-            }
+            },
+            "description": "A brush, that fills a surface with a solid color."
           },
           {
             "name": "linear_gradient",
@@ -19,7 +62,8 @@
               "Option": {
                 "Object": "LinearGradient"
               }
-            }
+            },
+            "description": "A brush, that fills a surface with a linear gradient, which is defined by two points in local coordinates\nand a set of stop points. See [`GradientPoint`] for more info."
           },
           {
             "name": "radial_gradient",
@@ -27,9 +71,11 @@
               "Option": {
                 "Object": "RadialGradient"
               }
-            }
+            },
+            "description": "A brush, that fills a surface with a radial gradient, which is defined by a center point in local coordinates\nand a set of stop points. See [`GradientPoint`] for more info."
           }
-        ]
+        ],
+        "description": "Brush defines a way to fill an arbitrary surface."
       }
     },
     {
@@ -62,13 +108,16 @@
         "rust_struct_path": "fyrox_lite::lite_window::LiteCursorGrabMode",
         "variants": [
           {
-            "tag": "None"
+            "tag": "None",
+            "description": "No grabbing of the cursor is performed."
           },
           {
-            "tag": "Confined"
+            "tag": "Confined",
+            "description": "The cursor is confined to the window area.\n\nThere's no guarantee that the cursor will be hidden. You should hide it by yourself if you\nwant to do so.\n\n## Platform-specific\n\n- **macOS:** Not implemented. Always returns [`ExternalError::NotSupported`] for now.\n- **iOS / Android / Web:** Always returns an [`ExternalError::NotSupported`]."
           },
           {
-            "tag": "Locked"
+            "tag": "Locked",
+            "description": "The cursor is locked inside the window area to the certain position.\n\nThere's no guarantee that the cursor will be hidden. You should hide it by yourself if you\nwant to do so.\n\n## Platform-specific\n\n- **X11 / Windows:** Not implemented. Always returns [`ExternalError::NotSupported`] for now.\n- **iOS / Android:** Always returns an [`ExternalError::NotSupported`]."
           }
         ]
       }
@@ -88,7 +137,8 @@
             "name": "id",
             "ty": "I32"
           }
-        ]
+        ],
+        "description": "Shape-dependent identifier."
       }
     },
     {
@@ -97,16 +147,20 @@
         "rust_struct_path": "fyrox_lite::lite_physics::LiteFeatureKind",
         "variants": [
           {
-            "tag": "Vertex"
+            "tag": "Vertex",
+            "description": "Shape-dependent identifier of a vertex."
           },
           {
-            "tag": "Edge"
+            "tag": "Edge",
+            "description": "Shape-dependent identifier of an edge."
           },
           {
-            "tag": "Face"
+            "tag": "Face",
+            "description": "Shape-dependent identifier of a face."
           },
           {
-            "tag": "Unknown"
+            "tag": "Unknown",
+            "description": "Unknown identifier."
           }
         ]
       }
@@ -137,7 +191,8 @@
                   "ok": "UserScript"
                 }
               }
-            }
+            },
+            "description": "find a plugin script by name"
           }
         ]
       }
@@ -149,13 +204,15 @@
         "fields": [
           {
             "name": "stop",
-            "ty": "F32"
+            "ty": "F32",
+            "description": "A distance from an origin of the gradient."
           },
           {
             "name": "color",
             "ty": {
               "Object": "Color"
-            }
+            },
+            "description": "Color of the point."
           }
         ]
       }
@@ -177,7 +234,8 @@
                 }
               ],
               "return_ty": "Bool"
-            }
+            },
+            "description": "is mouse button with ID `button` is in pressed state?"
           },
           {
             "instance": false,
@@ -282,7 +340,8 @@
               "Literal": {
                 "Number": "0"
               }
-            }
+            },
+            "description": "Left Mouse Button ID"
           },
           {
             "const_name": "MouseRight",
@@ -320,7 +379,8 @@
               }
             }
           }
-        ]
+        ],
+        "description": "Utility class to poll player input events"
       }
     },
     {
@@ -330,11 +390,13 @@
         "fields": [
           {
             "name": "memberships",
-            "ty": "I32"
+            "ty": "I32",
+            "description": "Groups memberships."
           },
           {
             "name": "filter",
-            "ty": "I32"
+            "ty": "I32",
+            "description": "Groups filter."
           }
         ]
       }
@@ -348,31 +410,37 @@
             "name": "collider",
             "ty": {
               "Object": "Node"
-            }
+            },
+            "description": "A handle of the collider with which intersection was detected."
           },
           {
             "name": "normal",
             "ty": {
               "Object": "Vector3"
-            }
+            },
+            "description": "A normal at the intersection position."
           },
           {
             "name": "position",
             "ty": {
               "Object": "Vector3"
-            }
+            },
+            "description": "A position of the intersection in world coordinates."
           },
           {
             "name": "feature",
             "ty": {
               "Object": "FeatureId"
-            }
+            },
+            "description": "Additional data that contains a kind of the feature with which\nintersection was detected as well as its index.\n\n# Important notes.\n\nFeatureId::Face might have index that is greater than amount of triangles in\na triangle mesh, this means that intersection was detected from \"back\" side of\na face. To \"fix\" that index, simply subtract amount of triangles of a triangle\nmesh from the value."
           },
           {
             "name": "toi",
-            "ty": "F32"
+            "ty": "F32",
+            "description": "Distance from the ray origin."
           }
-        ]
+        ],
+        "description": "A ray intersection result."
       }
     },
     {
@@ -381,376 +449,498 @@
         "rust_struct_path": "fyrox_lite::lite_input::LiteKeyCode",
         "variants": [
           {
-            "tag": "Backquote"
+            "tag": "Backquote",
+            "description": "<kbd>`</kbd> on a US keyboard. This is also called a backtick or grave.\nThis is the <kbd>半角</kbd>/<kbd>全角</kbd>/<kbd>漢字</kbd>\n(hankaku/zenkaku/kanji) key on Japanese keyboards"
           },
           {
-            "tag": "Backslash"
+            "tag": "Backslash",
+            "description": "Used for both the US <kbd>\\\\</kbd> (on the 101-key layout) and also for the key\nlocated between the <kbd>\"</kbd> and <kbd>Enter</kbd> keys on row C of the 102-,\n104- and 106-key layouts.\nLabeled <kbd>#</kbd> on a UK (102) keyboard."
           },
           {
-            "tag": "BracketLeft"
+            "tag": "BracketLeft",
+            "description": "<kbd>[</kbd> on a US keyboard."
           },
           {
-            "tag": "BracketRight"
+            "tag": "BracketRight",
+            "description": "<kbd>]</kbd> on a US keyboard."
           },
           {
-            "tag": "Comma"
+            "tag": "Comma",
+            "description": "<kbd>,</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit0"
+            "tag": "Digit0",
+            "description": "<kbd>0</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit1"
+            "tag": "Digit1",
+            "description": "<kbd>1</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit2"
+            "tag": "Digit2",
+            "description": "<kbd>2</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit3"
+            "tag": "Digit3",
+            "description": "<kbd>3</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit4"
+            "tag": "Digit4",
+            "description": "<kbd>4</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit5"
+            "tag": "Digit5",
+            "description": "<kbd>5</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit6"
+            "tag": "Digit6",
+            "description": "<kbd>6</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit7"
+            "tag": "Digit7",
+            "description": "<kbd>7</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit8"
+            "tag": "Digit8",
+            "description": "<kbd>8</kbd> on a US keyboard."
           },
           {
-            "tag": "Digit9"
+            "tag": "Digit9",
+            "description": "<kbd>9</kbd> on a US keyboard."
           },
           {
-            "tag": "Equal"
+            "tag": "Equal",
+            "description": "<kbd>=</kbd> on a US keyboard."
           },
           {
-            "tag": "IntlBackslash"
+            "tag": "IntlBackslash",
+            "description": "Located between the left <kbd>Shift</kbd> and <kbd>Z</kbd> keys.\nLabeled <kbd>\\\\</kbd> on a UK keyboard."
           },
           {
-            "tag": "IntlRo"
+            "tag": "IntlRo",
+            "description": "Located between the <kbd>/</kbd> and right <kbd>Shift</kbd> keys.\nLabeled <kbd>\\\\</kbd> (ro) on a Japanese keyboard."
           },
           {
-            "tag": "IntlYen"
+            "tag": "IntlYen",
+            "description": "Located between the <kbd>=</kbd> and <kbd>Backspace</kbd> keys.\nLabeled <kbd>¥</kbd> (yen) on a Japanese keyboard. <kbd>\\\\</kbd> on a\nRussian keyboard."
           },
           {
-            "tag": "A"
+            "tag": "A",
+            "description": "<kbd>a</kbd> on a US keyboard.\nLabeled <kbd>q</kbd> on an AZERTY (e.g., French) keyboard."
           },
           {
-            "tag": "B"
+            "tag": "B",
+            "description": "<kbd>b</kbd> on a US keyboard."
           },
           {
-            "tag": "C"
+            "tag": "C",
+            "description": "<kbd>c</kbd> on a US keyboard."
           },
           {
-            "tag": "D"
+            "tag": "D",
+            "description": "<kbd>d</kbd> on a US keyboard."
           },
           {
-            "tag": "E"
+            "tag": "E",
+            "description": "<kbd>e</kbd> on a US keyboard."
           },
           {
-            "tag": "F"
+            "tag": "F",
+            "description": "<kbd>f</kbd> on a US keyboard."
           },
           {
-            "tag": "G"
+            "tag": "G",
+            "description": "<kbd>g</kbd> on a US keyboard."
           },
           {
-            "tag": "H"
+            "tag": "H",
+            "description": "<kbd>h</kbd> on a US keyboard."
           },
           {
-            "tag": "I"
+            "tag": "I",
+            "description": "<kbd>i</kbd> on a US keyboard."
           },
           {
-            "tag": "J"
+            "tag": "J",
+            "description": "<kbd>j</kbd> on a US keyboard."
           },
           {
-            "tag": "K"
+            "tag": "K",
+            "description": "<kbd>k</kbd> on a US keyboard."
           },
           {
-            "tag": "L"
+            "tag": "L",
+            "description": "<kbd>l</kbd> on a US keyboard."
           },
           {
-            "tag": "M"
+            "tag": "M",
+            "description": "<kbd>m</kbd> on a US keyboard."
           },
           {
-            "tag": "N"
+            "tag": "N",
+            "description": "<kbd>n</kbd> on a US keyboard."
           },
           {
-            "tag": "O"
+            "tag": "O",
+            "description": "<kbd>o</kbd> on a US keyboard."
           },
           {
-            "tag": "P"
+            "tag": "P",
+            "description": "<kbd>p</kbd> on a US keyboard."
           },
           {
-            "tag": "Q"
+            "tag": "Q",
+            "description": "<kbd>q</kbd> on a US keyboard.\nLabeled <kbd>a</kbd> on an AZERTY (e.g., French) keyboard."
           },
           {
-            "tag": "R"
+            "tag": "R",
+            "description": "<kbd>r</kbd> on a US keyboard."
           },
           {
-            "tag": "S"
+            "tag": "S",
+            "description": "<kbd>s</kbd> on a US keyboard."
           },
           {
-            "tag": "T"
+            "tag": "T",
+            "description": "<kbd>t</kbd> on a US keyboard."
           },
           {
-            "tag": "U"
+            "tag": "U",
+            "description": "<kbd>u</kbd> on a US keyboard."
           },
           {
-            "tag": "V"
+            "tag": "V",
+            "description": "<kbd>v</kbd> on a US keyboard."
           },
           {
-            "tag": "W"
+            "tag": "W",
+            "description": "<kbd>w</kbd> on a US keyboard.\nLabeled <kbd>z</kbd> on an AZERTY (e.g., French) keyboard."
           },
           {
-            "tag": "X"
+            "tag": "X",
+            "description": "<kbd>x</kbd> on a US keyboard."
           },
           {
-            "tag": "Y"
+            "tag": "Y",
+            "description": "<kbd>y</kbd> on a US keyboard.\nLabeled <kbd>z</kbd> on a QWERTZ (e.g., German) keyboard."
           },
           {
-            "tag": "Z"
+            "tag": "Z",
+            "description": "<kbd>z</kbd> on a US keyboard.\nLabeled <kbd>w</kbd> on an AZERTY (e.g., French) keyboard, and <kbd>y</kbd> on a\nQWERTZ (e.g., German) keyboard."
           },
           {
-            "tag": "Minus"
+            "tag": "Minus",
+            "description": "<kbd>-</kbd> on a US keyboard."
           },
           {
-            "tag": "Period"
+            "tag": "Period",
+            "description": "<kbd>.</kbd> on a US keyboard."
           },
           {
-            "tag": "Quote"
+            "tag": "Quote",
+            "description": "<kbd>'</kbd> on a US keyboard."
           },
           {
-            "tag": "Semicolon"
+            "tag": "Semicolon",
+            "description": "<kbd>;</kbd> on a US keyboard."
           },
           {
-            "tag": "Slash"
+            "tag": "Slash",
+            "description": "<kbd>/</kbd> on a US keyboard."
           },
           {
-            "tag": "AltLeft"
+            "tag": "AltLeft",
+            "description": "<kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>."
           },
           {
-            "tag": "AltRight"
+            "tag": "AltRight",
+            "description": "<kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>.\nThis is labeled <kbd>AltGr</kbd> on many keyboard layouts."
           },
           {
-            "tag": "Backspace"
+            "tag": "Backspace",
+            "description": "<kbd>Backspace</kbd> or <kbd>⌫</kbd>.\nLabeled <kbd>Delete</kbd> on Apple keyboards."
           },
           {
-            "tag": "CapsLock"
+            "tag": "CapsLock",
+            "description": "<kbd>CapsLock</kbd> or <kbd>⇪</kbd>"
           },
           {
-            "tag": "ContextMenu"
+            "tag": "ContextMenu",
+            "description": "The application context menu key, which is typically found between the right\n<kbd>Super</kbd> key and the right <kbd>Control</kbd> key."
           },
           {
-            "tag": "ControlLeft"
+            "tag": "ControlLeft",
+            "description": "<kbd>Control</kbd> or <kbd>⌃</kbd>"
           },
           {
-            "tag": "ControlRight"
+            "tag": "ControlRight",
+            "description": "<kbd>Control</kbd> or <kbd>⌃</kbd>"
           },
           {
-            "tag": "Enter"
+            "tag": "Enter",
+            "description": "<kbd>Enter</kbd> or <kbd>↵</kbd>. Labeled <kbd>Return</kbd> on Apple keyboards."
           },
           {
-            "tag": "SuperLeft"
+            "tag": "SuperLeft",
+            "description": "The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key."
           },
           {
-            "tag": "SuperRight"
+            "tag": "SuperRight",
+            "description": "The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key."
           },
           {
-            "tag": "ShiftLeft"
+            "tag": "ShiftLeft",
+            "description": "<kbd>Shift</kbd> or <kbd>⇧</kbd>"
           },
           {
-            "tag": "ShiftRight"
+            "tag": "ShiftRight",
+            "description": "<kbd>Shift</kbd> or <kbd>⇧</kbd>"
           },
           {
-            "tag": "Space"
+            "tag": "Space",
+            "description": "<kbd> </kbd> (space)"
           },
           {
-            "tag": "Tab"
+            "tag": "Tab",
+            "description": "<kbd>Tab</kbd> or <kbd>⇥</kbd>"
           },
           {
-            "tag": "Convert"
+            "tag": "Convert",
+            "description": "Japanese: <kbd>変</kbd> (henkan)"
           },
           {
-            "tag": "KanaMode"
+            "tag": "KanaMode",
+            "description": "Japanese: <kbd>カタカナ</kbd>/<kbd>ひらがな</kbd>/<kbd>ローマ字</kbd> (katakana/hiragana/romaji)"
           },
           {
-            "tag": "Lang1"
+            "tag": "Lang1",
+            "description": "Korean: HangulMode <kbd>한/영</kbd> (han/yeong)\n\nJapanese (Mac keyboard): <kbd>か</kbd> (kana)"
           },
           {
-            "tag": "Lang2"
+            "tag": "Lang2",
+            "description": "Korean: Hanja <kbd>한</kbd> (hanja)\n\nJapanese (Mac keyboard): <kbd>英</kbd> (eisu)"
           },
           {
-            "tag": "Lang3"
+            "tag": "Lang3",
+            "description": "Japanese (word-processing keyboard): Katakana"
           },
           {
-            "tag": "Lang4"
+            "tag": "Lang4",
+            "description": "Japanese (word-processing keyboard): Hiragana"
           },
           {
-            "tag": "Lang5"
+            "tag": "Lang5",
+            "description": "Japanese (word-processing keyboard): Zenkaku/Hankaku"
           },
           {
-            "tag": "NonConvert"
+            "tag": "NonConvert",
+            "description": "Japanese: <kbd>無変換</kbd> (muhenkan)"
           },
           {
-            "tag": "Delete"
+            "tag": "Delete",
+            "description": "<kbd>⌦</kbd>. The forward delete key.\nNote that on Apple keyboards, the key labelled <kbd>Delete</kbd> on the main part of\nthe keyboard is encoded as [`Backspace`].\n\n[`Backspace`]: Self::Backspace"
           },
           {
-            "tag": "End"
+            "tag": "End",
+            "description": "<kbd>Page Down</kbd>, <kbd>End</kbd>, or <kbd>↘</kbd>"
           },
           {
-            "tag": "Help"
+            "tag": "Help",
+            "description": "<kbd>Help</kbd>. Not present on standard PC keyboards."
           },
           {
-            "tag": "Home"
+            "tag": "Home",
+            "description": "<kbd>Home</kbd> or <kbd>↖</kbd>"
           },
           {
-            "tag": "Insert"
+            "tag": "Insert",
+            "description": "<kbd>Insert</kbd> or <kbd>Ins</kbd>. Not present on Apple keyboards."
           },
           {
-            "tag": "PageDown"
+            "tag": "PageDown",
+            "description": "<kbd>Page Down</kbd>, <kbd>PgDn</kbd>, or <kbd>⇟</kbd>"
           },
           {
-            "tag": "PageUp"
+            "tag": "PageUp",
+            "description": "<kbd>Page Up</kbd>, <kbd>PgUp</kbd>, or <kbd>⇞</kbd>"
           },
           {
-            "tag": "ArrowDown"
+            "tag": "ArrowDown",
+            "description": "<kbd>↓</kbd>"
           },
           {
-            "tag": "ArrowLeft"
+            "tag": "ArrowLeft",
+            "description": "<kbd>←</kbd>"
           },
           {
-            "tag": "ArrowRight"
+            "tag": "ArrowRight",
+            "description": "<kbd>→</kbd>"
           },
           {
-            "tag": "ArrowUp"
+            "tag": "ArrowUp",
+            "description": "<kbd>↑</kbd>"
           },
           {
-            "tag": "NumLock"
+            "tag": "NumLock",
+            "description": "On the Mac, this is used for the numpad <kbd>Clear</kbd> key."
           },
           {
-            "tag": "Numpad0"
+            "tag": "Numpad0",
+            "description": "<kbd>0 Ins</kbd> on a keyboard. <kbd>0</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad1"
+            "tag": "Numpad1",
+            "description": "<kbd>1 End</kbd> on a keyboard. <kbd>1</kbd> or <kbd>1 QZ</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad2"
+            "tag": "Numpad2",
+            "description": "<kbd>2 ↓</kbd> on a keyboard. <kbd>2 ABC</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad3"
+            "tag": "Numpad3",
+            "description": "<kbd>3 PgDn</kbd> on a keyboard. <kbd>3 DEF</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad4"
+            "tag": "Numpad4",
+            "description": "<kbd>4 ←</kbd> on a keyboard. <kbd>4 GHI</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad5"
+            "tag": "Numpad5",
+            "description": "<kbd>5</kbd> on a keyboard. <kbd>5 JKL</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad6"
+            "tag": "Numpad6",
+            "description": "<kbd>6 →</kbd> on a keyboard. <kbd>6 MNO</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad7"
+            "tag": "Numpad7",
+            "description": "<kbd>7 Home</kbd> on a keyboard. <kbd>7 PQRS</kbd> or <kbd>7 PRS</kbd> on a phone\nor remote control"
           },
           {
-            "tag": "Numpad8"
+            "tag": "Numpad8",
+            "description": "<kbd>8 ↑</kbd> on a keyboard. <kbd>8 TUV</kbd> on a phone or remote control"
           },
           {
-            "tag": "Numpad9"
+            "tag": "Numpad9",
+            "description": "<kbd>9 PgUp</kbd> on a keyboard. <kbd>9 WXYZ</kbd> or <kbd>9 WXY</kbd> on a phone\nor remote control"
           },
           {
-            "tag": "NumpadAdd"
+            "tag": "NumpadAdd",
+            "description": "<kbd>+</kbd>"
           },
           {
-            "tag": "NumpadBackspace"
+            "tag": "NumpadBackspace",
+            "description": "Found on the Microsoft Natural Keyboard."
           },
           {
-            "tag": "NumpadClear"
+            "tag": "NumpadClear",
+            "description": "<kbd>C</kbd> or <kbd>A</kbd> (All Clear). Also for use with numpads that have a\n<kbd>Clear</kbd> key that is separate from the <kbd>NumLock</kbd> key. On the Mac, the\nnumpad <kbd>Clear</kbd> key is encoded as [`NumLock`].\n\n[`NumLock`]: Self::NumLock"
           },
           {
-            "tag": "NumpadClearEntry"
+            "tag": "NumpadClearEntry",
+            "description": "<kbd>C</kbd> (Clear Entry)"
           },
           {
-            "tag": "NumpadComma"
+            "tag": "NumpadComma",
+            "description": "<kbd>,</kbd> (thousands separator). For locales where the thousands separator\nis a \".\" (e.g., Brazil), this key may generate a <kbd>.</kbd>."
           },
           {
-            "tag": "NumpadDecimal"
+            "tag": "NumpadDecimal",
+            "description": "<kbd>. Del</kbd>. For locales where the decimal separator is \",\" (e.g.,\nBrazil), this key may generate a <kbd>,</kbd>."
           },
           {
-            "tag": "NumpadDivide"
+            "tag": "NumpadDivide",
+            "description": "<kbd>/</kbd>"
           },
           {
             "tag": "NumpadEnter"
           },
           {
-            "tag": "NumpadEqual"
+            "tag": "NumpadEqual",
+            "description": "<kbd>=</kbd>"
           },
           {
-            "tag": "NumpadHash"
+            "tag": "NumpadHash",
+            "description": "<kbd>#</kbd> on a phone or remote control device. This key is typically found\nbelow the <kbd>9</kbd> key and to the right of the <kbd>0</kbd> key."
           },
           {
-            "tag": "NumpadMemoryAdd"
+            "tag": "NumpadMemoryAdd",
+            "description": "<kbd>M</kbd> Add current entry to the value stored in memory."
           },
           {
-            "tag": "NumpadMemoryClear"
+            "tag": "NumpadMemoryClear",
+            "description": "<kbd>M</kbd> Clear the value stored in memory."
           },
           {
-            "tag": "NumpadMemoryRecall"
+            "tag": "NumpadMemoryRecall",
+            "description": "<kbd>M</kbd> Replace the current entry with the value stored in memory."
           },
           {
-            "tag": "NumpadMemoryStore"
+            "tag": "NumpadMemoryStore",
+            "description": "<kbd>M</kbd> Replace the value stored in memory with the current entry."
           },
           {
-            "tag": "NumpadMemorySubtract"
+            "tag": "NumpadMemorySubtract",
+            "description": "<kbd>M</kbd> Subtract current entry from the value stored in memory."
           },
           {
-            "tag": "NumpadMultiply"
+            "tag": "NumpadMultiply",
+            "description": "<kbd>*</kbd> on a keyboard. For use with numpads that provide mathematical\noperations (<kbd>+</kbd>, <kbd>-</kbd> <kbd>*</kbd> and <kbd>/</kbd>).\n\nUse `NumpadStar` for the <kbd>*</kbd> key on phones and remote controls."
           },
           {
-            "tag": "NumpadParenLeft"
+            "tag": "NumpadParenLeft",
+            "description": "<kbd>(</kbd> Found on the Microsoft Natural Keyboard."
           },
           {
-            "tag": "NumpadParenRight"
+            "tag": "NumpadParenRight",
+            "description": "<kbd>)</kbd> Found on the Microsoft Natural Keyboard."
           },
           {
-            "tag": "NumpadStar"
+            "tag": "NumpadStar",
+            "description": "<kbd>*</kbd> on a phone or remote control device.\n\nThis key is typically found below the <kbd>7</kbd> key and to the left of\nthe <kbd>0</kbd> key.\n\nUse <kbd>\"NumpadMultiply\"</kbd> for the <kbd>*</kbd> key on\nnumeric keypads."
           },
           {
-            "tag": "NumpadSubtract"
+            "tag": "NumpadSubtract",
+            "description": "<kbd>-</kbd>"
           },
           {
-            "tag": "Escape"
+            "tag": "Escape",
+            "description": "<kbd>Esc</kbd> or <kbd>⎋</kbd>"
           },
           {
-            "tag": "Fn"
+            "tag": "Fn",
+            "description": "<kbd>Fn</kbd> This is typically a hardware key that does not generate a separate code."
           },
           {
-            "tag": "FnLock"
+            "tag": "FnLock",
+            "description": "<kbd>FLock</kbd> or <kbd>FnLock</kbd>. Function Lock key. Found on the Microsoft\nNatural Keyboard."
           },
           {
-            "tag": "PrintScreen"
+            "tag": "PrintScreen",
+            "description": "<kbd>PrtScr SysRq</kbd> or <kbd>Print Screen</kbd>"
           },
           {
-            "tag": "ScrollLock"
+            "tag": "ScrollLock",
+            "description": "<kbd>Scroll Lock</kbd>"
           },
           {
-            "tag": "Pause"
+            "tag": "Pause",
+            "description": "<kbd>Pause Break</kbd>"
           },
           {
-            "tag": "BrowserBack"
+            "tag": "BrowserBack",
+            "description": "Some laptops place this key to the left of the <kbd>↑</kbd> key.\n\nThis also the \"back\" button (triangle) on Android."
           },
           {
             "tag": "BrowserFavorites"
           },
           {
-            "tag": "BrowserForward"
+            "tag": "BrowserForward",
+            "description": "Some laptops place this key to the right of the <kbd>↑</kbd> key."
           },
           {
-            "tag": "BrowserHome"
+            "tag": "BrowserHome",
+            "description": "The \"home\" button on Android."
           },
           {
             "tag": "BrowserRefresh"
@@ -762,13 +952,16 @@
             "tag": "BrowserStop"
           },
           {
-            "tag": "Eject"
+            "tag": "Eject",
+            "description": "<kbd>Eject</kbd> or <kbd>⏏</kbd>. This key is placed in the function section on some Apple\nkeyboards."
           },
           {
-            "tag": "LaunchApp1"
+            "tag": "LaunchApp1",
+            "description": "Sometimes labelled <kbd>My Computer</kbd> on the keyboard"
           },
           {
-            "tag": "LaunchApp2"
+            "tag": "LaunchApp2",
+            "description": "Sometimes labelled <kbd>Calculator</kbd> on the keyboard"
           },
           {
             "tag": "LaunchMail"
@@ -789,7 +982,8 @@
             "tag": "MediaTrackPrevious"
           },
           {
-            "tag": "Power"
+            "tag": "Power",
+            "description": "This key is placed in the function section on some Apple keyboards, replacing the\n<kbd>Eject</kbd> key."
           },
           {
             "tag": "Sleep"
@@ -825,144 +1019,191 @@
             "tag": "Suspend"
           },
           {
-            "tag": "Again"
+            "tag": "Again",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Copy"
+            "tag": "Copy",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Cut"
+            "tag": "Cut",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Find"
+            "tag": "Find",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Open"
+            "tag": "Open",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Paste"
+            "tag": "Paste",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Props"
+            "tag": "Props",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Select"
+            "tag": "Select",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Undo"
+            "tag": "Undo",
+            "description": "Found on Sun’s USB keyboard."
           },
           {
-            "tag": "Hiragana"
+            "tag": "Hiragana",
+            "description": "Use for dedicated <kbd>ひらがな</kbd> key found on some Japanese word processing keyboards."
           },
           {
-            "tag": "Katakana"
+            "tag": "Katakana",
+            "description": "Use for dedicated <kbd>カタカナ</kbd> key found on some Japanese word processing keyboards."
           },
           {
-            "tag": "F1"
+            "tag": "F1",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F2"
+            "tag": "F2",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F3"
+            "tag": "F3",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F4"
+            "tag": "F4",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F5"
+            "tag": "F5",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F6"
+            "tag": "F6",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F7"
+            "tag": "F7",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F8"
+            "tag": "F8",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F9"
+            "tag": "F9",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F10"
+            "tag": "F10",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F11"
+            "tag": "F11",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F12"
+            "tag": "F12",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F13"
+            "tag": "F13",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F14"
+            "tag": "F14",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F15"
+            "tag": "F15",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F16"
+            "tag": "F16",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F17"
+            "tag": "F17",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F18"
+            "tag": "F18",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F19"
+            "tag": "F19",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F20"
+            "tag": "F20",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F21"
+            "tag": "F21",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F22"
+            "tag": "F22",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F23"
+            "tag": "F23",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F24"
+            "tag": "F24",
+            "description": "General-purpose function key.\nUsually found at the top of the keyboard."
           },
           {
-            "tag": "F25"
+            "tag": "F25",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F26"
+            "tag": "F26",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F27"
+            "tag": "F27",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F28"
+            "tag": "F28",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F29"
+            "tag": "F29",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F30"
+            "tag": "F30",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F31"
+            "tag": "F31",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F32"
+            "tag": "F32",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F33"
+            "tag": "F33",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F34"
+            "tag": "F34",
+            "description": "General-purpose function key."
           },
           {
-            "tag": "F35"
+            "tag": "F35",
+            "description": "General-purpose function key."
           }
-        ]
+        ],
+        "description": "Basically a copy of `winit`'s [`KeyCode`], which is mostly inspired by UI Events Specification’s [`KeyboardEvent.code`].\n\n[`KeyCode`]: https://docs.rs/winit/0.29.15/i686-pc-windows-msvc/winit/keyboard/enum.KeyCode.html\n[`KeyboardEvent.code`]: https://w3c.github.io/uievents-code/#code-value-tables"
       }
     },
     {
@@ -974,13 +1215,15 @@
             "name": "from",
             "ty": {
               "Object": "Vector2"
-            }
+            },
+            "description": "Beginning of the gradient in local coordinates."
           },
           {
             "name": "to",
             "ty": {
               "Object": "Vector2"
-            }
+            },
+            "description": "End of the gradient in local coordinates."
           },
           {
             "name": "stops",
@@ -988,7 +1231,8 @@
               "Vec": {
                 "Object": "GradientPoint"
               }
-            }
+            },
+            "description": "Stops of the gradient."
           }
         ]
       }
@@ -1142,7 +1386,8 @@
                   "variadic": false
                 }
               ]
-            }
+            },
+            "description": "Sends a hierarchical script message with the given payload."
           },
           {
             "instance": true,
@@ -1363,56 +1608,64 @@
             "ty": "I32",
             "value": {
               "ComplexExpression": "1 << 1"
-            }
+            },
+            "description": "Exclude from the query any collider attached to a fixed rigid-body and colliders with no rigid-body attached."
           },
           {
             "const_name": "EXCLUDE_KINEMATIC",
             "ty": "I32",
             "value": {
               "ComplexExpression": "1 << 2"
-            }
+            },
+            "description": "Exclude from the query any collider attached to a kinematic rigid-body."
           },
           {
             "const_name": "EXCLUDE_DYNAMIC",
             "ty": "I32",
             "value": {
               "ComplexExpression": "1 << 3"
-            }
+            },
+            "description": "Exclude from the query any collider attached to a dynamic rigid-body."
           },
           {
             "const_name": "EXCLUDE_SENSORS",
             "ty": "I32",
             "value": {
               "ComplexExpression": "1 << 4"
-            }
+            },
+            "description": "Exclude from the query any collider that is a sensor."
           },
           {
             "const_name": "EXCLUDE_SOLIDS",
             "ty": "I32",
             "value": {
               "ComplexExpression": "1 << 5"
-            }
+            },
+            "description": "Exclude from the query any collider that is not a sensor."
           },
           {
             "const_name": "ONLY_DYNAMIC",
             "ty": "I32",
             "value": {
               "ComplexExpression": "LitePhysics :: EXCLUDE_FIXED | LitePhysics :: EXCLUDE_KINEMATIC"
-            }
+            },
+            "description": "Excludes all colliders not attached to a dynamic rigid-body."
           },
           {
             "const_name": "ONLY_KINEMATIC",
             "ty": "I32",
             "value": {
               "ComplexExpression": "LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_FIXED"
-            }
+            },
+            "description": "Excludes all colliders not attached to a kinematic rigid-body."
           },
           {
             "const_name": "ONLY_FIXED",
             "ty": "I32",
             "value": {
               "ComplexExpression": "LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_KINEMATIC"
-            }
+            },
+            "description": "Exclude all colliders attached to a non-fixed rigid-body\n(this will not exclude colliders not attached to any rigid-body)."
           }
         ]
       }
@@ -1492,7 +1745,8 @@
             "name": "center",
             "ty": {
               "Object": "Vector2"
-            }
+            },
+            "description": "Center of the gradient in local coordinates."
           },
           {
             "name": "stops",
@@ -1500,7 +1754,8 @@
               "Vec": {
                 "Object": "GradientPoint"
               }
-            }
+            },
+            "description": "Stops of the gradient."
           }
         ]
       }
@@ -1514,17 +1769,20 @@
             "name": "ray_origin",
             "ty": {
               "Object": "Vector3"
-            }
+            },
+            "description": "A ray origin."
           },
           {
             "name": "ray_direction",
             "ty": {
               "Object": "Vector3"
-            }
+            },
+            "description": "A ray direction. Can be non-normalized."
           },
           {
             "name": "max_len",
-            "ty": "F32"
+            "ty": "F32",
+            "description": "Maximum distance of cast."
           },
           {
             "name": "groups",
@@ -1532,11 +1790,13 @@
               "Option": {
                 "Object": "InteractionGroups"
               }
-            }
+            },
+            "description": "Groups to check."
           },
           {
             "name": "sort_results",
-            "ty": "Bool"
+            "ty": "Bool",
+            "description": "Whether to sort intersections from closest to farthest."
           }
         ]
       }
@@ -1570,10 +1830,12 @@
         "rust_struct_path": "fyrox_lite::lite_node::LiteRoutingStrategy",
         "variants": [
           {
-            "tag": "Up"
+            "tag": "Up",
+            "description": "An message will be passed to the specified root node and then to every node up in the hierarchy."
           },
           {
-            "tag": "Down"
+            "tag": "Down",
+            "description": "An message will be passed to every node down the tree in the hierarchy."
           }
         ]
       }
@@ -1705,7 +1967,8 @@
         "fields": [
           {
             "name": "x",
-            "ty": "F32"
+            "ty": "F32",
+            "description": "X component"
           },
           {
             "name": "y",
@@ -1715,7 +1978,8 @@
             "name": "z",
             "ty": "F32"
           }
-        ]
+        ],
+        "description": "Plain internal representation of 3D vector. In scripts, it's represented by another type with reach functionality."
       }
     },
     {

@@ -1,9 +1,11 @@
 use fyrox::core::algebra::{Quaternion, UnitQuaternion, Vector2, Vector3};
 use lite_macro::lite_api;
 
+/// Plain internal representation of 3D vector. In scripts, it's represented by another type with reach functionality.
 #[lite_api(class=Vector3)]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct PodVector3 {
+    /// X component
     pub x: f32,
     pub y: f32,
     pub z: f32,

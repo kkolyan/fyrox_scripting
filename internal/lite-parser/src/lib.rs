@@ -6,7 +6,7 @@ pub mod extract_pod_enum;
 pub mod extract_engine_class;
 pub mod extract_pod_struct;
 pub mod extract_ty;
-
+mod doc_attr;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct RustSymbol(pub String);

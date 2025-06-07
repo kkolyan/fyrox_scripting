@@ -11,6 +11,9 @@ impl HierarchicalCodeBase {
     pub fn write_lua(&self, target_dir: &str) {
         write_lua_mods(target_dir, &self.mods);
     }
+    pub fn write_md(&self, target_dir: &str) {
+        write_md_mods(target_dir, &self.mods);
+    }
 }
 
 pub struct Module {
@@ -68,6 +71,21 @@ impl Module {
             },
         }
     }
+    fn write_md(&self, parent_dir: &str)  {
+        match &self.content {
+            ModContent::Children(children) => {
+
+                let dir = format!("{}/{}", parent_dir, self.name);
+
+                write_md_mods(&dir, children);
+            },
+            ModContent::Code(code) => {
+                let file = format!("{}/{}.md", parent_dir, self.name);
+                fs::write(&file, code).unwrap();
+                crate::fmt::fmt_file(file);
+            },
+        }
+    }
 }
 
 fn write_rust_mods(dir: &str, children: &[Module])  {
@@ -91,5 +109,13 @@ fn write_lua_mods(dir: &str, children: &[Module])  {
 
     for m in children.iter() {
         m.write_lua(dir);
+    }
+}
+
+fn write_md_mods(dir: &str, children: &[Module])  {
+    let _ = fs::create_dir_all(dir);
+
+    for m in children.iter() {
+        m.write_md(dir);
     }
 }

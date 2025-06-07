@@ -4,6 +4,7 @@ use quote::ToTokens;
 use syn::Ident;
 
 use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
+use crate::doc_attr::extract_doc;
 
 pub fn extract_pod_struct(
     rust_path: &str,
@@ -23,6 +24,7 @@ pub fn extract_pod_struct(
                     continue;
                 }
             },
+            description: extract_doc(&field.attrs),
         });
     }
     let class_name = attr.class.unwrap_or_else(|| rust_name.to_string());
@@ -40,6 +42,7 @@ pub fn extract_pod_struct(
             class_name: ClassName(class_name),
             fields,
             rust_struct_path: RustQualifiedName(format!("{}::{}", rust_path, rust_name)),
+            description: extract_doc(&item.attrs),
         },
     ))
 }

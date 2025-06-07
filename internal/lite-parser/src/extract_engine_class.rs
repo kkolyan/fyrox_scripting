@@ -8,6 +8,7 @@ use quote::ToTokens;
 use syn::{parse_quote_spanned, spanned::Spanned, Expr, Ident, ImplItemFn, ItemFn, TraitBoundModifier, TypeParamBound};
 
 use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
+use crate::doc_attr::extract_doc;
 
 pub fn extract_engine_class_and_inject_assertions(
     rust_path: &str,
@@ -33,6 +34,8 @@ pub fn extract_engine_class_and_inject_assertions(
         }
     };
 
+    let class_description = extract_doc(&item.attrs);
+
     let mut constants: Vec<Constant> = Default::default();
     let mut methods: Vec<Method> = Default::default();
 
@@ -54,6 +57,7 @@ pub fn extract_engine_class_and_inject_assertions(
                         }
                     },
                     value: parse_constant_value(&it.expr),
+                    description: extract_doc(&it.attrs),
                 });
             }
             _ => {
@@ -75,6 +79,7 @@ pub fn extract_engine_class_and_inject_assertions(
                 constants,
                 rust_struct_path: RustQualifiedName(format!("{}::{}", rust_path, rust_name)),
                 features: attr.features,
+                description: class_description,
             },
         )
     })
@@ -226,6 +231,7 @@ pub fn extract_fn(
                 }
             },
         },
+        description: extract_doc(&func.attrs),
     })
 }
 

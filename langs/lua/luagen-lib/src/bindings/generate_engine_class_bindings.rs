@@ -5,11 +5,11 @@ use std::borrow::Cow;
 use to_vec::ToVec;
 
 use gen_common::{
-    code_model::{Module, ModContent}, context::GenerationContext, templating::render
+    code_model::{ModContent, Module}, context::GenerationContext, properties::is_getter, templating::render
 };
 use gen_common::properties::Setter;
 use crate::bindings::generate_methods::USER_SCRIPT_IMPL;
-use super::{eq::generate_eq, expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, generate_methods::{generate_methods, is_getter, is_setter}, supress_lint::SUPRESSIONS};
+use super::{eq::generate_eq, expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, generate_methods::{generate_methods}, supress_lint::SUPRESSIONS};
 
 pub fn generate_engine_class_bindings(class: &EngineClass, ctx: &GenerationContext) -> Module {
     let mut s: String = Default::default();

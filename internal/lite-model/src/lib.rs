@@ -5,7 +5,14 @@ use impls::is_false;
 
 #[derive(Serialize, Deserialize, Debug, Default, PartialEq)]
 pub struct Domain {
+    pub packages: Vec<Package>,
     pub classes: Vec<Class>,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+pub struct Package {
+    pub name: String,
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -36,6 +43,10 @@ pub struct EngineClass {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     pub features: Vec<Feature>,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -49,6 +60,10 @@ pub struct Method {
     pub instance: bool,
     pub method_name: String,
     pub signature: Signature,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -56,6 +71,10 @@ pub struct Field {
     pub name: String,
 
     pub ty: DataType,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -73,6 +92,10 @@ pub struct Constant {
     pub const_name: String,
     pub ty: DataType,
     pub value: ConstantValue,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -100,6 +123,10 @@ pub struct StructClass {
     pub rust_struct_path: RustQualifiedName,
 
     pub fields: Vec<Field>,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, Hash)]
@@ -119,6 +146,10 @@ pub struct EnumClass {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     pub features: Vec<Feature>,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
@@ -128,6 +159,10 @@ pub struct EnumVariant {
     #[serde(skip_serializing_if = "EnumValue::is_unit")]
     #[serde(default = "EnumValue::unit")]
     pub value: EnumValue,
+
+    #[serde(skip_serializing_if = "String::is_empty")]
+    #[serde(default)]
+    pub description: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

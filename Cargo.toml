@@ -8,6 +8,7 @@ members = [
 	"internal/lite-macro-lib",
 	"internal/lite-model",
 	"internal/lite-parser",
+	"internal/md-gen-lib",
 	"internal/gen-common",
 	"internal/error",
 	"internal/ask_user",
@@ -42,6 +43,7 @@ fyrox-lite-math = {path = "api/fyrox-lite-math", default-features = false}
 fyrox-lite-color = {path = "api/fyrox-lite-color", default-features = false}
 lite-model = { path = "internal/lite-model" }
 lite-parser = { path = "internal/lite-parser" }
+md-gen-lib = { path = "internal/md-gen-lib" }
 lite-macro = { path = "internal/lite-macro" }
 gen-common = { path = "internal/gen-common" }
 error = { path = "internal/error" }

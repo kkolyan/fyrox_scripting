@@ -1,0 +1,11 @@
+[package]
+name = "md-gen-lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+lite-model = { workspace = true }
+gen-common = { workspace = true }
+itertools = { workspace = true }
+to_vec = { workspace = true }
+convert_case = { workspace = true }

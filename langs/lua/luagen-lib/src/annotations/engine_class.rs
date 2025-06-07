@@ -2,11 +2,9 @@ use std::collections::{HashMap, HashSet};
 
 use lite_model::{DataType, EngineClass, Method};
 use to_vec::ToVec;
-use gen_common::methods::analyze_method_result;
+use gen_common::{methods::analyze_method_result, properties::{is_getter, is_setter}, writelnu};
 use crate::{
     annotations::type_to_lua::type_rust_to_lua,
-    bindings::generate_methods::{is_getter, is_setter},
-    writelnu,
 };
 
 pub fn generate_engine(s: &mut String, class: &EngineClass) {

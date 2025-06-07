@@ -5,7 +5,9 @@ public class GuardChief : NodeScript
 {
     private Prefab gaurd_prefab;
     private float initial_count;
-
+    
+    
+    
     [HideInInspector] [Transient] private bool initialized;
 
     [HideInInspector] [Transient] private bool frame_skipped_for_beacons;

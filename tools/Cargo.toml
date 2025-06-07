@@ -10,3 +10,4 @@ gen-common = { workspace = true }
 lite-model = { workspace = true }
 itertools = { workspace = true }
 csgen-lib = { workspace = true }
+md-gen-lib = { workspace = true }

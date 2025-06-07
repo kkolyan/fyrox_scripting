@@ -4,10 +4,9 @@ use crate::{
     annotations::{
         engine_class::generate_engine, enum_class::generate_enum, struct_class::generate_struct,
     },
-    writelnu
 };
 use gen_common::{
-    by_package::classes_by_package, code_model::{HierarchicalCodeBase, Module}, templating::strExt
+    by_package::classes_by_package, code_model::{HierarchicalCodeBase, Module}, templating::strExt, writelnu
 };
 
 const HEADER: &str = "

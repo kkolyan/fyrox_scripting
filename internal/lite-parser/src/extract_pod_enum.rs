@@ -1,8 +1,10 @@
 use lite_model::{ClassName, EnumClass, EnumValue, EnumVariant, Field, RustQualifiedName};
 use proc_macro2::Span;
+use quote::ToTokens;
 use syn::Ident;
 
 use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
+use crate::doc_attr::extract_doc;
 
 pub fn extract_pod_enum(
     rust_path: &str,
@@ -33,11 +35,13 @@ pub fn extract_pod_enum(
                                 continue 'variants;
                             }
                         },
+                        description: todo!(),
                     });
                 }
                 variants.push(EnumVariant {
                     tag: variant_name.to_string(),
                     value: EnumValue::Struct { fields },
+                    description: todo!(),
                 });
             }
             syn::Fields::Unnamed(syn_fields) => {
@@ -56,12 +60,14 @@ pub fn extract_pod_enum(
                 variants.push(EnumVariant {
                     tag: variant_name.to_string(),
                     value: EnumValue::Tuple { fields },
+                    description: todo!(),
                 });
             }
             syn::Fields::Unit => {
                 variants.push(EnumVariant {
                     tag: variant_name.to_string(),
                     value: EnumValue::Unit,
+                    description: extract_doc(&variant.attrs),
                 });
             }
         }
@@ -74,6 +80,7 @@ pub fn extract_pod_enum(
             variants,
             rust_struct_path: RustQualifiedName(format!("{}::{}", rust_path, item.ident)),
             features: attr.features,
+            description: extract_doc(&item.attrs),
         },
     ))
 }
