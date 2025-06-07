@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace FyroxLite
 {
     /// <summary>
-    /// (The code of this item is picked from Godot Engine).
+    /// (code of this item is picked from Godot Engine in compliance with MIT license).
     /// 
     /// 3-element structure that can be used to represent positions in 3D space or any other pair of numeric values.
     /// </summary>

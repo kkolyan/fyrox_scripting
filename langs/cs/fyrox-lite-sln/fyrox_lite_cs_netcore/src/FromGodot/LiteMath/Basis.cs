@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace FyroxLite
 {
     /// <summary>
-    /// (The code of this item is picked from Godot Engine).
+    /// (code of this item is picked from Godot Engine in compliance with MIT license).
     /// 
     /// 3×3 matrix used for 3D rotation and scale.
     /// Almost always used as an orthogonal basis for a Transform.

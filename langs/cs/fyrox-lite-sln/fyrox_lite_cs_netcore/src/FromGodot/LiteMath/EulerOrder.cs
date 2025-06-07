@@ -1,6 +1,6 @@
 namespace FyroxLite;
 
-/// (The code of this item is picked from Godot Engine).
+/// (code of this item is picked from Godot Engine in compliance with MIT license).
 public enum EulerOrder
 {
     

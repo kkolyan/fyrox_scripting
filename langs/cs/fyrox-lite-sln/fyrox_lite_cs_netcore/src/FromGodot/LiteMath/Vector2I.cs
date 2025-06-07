@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace FyroxLite
 {
     /// <summary>
-    /// (The code of this item is picked from Godot Engine).
+    /// (code of this item is picked from Godot Engine in compliance with MIT license).
     /// 
     /// 2-element structure that can be used to represent 2D grid coordinates or pairs of integers.
     /// </summary>

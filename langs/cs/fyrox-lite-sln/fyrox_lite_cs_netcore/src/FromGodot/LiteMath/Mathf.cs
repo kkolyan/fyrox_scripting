@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace FyroxLite
 {
     /// <summary>
-    /// (The code of this item is picked from Godot Engine).
+    /// (code of this item is picked from Godot Engine in compliance with MIT license).
     /// 
     /// Provides constants and static methods for common mathematical functions.
     /// </summary>

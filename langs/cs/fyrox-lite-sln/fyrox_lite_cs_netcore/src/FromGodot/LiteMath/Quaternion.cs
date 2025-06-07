@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace FyroxLite
 {
     /// <summary>
-    /// (The code of this item is picked from Godot Engine).
+    /// (code of this item is picked from Godot Engine in compliance with MIT license).
     /// 
     /// A unit quaternion used for representing 3D rotations.
     /// Quaternions need to be normalized to be used for rotation.

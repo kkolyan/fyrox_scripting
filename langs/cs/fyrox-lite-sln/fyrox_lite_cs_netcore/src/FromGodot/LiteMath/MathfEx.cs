@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace FyroxLite
 {
-    /// (The code of this item is picked from Godot Engine).
+    /// (code of this item is picked from Godot Engine in compliance with MIT license).
     public static partial class Mathf
     {
         // Define constants with Decimal precision and cast down to double or float.
