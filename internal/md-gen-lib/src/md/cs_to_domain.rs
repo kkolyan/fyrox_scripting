@@ -137,11 +137,19 @@ fn class_to_md(
     let mut s = "".to_string();
 
     writelnu!(s, "# {}", &class.name);
-    writelnu!(
+    if class.is_struct {
+        writelnu!(
+        s,
+        "struct in [FyroxLite](../README.md).[{}](README.md)",
+        package
+    );
+    } else {
+        writelnu!(
         s,
         "class in [FyroxLite](../README.md).[{}](README.md)",
         package
     );
+    }
     if !class.description.is_empty() {
         writelnu!(s, "## Description");
         writelnu!(s, "{}", cs_docs_to_string(&class.description, "\n"));
