@@ -9,3 +9,5 @@ gen-common = { workspace = true }
 itertools = { workspace = true }
 to_vec = { workspace = true }
 convert_case = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
