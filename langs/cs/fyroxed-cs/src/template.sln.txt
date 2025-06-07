@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 #### To generate it again - delete and restart Fyrox C# Editor ###
 ##################################################################
 
-Project("{$solution_uuid}") = "${project_name}", "${project_name}.csproj", "{${project_uuid}}"
+Project("{${solution_uuid}}") = "${project_name}", "${project_name}.csproj", "{${project_uuid}}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
