@@ -5,6 +5,6 @@ Shape-dependent identifier.
 ## Fields
 | Name | Type | Description |
 |---|---|---|
-| Kind | [FeatureKind](../LitePhysics/FeatureKind.md) |  |
-| Id | int |  |
+| `Kind` | [FeatureKind](../LitePhysics/FeatureKind.md) |  |
+| `Id` | int |  |
 

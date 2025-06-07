@@ -4,17 +4,13 @@ use std::mem;
 
 use crate::{
     md::{engine_class::generate_engine, enum_class::generate_enum, struct_class::generate_struct},
-    writelnu, Naming,
+    Naming,
 };
 use gen_common::by_package::extract_package;
-use gen_common::{
-    by_package::classes_by_package,
-    code_model::{HierarchicalCodeBase, Module},
-    templating::strExt,
-};
+use gen_common::{by_package::classes_by_package, code_model::{HierarchicalCodeBase, Module}, templating::strExt, writelnu};
+use crate::md::cs_to_domain::CSharpDomain;
 
-pub fn generate_md(domain: &Domain, naming: Naming) -> HierarchicalCodeBase {
-    let mut mods = vec![];
+pub fn generate_md(domain: &Domain, csharp_domain: &CSharpDomain, naming: Naming) -> HierarchicalCodeBase {
 
     let mut class_page_links = HashMap::new();
     for x in domain.classes.iter() {
@@ -28,6 +24,26 @@ pub fn generate_md(domain: &Domain, naming: Naming) -> HierarchicalCodeBase {
         );
     }
 
+    for package in csharp_domain.packages.iter() {
+        for ty in package.collect_type_names() {
+            class_page_links.insert(
+                ClassName(ty.clone()),
+                format!(
+                    "../{}/{}.md",
+                    package.name.clone(),
+                    &ty
+                ),
+            );
+        }
+    }
+
+    let mut mods = generate_rust_md(domain, naming, &mut class_page_links);
+    mods.extend(csharp_domain.generate_md(&class_page_links).mods);
+    HierarchicalCodeBase { mods }
+}
+
+fn generate_rust_md(domain: &Domain, naming: Naming, class_page_links: &mut HashMap<ClassName, String>) -> Vec<Module> {
+    let mut mods = vec![];
     let by_package = classes_by_package(domain);
     for (package, classes) in by_package.iter() {
         let mut package_mods = vec![];
@@ -56,7 +72,7 @@ pub fn generate_md(domain: &Domain, naming: Naming) -> HierarchicalCodeBase {
         ));
     }
     mods.push(Module::code("README", generate_index(&by_package, naming)));
-    HierarchicalCodeBase { mods }
+    mods
 }
 
 fn generate_index(packages: &Vec<(String, Vec<ClassName>)>, naming: Naming) -> String {

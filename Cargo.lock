@@ -2593,6 +2593,7 @@ name = "md-gen-lib"
 version = "0.1.0"
 dependencies = [
  "convert_case",
+ "dunce",
  "gen-common",
  "itertools 0.13.0",
  "lite-model",

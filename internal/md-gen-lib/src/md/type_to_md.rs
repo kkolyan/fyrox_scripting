@@ -15,7 +15,7 @@ pub fn type_rust_to_md(ty: &DataType, class_md_links: &HashMap<ClassName, String
         DataType::String => format!("string"), //format!("[string⤴](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/strings)"),
         DataType::ClassName => format!("`T`"),
         DataType::Vec(item_ty) => format!("List< {} >", type_rust_to_md(item_ty, class_md_links)),
-        DataType::UserScript => format!("T"),
+        DataType::UserScript => format!("`T`"),
         DataType::UserScriptMessage => format!("object"), //format!("[object⤴](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/objects)"),
         DataType::UserScriptGenericStub => {
             panic!("UserScriptGenericStub is not allowed in this context")

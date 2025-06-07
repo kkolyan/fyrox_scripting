@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 namespace FyroxLite
 {
     /// <summary>
+    /// (The code of this item is picked from Godot Engine).
+    /// 
     /// Provides constants and static methods for common mathematical functions.
     /// </summary>
     public static partial class Mathf

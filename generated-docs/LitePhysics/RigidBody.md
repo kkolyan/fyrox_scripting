@@ -3,5 +3,5 @@ class in [FyroxLite](../README.md).[LitePhysics](README.md)
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
-| void | [ApplyForce](##) ( [Vector3](../LiteMath/Vector3.md) force ) |  |
+| void | `ApplyForce` ( [Vector3](../LiteMath/Vector3.md) <ins>force</ins> ) |  |
 

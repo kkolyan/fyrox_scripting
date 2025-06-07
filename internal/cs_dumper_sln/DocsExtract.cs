@@ -22,7 +22,7 @@ public class DocsExtract
             .ToList();
         return docs;
     }
-    
+
 
     private static IEnumerable<CsXmlNode?> ToDto<T>(IEnumerator<T> stream)
         where T : SyntaxNode
@@ -41,8 +41,12 @@ public class DocsExtract
                 {
                     yield return new CsXmlNode
                     {
-                        element_name = e.StartTag.Name.ToString(),
-                        element_children = ToDto(new SyntaxListEnumeratorAdapter<XmlNodeSyntax>(e.Content.GetEnumerator())).DropNulls().ToList()
+                        element = new CsXmlElement
+                        {
+                            name = e.StartTag.Name.ToString(),
+                            children = ToDto(new SyntaxListEnumeratorAdapter<XmlNodeSyntax>(e.Content.GetEnumerator()))
+                                .DropNulls().ToList()
+                        }
                     };
                     continue;
                 }
@@ -86,15 +90,18 @@ public class DocsExtract
 
                     yield return new CsXmlNode
                     {
-                        element_name = empty.Name.ToString(),
-                        element_attrs = attrsDict,
+                        element = new CsXmlElement
+                        {
+                            name = empty.Name.ToString(),
+                            attrs = attrsDict
+                        }
                     };
                     continue;
                 }
 
                 // throw new NotImplementedException(node.ToString());
             }
-            
+
             yield return Unknown(next);
             continue;
         }

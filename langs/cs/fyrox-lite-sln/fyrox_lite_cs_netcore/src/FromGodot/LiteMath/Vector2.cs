@@ -8,11 +8,13 @@ using System.Runtime.InteropServices;
 namespace FyroxLite
 {
     /// <summary>
-    /// 3-element structure that can be used to represent positions in 3D space or any other pair of numeric values.
+    /// (The code of this item is picked from Godot Engine).
+    /// 
+    /// 2-element structure that can be used to represent positions in 2D space or any other pair of numeric values.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3 : IEquatable<Vector3>
+    public struct Vector2 : IEquatable<Vector2>
     {
         /// <summary>
         /// Enumerated index values for the axes.
@@ -27,11 +29,7 @@ namespace FyroxLite
             /// <summary>
             /// The vector's Y axis.
             /// </summary>
-            Y,
-            /// <summary>
-            /// The vector's Z axis.
-            /// </summary>
-            Z
+            Y
         }
 
         /// <summary>
@@ -45,20 +43,14 @@ namespace FyroxLite
         public real_t Y;
 
         /// <summary>
-        /// The vector's Z component. Also accessible by using the index position <c>[2]</c>.
-        /// </summary>
-        public real_t Z;
-
-        /// <summary>
         /// Access vector components using their index.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="index"/> is not 0, 1 or 2.
+        /// <paramref name="index"/> is not 0 or 1.
         /// </exception>
         /// <value>
         /// <c>[0]</c> is equivalent to <see cref="X"/>,
-        /// <c>[1]</c> is equivalent to <see cref="Y"/>,
-        /// <c>[2]</c> is equivalent to <see cref="Z"/>.
+        /// <c>[1]</c> is equivalent to <see cref="Y"/>.
         /// </value>
         public real_t this[int index]
         {
@@ -70,8 +62,6 @@ namespace FyroxLite
                         return X;
                     case 1:
                         return Y;
-                    case 2:
-                        return Z;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(index));
                 }
@@ -86,9 +76,6 @@ namespace FyroxLite
                     case 1:
                         Y = value;
                         return;
-                    case 2:
-                        Z = value;
-                        return;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(index));
                 }
@@ -98,11 +85,10 @@ namespace FyroxLite
         /// <summary>
         /// Helper method for deconstruction into a tuple.
         /// </summary>
-        public readonly void Deconstruct(out real_t x, out real_t y, out real_t z)
+        public readonly void Deconstruct(out real_t x, out real_t y)
         {
             x = X;
             y = Y;
-            z = Z;
         }
 
         internal void Normalize()
@@ -111,14 +97,13 @@ namespace FyroxLite
 
             if (lengthsq == 0)
             {
-                X = Y = Z = 0f;
+                X = Y = 0f;
             }
             else
             {
                 real_t length = Mathf.Sqrt(lengthsq);
                 X /= length;
                 Y /= length;
-                Z /= length;
             }
         }
 
@@ -126,27 +111,58 @@ namespace FyroxLite
         /// Returns a new vector with all components in absolute values (i.e. positive).
         /// </summary>
         /// <returns>A vector with <see cref="Mathf.Abs(real_t)"/> called on each component.</returns>
-        public readonly Vector3 Abs()
+        public readonly Vector2 Abs()
         {
-            return new Vector3(Mathf.Abs(X), Mathf.Abs(Y), Mathf.Abs(Z));
+            return new Vector2(Mathf.Abs(X), Mathf.Abs(Y));
         }
 
         /// <summary>
-        /// Returns the unsigned minimum angle to the given vector, in radians.
+        /// Returns this vector's angle with respect to the X axis, or (1, 0) vector, in radians.
+        ///
+        /// Equivalent to the result of <see cref="Mathf.Atan2(real_t, real_t)"/> when
+        /// called with the vector's <see cref="Y"/> and <see cref="X"/> as parameters: <c>Mathf.Atan2(v.Y, v.X)</c>.
+        /// </summary>
+        /// <returns>The angle of this vector, in radians.</returns>
+        public readonly real_t Angle()
+        {
+            return Mathf.Atan2(Y, X);
+        }
+
+        /// <summary>
+        /// Returns the angle to the given vector, in radians.
         /// </summary>
         /// <param name="to">The other vector to compare this vector to.</param>
-        /// <returns>The unsigned angle between the two vectors, in radians.</returns>
-        public readonly real_t AngleTo(Vector3 to)
+        /// <returns>The angle between the two vectors, in radians.</returns>
+        public readonly real_t AngleTo(Vector2 to)
         {
-            return Mathf.Atan2(Cross(to).Length(), Dot(to));
+            return Mathf.Atan2(Cross(to), Dot(to));
         }
 
         /// <summary>
-        /// Returns this vector "bounced off" from a plane defined by the given normal.
+        /// Returns the angle between the line connecting the two points and the X axis, in radians.
+        /// </summary>
+        /// <param name="to">The other vector to compare this vector to.</param>
+        /// <returns>The angle between the two vectors, in radians.</returns>
+        public readonly real_t AngleToPoint(Vector2 to)
+        {
+            return Mathf.Atan2(to.Y - Y, to.X - X);
+        }
+
+        /// <summary>
+        /// Returns the aspect ratio of this vector, the ratio of <see cref="X"/> to <see cref="Y"/>.
+        /// </summary>
+        /// <returns>The <see cref="X"/> component divided by the <see cref="Y"/> component.</returns>
+        public readonly real_t Aspect()
+        {
+            return X / Y;
+        }
+
+        /// <summary>
+        /// Returns the vector "bounced off" from a plane defined by the given normal.
         /// </summary>
         /// <param name="normal">The normal vector defining the plane to bounce off. Must be normalized.</param>
         /// <returns>The bounced vector.</returns>
-        public readonly Vector3 Bounce(Vector3 normal)
+        public readonly Vector2 Bounce(Vector2 normal)
         {
             return -Reflect(normal);
         }
@@ -155,9 +171,9 @@ namespace FyroxLite
         /// Returns a new vector with all components rounded up (towards positive infinity).
         /// </summary>
         /// <returns>A vector with <see cref="Mathf.Ceil(real_t)"/> called on each component.</returns>
-        public readonly Vector3 Ceil()
+        public readonly Vector2 Ceil()
         {
-            return new Vector3(Mathf.Ceil(X), Mathf.Ceil(Y), Mathf.Ceil(Z));
+            return new Vector2(Mathf.Ceil(X), Mathf.Ceil(Y));
         }
 
         /// <summary>
@@ -168,13 +184,12 @@ namespace FyroxLite
         /// <param name="min">The vector with minimum allowed values.</param>
         /// <param name="max">The vector with maximum allowed values.</param>
         /// <returns>The vector with all components clamped.</returns>
-        public readonly Vector3 Clamp(Vector3 min, Vector3 max)
+        public readonly Vector2 Clamp(Vector2 min, Vector2 max)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.Clamp(X, min.X, max.X),
-                Mathf.Clamp(Y, min.Y, max.Y),
-                Mathf.Clamp(Z, min.Z, max.Z)
+                Mathf.Clamp(Y, min.Y, max.Y)
             );
         }
 
@@ -186,13 +201,12 @@ namespace FyroxLite
         /// <param name="min">The minimum allowed value.</param>
         /// <param name="max">The maximum allowed value.</param>
         /// <returns>The vector with all components clamped.</returns>
-        public readonly Vector3 Clamp(real_t min, real_t max)
+        public readonly Vector2 Clamp(real_t min, real_t max)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.Clamp(X, min, max),
-                Mathf.Clamp(Y, min, max),
-                Mathf.Clamp(Z, min, max)
+                Mathf.Clamp(Y, min, max)
             );
         }
 
@@ -200,15 +214,10 @@ namespace FyroxLite
         /// Returns the cross product of this vector and <paramref name="with"/>.
         /// </summary>
         /// <param name="with">The other vector.</param>
-        /// <returns>The cross product vector.</returns>
-        public readonly Vector3 Cross(Vector3 with)
+        /// <returns>The cross product value.</returns>
+        public readonly real_t Cross(Vector2 with)
         {
-            return new Vector3
-            (
-                (Y * with.Z) - (Z * with.Y),
-                (Z * with.X) - (X * with.Z),
-                (X * with.Y) - (Y * with.X)
-            );
+            return (X * with.Y) - (Y * with.X);
         }
 
         /// <summary>
@@ -220,13 +229,12 @@ namespace FyroxLite
         /// <param name="postB">A vector after <paramref name="b"/>.</param>
         /// <param name="weight">A value on the range of 0.0 to 1.0, representing the amount of interpolation.</param>
         /// <returns>The interpolated vector.</returns>
-        public readonly Vector3 CubicInterpolate(Vector3 b, Vector3 preA, Vector3 postB, real_t weight)
+        public readonly Vector2 CubicInterpolate(Vector2 b, Vector2 preA, Vector2 postB, real_t weight)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.CubicInterpolate(X, b.X, preA.X, postB.X, weight),
-                Mathf.CubicInterpolate(Y, b.Y, preA.Y, postB.Y, weight),
-                Mathf.CubicInterpolate(Z, b.Z, preA.Z, postB.Z, weight)
+                Mathf.CubicInterpolate(Y, b.Y, preA.Y, postB.Y, weight)
             );
         }
 
@@ -244,13 +252,12 @@ namespace FyroxLite
         /// <param name="preAT"></param>
         /// <param name="postBT"></param>
         /// <returns>The interpolated vector.</returns>
-        public readonly Vector3 CubicInterpolateInTime(Vector3 b, Vector3 preA, Vector3 postB, real_t weight, real_t t, real_t preAT, real_t postBT)
+        public readonly Vector2 CubicInterpolateInTime(Vector2 b, Vector2 preA, Vector2 postB, real_t weight, real_t t, real_t preAT, real_t postBT)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.CubicInterpolateInTime(X, b.X, preA.X, postB.X, weight, t, preAT, postBT),
-                Mathf.CubicInterpolateInTime(Y, b.Y, preA.Y, postB.Y, weight, t, preAT, postBT),
-                Mathf.CubicInterpolateInTime(Z, b.Z, preA.Z, postB.Z, weight, t, preAT, postBT)
+                Mathf.CubicInterpolateInTime(Y, b.Y, preA.Y, postB.Y, weight, t, preAT, postBT)
             );
         }
 
@@ -263,13 +270,12 @@ namespace FyroxLite
         /// <param name="end">The destination vector.</param>
         /// <param name="t">A value on the range of 0.0 to 1.0, representing the amount of interpolation.</param>
         /// <returns>The interpolated vector.</returns>
-        public readonly Vector3 BezierInterpolate(Vector3 control1, Vector3 control2, Vector3 end, real_t t)
+        public readonly Vector2 BezierInterpolate(Vector2 control1, Vector2 control2, Vector2 end, real_t t)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.BezierInterpolate(X, control1.X, control2.X, end.X, t),
-                Mathf.BezierInterpolate(Y, control1.Y, control2.Y, end.Y, t),
-                Mathf.BezierInterpolate(Z, control1.Z, control2.Z, end.Z, t)
+                Mathf.BezierInterpolate(Y, control1.Y, control2.Y, end.Y, t)
             );
         }
 
@@ -282,12 +288,11 @@ namespace FyroxLite
         /// <param name="end">The destination value for the interpolation.</param>
         /// <param name="t">A value on the range of 0.0 to 1.0, representing the amount of interpolation.</param>
         /// <returns>The resulting value of the interpolation.</returns>
-        public readonly Vector3 BezierDerivative(Vector3 control1, Vector3 control2, Vector3 end, real_t t)
+        public readonly Vector2 BezierDerivative(Vector2 control1, Vector2 control2, Vector2 end, real_t t)
         {
-            return new Vector3(
+            return new Vector2(
                 Mathf.BezierDerivative(X, control1.X, control2.X, end.X, t),
-                Mathf.BezierDerivative(Y, control1.Y, control2.Y, end.Y, t),
-                Mathf.BezierDerivative(Z, control1.Z, control2.Z, end.Z, t)
+                Mathf.BezierDerivative(Y, control1.Y, control2.Y, end.Y, t)
             );
         }
 
@@ -296,9 +301,9 @@ namespace FyroxLite
         /// </summary>
         /// <param name="to">The other vector to point towards.</param>
         /// <returns>The direction from this vector to <paramref name="to"/>.</returns>
-        public readonly Vector3 DirectionTo(Vector3 to)
+        public readonly Vector2 DirectionTo(Vector2 to)
         {
-            return new Vector3(to.X - X, to.Y - Y, to.Z - Z).Normalized();
+            return new Vector2(to.X - X, to.Y - Y).Normalized();
         }
 
         /// <summary>
@@ -308,20 +313,19 @@ namespace FyroxLite
         /// </summary>
         /// <param name="to">The other vector to use.</param>
         /// <returns>The squared distance between the two vectors.</returns>
-        public readonly real_t DistanceSquaredTo(Vector3 to)
+        public readonly real_t DistanceSquaredTo(Vector2 to)
         {
-            return (to - this).LengthSquared();
+            return (X - to.X) * (X - to.X) + (Y - to.Y) * (Y - to.Y);
         }
 
         /// <summary>
         /// Returns the distance between this vector and <paramref name="to"/>.
         /// </summary>
-        /// <seealso cref="DistanceSquaredTo(Vector3)"/>
         /// <param name="to">The other vector to use.</param>
         /// <returns>The distance between the two vectors.</returns>
-        public readonly real_t DistanceTo(Vector3 to)
+        public readonly real_t DistanceTo(Vector2 to)
         {
-            return (to - this).Length();
+            return Mathf.Sqrt((X - to.X) * (X - to.X) + (Y - to.Y) * (Y - to.Y));
         }
 
         /// <summary>
@@ -329,27 +333,27 @@ namespace FyroxLite
         /// </summary>
         /// <param name="with">The other vector to use.</param>
         /// <returns>The dot product of the two vectors.</returns>
-        public readonly real_t Dot(Vector3 with)
+        public readonly real_t Dot(Vector2 with)
         {
-            return (X * with.X) + (Y * with.Y) + (Z * with.Z);
+            return (X * with.X) + (Y * with.Y);
         }
 
         /// <summary>
         /// Returns a new vector with all components rounded down (towards negative infinity).
         /// </summary>
         /// <returns>A vector with <see cref="Mathf.Floor(real_t)"/> called on each component.</returns>
-        public readonly Vector3 Floor()
+        public readonly Vector2 Floor()
         {
-            return new Vector3(Mathf.Floor(X), Mathf.Floor(Y), Mathf.Floor(Z));
+            return new Vector2(Mathf.Floor(X), Mathf.Floor(Y));
         }
 
         /// <summary>
-        /// Returns the inverse of this vector. This is the same as <c>new Vector3(1 / v.X, 1 / v.Y, 1 / v.Z)</c>.
+        /// Returns the inverse of this vector. This is the same as <c>new Vector2(1 / v.X, 1 / v.Y)</c>.
         /// </summary>
         /// <returns>The inverse of this vector.</returns>
-        public readonly Vector3 Inverse()
+        public readonly Vector2 Inverse()
         {
-            return new Vector3(1 / X, 1 / Y, 1 / Z);
+            return new Vector2(1 / X, 1 / Y);
         }
 
         /// <summary>
@@ -359,7 +363,7 @@ namespace FyroxLite
         /// <returns>Whether this vector is finite or not.</returns>
         public readonly bool IsFinite()
         {
-            return Mathf.IsFinite(X) && Mathf.IsFinite(Y) && Mathf.IsFinite(Z);
+            return Mathf.IsFinite(X) && Mathf.IsFinite(Y);
         }
 
         /// <summary>
@@ -378,11 +382,7 @@ namespace FyroxLite
         /// <returns>The length of this vector.</returns>
         public readonly real_t Length()
         {
-            real_t x2 = X * X;
-            real_t y2 = Y * Y;
-            real_t z2 = Z * Z;
-
-            return Mathf.Sqrt(x2 + y2 + z2);
+            return Mathf.Sqrt((X * X) + (Y * Y));
         }
 
         /// <summary>
@@ -393,11 +393,7 @@ namespace FyroxLite
         /// <returns>The squared length of this vector.</returns>
         public readonly real_t LengthSquared()
         {
-            real_t x2 = X * X;
-            real_t y2 = Y * Y;
-            real_t z2 = Z * Z;
-
-            return x2 + y2 + z2;
+            return (X * X) + (Y * Y);
         }
 
         /// <summary>
@@ -407,13 +403,12 @@ namespace FyroxLite
         /// <param name="to">The destination vector for interpolation.</param>
         /// <param name="weight">A value on the range of 0.0 to 1.0, representing the amount of interpolation.</param>
         /// <returns>The resulting vector of the interpolation.</returns>
-        public readonly Vector3 Lerp(Vector3 to, real_t weight)
+        public readonly Vector2 Lerp(Vector2 to, real_t weight)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.Lerp(X, to.X, weight),
-                Mathf.Lerp(Y, to.Y, weight),
-                Mathf.Lerp(Z, to.Z, weight)
+                Mathf.Lerp(Y, to.Y, weight)
             );
         }
 
@@ -422,9 +417,9 @@ namespace FyroxLite
         /// </summary>
         /// <param name="length">The length to limit to.</param>
         /// <returns>The vector with its length limited.</returns>
-        public readonly Vector3 LimitLength(real_t length = 1.0f)
+        public readonly Vector2 LimitLength(real_t length = 1.0f)
         {
-            Vector3 v = this;
+            Vector2 v = this;
             real_t l = Length();
 
             if (l > 0 && length < l)
@@ -439,72 +434,85 @@ namespace FyroxLite
         /// <summary>
         /// Returns the result of the component-wise maximum between
         /// this vector and <paramref name="with"/>.
-        /// Equivalent to <c>new Vector3(Mathf.Max(X, with.X), Mathf.Max(Y, with.Y), Mathf.Max(Z, with.Z))</c>.
+        /// Equivalent to <c>new Vector2(Mathf.Max(X, with.X), Mathf.Max(Y, with.Y))</c>.
         /// </summary>
         /// <param name="with">The other vector to use.</param>
         /// <returns>The resulting maximum vector.</returns>
-        public readonly Vector3 Max(Vector3 with)
+        public readonly Vector2 Max(Vector2 with)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.Max(X, with.X),
-                Mathf.Max(Y, with.Y),
-                Mathf.Max(Z, with.Z)
+                Mathf.Max(Y, with.Y)
             );
         }
 
         /// <summary>
         /// Returns the result of the component-wise maximum between
         /// this vector and <paramref name="with"/>.
-        /// Equivalent to <c>new Vector3(Mathf.Max(X, with), Mathf.Max(Y, with), Mathf.Max(Z, with))</c>.
+        /// Equivalent to <c>new Vector2(Mathf.Max(X, with), Mathf.Max(Y, with))</c>.
         /// </summary>
         /// <param name="with">The other value to use.</param>
         /// <returns>The resulting maximum vector.</returns>
-        public readonly Vector3 Max(real_t with)
+        public readonly Vector2 Max(real_t with)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.Max(X, with),
-                Mathf.Max(Y, with),
-                Mathf.Max(Z, with)
+                Mathf.Max(Y, with)
             );
         }
 
         /// <summary>
         /// Returns the result of the component-wise minimum between
         /// this vector and <paramref name="with"/>.
-        /// Equivalent to <c>new Vector3(Mathf.Min(X, with.X), Mathf.Min(Y, with.Y), Mathf.Min(Z, with.Z))</c>.
+        /// Equivalent to <c>new Vector2(Mathf.Min(X, with.X), Mathf.Min(Y, with.Y))</c>.
         /// </summary>
         /// <param name="with">The other vector to use.</param>
         /// <returns>The resulting minimum vector.</returns>
-        public readonly Vector3 Min(Vector3 with)
+        public readonly Vector2 Min(Vector2 with)
         {
-            return new Vector3
+            return new Vector2
             (
                 Mathf.Min(X, with.X),
-                Mathf.Min(Y, with.Y),
-                Mathf.Min(Z, with.Z)
+                Mathf.Min(Y, with.Y)
+            );
+        }
+
+        /// <summary>
+        /// Returns the result of the component-wise minimum between
+        /// this vector and <paramref name="with"/>.
+        /// Equivalent to <c>new Vector2(Mathf.Min(X, with), Mathf.Min(Y, with))</c>.
+        /// </summary>
+        /// <param name="with">The other value to use.</param>
+        /// <returns>The resulting minimum vector.</returns>
+        public readonly Vector2 Min(real_t with)
+        {
+            return new Vector2
+            (
+                Mathf.Min(X, with),
+                Mathf.Min(Y, with)
             );
         }
 
         /// <summary>
         /// Returns the axis of the vector's highest value. See <see cref="Axis"/>.
-        /// If all components are equal, this method returns <see cref="Axis.X"/>.
+        /// If both components are equal, this method returns <see cref="Axis.X"/>.
         /// </summary>
         /// <returns>The index of the highest axis.</returns>
         public readonly Axis MaxAxisIndex()
         {
-            return X < Y ? (Y < Z ? Axis.Z : Axis.Y) : (X < Z ? Axis.Z : Axis.X);
+            return X < Y ? Axis.Y : Axis.X;
         }
 
         /// <summary>
         /// Returns the axis of the vector's lowest value. See <see cref="Axis"/>.
-        /// If all components are equal, this method returns <see cref="Axis.Z"/>.
+        /// If both components are equal, this method returns <see cref="Axis.Y"/>.
         /// </summary>
         /// <returns>The index of the lowest axis.</returns>
         public readonly Axis MinAxisIndex()
         {
-            return X < Y ? (X < Z ? Axis.X : Axis.Z) : (Y < Z ? Axis.Y : Axis.Z);
+            return X < Y ? Axis.X : Axis.Y;
         }
 
         /// <summary>
@@ -513,10 +521,10 @@ namespace FyroxLite
         /// <param name="to">The vector to move towards.</param>
         /// <param name="delta">The amount to move towards by.</param>
         /// <returns>The resulting vector.</returns>
-        public readonly Vector3 MoveToward(Vector3 to, real_t delta)
+        public readonly Vector2 MoveToward(Vector2 to, real_t delta)
         {
-            Vector3 v = this;
-            Vector3 vd = to - v;
+            Vector2 v = this;
+            Vector2 vd = to - v;
             real_t len = vd.Length();
             if (len <= delta || len < Mathf.Epsilon)
                 return to;
@@ -528,25 +536,11 @@ namespace FyroxLite
         /// Returns the vector scaled to unit length. Equivalent to <c>v / v.Length()</c>.
         /// </summary>
         /// <returns>A normalized version of the vector.</returns>
-        public readonly Vector3 Normalized()
+        public readonly Vector2 Normalized()
         {
-            Vector3 v = this;
+            Vector2 v = this;
             v.Normalize();
             return v;
-        }
-
-        /// <summary>
-        /// Returns the outer product with <paramref name="with"/>.
-        /// </summary>
-        /// <param name="with">The other vector.</param>
-        /// <returns>A <see cref="Basis"/> representing the outer product matrix.</returns>
-        public readonly Basis Outer(Vector3 with)
-        {
-            return new Basis(
-                X * with.X, X * with.Y, X * with.Z,
-                Y * with.X, Y * with.Y, Y * with.Z,
-                Z * with.X, Z * with.Y, Z * with.Z
-            );
         }
 
         /// <summary>
@@ -557,12 +551,11 @@ namespace FyroxLite
         /// <returns>
         /// A vector with each component <see cref="Mathf.PosMod(real_t, real_t)"/> by <paramref name="mod"/>.
         /// </returns>
-        public readonly Vector3 PosMod(real_t mod)
+        public readonly Vector2 PosMod(real_t mod)
         {
-            Vector3 v;
+            Vector2 v;
             v.X = Mathf.PosMod(X, mod);
             v.Y = Mathf.PosMod(Y, mod);
-            v.Z = Mathf.PosMod(Z, mod);
             return v;
         }
 
@@ -574,24 +567,23 @@ namespace FyroxLite
         /// <returns>
         /// A vector with each component <see cref="Mathf.PosMod(real_t, real_t)"/> by <paramref name="modv"/>'s components.
         /// </returns>
-        public readonly Vector3 PosMod(Vector3 modv)
+        public readonly Vector2 PosMod(Vector2 modv)
         {
-            Vector3 v;
+            Vector2 v;
             v.X = Mathf.PosMod(X, modv.X);
             v.Y = Mathf.PosMod(Y, modv.Y);
-            v.Z = Mathf.PosMod(Z, modv.Z);
             return v;
         }
 
         /// <summary>
         /// Returns a new vector resulting from projecting this vector onto the given vector <paramref name="onNormal"/>.
         /// The resulting new vector is parallel to <paramref name="onNormal"/>.
-        /// See also <see cref="Slide(Vector3)"/>.
+        /// See also <see cref="Slide(Vector2)"/>.
         /// Note: If the vector <paramref name="onNormal"/> is a zero vector, the components of the resulting new vector will be <see cref="real_t.NaN"/>.
         /// </summary>
         /// <param name="onNormal">The vector to project onto.</param>
         /// <returns>The projected vector.</returns>
-        public readonly Vector3 Project(Vector3 onNormal)
+        public readonly Vector2 Project(Vector2 onNormal)
         {
             return onNormal * (Dot(onNormal) / onNormal.LengthSquared());
         }
@@ -601,7 +593,7 @@ namespace FyroxLite
         /// </summary>
         /// <param name="normal">The normal vector defining the plane to reflect from. Must be normalized.</param>
         /// <returns>The reflected vector.</returns>
-        public readonly Vector3 Reflect(Vector3 normal)
+        public readonly Vector2 Reflect(Vector2 normal)
         {
 #if DEBUG
             if (!normal.IsNormalized())
@@ -609,25 +601,22 @@ namespace FyroxLite
                 throw new ArgumentException("Argument is not normalized.", nameof(normal));
             }
 #endif
-            return (2.0f * Dot(normal) * normal) - this;
+            return (2 * Dot(normal) * normal) - this;
         }
 
         /// <summary>
-        /// Rotates this vector around a given <paramref name="axis"/> vector by <paramref name="angle"/> (in radians).
-        /// The <paramref name="axis"/> vector must be a normalized vector.
+        /// Rotates this vector by <paramref name="angle"/> radians.
         /// </summary>
-        /// <param name="axis">The vector to rotate around. Must be normalized.</param>
         /// <param name="angle">The angle to rotate by, in radians.</param>
         /// <returns>The rotated vector.</returns>
-        public readonly Vector3 Rotated(Vector3 axis, real_t angle)
+        public readonly Vector2 Rotated(real_t angle)
         {
-#if DEBUG
-            if (!axis.IsNormalized())
-            {
-                throw new ArgumentException("Argument is not normalized.", nameof(axis));
-            }
-#endif
-            return new Basis(axis, angle) * this;
+            (real_t sin, real_t cos) = Mathf.SinCos(angle);
+            return new Vector2
+            (
+                X * cos - Y * sin,
+                X * sin + Y * cos
+            );
         }
 
         /// <summary>
@@ -635,9 +624,9 @@ namespace FyroxLite
         /// with halfway cases rounded towards the nearest multiple of two.
         /// </summary>
         /// <returns>The rounded vector.</returns>
-        public readonly Vector3 Round()
+        public readonly Vector2 Round()
         {
-            return new Vector3(Mathf.Round(X), Mathf.Round(Y), Mathf.Round(Z));
+            return new Vector2(Mathf.Round(X), Mathf.Round(Y));
         }
 
         /// <summary>
@@ -646,30 +635,12 @@ namespace FyroxLite
         /// by calling <see cref="Mathf.Sign(real_t)"/> on each component.
         /// </summary>
         /// <returns>A vector with all components as either <c>1</c>, <c>-1</c>, or <c>0</c>.</returns>
-        public readonly Vector3 Sign()
+        public readonly Vector2 Sign()
         {
-            Vector3 v;
+            Vector2 v;
             v.X = Mathf.Sign(X);
             v.Y = Mathf.Sign(Y);
-            v.Z = Mathf.Sign(Z);
             return v;
-        }
-
-        /// <summary>
-        /// Returns the signed angle to the given vector, in radians.
-        /// The sign of the angle is positive in a counter-clockwise
-        /// direction and negative in a clockwise direction when viewed
-        /// from the side specified by the <paramref name="axis"/>.
-        /// </summary>
-        /// <param name="to">The other vector to compare this vector to.</param>
-        /// <param name="axis">The reference axis to use for the angle sign.</param>
-        /// <returns>The signed angle between the two vectors, in radians.</returns>
-        public readonly real_t SignedAngleTo(Vector3 to, Vector3 axis)
-        {
-            Vector3 crossTo = Cross(to);
-            real_t unsignedAngle = Mathf.Atan2(crossTo.Length(), Dot(to));
-            real_t sign = crossTo.Dot(axis);
-            return (sign < 0) ? -unsignedAngle : unsignedAngle;
         }
 
         /// <summary>
@@ -678,12 +649,12 @@ namespace FyroxLite
         ///
         /// This method also handles interpolating the lengths if the input vectors
         /// have different lengths. For the special case of one or both input vectors
-        /// having zero length, this method behaves like <see cref="Lerp(Vector3, real_t)"/>.
+        /// having zero length, this method behaves like <see cref="Lerp(Vector2, real_t)"/>.
         /// </summary>
         /// <param name="to">The destination vector for interpolation.</param>
         /// <param name="weight">A value on the range of 0.0 to 1.0, representing the amount of interpolation.</param>
         /// <returns>The resulting vector of the interpolation.</returns>
-        public readonly Vector3 Slerp(Vector3 to, real_t weight)
+        public readonly Vector2 Slerp(Vector2 to, real_t weight)
         {
             real_t startLengthSquared = LengthSquared();
             real_t endLengthSquared = to.LengthSquared();
@@ -692,29 +663,21 @@ namespace FyroxLite
                 // Zero length vectors have no angle, so the best we can do is either lerp or throw an error.
                 return Lerp(to, weight);
             }
-            Vector3 axis = Cross(to);
-            real_t axisLengthSquared = axis.LengthSquared();
-            if (axisLengthSquared == 0.0)
-            {
-                // Colinear vectors have no rotation axis or angle between them, so the best we can do is lerp.
-                return Lerp(to, weight);
-            }
-            axis /= Mathf.Sqrt(axisLengthSquared);
             real_t startLength = Mathf.Sqrt(startLengthSquared);
             real_t resultLength = Mathf.Lerp(startLength, Mathf.Sqrt(endLengthSquared), weight);
             real_t angle = AngleTo(to);
-            return Rotated(axis, angle * weight) * (resultLength / startLength);
+            return Rotated(angle * weight) * (resultLength / startLength);
         }
 
         /// <summary>
-        /// Returns a new vector resulting from sliding this vector along a plane with normal <paramref name="normal"/>.
+        /// Returns a new vector resulting from sliding this vector along a line with normal <paramref name="normal"/>.
         /// The resulting new vector is perpendicular to <paramref name="normal"/>, and is equivalent to this vector minus its projection on <paramref name="normal"/>.
-        /// See also <see cref="Project(Vector3)"/>.
+        /// See also <see cref="Project(Vector2)"/>.
         /// Note: The vector <paramref name="normal"/> must be normalized. See also <see cref="Normalized()"/>.
         /// </summary>
         /// <param name="normal">The normal vector of the plane to slide on.</param>
         /// <returns>The slid vector.</returns>
-        public readonly Vector3 Slide(Vector3 normal)
+        public readonly Vector2 Slide(Vector2 normal)
         {
             return this - (normal * Dot(normal));
         }
@@ -725,14 +688,9 @@ namespace FyroxLite
         /// </summary>
         /// <param name="step">A vector value representing the step size to snap to.</param>
         /// <returns>The snapped vector.</returns>
-        public readonly Vector3 Snapped(Vector3 step)
+        public readonly Vector2 Snapped(Vector2 step)
         {
-            return new Vector3
-            (
-                Mathf.Snapped(X, step.X),
-                Mathf.Snapped(Y, step.Y),
-                Mathf.Snapped(Z, step.Z)
-            );
+            return new Vector2(Mathf.Snapped(X, step.X), Mathf.Snapped(Y, step.Y));
         }
 
         /// <summary>
@@ -741,248 +699,207 @@ namespace FyroxLite
         /// </summary>
         /// <param name="step">The step size to snap to.</param>
         /// <returns>The snapped vector.</returns>
-        public readonly Vector3 Snapped(real_t step)
+        public readonly Vector2 Snapped(real_t step)
         {
-            return new Vector3
-            (
-                Mathf.Snapped(X, step),
-                Mathf.Snapped(Y, step),
-                Mathf.Snapped(Z, step)
-            );
+            return new Vector2(Mathf.Snapped(X, step), Mathf.Snapped(Y, step));
+        }
+
+        /// <summary>
+        /// Returns a perpendicular vector rotated 90 degrees counter-clockwise
+        /// compared to the original, with the same length.
+        /// </summary>
+        /// <returns>The perpendicular vector.</returns>
+        public readonly Vector2 Orthogonal()
+        {
+            return new Vector2(Y, -X);
         }
 
         // Constants
-        private static readonly Vector3 _zero = new Vector3(0, 0, 0);
-        private static readonly Vector3 _one = new Vector3(1, 1, 1);
-        private static readonly Vector3 _inf = new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf);
+        private static readonly Vector2 _zero = new Vector2(0, 0);
+        private static readonly Vector2 _one = new Vector2(1, 1);
+        private static readonly Vector2 _inf = new Vector2(Mathf.Inf, Mathf.Inf);
 
-        private static readonly Vector3 _up = new Vector3(0, 1, 0);
-        private static readonly Vector3 _down = new Vector3(0, -1, 0);
-        private static readonly Vector3 _right = new Vector3(-1, 0, 0);
-        private static readonly Vector3 _left = new Vector3(1, 0, 0);
-        private static readonly Vector3 _forward = new Vector3(0, 0, 1);
-        private static readonly Vector3 _back = new Vector3(0, 0, -1);
-
-        private static readonly Vector3 _modelLeft = new Vector3(1, 0, 0);
-        private static readonly Vector3 _modelRight = new Vector3(-1, 0, 0);
-        private static readonly Vector3 _modelTop = new Vector3(0, 1, 0);
-        private static readonly Vector3 _modelBottom = new Vector3(0, -1, 0);
-        private static readonly Vector3 _modelFront = new Vector3(0, 0, 1);
-        private static readonly Vector3 _modelRear = new Vector3(0, 0, -1);
+        private static readonly Vector2 _up = new Vector2(0, -1);
+        private static readonly Vector2 _down = new Vector2(0, 1);
+        private static readonly Vector2 _right = new Vector2(1, 0);
+        private static readonly Vector2 _left = new Vector2(-1, 0);
 
         /// <summary>
         /// Zero vector, a vector with all components set to <c>0</c>.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(0, 0, 0)</c>.</value>
-        public static Vector3 Zero { get { return _zero; } }
+        /// <value>Equivalent to <c>new Vector2(0, 0)</c>.</value>
+        public static Vector2 Zero { get { return _zero; } }
         /// <summary>
         /// One vector, a vector with all components set to <c>1</c>.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(1, 1, 1)</c>.</value>
-        public static Vector3 One { get { return _one; } }
+        /// <value>Equivalent to <c>new Vector2(1, 1)</c>.</value>
+        public static Vector2 One { get { return _one; } }
         /// <summary>
         /// Infinity vector, a vector with all components set to <see cref="Mathf.Inf"/>.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf)</c>.</value>
-        public static Vector3 Inf { get { return _inf; } }
+        /// <value>Equivalent to <c>new Vector2(Mathf.Inf, Mathf.Inf)</c>.</value>
+        public static Vector2 Inf { get { return _inf; } }
 
         /// <summary>
-        /// Up unit vector.
+        /// Up unit vector. Y is down in 2D, so this vector points -Y.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(0, 1, 0)</c>.</value>
-        public static Vector3 Up { get { return _up; } }
+        /// <value>Equivalent to <c>new Vector2(0, -1)</c>.</value>
+        public static Vector2 Up { get { return _up; } }
         /// <summary>
-        /// Down unit vector.
+        /// Down unit vector. Y is down in 2D, so this vector points +Y.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(0, -1, 0)</c>.</value>
-        public static Vector3 Down { get { return _down; } }
+        /// <value>Equivalent to <c>new Vector2(0, 1)</c>.</value>
+        public static Vector2 Down { get { return _down; } }
         /// <summary>
-        /// Right unit vector. Represents the local direction of right,
-        /// and the global direction of east.
+        /// Right unit vector. Represents the direction of right.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(1, 0, 0)</c>.</value>
-        public static Vector3 Right { get { return _right; } }
+        /// <value>Equivalent to <c>new Vector2(1, 0)</c>.</value>
+        public static Vector2 Right { get { return _right; } }
         /// <summary>
-        /// Left unit vector. Represents the local direction of left,
-        /// and the global direction of west.
+        /// Left unit vector. Represents the direction of left.
         /// </summary>
-        /// <value>Equivalent to <c>new Vector3(-1, 0, 0)</c>.</value>
-        public static Vector3 Left { get { return _left; } }
-        /// <summary>
-        /// Forward unit vector. Represents the local direction of forward,
-        /// and the global direction of north.
-        /// </summary>
-        /// <value>Equivalent to <c>new Vector3(0, 0, -1)</c>.</value>
-        public static Vector3 Forward { get { return _forward; } }
-        /// <summary>
-        /// Back unit vector. Represents the local direction of back,
-        /// and the global direction of south.
-        /// </summary>
-        /// <value>Equivalent to <c>new Vector3(0, 0, 1)</c>.</value>
-        public static Vector3 Back { get { return _back; } }
+        /// <value>Equivalent to <c>new Vector2(-1, 0)</c>.</value>
+        public static Vector2 Left { get { return _left; } }
 
         /// <summary>
-        /// Unit vector pointing towards the left side of imported 3D assets.
-        /// </summary>
-        public static Vector3 ModelLeft { get { return _modelLeft; } }
-        /// <summary>
-        /// Unit vector pointing towards the right side of imported 3D assets.
-        /// </summary>
-        public static Vector3 ModelRight { get { return _modelRight; } }
-        /// <summary>
-        /// Unit vector pointing towards the top side (up) of imported 3D assets.
-        /// </summary>
-        public static Vector3 ModelTop { get { return _modelTop; } }
-        /// <summary>
-        /// Unit vector pointing towards the bottom side (down) of imported 3D assets.
-        /// </summary>
-        public static Vector3 ModelBottom { get { return _modelBottom; } }
-        /// <summary>
-        /// Unit vector pointing towards the front side (facing forward) of imported 3D assets.
-        /// </summary>
-        public static Vector3 ModelFront { get { return _modelFront; } }
-        /// <summary>
-        /// Unit vector pointing towards the rear side (back) of imported 3D assets.
-        /// </summary>
-        public static Vector3 ModelRear { get { return _modelRear; } }
-
-        /// <summary>
-        /// Constructs a new <see cref="Vector3"/> with the given components.
+        /// Constructs a new <see cref="Vector2"/> with the given components.
         /// </summary>
         /// <param name="x">The vector's X component.</param>
         /// <param name="y">The vector's Y component.</param>
-        /// <param name="z">The vector's Z component.</param>
-        public Vector3(real_t x, real_t y, real_t z)
+        public Vector2(real_t x, real_t y)
         {
             X = x;
             Y = y;
-            Z = z;
         }
 
         /// <summary>
-        /// Adds each component of the <see cref="Vector3"/>
-        /// with the components of the given <see cref="Vector3"/>.
+        /// Creates a unit Vector2 rotated to the given angle. This is equivalent to doing
+        /// <c>Vector2(Mathf.Cos(angle), Mathf.Sin(angle))</c> or <c>Vector2.Right.Rotated(angle)</c>.
+        /// </summary>
+        /// <param name="angle">Angle of the vector, in radians.</param>
+        /// <returns>The resulting vector.</returns>
+        public static Vector2 FromAngle(real_t angle)
+        {
+            (real_t sin, real_t cos) = Mathf.SinCos(angle);
+            return new Vector2(cos, sin);
+        }
+
+        /// <summary>
+        /// Adds each component of the <see cref="Vector2"/>
+        /// with the components of the given <see cref="Vector2"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The added vector.</returns>
-        public static Vector3 operator +(Vector3 left, Vector3 right)
+        public static Vector2 operator +(Vector2 left, Vector2 right)
         {
             left.X += right.X;
             left.Y += right.Y;
-            left.Z += right.Z;
             return left;
         }
 
         /// <summary>
-        /// Subtracts each component of the <see cref="Vector3"/>
-        /// by the components of the given <see cref="Vector3"/>.
+        /// Subtracts each component of the <see cref="Vector2"/>
+        /// by the components of the given <see cref="Vector2"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The subtracted vector.</returns>
-        public static Vector3 operator -(Vector3 left, Vector3 right)
+        public static Vector2 operator -(Vector2 left, Vector2 right)
         {
             left.X -= right.X;
             left.Y -= right.Y;
-            left.Z -= right.Z;
             return left;
         }
 
         /// <summary>
-        /// Returns the negative value of the <see cref="Vector3"/>.
-        /// This is the same as writing <c>new Vector3(-v.X, -v.Y, -v.Z)</c>.
+        /// Returns the negative value of the <see cref="Vector2"/>.
+        /// This is the same as writing <c>new Vector2(-v.X, -v.Y)</c>.
         /// This operation flips the direction of the vector while
         /// keeping the same magnitude.
         /// With floats, the number zero can be either positive or negative.
         /// </summary>
         /// <param name="vec">The vector to negate/flip.</param>
         /// <returns>The negated/flipped vector.</returns>
-        public static Vector3 operator -(Vector3 vec)
+        public static Vector2 operator -(Vector2 vec)
         {
             vec.X = -vec.X;
             vec.Y = -vec.Y;
-            vec.Z = -vec.Z;
             return vec;
         }
 
         /// <summary>
-        /// Multiplies each component of the <see cref="Vector3"/>
+        /// Multiplies each component of the <see cref="Vector2"/>
         /// by the given <see cref="real_t"/>.
         /// </summary>
         /// <param name="vec">The vector to multiply.</param>
         /// <param name="scale">The scale to multiply by.</param>
         /// <returns>The multiplied vector.</returns>
-        public static Vector3 operator *(Vector3 vec, real_t scale)
+        public static Vector2 operator *(Vector2 vec, real_t scale)
         {
             vec.X *= scale;
             vec.Y *= scale;
-            vec.Z *= scale;
             return vec;
         }
 
         /// <summary>
-        /// Multiplies each component of the <see cref="Vector3"/>
+        /// Multiplies each component of the <see cref="Vector2"/>
         /// by the given <see cref="real_t"/>.
         /// </summary>
         /// <param name="scale">The scale to multiply by.</param>
         /// <param name="vec">The vector to multiply.</param>
         /// <returns>The multiplied vector.</returns>
-        public static Vector3 operator *(real_t scale, Vector3 vec)
+        public static Vector2 operator *(real_t scale, Vector2 vec)
         {
             vec.X *= scale;
             vec.Y *= scale;
-            vec.Z *= scale;
             return vec;
         }
 
         /// <summary>
-        /// Multiplies each component of the <see cref="Vector3"/>
-        /// by the components of the given <see cref="Vector3"/>.
+        /// Multiplies each component of the <see cref="Vector2"/>
+        /// by the components of the given <see cref="Vector2"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The multiplied vector.</returns>
-        public static Vector3 operator *(Vector3 left, Vector3 right)
+        public static Vector2 operator *(Vector2 left, Vector2 right)
         {
             left.X *= right.X;
             left.Y *= right.Y;
-            left.Z *= right.Z;
             return left;
         }
 
         /// <summary>
-        /// Divides each component of the <see cref="Vector3"/>
+        /// Divides each component of the <see cref="Vector2"/>
         /// by the given <see cref="real_t"/>.
         /// </summary>
         /// <param name="vec">The dividend vector.</param>
         /// <param name="divisor">The divisor value.</param>
         /// <returns>The divided vector.</returns>
-        public static Vector3 operator /(Vector3 vec, real_t divisor)
+        public static Vector2 operator /(Vector2 vec, real_t divisor)
         {
             vec.X /= divisor;
             vec.Y /= divisor;
-            vec.Z /= divisor;
             return vec;
         }
 
         /// <summary>
-        /// Divides each component of the <see cref="Vector3"/>
-        /// by the components of the given <see cref="Vector3"/>.
+        /// Divides each component of the <see cref="Vector2"/>
+        /// by the components of the given <see cref="Vector2"/>.
         /// </summary>
         /// <param name="vec">The dividend vector.</param>
         /// <param name="divisorv">The divisor vector.</param>
         /// <returns>The divided vector.</returns>
-        public static Vector3 operator /(Vector3 vec, Vector3 divisorv)
+        public static Vector2 operator /(Vector2 vec, Vector2 divisorv)
         {
             vec.X /= divisorv.X;
             vec.Y /= divisorv.Y;
-            vec.Z /= divisorv.Z;
             return vec;
         }
 
         /// <summary>
-        /// Gets the remainder of each component of the <see cref="Vector3"/>
+        /// Gets the remainder of each component of the <see cref="Vector2"/>
         /// with the components of the given <see cref="real_t"/>.
         /// This operation uses truncated division, which is often not desired
         /// as it does not work well with negative numbers.
@@ -991,41 +908,39 @@ namespace FyroxLite
         /// </summary>
         /// <example>
         /// <code>
-        /// GD.Print(new Vector3(10, -20, 30) % 7); // Prints "(3, -6, 2)"
+        /// GD.Print(new Vector2(10, -20) % 7); // Prints "(3, -6)"
         /// </code>
         /// </example>
         /// <param name="vec">The dividend vector.</param>
         /// <param name="divisor">The divisor value.</param>
         /// <returns>The remainder vector.</returns>
-        public static Vector3 operator %(Vector3 vec, real_t divisor)
+        public static Vector2 operator %(Vector2 vec, real_t divisor)
         {
             vec.X %= divisor;
             vec.Y %= divisor;
-            vec.Z %= divisor;
             return vec;
         }
 
         /// <summary>
-        /// Gets the remainder of each component of the <see cref="Vector3"/>
-        /// with the components of the given <see cref="Vector3"/>.
+        /// Gets the remainder of each component of the <see cref="Vector2"/>
+        /// with the components of the given <see cref="Vector2"/>.
         /// This operation uses truncated division, which is often not desired
         /// as it does not work well with negative numbers.
-        /// Consider using <see cref="PosMod(Vector3)"/> instead
+        /// Consider using <see cref="PosMod(Vector2)"/> instead
         /// if you want to handle negative numbers.
         /// </summary>
         /// <example>
         /// <code>
-        /// GD.Print(new Vector3(10, -20, 30) % new Vector3(7, 8, 9)); // Prints "(3, -4, 3)"
+        /// GD.Print(new Vector2(10, -20) % new Vector2(7, 8)); // Prints "(3, -4)"
         /// </code>
         /// </example>
         /// <param name="vec">The dividend vector.</param>
         /// <param name="divisorv">The divisor vector.</param>
         /// <returns>The remainder vector.</returns>
-        public static Vector3 operator %(Vector3 vec, Vector3 divisorv)
+        public static Vector2 operator %(Vector2 vec, Vector2 divisorv)
         {
             vec.X %= divisorv.X;
             vec.Y %= divisorv.Y;
-            vec.Z %= divisorv.Z;
             return vec;
         }
 
@@ -1037,7 +952,7 @@ namespace FyroxLite
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>Whether or not the vectors are exactly equal.</returns>
-        public static bool operator ==(Vector3 left, Vector3 right)
+        public static bool operator ==(Vector2 left, Vector2 right)
         {
             return left.Equals(right);
         }
@@ -1050,103 +965,87 @@ namespace FyroxLite
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>Whether or not the vectors are not equal.</returns>
-        public static bool operator !=(Vector3 left, Vector3 right)
+        public static bool operator !=(Vector2 left, Vector2 right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Compares two <see cref="Vector3"/> vectors by first checking if
+        /// Compares two <see cref="Vector2"/> vectors by first checking if
         /// the X value of the <paramref name="left"/> vector is less than
         /// the X value of the <paramref name="right"/> vector.
         /// If the X values are exactly equal, then it repeats this check
-        /// with the Y values of the two vectors, and then with the Z values.
+        /// with the Y values of the two vectors.
         /// This operator is useful for sorting vectors.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>Whether or not the left is less than the right.</returns>
-        public static bool operator <(Vector3 left, Vector3 right)
+        public static bool operator <(Vector2 left, Vector2 right)
         {
             if (left.X == right.X)
             {
-                if (left.Y == right.Y)
-                {
-                    return left.Z < right.Z;
-                }
                 return left.Y < right.Y;
             }
             return left.X < right.X;
         }
 
         /// <summary>
-        /// Compares two <see cref="Vector3"/> vectors by first checking if
+        /// Compares two <see cref="Vector2"/> vectors by first checking if
         /// the X value of the <paramref name="left"/> vector is greater than
         /// the X value of the <paramref name="right"/> vector.
         /// If the X values are exactly equal, then it repeats this check
-        /// with the Y values of the two vectors, and then with the Z values.
+        /// with the Y values of the two vectors.
         /// This operator is useful for sorting vectors.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>Whether or not the left is greater than the right.</returns>
-        public static bool operator >(Vector3 left, Vector3 right)
+        public static bool operator >(Vector2 left, Vector2 right)
         {
             if (left.X == right.X)
             {
-                if (left.Y == right.Y)
-                {
-                    return left.Z > right.Z;
-                }
                 return left.Y > right.Y;
             }
             return left.X > right.X;
         }
 
         /// <summary>
-        /// Compares two <see cref="Vector3"/> vectors by first checking if
+        /// Compares two <see cref="Vector2"/> vectors by first checking if
         /// the X value of the <paramref name="left"/> vector is less than
         /// or equal to the X value of the <paramref name="right"/> vector.
         /// If the X values are exactly equal, then it repeats this check
-        /// with the Y values of the two vectors, and then with the Z values.
+        /// with the Y values of the two vectors.
         /// This operator is useful for sorting vectors.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>Whether or not the left is less than or equal to the right.</returns>
-        public static bool operator <=(Vector3 left, Vector3 right)
+        public static bool operator <=(Vector2 left, Vector2 right)
         {
             if (left.X == right.X)
             {
-                if (left.Y == right.Y)
-                {
-                    return left.Z <= right.Z;
-                }
-                return left.Y < right.Y;
+                return left.Y <= right.Y;
             }
             return left.X < right.X;
         }
 
         /// <summary>
-        /// Compares two <see cref="Vector3"/> vectors by first checking if
+        /// Compares two <see cref="Vector2"/> vectors by first checking if
         /// the X value of the <paramref name="left"/> vector is greater than
         /// or equal to the X value of the <paramref name="right"/> vector.
         /// If the X values are exactly equal, then it repeats this check
-        /// with the Y values of the two vectors, and then with the Z values.
+        /// with the Y values of the two vectors.
         /// This operator is useful for sorting vectors.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>Whether or not the left is greater than or equal to the right.</returns>
-        public static bool operator >=(Vector3 left, Vector3 right)
+        public static bool operator >=(Vector2 left, Vector2 right)
         {
             if (left.X == right.X)
             {
-                if (left.Y == right.Y)
-                {
-                    return left.Z >= right.Z;
-                }
-                return left.Y > right.Y;
+                return left.Y >= right.Y;
             }
             return left.X > right.X;
         }
@@ -1161,7 +1060,7 @@ namespace FyroxLite
         /// <returns>Whether or not the vector and the object are equal.</returns>
         public override readonly bool Equals([NotNullWhen(true)] object? obj)
         {
-            return obj is Vector3 other && Equals(other);
+            return obj is Vector2 other && Equals(other);
         }
 
         /// <summary>
@@ -1171,9 +1070,9 @@ namespace FyroxLite
         /// </summary>
         /// <param name="other">The other vector.</param>
         /// <returns>Whether or not the vectors are exactly equal.</returns>
-        public readonly bool Equals(Vector3 other)
+        public readonly bool Equals(Vector2 other)
         {
-            return X == other.X && Y == other.Y && Z == other.Z;
+            return X == other.X && Y == other.Y;
         }
 
         /// <summary>
@@ -1182,9 +1081,9 @@ namespace FyroxLite
         /// </summary>
         /// <param name="other">The other vector to compare.</param>
         /// <returns>Whether or not the vectors are approximately equal.</returns>
-        public readonly bool IsEqualApprox(Vector3 other)
+        public readonly bool IsEqualApprox(Vector2 other)
         {
-            return Mathf.IsEqualApprox(X, other.X) && Mathf.IsEqualApprox(Y, other.Y) && Mathf.IsEqualApprox(Z, other.Z);
+            return Mathf.IsEqualApprox(X, other.X) && Mathf.IsEqualApprox(Y, other.Y);
         }
 
         /// <summary>
@@ -1196,31 +1095,31 @@ namespace FyroxLite
         /// <returns>Whether or not the vector is approximately zero.</returns>
         public readonly bool IsZeroApprox()
         {
-            return Mathf.IsZeroApprox(X) && Mathf.IsZeroApprox(Y) && Mathf.IsZeroApprox(Z);
+            return Mathf.IsZeroApprox(X) && Mathf.IsZeroApprox(Y);
         }
 
         /// <summary>
-        /// Serves as the hash function for <see cref="Vector3"/>.
+        /// Serves as the hash function for <see cref="Vector2"/>.
         /// </summary>
         /// <returns>A hash code for this vector.</returns>
         public override readonly int GetHashCode()
         {
-            return HashCode.Combine(X, Y, Z);
+            return HashCode.Combine(X, Y);
         }
 
         /// <summary>
-        /// Converts this <see cref="Vector3"/> to a string.
+        /// Converts this <see cref="Vector2"/> to a string.
         /// </summary>
         /// <returns>A string representation of this vector.</returns>
         public override readonly string ToString() => ToString(null);
 
         /// <summary>
-        /// Converts this <see cref="Vector3"/> to a string with the given <paramref name="format"/>.
+        /// Converts this <see cref="Vector2"/> to a string with the given <paramref name="format"/>.
         /// </summary>
         /// <returns>A string representation of this vector.</returns>
         public readonly string ToString(string? format)
         {
-            return $"({X.ToString(format, CultureInfo.InvariantCulture)}, {Y.ToString(format, CultureInfo.InvariantCulture)}, {Z.ToString(format, CultureInfo.InvariantCulture)})";
+            return $"({X.ToString(format, CultureInfo.InvariantCulture)}, {Y.ToString(format, CultureInfo.InvariantCulture)})";
         }
     }
 }

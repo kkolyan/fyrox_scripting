@@ -1,10 +1,7 @@
-use crate::{md::type_to_md::type_rust_to_md, writelnu, Naming};
+use crate::{md::type_to_md::type_rust_to_md, Naming};
 use gen_common::by_package::extract_package;
 use gen_common::properties::is_regular;
-use gen_common::{
-    methods::analyze_method_result,
-    properties::{is_getter, is_setter},
-};
+use gen_common::{methods::analyze_method_result, properties::{is_getter, is_setter}, writelnu};
 use itertools::Itertools;
 use lite_model::{
     ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method, Signature,
@@ -98,14 +95,14 @@ fn render_methods(
             .to_vec();
         writelnu!(
             s,
-            "| {} | [{}](##){} ( {} ) | {} |",
+            "| {} | `{}`{} ( {} ) | {} |",
             type_rust_to_md(&return_ty.success_type, class_page_links),
             naming.member_name(method.method_name.as_str()),
             generics,
             params
                 .iter()
                 .map(|it| format!(
-                    "{} {}",
+                    "{} <ins>{}</ins>",
                     type_rust_to_md(&it.ty, class_page_links),
                     naming.param_name(&it.name)
                 ))
@@ -132,7 +129,7 @@ fn render_properties(
         };
         writelnu!(
             s,
-            "| {} | {} | {} | {} |",
+            "| `{}` | {} | {} | {} |",
             naming.member_name(prop.name),
             type_rust_to_md(prop.ty, class_page_links),
             access,
@@ -152,7 +149,7 @@ fn render_constants(
     for constant in constants {
         writelnu!(
             s,
-            "| {} | {} | {} | {} |",
+            "| `{}` | {} | {} | {} |",
             naming.member_name(&constant.const_name),
             type_rust_to_md(&constant.ty, class_page_links),
             constant_to_display(&constant.value),

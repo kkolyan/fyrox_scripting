@@ -3,7 +3,8 @@ use std::collections::HashMap;
 use lite_model::{ClassName, EnumClass, EnumValue};
 use to_vec::ToVec;
 use gen_common::by_package::extract_package;
-use crate::{md::type_to_md::type_rust_to_md, writelnu, Naming};
+use gen_common::writelnu;
+use crate::{md::type_to_md::type_rust_to_md, Naming};
 
 pub fn generate_enum(s: &mut String, class: &EnumClass, naming: Naming, x1: &HashMap<ClassName, String>) {
 	writelnu!(s, "# {}", class.class_name);
@@ -23,6 +24,6 @@ pub fn generate_enum(s: &mut String, class: &EnumClass, naming: Naming, x1: &Has
     );
 	writelnu!(s, "|---|---|");
 	for variant in class.variants.iter() {
-		writelnu!(s, "| {} | {} |", variant.tag, "");
+		writelnu!(s, "| `{}` | {} |", variant.tag, variant.description);
 	}
 }
