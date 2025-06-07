@@ -27,6 +27,11 @@ There is a simple game that written in different scripting languages to demonstr
 * [in Fyrox / Lua](showcase/guards_lua)
 * [in Fyrox / Rust (vanilla)](showcase/guards_vanilla)
 
+## Credits
+* Special thanks to [Dmitry Stepanov](https://github.com/mrDIMAS), author of Fyrox and other [Fyrox](https://github.com/FyroxEngine/Fyrox/) Contributors for such a powerful and inspiring foundation.
+* Grateful acknowledgment to the [Godot Engine](https://github.com/godotengine/godot) contributors for Godot's modular design and liberal license, allowed to reuse their Math classes in this project.
+* Sincere thanks to the open-source community for sharing tools, ideas and knowledge.
+
 ## Contributing
 See the [contributions guidelines](CONTRIBUTING.md) for more info.
 
