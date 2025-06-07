@@ -1,5 +1,5 @@
 # Intersection
-struct in FyroxLite.LitePhysics
+struct in [FyroxLite](../README.md).[LitePhysics](README.md)
 ## Description
 A ray intersection result.
 ## Fields

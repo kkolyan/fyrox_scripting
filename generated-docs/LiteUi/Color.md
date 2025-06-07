@@ -1,5 +1,5 @@
 # Color
-struct in FyroxLite.LiteUi
+struct in [FyroxLite](../README.md).[LiteUi](README.md)
 ## Fields
 | Name | Type | Description |
 |---|---|---|

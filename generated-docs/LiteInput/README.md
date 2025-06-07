@@ -1,5 +1,5 @@
 # LiteInput
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Description
 User input utilities
 ## Classes

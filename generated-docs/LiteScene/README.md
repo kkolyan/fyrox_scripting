@@ -1,4 +1,4 @@
 # LiteScene
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Scene](../LiteScene/Scene.md)

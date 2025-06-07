@@ -1,5 +1,5 @@
 # KeyCode
-enum in FyroxLite.LiteInput
+enum in [FyroxLite](../README.md).[LiteInput](README.md)
 ## Description
 Basically a copy of `winit`'s [`KeyCode`], which is mostly inspired by UI Events Specification’s [`KeyboardEvent.code`].
 

@@ -1,4 +1,4 @@
 # LiteLog
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Log](../LiteLog/Log.md)

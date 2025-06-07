@@ -1,5 +1,5 @@
 # GlobalScript
-class in FyroxLite.LitePlugin
+class in [FyroxLite](../README.md).[LitePlugin](README.md)
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|

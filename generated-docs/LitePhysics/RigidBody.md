@@ -1,5 +1,5 @@
 # RigidBody
-class in FyroxLite.LitePhysics
+class in [FyroxLite](../README.md).[LitePhysics](README.md)
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|

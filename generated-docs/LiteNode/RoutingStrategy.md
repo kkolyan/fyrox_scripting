@@ -1,5 +1,5 @@
 # RoutingStrategy
-enum in FyroxLite.LiteNode
+enum in [FyroxLite](../README.md).[LiteNode](README.md)
 ## Properties
 | Property | Description |
 |---|---|

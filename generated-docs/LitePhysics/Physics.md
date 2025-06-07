@@ -1,5 +1,5 @@
 # Physics
-class in FyroxLite.LitePhysics
+class in [FyroxLite](../README.md).[LitePhysics](README.md)
 ## Constants
 | Name | Type | Value | Description |
 |---|---|---|---|

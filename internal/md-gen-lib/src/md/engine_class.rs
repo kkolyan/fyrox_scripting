@@ -31,7 +31,7 @@ pub fn generate_engine(
     writelnu!(s, "# {}", class.class_name);
     writelnu!(
         s,
-        "class in FyroxLite.{}",
+        "class in [FyroxLite](../README.md).[{}](README.md)",
         naming.package_name(extract_package(&class.rust_struct_path))
     );
     if !class.description.is_empty() {

@@ -1,4 +1,4 @@
 # LitePlugin
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [GlobalScript](../LitePlugin/GlobalScript.md)

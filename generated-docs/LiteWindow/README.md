@@ -1,5 +1,5 @@
 # LiteWindow
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Window](../LiteWindow/Window.md)
 ## Enums

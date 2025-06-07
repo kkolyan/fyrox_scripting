@@ -1,4 +1,4 @@
 # LitePrefab
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Prefab](../LitePrefab/Prefab.md)

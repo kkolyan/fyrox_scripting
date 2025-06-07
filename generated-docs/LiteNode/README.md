@@ -1,5 +1,5 @@
 # LiteNode
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Node](../LiteNode/Node.md)
 ## Enums

@@ -1,5 +1,5 @@
 # LiteUi
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Text](../LiteUi/Text.md)
 * [UiNode](../LiteUi/UiNode.md)

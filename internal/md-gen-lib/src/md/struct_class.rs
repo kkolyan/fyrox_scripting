@@ -6,7 +6,7 @@ use crate::{md::type_to_md::type_rust_to_md, writelnu, Naming};
 
 pub fn generate_struct(s: &mut String, class: &StructClass, naming: Naming, class_page_links: &HashMap<ClassName, String>) {
     writelnu!(s, "# {}", class.class_name);
-    writelnu!(s, "struct in FyroxLite.{}", naming.package_name(extract_package(&class.rust_struct_path)));
+    writelnu!(s, "struct in [FyroxLite](../README.md).[{}](README.md)", naming.package_name(extract_package(&class.rust_struct_path)));
     if !class.description.is_empty() {
         writelnu!(s, "## Description");
         writelnu!(s, "{}", class.description);

@@ -1,5 +1,5 @@
 # Scene
-class in FyroxLite.LiteScene
+class in [FyroxLite](../README.md).[LiteScene](README.md)
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|

@@ -1,5 +1,5 @@
 # Input
-class in FyroxLite.LiteInput
+class in [FyroxLite](../README.md).[LiteInput](README.md)
 ## Description
 Utility class to poll player input events
 ## Constants

@@ -1,5 +1,5 @@
 # Log
-class in FyroxLite.LiteLog
+class in [FyroxLite](../README.md).[LiteLog](README.md)
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|

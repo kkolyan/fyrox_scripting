@@ -1,5 +1,5 @@
 # Text
-class in FyroxLite.LiteUi
+class in [FyroxLite](../README.md).[LiteUi](README.md)
 ## Properties
 | Name | Type | Access | Description |
 |---|---|---|---|

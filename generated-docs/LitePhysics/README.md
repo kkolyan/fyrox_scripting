@@ -1,5 +1,5 @@
 # LitePhysics
-package in FyroxLite
+package in [FyroxLite](../README.md)
 ## Classes
 * [Physics](../LitePhysics/Physics.md)
 * [RigidBody](../LitePhysics/RigidBody.md)

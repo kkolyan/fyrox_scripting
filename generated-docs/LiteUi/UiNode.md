@@ -1,3 +1,3 @@
 # UiNode
-class in FyroxLite.LiteUi
+class in [FyroxLite](../README.md).[LiteUi](README.md)
 

@@ -1,5 +1,5 @@
 # Node
-class in FyroxLite.LiteNode
+class in [FyroxLite](../README.md).[LiteNode](README.md)
 ## Properties
 | Name | Type | Access | Description |
 |---|---|---|---|

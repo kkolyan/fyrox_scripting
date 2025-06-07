@@ -1,5 +1,5 @@
 # Brush
-struct in FyroxLite.LiteUi
+struct in [FyroxLite](../README.md).[LiteUi](README.md)
 ## Description
 Brush defines a way to fill an arbitrary surface.
 ## Fields

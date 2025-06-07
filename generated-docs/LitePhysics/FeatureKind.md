@@ -1,5 +1,5 @@
 # FeatureKind
-enum in FyroxLite.LitePhysics
+enum in [FyroxLite](../README.md).[LitePhysics](README.md)
 ## Properties
 | Property | Description |
 |---|---|

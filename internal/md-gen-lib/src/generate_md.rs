@@ -79,7 +79,7 @@ fn generate_package(
 ) -> String {
     let mut s = "".to_string();
     writelnu!(s, "# {}", naming.package_name(package));
-    writelnu!(s, "package in FyroxLite");
+    writelnu!(s, "package in [FyroxLite](../README.md)");
 
     let description = &domain
         .packages

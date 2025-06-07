@@ -1,5 +1,5 @@
 # Quaternion
-struct in FyroxLite.LiteMath
+struct in [FyroxLite](../README.md).[LiteMath](README.md)
 ## Fields
 | Name | Type | Description |
 |---|---|---|

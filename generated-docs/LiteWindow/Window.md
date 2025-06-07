@@ -1,5 +1,5 @@
 # Window
-class in FyroxLite.LiteWindow
+class in [FyroxLite](../README.md).[LiteWindow](README.md)
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|

@@ -1,5 +1,5 @@
 # FeatureId
-struct in FyroxLite.LitePhysics
+struct in [FyroxLite](../README.md).[LitePhysics](README.md)
 ## Description
 Shape-dependent identifier.
 ## Fields

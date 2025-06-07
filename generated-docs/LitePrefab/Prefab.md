@@ -1,5 +1,5 @@
 # Prefab
-class in FyroxLite.LitePrefab
+class in [FyroxLite](../README.md).[LitePrefab](README.md)
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
