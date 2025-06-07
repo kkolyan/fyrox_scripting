@@ -4,7 +4,7 @@ use lite_model::StructClass;
 use to_vec::ToVec;
 
 use gen_common::{
-    code_model::{Module, ModContent}, context::GenerationContext, templating::render
+    code_model::{Module}, context::GenerationContext, templating::render
 };
 use super::{expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, supress_lint::SUPRESSIONS};
 
@@ -29,10 +29,7 @@ pub fn generate_struct_class_bindings(class: &StructClass, ctx: &GenerationConte
     generate_into_lua(&mut s, class, ctx);
     generate_from_lua(&mut s, class, ctx);
 
-    Module {
-        name: class.class_name.0.to_case(Case::Snake),
-        content: ModContent::Code(s),
-    }
+    Module::code(class.class_name.0.to_case(Case::Snake), s)
 }
 
 fn generate_into_lua(s: &mut String, class: &StructClass, ctx: &GenerationContext) {

@@ -1,8 +1,8 @@
+use crate::lite_csgen::gen_rs::RustEmitter;
 use gen_common::by_package::classes_by_package;
-use gen_common::code_model::{HierarchicalCodeBase, ModContent, Module};
+use gen_common::code_model::Module;
 use gen_common::context::GenerationContext;
 use lite_model::{Class, ClassName, DataType, Domain};
-use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub mod engine_class;
 pub mod struct_class;
@@ -12,7 +12,7 @@ pub mod write_cs;
 pub mod wrappers;
 pub mod gen_rs;
 
-pub fn generate_cs_facade(domain: &Domain) -> (HierarchicalCodeBase, RustEmitter) {
+pub fn generate_cs_facade(domain: &Domain) -> (Module, RustEmitter) {
     let ctx = GenerationContext {
         internal_to_external: Default::default(),
         domain,
@@ -20,35 +20,32 @@ pub fn generate_cs_facade(domain: &Domain) -> (HierarchicalCodeBase, RustEmitter
     
     let mut rust = RustEmitter::default();
 
-    let mut bindings = HierarchicalCodeBase::default();
+    let mut bindings = Module::root();
 
     let by_package = classes_by_package(ctx.domain);
 
     for (package, class_names) in by_package {
-        let mut mods = Vec::new();
+        let mut package_content = Module::no_code(package.as_str());
         for class_name in class_names.iter() {
             let class = ctx.domain.get_class(class_name).unwrap();
             match class {
                 Class::Engine(it) => {
-                    mods.push(engine_class::generate_bindings(it, &ctx, &mut rust));
+                    package_content.add_child(engine_class::generate_bindings(it, &ctx, &mut rust));
                 }
                 Class::Struct(it) => {
-                    mods.push(struct_class::generate_bindings(it, &ctx, &mut rust));
+                    package_content.add_child(struct_class::generate_bindings(it, &ctx, &mut rust));
                 }
                 Class::Enum(it) => {
-                    mods.push(enum_class::generate_bindings(it, &ctx, &mut rust));
+                    package_content.add_child(enum_class::generate_bindings(it, &ctx, &mut rust));
                 }
             }
         }
-        bindings.mods.push(Module {
-            name: package.to_string(),
-            content: ModContent::Children(mods),
-        });
+        bindings.add_child(package_content);
     }
     (bindings, rust)
 }
 
-pub fn generate_base() -> (HierarchicalCodeBase, RustEmitter) {
+pub fn generate_base() -> (Module, RustEmitter) {
     let ctx = GenerationContext {
         internal_to_external: Default::default(),
         domain: &Default::default(),
@@ -80,5 +77,7 @@ pub fn generate_base() -> (HierarchicalCodeBase, RustEmitter) {
     wrappers::generate_optional(&mut s, rust, &DataType::Object(ClassName("NativeHandle".to_string())), ctx);
     wrappers::generate_slice(&mut s, rust, &DataType::Object(ClassName("NativePropertyValue".to_string())), ctx);
     wrappers::generate_result(&mut s, rust, &DataType::Option(Box::new(DataType::UserScript)), ctx);
-    (HierarchicalCodeBase {mods: vec![Module::code("LiteBase", s)]}, rust_owned)
+    let mut root = Module::root();
+    root.add_child(Module::code("LiteBase", s));
+    (root, rust_owned)
 }

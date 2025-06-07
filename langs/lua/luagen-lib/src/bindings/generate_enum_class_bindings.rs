@@ -6,7 +6,7 @@ use lite_model::{
 use to_vec::ToVec;
 
 use gen_common::{
-    code_model::{Module, ModContent}, context::GenerationContext, templating::render
+    code_model::{Module}, context::GenerationContext, templating::render
 };
 use super::{eq::generate_eq, expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, supress_lint::SUPRESSIONS};
 
@@ -53,10 +53,7 @@ pub fn generate_enum_class_bindings(class: &EnumClass, ctx: &GenerationContext) 
         }
     ";
 
-    Module {
-        name: class.class_name.0.to_case(Case::Snake),
-        content: ModContent::Code(s),
-    }
+    Module::code(class.class_name.0.to_case(Case::Snake), s)
 }
 
 fn generate_instance_methods(s: &mut String, class: &EnumClass, _ctx: &GenerationContext) {

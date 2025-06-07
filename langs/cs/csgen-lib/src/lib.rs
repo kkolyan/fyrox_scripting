@@ -1,18 +1,15 @@
-use std::{fmt::Display, fs, str::FromStr};
-use std::collections::HashSet;
-use gen_common::templating::render;
-use lite_model::Domain;
+use gen_common::code_model::Module;
 use proc_macro2::TokenStream;
+use std::collections::HashSet;
+use std::{fmt::Display, fs, str::FromStr};
 use syn::{parse2, File};
 use to_vec::ToVec;
-use gen_common::code_model::HierarchicalCodeBase;
-use crate::lite_cgen::CBindingsLite;
 
 pub mod rust_decl_to_cs;
 pub mod lite_cgen;
 pub mod lite_csgen;
 
-pub fn generate_manual_bindings_cs() -> HierarchicalCodeBase {
+pub fn generate_manual_bindings_cs() -> Module {
     let s = fs::read_to_string("langs/cs/fyrox-lite-cs-lib/src/bindings_manual.rs").unwrap();
     let file = parse2::<File>(TokenStream::from_str(&s).unwrap()).unwrap();
 

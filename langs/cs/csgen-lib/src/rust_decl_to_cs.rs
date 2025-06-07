@@ -7,13 +7,13 @@ use gen_common::templating::{render, render_string};
 use quote::{quote, ToTokens};
 use syn::{parse2, Attribute, Expr, File, FnArg, Item, ReturnType, Type};
 use to_vec::ToVec;
-use gen_common::code_model::{HierarchicalCodeBase, Module};
+use gen_common::code_model::{Module};
 
 struct CustomTypeProps {
     is_delegate: bool
 }
 
-pub fn rust_decl_to_c(file: &File, known_structs: &HashSet<String>) -> HierarchicalCodeBase {
+pub fn rust_decl_to_c(file: &File, known_structs: &HashSet<String>) -> Module {
     let mut custom_type_names: HashMap<String, CustomTypeProps> = Default::default();
     collect_custom_type_names(file, &mut custom_type_names);
     for known_struct in known_structs.iter() {
@@ -44,24 +44,24 @@ fn collect_custom_type_names(file: &File, custom_type_names: &mut HashMap<String
     }
 }
 
-fn convert_file(file: &File, custom_type_names: &HashMap<String, CustomTypeProps>) -> HierarchicalCodeBase {
-    let mut mods = vec![];
+fn convert_file(file: &File, custom_type_names: &HashMap<String, CustomTypeProps>) -> Module {
+    let mut mods = Module::root();
     let mut globals = String::new();
     for item in file.items.iter() {
         if let Item::Struct(item) = item {
             let mut s = String::new();
             convert_struct(&mut s, item, custom_type_names);
-            mods.push(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
+            mods.add_child(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
         }
         if let Item::Union(item) = item {
             let mut s = String::new();
             convert_union(&mut s, item, custom_type_names);
-            mods.push(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
+            mods.add_child(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
         }
         if let Item::Enum(item) = item {
             let mut s = String::new();
             convert_enum(&mut s, item, custom_type_names);
-            mods.push(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
+            mods.add_child(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
         }
         if let Item::Type(item) = item {
             convert_functor_def(&mut globals, item, custom_type_names);
@@ -85,8 +85,8 @@ fn convert_file(file: &File, custom_type_names: &HashMap<String, CustomTypeProps
             ("code", &globals),
         ],
     );
-    mods.push(Module::code(globals_host_class, strip_indent(globals, "    ")));
-    HierarchicalCodeBase { mods }
+    mods.add_child(Module::code(globals_host_class, strip_indent(globals, "    ")));
+    mods
 }
 
 fn strip_indent(s: String, indent: &str) -> String {

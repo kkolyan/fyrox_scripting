@@ -17,10 +17,10 @@ const HEADER: &str = "
 ---@diagnostic disable: missing-return, lowercase-global, missing-fields
 ";
 
-pub fn generate_lua_annotations(domain: &Domain) -> HierarchicalCodeBase {
-    let mut mods = vec![];
+pub fn generate_lua_annotations(domain: &Domain) -> Module {
+    let mut mods = Module::root();
 
-    mods.push(Module::code("Script", format!("{}
+    mods.add_child(Module::code("Script", format!("{}
 
 			---@class Script
 			---@field node Node
@@ -32,7 +32,7 @@ pub fn generate_lua_annotations(domain: &Domain) -> HierarchicalCodeBase {
     let by_package = classes_by_package(domain);
     for (package, classes) in by_package {
 
-        let mut package_mods = vec![];
+        let mut package_mods = Module::no_code(package.strip_prefix("lite_").unwrap());
 
         for class in classes {
             let class = domain.get_class(&class).unwrap();
@@ -55,12 +55,10 @@ pub fn generate_lua_annotations(domain: &Domain) -> HierarchicalCodeBase {
             }
             writelnu!(s, "");
 
-            package_mods.push(Module::code(class.class_name(), s));
+            package_mods.add_child(Module::code(class.class_name(), s));
         }
 
-        mods.push(Module::children(package.strip_prefix("lite_").unwrap(), package_mods));
+        mods.add_child(package_mods);
     }
-    HierarchicalCodeBase {
-        mods,
-    }
+    mods
 }

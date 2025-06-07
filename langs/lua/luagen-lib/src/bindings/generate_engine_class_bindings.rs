@@ -5,7 +5,7 @@ use std::borrow::Cow;
 use to_vec::ToVec;
 
 use gen_common::{
-    code_model::{ModContent, Module}, context::GenerationContext, properties::is_getter, templating::render
+    code_model::{Module}, context::GenerationContext, properties::is_getter, templating::render
 };
 use gen_common::properties::Setter;
 use crate::bindings::generate_methods::USER_SCRIPT_IMPL;
@@ -48,10 +48,7 @@ pub fn generate_engine_class_bindings(class: &EngineClass, ctx: &GenerationConte
         }
     ";
 
-    Module {
-        name: class.class_name.0.to_case(Case::Snake),
-        content: ModContent::Code(s),
-    }
+    Module::code(class.class_name.0.to_case(Case::Snake), s)
 }
 
 fn generate_class_methods(s: &mut String, class: &EngineClass, ctx: &GenerationContext) {

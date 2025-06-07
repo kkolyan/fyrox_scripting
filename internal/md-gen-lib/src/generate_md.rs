@@ -7,10 +7,10 @@ use crate::{
     Naming,
 };
 use gen_common::by_package::extract_package;
-use gen_common::{by_package::classes_by_package, code_model::{HierarchicalCodeBase, Module}, templating::strExt, writelnu};
+use gen_common::{by_package::classes_by_package, code_model::{Module}, templating::strExt, writelnu};
 use crate::md::cs_to_domain::CSharpDomain;
 
-pub fn generate_md(domain: &Domain, csharp_domain: &CSharpDomain, naming: Naming) -> HierarchicalCodeBase {
+pub fn generate_md(domain: &Domain, csharp_domain: &CSharpDomain, naming: Naming) -> Module {
 
     let mut class_page_links = HashMap::new();
     for x in domain.classes.iter() {
@@ -38,18 +38,22 @@ pub fn generate_md(domain: &Domain, csharp_domain: &CSharpDomain, naming: Naming
     }
 
     let mut mods = generate_rust_md(domain, naming, &mut class_page_links);
-    mods.extend(csharp_domain.generate_md(&class_page_links).mods);
-    HierarchicalCodeBase { mods }
+    mods.merge(csharp_domain.generate_md(&class_page_links));
+    mods
 }
 
-fn generate_rust_md(domain: &Domain, naming: Naming, class_page_links: &mut HashMap<ClassName, String>) -> Vec<Module> {
-    let mut mods = vec![];
+fn generate_rust_md(domain: &Domain, naming: Naming, class_page_links: &mut HashMap<ClassName, String>) -> Module {
+    let mut root = Module::root();
     let by_package = classes_by_package(domain);
     for (package, classes) in by_package.iter() {
-        let mut package_mods = vec![];
+        let mut package_mod = Module::code(
+            naming.package_name(package),
+            generate_package(package, classes, domain, naming, class_page_links)
+        );
+        // let mut package_mod = Module::no_code(naming.package_name(package));
 
         for class in classes.iter() {
-            let class = domain.get_class(&class).unwrap();
+            let class = domain.get_class(class).unwrap();
             let mut s = String::new();
             match class {
                 Class::Engine(class) => generate_engine(&mut s, class, naming, &class_page_links),
@@ -59,31 +63,12 @@ fn generate_rust_md(domain: &Domain, naming: Naming, class_page_links: &mut Hash
             }
             writelnu!(s, "");
 
-            package_mods.push(Module::code(class.class_name(), s));
+            package_mod.add_child(Module::code(class.class_name(), s));
         }
-        package_mods.push(Module::code(
-            "README",
-            generate_package(&package, &classes, domain, naming, &class_page_links),
-        ));
 
-        mods.push(Module::children(
-            naming.package_name(&package),
-            package_mods,
-        ));
+        root.add_child(package_mod);
     }
-    mods.push(Module::code("README", generate_index(&by_package, naming)));
-    mods
-}
-
-fn generate_index(packages: &Vec<(String, Vec<ClassName>)>, naming: Naming) -> String {
-    let mut s = "".to_string();
-
-    writelnu!(s, "## Packages");
-    for (package, _) in packages.iter() {
-        let package = naming.package_name(package);
-        writelnu!(s, "* [{}]({}/README.md)", package, package);
-    }
-    s
+    root
 }
 
 fn generate_package(
@@ -95,7 +80,7 @@ fn generate_package(
 ) -> String {
     let mut s = "".to_string();
     writelnu!(s, "# {}", naming.package_name(package));
-    writelnu!(s, "package in [FyroxLite](../README.md)");
+    writelnu!(s, "package in [FyroxLite](../scripting_api_cs.md)");
 
     let description = &domain
         .packages
@@ -118,7 +103,7 @@ fn generate_package(
     let mut enums = vec![];
 
     for class in classes_of_package {
-        let class = domain.get_class(&class).unwrap();
+        let class = domain.get_class(class).unwrap();
         match class {
             Class::Engine(it) => classes.push(it),
             Class::Struct(it) => structs.push(it),
@@ -143,8 +128,9 @@ fn generate_package(
         for x in structs.iter() {
             writelnu!(
                 s,
-                "* [{}]({})",
+                "* [{}]({}/{})",
                 x.class_name,
+                package,
                 class_page_links.get(&x.class_name).unwrap()
             );
         }
@@ -155,8 +141,9 @@ fn generate_package(
         for x in enums.iter() {
             writelnu!(
                 s,
-                "* [{}]({})",
+                "* [{}]({}/{})",
                 x.class_name,
+                package,
                 class_page_links.get(&x.class_name).unwrap()
             );
         }

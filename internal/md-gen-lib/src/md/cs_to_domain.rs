@@ -1,11 +1,12 @@
-use crate::md::csharp_metamodel::{CsClass, CsConstructor, CsEnum, CsField, CsFile, CsMethod, CsProperty, CsType, CsXmlNode};
+use crate::md::csharp_metamodel::{
+    CsClass, CsConstructor, CsEnum, CsField, CsFile, CsMethod, CsProperty, CsType, CsXmlNode,
+};
 use crate::Naming;
 use gen_common::code_model::{HierarchicalCodeBase, Module};
-use gen_common::methods::analyze_method_result;
 use gen_common::writelnu;
 use itertools::Itertools;
-use lite_model::{ClassName, Constant, Domain, EnumClass, Method};
-use std::collections::HashMap;
+use lite_model::{Class, ClassName, Domain};
+use std::collections::{BTreeMap, HashMap};
 use std::fs;
 use std::process::{Command, Stdio};
 use to_vec::ToVec;
@@ -16,44 +17,130 @@ pub struct CSharpDomain {
 
 pub struct CSharpPackage {
     pub name: String,
-    items: Vec<CsFile>,
+    items: HashMap<String, CSharpType>,
+}
+
+pub enum CSharpType {
+    Class(CsClass),
+    Enum(CsEnum),
+}
+
+impl CSharpType {
+    pub fn merge_into(&mut self, other: CSharpType) {
+        match self {
+            CSharpType::Class(this) => match other {
+                CSharpType::Class(other) => {
+                    assert_eq!(&this.name, &other.name);
+                    this.methods.extend(other.methods);
+                    this.operators.extend(other.operators);
+                    this.constructors.extend(other.constructors);
+                    this.fields.extend(other.fields);
+                    this.properties.extend(other.properties);
+                    // this.description.extend(other.description);
+                }
+                CSharpType::Enum(_) => panic!(),
+            },
+            CSharpType::Enum(_) => panic!("not expected for enums"),
+        }
+    }
 }
 
 impl CSharpDomain {
-    pub fn generate_md(&self, class_page_links: &HashMap<ClassName, String>) -> HierarchicalCodeBase {
-        let mut mods = vec![];
+    pub fn generate_md(&self, class_page_links: &HashMap<ClassName, String>) -> Module {
+        let mut root = Module::root();
 
         for package in &self.packages {
-            let mut package_mods = vec![];
-            for file in &package.items {
-                let contents = generate_cs_doc(
-                    &file,
-                    package.name.as_str(),
-                    class_page_links,
-                );
-                for content in contents {
-                    package_mods.push(content);
+            let mut package_mod = Module::code(
+                package.name.clone(),
+                generate_package(package, class_page_links),
+            );
+            for (_, ty) in package.items.iter().sorted_by_key(|(ty, _)| ty.as_str()) {
+                let m = match ty {
+                    CSharpType::Class(ty) => {
+                        class_to_md(ty, package.name.as_str(), class_page_links)
+                    }
+                    CSharpType::Enum(ty) => enum_to_md(ty, package.name.as_str(), class_page_links),
+                };
+                package_mod.add_child(m);
+            }
+            root.add_child(package_mod);
+        }
+        root
+    }
+}
+
+fn generate_package(
+    package: &CSharpPackage,
+    class_page_links: &HashMap<ClassName, String>,
+) -> String {
+    let mut s = "".to_string();
+    writelnu!(s, "# {}", &package.name);
+    writelnu!(s, "package in [FyroxLite](../scripting_api_cs.md)");
+
+    let mut classes = vec![];
+    let mut structs = vec![];
+    let mut enums = vec![];
+
+    for class in package.collect_type_names() {
+        let class = package.items.get(&class).unwrap();
+
+        match class {
+            CSharpType::Class(class) => {
+                if class.is_struct {
+                    structs.push(class.name.clone());
+                } else {
+                    classes.push(class.name.clone());
                 }
             }
-            mods.push(Module::children(
-                package.name.as_str(),
-                package_mods,
-            ))
+            CSharpType::Enum(class) => {
+                enums.push(class.name.clone());
+            }
         }
-        HierarchicalCodeBase { mods }
     }
+
+    if !classes.is_empty() {
+        writelnu!(s, "## Classes");
+        for x in classes.iter() {
+            writelnu!(
+                s,
+                "* [{}]({}/{})",
+                x,
+                package.name.as_str(),
+                class_page_links.get(&ClassName(x.clone())).unwrap()
+            );
+        }
+    }
+
+    if !structs.is_empty() {
+        writelnu!(s, "## Structs");
+        for x in structs.iter() {
+            writelnu!(
+                s,
+                "* [{}]({}/{})",
+                x,
+                package.name.as_str(),
+                class_page_links.get(&ClassName(x.clone())).unwrap()
+            );
+        }
+    }
+
+    if !enums.is_empty() {
+        writelnu!(s, "## Enums");
+        for x in enums.iter() {
+            writelnu!(
+                s,
+                "* [{}]({})",
+                x,
+                class_page_links.get(&ClassName(x.clone())).unwrap()
+            );
+        }
+    }
+    s
 }
 
 impl CSharpPackage {
     pub fn collect_type_names(&self) -> Vec<String> {
-        let mut vec = vec![];
-        vec.extend(self.items.iter()
-            .flat_map(|it| it.enums.iter())
-            .map(|e| e.name.clone()));
-        vec.extend(self.items.iter()
-            .flat_map(|it| it.classes.iter())
-            .map(|e| e.name.clone()));
-        vec
+        self.items.keys().cloned().sorted().collect()
     }
 }
 
@@ -71,7 +158,7 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
     {
         let package_candidate = package_candidate.unwrap();
         if package_candidate.file_type().unwrap().is_dir() {
-            let mut items = vec![];
+            let mut items: HashMap<String, CSharpType> = Default::default();
             for type_candidate in fs::read_dir(package_candidate.path()).unwrap() {
                 let type_candidate = type_candidate.unwrap();
                 if type_candidate
@@ -81,7 +168,7 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
                 {
                     println!(
                         "processing file {}",
-                        type_candidate.file_name().to_string_lossy()
+                        type_candidate.path().to_string_lossy()
                     );
                     let output =
                         Command::new("internal/cs_dumper_sln/bin/Debug/net8.0/cs_dumper.exe")
@@ -105,28 +192,41 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
 
                     let cs_file = String::from_utf8_lossy(&output.stdout);
                     let cs_file = serde_json::from_str::<CsFile>(&cs_file).unwrap();
-                    items.push(cs_file);
+                    for ty in cs_file.classes.iter() {
+                        let new_ty = CSharpType::Class(ty.clone());
+                        println!("adding type: {}", ty.name.as_str());
+                        let existing = items.get_mut(ty.name.as_str());
+                        match existing {
+                            None => {
+                                items.insert(ty.name.clone(), new_ty);
+                            }
+                            Some(existing) => {
+                                existing.merge_into(new_ty);
+                            }
+                        }
+                    }
+                    for ty in cs_file.enums.iter() {
+                        let new_ty = CSharpType::Enum(ty.clone());
+                        println!("adding type: {}", ty.name.as_str());
+                        let existing = items.get_mut(ty.name.as_str());
+                        match existing {
+                            None => {
+                                items.insert(ty.name.clone(), new_ty);
+                            }
+                            Some(existing) => {
+                                existing.merge_into(new_ty);
+                            }
+                        }
+                    }
                 }
             }
-            packages.push(CSharpPackage { name: package_candidate.file_name().to_str().unwrap().to_string(), items })
+            packages.push(CSharpPackage {
+                name: package_candidate.file_name().to_str().unwrap().to_string(),
+                items,
+            })
         }
     }
     CSharpDomain { packages }
-}
-
-fn generate_cs_doc(
-    file: &CsFile,
-    package: &str,
-    class_page_links: &HashMap<ClassName, String>,
-) -> Vec<Module> {
-    let mut contents = vec![];
-    for class in &file.classes {
-        contents.push(class_to_md(class, package, class_page_links))
-    }
-    for class in &file.enums {
-        contents.push(enum_to_md(class, package, class_page_links))
-    }
-    contents
 }
 
 fn class_to_md(
@@ -139,16 +239,14 @@ fn class_to_md(
     writelnu!(s, "# {}", &class.name);
     if class.is_struct {
         writelnu!(
-        s,
-        "struct in [FyroxLite](../README.md).[{}](README.md)",
-        package
-    );
+            s,
+            "struct in [FyroxLite](../../scripting_api_cs.md).[{package}](../{package}.md)",
+        );
     } else {
         writelnu!(
-        s,
-        "class in [FyroxLite](../README.md).[{}](README.md)",
-        package
-    );
+            s,
+            "class in [FyroxLite](../../scripting_api_cs.md).[{package}](../{package}.md)",
+        );
     }
     if !class.description.is_empty() {
         writelnu!(s, "## Description");
@@ -157,7 +255,11 @@ fn class_to_md(
 
     if !class.constructors.is_empty() {
         writelnu!(s, "## Constructors");
-        render_constructors(&mut s, class.constructors.iter().to_vec().as_slice(), class_page_links);
+        render_constructors(
+            &mut s,
+            class.constructors.iter().to_vec().as_slice(),
+            class_page_links,
+        );
     }
 
     let constants = class.fields.iter().filter(|it| it.is_const).to_vec();
@@ -192,7 +294,11 @@ fn class_to_md(
 
     if !class.operators.is_empty() {
         writelnu!(s, "## Operators");
-        render_methods(&mut s, class.operators.iter().to_vec().as_slice(), class_page_links);
+        render_methods(
+            &mut s,
+            class.operators.iter().to_vec().as_slice(),
+            class_page_links,
+        );
     }
 
     Module::code(class.name.clone(), s)
@@ -217,7 +323,11 @@ fn render_methods(
             generics,
             params
                 .iter()
-                .map(|it| format!("{} <ins>{}</ins>", type_cs_to_md(&it.ty, class_page_links), &it.name))
+                .map(|it| format!(
+                    "{} <ins>{}</ins>",
+                    type_cs_to_md(&it.ty, class_page_links),
+                    &it.name
+                ))
                 .join(", "),
             cs_docs_to_string(&method.description, " ")
         );
@@ -238,7 +348,11 @@ fn render_constructors(
             "| ( {} ) | {} |",
             params
                 .iter()
-                .map(|it| format!("{} <ins>{}</ins>", type_cs_to_md(&it.ty, class_page_links), &it.name))
+                .map(|it| format!(
+                    "{} <ins>{}</ins>",
+                    type_cs_to_md(&it.ty, class_page_links),
+                    &it.name
+                ))
                 .join(", "),
             cs_docs_to_string(&method.description, " ")
         );
@@ -294,9 +408,13 @@ fn type_cs_to_md(ty: &CsType, class_page_links: &HashMap<ClassName, String>) -> 
         return "float".to_string();
     }
     if ty.name == "?" {
-        return format!("{}?", type_cs_to_md(ty.args.first().unwrap(), class_page_links));
+        return format!(
+            "{}?",
+            type_cs_to_md(ty.args.first().unwrap(), class_page_links)
+        );
     }
-    let type_display = class_page_links.get(&ClassName(ty.name.clone()))
+    let type_display = class_page_links
+        .get(&ClassName(ty.name.clone()))
         .map(|it| format!("[{}]({})", &ty.name, it))
         .unwrap_or_else(|| format!("{}", &ty.name));
     if ty.args.is_empty() {
@@ -319,11 +437,7 @@ fn enum_to_md(
 ) -> Module {
     let mut s = "".to_string();
     writelnu!(s, "# {}", &class.name);
-    writelnu!(
-        s,
-        "enum in [FyroxLite](../README.md).[{}](README.md)",
-        package
-    );
+    writelnu!(s, "enum in [FyroxLite](../../scripting_api_cs.md).[{package}](../{package}.md)");
     if !class.description.is_empty() {
         writelnu!(s, "## Description");
         writelnu!(s, "{}", cs_docs_to_string(&class.description, "\n"));
@@ -344,12 +458,19 @@ fn enum_to_md(
 }
 
 fn cs_docs_to_string(doc: &[CsXmlNode], line_separator: &str) -> String {
-    doc.iter().map(|it| cs_doc_to_string(it, line_separator)).join(line_separator)
+    doc.iter()
+        .map(|it| cs_doc_to_string(it, line_separator))
+        .join(line_separator)
 }
 
 fn cs_doc_to_string(doc: &CsXmlNode, line_separator: &str) -> String {
     if let Some(text) = &doc.text {
-        return text.lines().map(|it| it.trim().strip_prefix("///").unwrap_or(it)).join(line_separator).trim().to_string();
+        return text
+            .lines()
+            .map(|it| it.trim().strip_prefix("///").unwrap_or(it))
+            .join(line_separator)
+            .trim()
+            .to_string();
     }
     if let Some(tag) = &doc.element {
         if tag.name == "summary" {
@@ -385,10 +506,10 @@ fn cs_doc_to_string(doc: &CsXmlNode, line_separator: &str) -> String {
             return format!("`{}`", tag.attrs.get("name").unwrap());
         }
         if tag.name == "see" {
-            if let Some(attr) = tag.attrs.get("cref"){
+            if let Some(attr) = tag.attrs.get("cref") {
                 return format!("`{}`", attr);
             }
-            if let Some(attr) = tag.attrs.get("langword"){
+            if let Some(attr) = tag.attrs.get("langword") {
                 return format!("`{}`", attr);
             }
             todo!()

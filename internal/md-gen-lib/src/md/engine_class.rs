@@ -1,7 +1,11 @@
 use crate::{md::type_to_md::type_rust_to_md, Naming};
 use gen_common::by_package::extract_package;
 use gen_common::properties::is_regular;
-use gen_common::{methods::analyze_method_result, properties::{is_getter, is_setter}, writelnu};
+use gen_common::{
+    methods::analyze_method_result,
+    properties::{is_getter, is_setter},
+    writelnu,
+};
 use itertools::Itertools;
 use lite_model::{
     ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method, Signature,
@@ -26,10 +30,10 @@ pub fn generate_engine(
     class_page_links: &HashMap<ClassName, String>,
 ) {
     writelnu!(s, "# {}", class.class_name);
+    let package = naming.package_name(extract_package(&class.rust_struct_path));
     writelnu!(
         s,
-        "class in [FyroxLite](../README.md).[{}](README.md)",
-        naming.package_name(extract_package(&class.rust_struct_path))
+        "class in [FyroxLite](../../scripting_api_cs.md).[{package}](../{package}.md)",
     );
     if !class.description.is_empty() {
         writelnu!(s, "## Description");

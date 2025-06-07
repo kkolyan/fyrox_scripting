@@ -1,0 +1,21 @@
+[book]
+authors = ["Nikolay Plekhanov"]
+language = "en"
+src = "src"
+title = "Fyrox Lite"
+
+#[output.html]
+#no-section-label = true
+
+[output.html]
+mathjax-support = true
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-icon = "fa-github"
+site-url = "/fyrox-book.github.io/"
+git-repository-url = "https://github.com/fyrox-book/fyrox-book.github.io/tree/main"
+edit-url-template = "https://github.com/fyrox-book/fyrox-book.github.io/edit/main/{path}"
+
+[output.html.fold]
+enable = true
+level = 7

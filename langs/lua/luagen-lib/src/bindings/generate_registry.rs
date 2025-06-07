@@ -1,6 +1,6 @@
 use lite_model::Class;
 
-use gen_common::{code_model::{Module, ModContent}, context::GenerationContext, templating::render};
+use gen_common::{code_model::{Module}, context::GenerationContext, templating::render};
 
 
 pub fn generate_registry(ctx: &GenerationContext) -> Module {
@@ -33,8 +33,6 @@ pub fn generate_registry(ctx: &GenerationContext) -> Module {
     s += r#"
         }
     "#;
-    Module {
-        name: "registry".into(),
-        content: ModContent::Code(s),
-    }
+    
+    Module::code("registry", s)
 }
