@@ -4,8 +4,7 @@ Make games with [Fyrox](https://fyrox.rs) without a writing code in Rust.
 ### Fyrox / C#
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [C#](https://learnxinyminutes.com/csharp/) scripting support.
 * Requires [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer).
-* Run and compile game from either Fyrox Editor or any IDE (with debug support)
-* [API Reference](https://kkolyan.github.io/fyrox_lite/scripting_api_cs.html)
+* Run and compile game from either Fyrox Editor, any IDE (with debug support) or command line.
 
 [Fyrox C# SDK Guide](guide_cs.md)
 
@@ -16,11 +15,14 @@ Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.h
 
 [Fyrox Lua SDK Guide](guide_lua.md)
 
-### Supported platforms
-Currently, I test project only on Windows. Fyrox [supports a lot of platforms](https://fyrox-book.github.io/introduction/requirements.html), so that's short-term limitation. Editor and game support for MacOSX and Linux support will be soon.
+### Current state
+* It works (see [Examples](#examples))
+* The [subset of supported Fyrox API](https://kkolyan.github.io/fyrox_lite/scripting_api_cs.html) is pretty limited.
+* It probably lacks polishing
+* Prebuilt binaries temporary unavailable (due to high pace of development)
 
-### Simplified API
-Scripting languages access Fyrox via a [simplified API](https://kkolyan.github.io/fyrox_lite/scripting_api_cs.html).
+### Supported platforms
+Currently, Windows only. MacOSX and Linux support will be soon. WASM and mobile support is in agenda, but has low priority.
 
 ## Examples
 There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently exposed to scripting languages.
