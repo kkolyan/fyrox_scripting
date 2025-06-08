@@ -10,15 +10,21 @@ pub enum Naming {
 }
 
 impl Naming {
-    pub(crate) fn package_name(&self, name: &str) -> String {
+
+    pub fn package_name(&self, name: &str) -> String {
         match self {
             Naming::Cs => name.to_case(Case::Pascal),
             Naming::Lua => name.to_string(),
         }
     }
-}
 
-impl Naming {
+    pub fn md_root(&self) -> &'static str {
+        match self {
+            Naming::Cs => "scripting_api_cs",
+            Naming::Lua => "scripting_api_lua",
+        }
+    }
+
     pub fn member_name(&self, name: &str) -> String {
         match self {
             Naming::Cs => name.to_case(Case::Pascal),

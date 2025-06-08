@@ -33,7 +33,8 @@ pub fn generate_engine(
     let package = naming.package_name(extract_package(&class.rust_struct_path));
     writelnu!(
         s,
-        "class in [FyroxLite](../../scripting_api_cs.md).[{package}](../{package}.md)",
+        "class in [FyroxLite](../../{}.md).[{package}](../{package}.md)",
+        naming.md_root()
     );
     if !class.description.is_empty() {
         writelnu!(s, "## Description");
