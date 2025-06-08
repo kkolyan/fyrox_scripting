@@ -172,7 +172,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="scripting-api-c"><a class="header" href="#scripting-api-c">Scripting API (C#)</a></h2>
+                        <h1 id="how-to-install"><a class="header" href="#how-to-install">How to Install</a></h1>
+<p>Currently, it needs to be built from sources and only on Windows (temporary limitation).</p>
+<ol>
+<li>Install <a href="https://rustup.rs/">Rust</a>. It's needed only to build SDK.</li>
+<li>Install <a href="https://git-scm.com/downloads">Git for Windows</a>. This is needed for the <code>Git Bash</code> terminal - required to build the SDK on Windows using shell scripts.</li>
+<li>Run <code>install_sdk_lua.sh /c/dev/fyrox_lua_sdk</code> in <code>Git Bash</code> terminal. Note: the path must not exist before installation (to prevent mistakes).</li>
+</ol>
+<h1 id="how-to-use"><a class="header" href="#how-to-use">How to use</a></h1>
+<p>Select a project directory where you'll keep scripts and other resources. Double-click on <code>C:/dev/fyrox_lua_sdk/fyroxed_lua.exe</code> and choose that directory.</p>
+<p>Game can be launched using Play button in editor. Also, game can be launched using <code>C:/dev/fyrox_lua_sdk/fyrox_lite_lua.exe c:/dev/my_lua_game</code> command.</p>
+<h2 id="scripts"><a class="header" href="#scripts">Scripts</a></h2>
+<p>To emulate some OOP concepts, <a href="https://luals.github.io/wiki/annotations/">Lua Annotaions</a> are used.</p>
+<p>Following code defines a <code>MyScript</code> class, inherited from <code>Script</code></p>
+<pre><code class="language-lua">---@uuid 3e0d5f2b-6f9b-4c9a-a4fb-7cda5fae9d8d
+---@class MyScript : Script
+---@field velocity Vector3
+---@field collider Node
+---@field power number
+MyScript = script_class()
+
+function MyScript:on_update(dt)
+end
+</code></pre>
+<p>Inherit classes from <code>Script</code> to create scripts that can be attached to scene nodes in editor via dropdown on Inspector panel at the right. for <code>@uuid</code> annotation value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
+<p>Inherit from <code>GlobalScript</code> to create singleton scripts. Unlike C# scripts, Lua global scripts require UUID.</p>
+<p>For details about <code>Fyrox Lite API</code>, look into <a href="showcase/guards_lua">guards_lua</a> project as a reference.</p>
+<h2 id="scripts-reloading"><a class="header" href="#scripts-reloading">Scripts Reloading</a></h2>
+<p>Editor reloads scripts metadata automatically after their change and window re-focusing. In-game hot reload works the same way.</p>
+<h2 id="scenes--assets"><a class="header" href="#scenes--assets">Scenes &amp; Assets</a></h2>
+<ul>
+<li><a href="https://fyrox-book.github.io/beginning/editor_overview.html">Fyrox Book: Editor Overview</a></li>
+<li><a href="https://fyrox-book.github.io/beginning/assets.html">Fyrox Book: Assets</a></li>
+</ul>
+<h2 id="cli"><a class="header" href="#cli">CLI</a></h2>
+<p>The <code>fyroxed_lua.exe</code> can also be invoked via terminal with project path argument.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="scripting-api-c"><a class="header" href="#scripting-api-c">Scripting API (C#)</a></h2>
 <ul>
 <li><a href="scripting_api/Input.html">Input</a></li>
 <li><a href="scripting_api/Log.html">Log</a></li>
