@@ -1,5 +1,5 @@
 ## About a project
-Make games with [Fyrox](https://fyrox.rs) without a writing code in Rust.
+Make games with [Fyrox](https://fyrox.rs) without writing code in Rust.
 
 ### Fyrox / C#
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [C#](https://learnxinyminutes.com/csharp/) scripting support.

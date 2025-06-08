@@ -85,7 +85,12 @@ fn generate_package(
     let description = &domain
         .packages
         .iter()
-        .find(|it| it.name.strip_prefix("fyrox_lite::").unwrap() == package)
+        .find(|it| {
+            ["fyrox_lite::", "fyrox_lite_math::", "fyrox_lite_color::"].iter()
+                .filter_map(|prefix| it.name.strip_prefix(prefix))
+                .next()
+                .unwrap() == package
+        })
         .unwrap_or_else(|| {
             panic!(
                 "expected to find package {} along packages {:?}",
@@ -116,8 +121,9 @@ fn generate_package(
         for x in classes.iter() {
             writelnu!(
                 s,
-                "* [{}]({})",
+                "* [{}]({}/{})",
                 x.class_name,
+                package,
                 class_page_links.get(&x.class_name).unwrap()
             );
         }

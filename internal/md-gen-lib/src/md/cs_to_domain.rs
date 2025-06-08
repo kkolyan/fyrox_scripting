@@ -221,7 +221,7 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
                 }
             }
             packages.push(CSharpPackage {
-                name: package_candidate.file_name().to_str().unwrap().to_string(),
+                name: Naming::Cs.package_name(package_candidate.file_name().to_str().unwrap()),
                 items,
             })
         }

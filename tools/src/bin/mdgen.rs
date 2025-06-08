@@ -6,19 +6,12 @@ use md_gen_lib::Naming;
 use std::fs;
 
 fn main() {
-    let mut summary = fs::read_to_string("www/src/SUMMARY.template.md").unwrap();
-    generate_script_reference(Naming::Cs, "%GENERATED_SECTION_CS%", &mut summary);
-    generate_script_reference(Naming::Lua, "%GENERATED_SECTION_LUA%", &mut summary);
-    fs::write("www/src/SUMMARY.md", summary).unwrap();
+    generate_script_reference(Naming::Cs, "www/sdk_cs", generate_md_cs());
+    generate_script_reference(Naming::Lua, "www/sdk_lua", generate_md_lua());
 }
 
-fn generate_script_reference(naming: Naming, summary_placeholder: &str, summary: &mut String) {
-    let code_base = match naming {
-        Naming::Cs => generate_md_cs(),
-        Naming::Lua => generate_md_lua(),
-    };
-
-    let target_dir = format!("www/src/{}", naming.md_root());
+fn generate_script_reference(naming: Naming, book_dir: &str, code_base: Module) {
+    let target_dir = format!("{book_dir}/src/{}", naming.md_root());
     let _ = fs::remove_dir_all(&target_dir);
     code_base.write_md(&target_dir);
 
@@ -31,7 +24,9 @@ fn generate_script_reference(naming: Naming, summary_placeholder: &str, summary:
         &mut summary_section,
     );
 
-    *summary = summary.replace(summary_placeholder, &summary_section);
+    let mut summary_template = fs::read_to_string(format!("{book_dir}/src/SUMMARY.template.md")).unwrap();
+    let summary = summary_template.replace("%GENERATED_SECTION%", &summary_section);
+    fs::write(format!("{book_dir}/src/SUMMARY.md"), summary).unwrap();
 }
 
 fn generate_md_cs() -> Module {

@@ -1,4 +1,10 @@
 {
+  "packages": [
+    {
+      "name": "fyrox_lite_color::lite_color",
+      "description": ""
+    }
+  ],
   "classes": [
     {
       "Engine": {

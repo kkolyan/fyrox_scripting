@@ -12,10 +12,11 @@ pub enum Naming {
 impl Naming {
 
     pub fn package_name(&self, name: &str) -> String {
-        match self {
-            Naming::Cs => name.to_case(Case::Pascal),
-            Naming::Lua => name.to_string(),
+        let n = name.to_case(Case::Pascal).strip_prefix("Lite").unwrap().to_string();
+        if n == "Ui" {
+            return "UI".to_string();
         }
+        n
     }
 
     pub fn md_root(&self) -> &'static str {

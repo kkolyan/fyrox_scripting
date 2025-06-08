@@ -24,12 +24,18 @@ jobs:
         with:
           mdbook-version: 'latest'
 
-      - name: Build the book
-        run: mdbook build ./www
+      - name: Build the hub
+        run: mdbook build ./www/hub && cp ./www/hub/book ./www/public
+
+      - name: Build the book for C#
+        run: mdbook build ./www/cs && cp ./www/cs/book ./www/public/cs
+
+      - name: Build the book for Lua
+        run: mdbook build ./www/lua && cp ./www/lua/book ./www/public/lua
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./www/book
+          publish_dir: ./www/public

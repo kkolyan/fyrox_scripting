@@ -1,4 +1,10 @@
 {
+  "packages": [
+    {
+      "name": "fyrox_lite_math::lite_math",
+      "description": ""
+    }
+  ],
   "classes": [
     {
       "Engine": {
