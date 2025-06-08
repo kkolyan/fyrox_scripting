@@ -1,6 +1,5 @@
 # Summary
 
-- [Introduction](introduction.md)
 - [Scripting API for (C#)](./scripting_api_cs.md)
   - [LiteInput](scripting_api_cs/LiteInput.md)
     - [Input](scripting_api_cs/LiteInput/Input.md)

@@ -5,6 +5,7 @@ Make games with [Fyrox](https://fyrox.rs) without a writing code in Rust.
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [C#](https://learnxinyminutes.com/csharp/) scripting support.
 * Requires [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer).
 * Run and compile game from either Fyrox Editor or any IDE (with debug support)
+* [API Reference](https://kkolyan.github.io/fyrox_lite/scripting_api_cs.html)
 
 [Fyrox C# SDK Guide](guide_cs.md)
 
@@ -19,7 +20,7 @@ Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.h
 Currently, I test project only on Windows. Fyrox [supports a lot of platforms](https://fyrox-book.github.io/introduction/requirements.html), so that's short-term limitation. Editor and game support for MacOSX and Linux support will be soon.
 
 ### Simplified API
-Scripting languages access Fyrox via a simplified API.
+Scripting languages access Fyrox via a [simplified API](https://kkolyan.github.io/fyrox_lite/scripting_api_cs.html).
 
 ## Examples
 There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently exposed to scripting languages.
