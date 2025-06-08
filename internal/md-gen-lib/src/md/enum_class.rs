@@ -9,7 +9,7 @@ use crate::{md::type_to_md::type_rust_to_md, Naming};
 pub fn generate_enum(s: &mut String, class: &EnumClass, naming: Naming, x1: &HashMap<ClassName, String>) {
 	writelnu!(s, "# {}", class.class_name);
 	let package = naming.package_name(extract_package(&class.rust_struct_path));
-	writelnu!(s, "enum in [FyroxLite](../../{}.md).[{package}](../{package}.md)", naming.md_root());
+	writelnu!(s, "enum in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
 	if !class.description.is_empty() {
 		writelnu!(s, "## Description");
 		writelnu!(s, "{}", class.description);

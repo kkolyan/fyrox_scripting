@@ -6,16 +6,16 @@ use md_gen_lib::Naming;
 use std::fs;
 
 fn main() {
-    generate_script_reference(Naming::Cs, "www/sdk_cs", generate_md_cs());
-    generate_script_reference(Naming::Lua, "www/sdk_lua", generate_md_lua());
+    generate_script_reference(Naming::Cs, "www/fyrox_cs", generate_md_cs());
+    generate_script_reference(Naming::Lua, "www/fyrox_lua", generate_md_lua());
 }
 
 fn generate_script_reference(naming: Naming, book_dir: &str, code_base: Module) {
-    let target_dir = format!("{book_dir}/src/{}", naming.md_root());
+    let target_dir = format!("{book_dir}/src/scripting_api");
     let _ = fs::remove_dir_all(&target_dir);
     code_base.write_md(&target_dir);
 
-    let mut breadcrumb = vec![naming.md_root().to_string()];
+    let mut breadcrumb = vec!["scripting_api".to_string()];
     let mut summary_section = String::new();
     generate_summary_section(
         "",

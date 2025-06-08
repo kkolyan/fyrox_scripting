@@ -31,10 +31,10 @@ jobs:
         run: mdbook build ./www/hub && cp -r ./www/hub/book ./www/public
 
       - name: Build the book for C#
-        run: mdbook build ./www/sdk_cs && cp -r ./www/sdk_cs/book ./www/public/sdk_cs
+        run: mdbook build ./www/fyrox_cs && cp -r ./www/fyrox_cs/book ./www/public/fyrox_cs
 
       - name: Build the book for Lua
-        run: mdbook build ./www/sdk_lua && cp -r ./www/sdk_lua/book ./www/public/sdk_lua
+        run: mdbook build ./www/fyrox_lua && cp -r ./www/fyrox_lua/book ./www/public/fyrox_lua
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
