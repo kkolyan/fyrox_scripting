@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Vector2I - Fyrox Lite / C#</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Fyrox Lite / C#</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/kkolyan/fyrox-lite" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="vector2i"><a class="header" href="#vector2i">Vector2I</a></h1>
+<p>struct in <a href="../../scripting_api.html">FyroxLite</a>.<a href="../Math.html">Math</a></p>
+<h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>(code of this item is picked from Godot Engine in compliance with MIT license).</p>
+<p>2-element structure that can be used to represent 2D grid coordinates or pairs of integers.</p>
+<h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td>( int <ins>x</ins>, int <ins>y</ins> )</td><td>Constructs a new <code>Vector2I</code> with the given components.</td></tr>
+</tbody></table>
+</div>
+<h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td>void</td><td><code>Deconstruct</code> ( int <ins>x</ins>, int <ins>y</ins> )</td><td>Helper method for deconstruction into a tuple.</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Abs</code> (  )</td><td>Returns a new vector with all components in absolute values (i.e. positive).</td></tr>
+<tr><td>float</td><td><code>Aspect</code> (  )</td><td>Returns the aspect ratio of this vector, the ratio of <code>X</code> to <code>Y</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Clamp</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>min</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>max</ins> )</td><td>Returns a new vector with all components clamped between the  components of <code>name</code> and <code>name</code> using <code>Mathf.Clamp(int, int, int)</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Clamp</code> ( int <ins>min</ins>, int <ins>max</ins> )</td><td>Returns a new vector with all components clamped between the <code>name</code> and <code>name</code> using <code>Mathf.Clamp(int, int, int)</code> .</td></tr>
+<tr><td>int</td><td><code>DistanceSquaredTo</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>to</ins> )</td><td>Returns the squared distance between this vector and <code>name</code> .  This method runs faster than <code>DistanceTo</code> , so prefer it if  you need to compare vectors or need the squared distance for some formula.</td></tr>
+<tr><td>float</td><td><code>DistanceTo</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>to</ins> )</td><td>Returns the distance between this vector and <code>name</code> .</td></tr>
+<tr><td>float</td><td><code>Length</code> (  )</td><td>Returns the length (magnitude) of this vector.</td></tr>
+<tr><td>int</td><td><code>LengthSquared</code> (  )</td><td>Returns the squared length (squared magnitude) of this vector.  This method runs faster than <code>Length</code> , so prefer it if  you need to compare vectors or need the squared length for some formula.</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Max</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>with</ins> )</td><td>Returns the result of the component-wise maximum between  this vector and <code>name</code> .  Equivalent to <code>new Vector2I(Mathf.Max(X, with.X), Mathf.Max(Y, with.Y))</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Max</code> ( int <ins>with</ins> )</td><td>Returns the result of the component-wise maximum between  this vector and <code>name</code> .  Equivalent to <code>new Vector2I(Mathf.Max(X, with), Mathf.Max(Y, with))</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Min</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>with</ins> )</td><td>Returns the result of the component-wise minimum between  this vector and <code>name</code> .  Equivalent to <code>new Vector2I(Mathf.Min(X, with.X), Mathf.Min(Y, with.Y))</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Min</code> ( int <ins>with</ins> )</td><td>Returns the result of the component-wise minimum between  this vector and <code>name</code> .  Equivalent to <code>new Vector2I(Mathf.Min(X, with), Mathf.Min(Y, with))</code> .</td></tr>
+<tr><td>Axis</td><td><code>MaxAxisIndex</code> (  )</td><td>Returns the axis of the vector's highest value. See <code>Axis</code> .  If both components are equal, this method returns <code>Axis.X</code> .</td></tr>
+<tr><td>Axis</td><td><code>MinAxisIndex</code> (  )</td><td>Returns the axis of the vector's lowest value. See <code>Axis</code> .  If both components are equal, this method returns <code>Axis.Y</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Sign</code> (  )</td><td>Returns a vector with each component set to one or negative one, depending  on the signs of this vector's components, or zero if the component is zero,  by calling <code>Mathf.Sign(int)</code> on each component.</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Snapped</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>step</ins> )</td><td>Returns a new vector with each component snapped to the closest multiple of the corresponding component in <code>name</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>Snapped</code> ( int <ins>step</ins> )</td><td>Returns a new vector with each component snapped to the closest multiple of <code>name</code> .</td></tr>
+<tr><td>bool</td><td><code>Equals</code> ( object? <ins>obj</ins> )</td><td>Returns <code>true</code> if the vector is equal  to the given object ( <code>name</code> ).</td></tr>
+<tr><td>bool</td><td><code>Equals</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>other</ins> )</td><td>Returns <code>true</code> if the vectors are equal.</td></tr>
+<tr><td>int</td><td><code>GetHashCode</code> (  )</td><td>Serves as the hash function for <code>Vector2I</code> .</td></tr>
+<tr><td>string</td><td><code>ToString</code> (  )</td><td>Converts this <code>Vector2I</code> to a string.</td></tr>
+<tr><td>string</td><td><code>ToString</code> ( string? <ins>format</ins> )</td><td>Converts this <code>Vector2I</code> to a string with the given <code>name</code> .</td></tr>
+</tbody></table>
+</div>
+<h2 id="static-properties"><a class="header" href="#static-properties">Static Properties</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Access</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>MinValue</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Min vector, a vector with all components equal to <code>int.MinValue</code> . Can be used as a negative integer equivalent of <code>Vector2.Inf</code> .  Equivalent to <code>new Vector2I(int.MinValue, int.MinValue)</code> .</td></tr>
+<tr><td><code>MaxValue</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Max vector, a vector with all components equal to <code>int.MaxValue</code> . Can be used as an integer equivalent of <code>Vector2.Inf</code> .  Equivalent to <code>new Vector2I(int.MaxValue, int.MaxValue)</code> .</td></tr>
+<tr><td><code>Zero</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Zero vector, a vector with all components set to <code>0</code> .  Equivalent to <code>new Vector2I(0, 0)</code> .</td></tr>
+<tr><td><code>One</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>One vector, a vector with all components set to <code>1</code> .  Equivalent to <code>new Vector2I(1, 1)</code> .</td></tr>
+<tr><td><code>Up</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Up unit vector. Y is down in 2D, so this vector points -Y.  Equivalent to <code>new Vector2I(0, -1)</code> .</td></tr>
+<tr><td><code>Down</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to <code>new Vector2I(0, 1)</code> .</td></tr>
+<tr><td><code>Right</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Right unit vector. Represents the direction of right.  Equivalent to <code>new Vector2I(1, 0)</code> .</td></tr>
+<tr><td><code>Left</code></td><td><a href="../Math/Vector2I.html">Vector2I</a></td><td>get</td><td>Left unit vector. Represents the direction of left.  Equivalent to <code>new Vector2I(-1, 0)</code> .</td></tr>
+</tbody></table>
+</div>
+<h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>+</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Adds each component of the <code>Vector2I</code> with the components of the given <code>Vector2I</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>-</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Subtracts each component of the <code>Vector2I</code> by the components of the given <code>Vector2I</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>-</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins> )</td><td>Returns the negative value of the <code>Vector2I</code> .  This is the same as writing <code>new Vector2I(-v.X, -v.Y)</code> .  This operation flips the direction of the vector while  keeping the same magnitude.</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>*</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins>, int <ins>scale</ins> )</td><td>Multiplies each component of the <code>Vector2I</code> by the given <code>int</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>*</code> ( int <ins>scale</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins> )</td><td>Multiplies each component of the <code>Vector2I</code> by the given <code>int</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>*</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Multiplies each component of the <code>Vector2I</code> by the components of the given <code>Vector2I</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>/</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins>, int <ins>divisor</ins> )</td><td>Divides each component of the <code>Vector2I</code> by the given <code>int</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>/</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>divisorv</ins> )</td><td>Divides each component of the <code>Vector2I</code> by the components of the given <code>Vector2I</code> .</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>%</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins>, int <ins>divisor</ins> )</td><td>Gets the remainder of each component of the <code>Vector2I</code> with the components of the given <code>int</code> .  This operation uses truncated division, which is often not desired  as it does not work well with negative numbers.  Consider using <code>Mathf.PosMod(int, int)</code> instead  if you want to handle negative numbers.</td></tr>
+<tr><td><a href="../Math/Vector2I.html">Vector2I</a></td><td><code>%</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>vec</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>divisorv</ins> )</td><td>Gets the remainder of each component of the <code>Vector2I</code> with the components of the given <code>Vector2I</code> .  This operation uses truncated division, which is often not desired  as it does not work well with negative numbers.  Consider using <code>Mathf.PosMod(int, int)</code> instead  if you want to handle negative numbers.</td></tr>
+<tr><td>bool</td><td><code>==</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Returns <code>true</code> if the vectors are equal.</td></tr>
+<tr><td>bool</td><td><code>!=</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Returns <code>true</code> if the vectors are not equal.</td></tr>
+<tr><td>bool</td><td><code>&lt;</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Compares two <code>Vector2I</code> vectors by first checking if  the X value of the <code>name</code> vector is less than  the X value of the <code>name</code> vector.  If the X values are exactly equal, then it repeats this check  with the Y values of the two vectors.  This operator is useful for sorting vectors.</td></tr>
+<tr><td>bool</td><td><code>&gt;</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Compares two <code>Vector2I</code> vectors by first checking if  the X value of the <code>name</code> vector is greater than  the X value of the <code>name</code> vector.  If the X values are exactly equal, then it repeats this check  with the Y values of the two vectors.  This operator is useful for sorting vectors.</td></tr>
+<tr><td>bool</td><td><code>&lt;=</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Compares two <code>Vector2I</code> vectors by first checking if  the X value of the <code>name</code> vector is less than  or equal to the X value of the <code>name</code> vector.  If the X values are exactly equal, then it repeats this check  with the Y values of the two vectors.  This operator is useful for sorting vectors.</td></tr>
+<tr><td>bool</td><td><code>&gt;=</code> ( <a href="../Math/Vector2I.html">Vector2I</a> <ins>left</ins>, <a href="../Math/Vector2I.html">Vector2I</a> <ins>right</ins> )</td><td>Compares two <code>Vector2I</code> vectors by first checking if  the X value of the <code>name</code> vector is greater than  or equal to the X value of the <code>name</code> vector.  If the X values are exactly equal, then it repeats this check  with the Y values of the two vectors.  This operator is useful for sorting vectors.</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../scripting_api/Math/Vector2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../scripting_api/Math/Vector3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../scripting_api/Math/Vector2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../scripting_api/Math/Vector3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../src/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>
