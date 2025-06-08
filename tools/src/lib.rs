@@ -2,9 +2,9 @@ use std::fs;
 
 use lite_model::Domain;
 use lite_parser::parse_domain_metadata::parse_domain_metadata;
-use gen_common::code_model::HierarchicalCodeBase;
+use gen_common::code_model::{Module};
 
-pub fn write_annotations(annotations: HierarchicalCodeBase) {
+pub fn write_annotations(annotations: Module) {
     let target_path = "langs/lua/annotations";
     println!("clearing {}", target_path);
     let _ = fs::remove_dir_all(target_path);
@@ -12,7 +12,7 @@ pub fn write_annotations(annotations: HierarchicalCodeBase) {
     annotations.write_lua(target_path);
 }
 
-pub fn write_bindings(bindings: HierarchicalCodeBase) {
+pub fn write_bindings(bindings: Module) {
     let target_path = "langs/lua/fyrox-lite-lua-lib/src/generated";
     println!("clearing {}", target_path);
     let _ = fs::remove_dir_all(target_path);

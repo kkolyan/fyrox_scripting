@@ -10,10 +10,10 @@ fn main() {
     let domain = tools::get_fyrox_lite_domain();
 
     let (mut facade_cs, facade_rs) = csgen_lib::lite_csgen::generate_cs_facade(&domain);
-    let (mut internal_cs, internal_rs) = csgen_lib::lite_csgen::generate_base();
+    let (internal_cs, internal_rs) = csgen_lib::lite_csgen::generate_base();
 
-    facade_cs.mods.extend(internal_cs.mods);
-    facade_cs.mods.extend(manuals.mods);
+    facade_cs.merge(internal_cs);
+    facade_cs.merge(manuals);
 
     csgen_lib::lite_csgen::write_cs::write_cs("langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Auto", facade_cs);
     write_rs_to_file("langs/cs/fyrox-lite-cs-lib/src/bindings_lite_2.rs", facade_rs);
