@@ -24,14 +24,17 @@ jobs:
         with:
           mdbook-version: 'latest'
 
+      - name: Clean
+        run: rm -rf ./www/public
+
       - name: Build the hub
         run: mdbook build ./www/hub && cp -r ./www/hub/book ./www/public
 
       - name: Build the book for C#
-        run: mdbook build ./www/cs && cp -r ./www/cs/book ./www/public/cs
+        run: mdbook build ./www/sdk_cs && cp -r ./www/sdk_cs/book ./www/public/sdk_cs
 
       - name: Build the book for Lua
-        run: mdbook build ./www/lua && cp -r ./www/lua/book ./www/public/lua
+        run: mdbook build ./www/sdk_lua && cp -r ./www/sdk_lua/book ./www/public/sdk_lua
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
