@@ -1,5 +1,3 @@
-# Fyrox Lua SDK
-
 # How to Install
 Currently, it needs to be built from sources and only on Windows (temporary limitation).
 
@@ -9,7 +7,7 @@ Currently, it needs to be built from sources and only on Windows (temporary limi
 
 # How to use
 
-Select a project directory where you'll keep scripts and other resources. Double-click on `C:/dev/fyrox_lua_sdk/fyroxed_lua.exe` and choose that directory. 
+Select a project directory where you'll keep scripts and other resources. Double-click on `C:/dev/fyrox_lua_sdk/fyroxed_lua.exe` and choose that directory.
 
 Game can be launched using Play button in editor. Also, game can be launched using `C:/dev/fyrox_lua_sdk/fyrox_lite_lua.exe c:/dev/my_lua_game` command.
 

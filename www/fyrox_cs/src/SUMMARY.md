@@ -1,5 +1,5 @@
 # Summary
-
+- [Getting Started](introduction.md)
 - [Scripting API (C#)](./scripting_api.md)
   - [Input](scripting_api/Input.md)
     - [Input](scripting_api/Input/Input.md)
