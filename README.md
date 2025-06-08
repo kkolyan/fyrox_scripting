@@ -17,7 +17,7 @@ Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.h
 
 ### Current state
 * It works (see [Examples](#examples))
-* The [subset of supported Fyrox API](https://kkolyan.github.io/fyrox_lite/scripting_api_cs.html) is pretty limited.
+* The [subset of supported Fyrox API](https://kkolyan.github.io/fyrox_lite/scripting_api.html) is pretty limited.
 * It probably lacks polishing
 * Prebuilt binaries temporary unavailable (due to high pace of development)
 

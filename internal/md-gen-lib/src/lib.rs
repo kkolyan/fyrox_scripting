@@ -21,7 +21,7 @@ impl Naming {
 
     pub fn md_root(&self) -> &'static str {
         match self {
-            Naming::Cs => "scripting_api_cs",
+            Naming::Cs => "scripting_api",
             Naming::Lua => "scripting_api_lua",
         }
     }

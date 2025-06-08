@@ -3,12 +3,12 @@
 ## About a project
 Make games with Rust-written [Fyrox Game Engine](https://fyrox.rs) without writing code in Rust.
 
-###  [Fyrox / C#](https://kkolyan.github.io/fyrox_lite/sdk_cs/)
+###  [Fyrox / C#](./sdk_cs/index.html)
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [C#](https://learnxinyminutes.com/csharp/) scripting support.
 * Requires [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer).
 * Run and compile game from either Fyrox Editor, any IDE (with debug support) or command line.
 
-### [Fyrox / Lua](https://kkolyan.github.io/fyrox_lite/sdk_lua/)
+### [Fyrox / Lua](./sdk_lua/index.html)
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [Lua](https://learnxinyminutes.com/lua/) scripting support.
 * No additional SDKs required.
 * Run game from either Fyrox Editor or command line.

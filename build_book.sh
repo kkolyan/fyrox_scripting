@@ -4,8 +4,9 @@ set -e
 
 cargo run --bin mdgen
 
-mdbook build ./www/hub && cp ./www/hub/book ./www/public
-mdbook build ./www/cs && cp ./www/cs/book ./www/public/cs
-mdbook build ./www/lua && cp ./www/lua/book ./www/public/lua
+rm -rf ./www/public
+mdbook build ./www/hub && cp -r ./www/hub/book ./www/public
+mdbook build ./www/sdk_cs && cp -r ./www/sdk_cs/book ./www/public/sdk_cs
+mdbook build ./www/sdk_lua && cp -r ./www/sdk_lua/book ./www/public/sdk_lua
 
-open ./www/public/index.html
+start ./www/public/index.html

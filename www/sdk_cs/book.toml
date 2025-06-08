@@ -8,6 +8,7 @@ title = "Fyrox Lite / C#"
 #no-section-label = true
 
 [output.html]
+additional-js = ["src/custom.js"]
 mathjax-support = true
 default-theme = "navy"
 preferred-dark-theme = "navy"

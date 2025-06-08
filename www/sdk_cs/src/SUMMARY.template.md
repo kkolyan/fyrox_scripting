@@ -1,4 +1,5 @@
 # Summary
 
-- [Scripting API (C#)](./scripting_api_cs.md)
+- [Home⤴](./fake_home.md)
+- [Scripting API (C#)](./scripting_api.md)
 %GENERATED_SECTION%

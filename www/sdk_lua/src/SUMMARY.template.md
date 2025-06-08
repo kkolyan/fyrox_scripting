@@ -1,4 +1,5 @@
 # Summary
 
-- [Scripting API (Lua)](scripting_api_lua.md)
+- [Home⤴](./fake_home.md)
+- [Scripting API (Lua)](scripting_api.md)
 %GENERATED_SECTION%
