@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>KeyCode - Fyrox Lite</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Fyrox Lite</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/fyrox-book/fyrox-book.github.io/tree/main" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/fyrox-book/fyrox-book.github.io/edit/main/src/scripting_api_cs/LiteInput/KeyCode.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="keycode"><a class="header" href="#keycode">KeyCode</a></h1>
+<p>enum in <a href="../../scripting_api_cs.html">FyroxLite</a>.<a href="../LiteInput.html">LiteInput</a></p>
+<h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>Basically a copy of <code>winit</code>'s <a href="https://docs.rs/winit/0.29.15/i686-pc-windows-msvc/winit/keyboard/enum.KeyCode.html"><code>KeyCode</code></a>, which is mostly inspired by UI Events Specification’s <a href="https://w3c.github.io/uievents-code/#code-value-tables"><code>KeyboardEvent.code</code></a>.</p>
+<h2 id="properties"><a class="header" href="#properties">Properties</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>Backquote</code></td><td><kbd>`</kbd> on a US keyboard. This is also called a backtick or grave.</td></tr>
+<tr><td>This is the <kbd>半角</kbd>/<kbd>全角</kbd>/<kbd>漢字</kbd></td><td></td></tr>
+<tr><td>(hankaku/zenkaku/kanji) key on Japanese keyboards</td><td></td></tr>
+<tr><td><code>Backslash</code></td><td>Used for both the US <kbd>\</kbd> (on the 101-key layout) and also for the key</td></tr>
+<tr><td>located between the <kbd>"</kbd> and <kbd>Enter</kbd> keys on row C of the 102-,</td><td></td></tr>
+<tr><td>104- and 106-key layouts.</td><td></td></tr>
+<tr><td>Labeled <kbd>#</kbd> on a UK (102) keyboard.</td><td></td></tr>
+<tr><td><code>BracketLeft</code></td><td><kbd>[</kbd> on a US keyboard.</td></tr>
+<tr><td><code>BracketRight</code></td><td><kbd>]</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Comma</code></td><td><kbd>,</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit0</code></td><td><kbd>0</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit1</code></td><td><kbd>1</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit2</code></td><td><kbd>2</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit3</code></td><td><kbd>3</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit4</code></td><td><kbd>4</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit5</code></td><td><kbd>5</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit6</code></td><td><kbd>6</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit7</code></td><td><kbd>7</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit8</code></td><td><kbd>8</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Digit9</code></td><td><kbd>9</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Equal</code></td><td><kbd>=</kbd> on a US keyboard.</td></tr>
+<tr><td><code>IntlBackslash</code></td><td>Located between the left <kbd>Shift</kbd> and <kbd>Z</kbd> keys.</td></tr>
+<tr><td>Labeled <kbd>\</kbd> on a UK keyboard.</td><td></td></tr>
+<tr><td><code>IntlRo</code></td><td>Located between the <kbd>/</kbd> and right <kbd>Shift</kbd> keys.</td></tr>
+<tr><td>Labeled <kbd>\</kbd> (ro) on a Japanese keyboard.</td><td></td></tr>
+<tr><td><code>IntlYen</code></td><td>Located between the <kbd>=</kbd> and <kbd>Backspace</kbd> keys.</td></tr>
+<tr><td>Labeled <kbd>¥</kbd> (yen) on a Japanese keyboard. <kbd>\</kbd> on a</td><td></td></tr>
+<tr><td>Russian keyboard.</td><td></td></tr>
+<tr><td><code>A</code></td><td><kbd>a</kbd> on a US keyboard.</td></tr>
+<tr><td>Labeled <kbd>q</kbd> on an AZERTY (e.g., French) keyboard.</td><td></td></tr>
+<tr><td><code>B</code></td><td><kbd>b</kbd> on a US keyboard.</td></tr>
+<tr><td><code>C</code></td><td><kbd>c</kbd> on a US keyboard.</td></tr>
+<tr><td><code>D</code></td><td><kbd>d</kbd> on a US keyboard.</td></tr>
+<tr><td><code>E</code></td><td><kbd>e</kbd> on a US keyboard.</td></tr>
+<tr><td><code>F</code></td><td><kbd>f</kbd> on a US keyboard.</td></tr>
+<tr><td><code>G</code></td><td><kbd>g</kbd> on a US keyboard.</td></tr>
+<tr><td><code>H</code></td><td><kbd>h</kbd> on a US keyboard.</td></tr>
+<tr><td><code>I</code></td><td><kbd>i</kbd> on a US keyboard.</td></tr>
+<tr><td><code>J</code></td><td><kbd>j</kbd> on a US keyboard.</td></tr>
+<tr><td><code>K</code></td><td><kbd>k</kbd> on a US keyboard.</td></tr>
+<tr><td><code>L</code></td><td><kbd>l</kbd> on a US keyboard.</td></tr>
+<tr><td><code>M</code></td><td><kbd>m</kbd> on a US keyboard.</td></tr>
+<tr><td><code>N</code></td><td><kbd>n</kbd> on a US keyboard.</td></tr>
+<tr><td><code>O</code></td><td><kbd>o</kbd> on a US keyboard.</td></tr>
+<tr><td><code>P</code></td><td><kbd>p</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Q</code></td><td><kbd>q</kbd> on a US keyboard.</td></tr>
+<tr><td>Labeled <kbd>a</kbd> on an AZERTY (e.g., French) keyboard.</td><td></td></tr>
+<tr><td><code>R</code></td><td><kbd>r</kbd> on a US keyboard.</td></tr>
+<tr><td><code>S</code></td><td><kbd>s</kbd> on a US keyboard.</td></tr>
+<tr><td><code>T</code></td><td><kbd>t</kbd> on a US keyboard.</td></tr>
+<tr><td><code>U</code></td><td><kbd>u</kbd> on a US keyboard.</td></tr>
+<tr><td><code>V</code></td><td><kbd>v</kbd> on a US keyboard.</td></tr>
+<tr><td><code>W</code></td><td><kbd>w</kbd> on a US keyboard.</td></tr>
+<tr><td>Labeled <kbd>z</kbd> on an AZERTY (e.g., French) keyboard.</td><td></td></tr>
+<tr><td><code>X</code></td><td><kbd>x</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Y</code></td><td><kbd>y</kbd> on a US keyboard.</td></tr>
+<tr><td>Labeled <kbd>z</kbd> on a QWERTZ (e.g., German) keyboard.</td><td></td></tr>
+<tr><td><code>Z</code></td><td><kbd>z</kbd> on a US keyboard.</td></tr>
+<tr><td>Labeled <kbd>w</kbd> on an AZERTY (e.g., French) keyboard, and <kbd>y</kbd> on a</td><td></td></tr>
+<tr><td>QWERTZ (e.g., German) keyboard.</td><td></td></tr>
+<tr><td><code>Minus</code></td><td><kbd>-</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Period</code></td><td><kbd>.</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Quote</code></td><td><kbd>'</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Semicolon</code></td><td><kbd>;</kbd> on a US keyboard.</td></tr>
+<tr><td><code>Slash</code></td><td><kbd>/</kbd> on a US keyboard.</td></tr>
+<tr><td><code>AltLeft</code></td><td><kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>.</td></tr>
+<tr><td><code>AltRight</code></td><td><kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>.</td></tr>
+<tr><td>This is labeled <kbd>AltGr</kbd> on many keyboard layouts.</td><td></td></tr>
+<tr><td><code>Backspace</code></td><td><kbd>Backspace</kbd> or <kbd>⌫</kbd>.</td></tr>
+<tr><td>Labeled <kbd>Delete</kbd> on Apple keyboards.</td><td></td></tr>
+<tr><td><code>CapsLock</code></td><td><kbd>CapsLock</kbd> or <kbd>⇪</kbd></td></tr>
+<tr><td><code>ContextMenu</code></td><td>The application context menu key, which is typically found between the right</td></tr>
+<tr><td><kbd>Super</kbd> key and the right <kbd>Control</kbd> key.</td><td></td></tr>
+<tr><td><code>ControlLeft</code></td><td><kbd>Control</kbd> or <kbd>⌃</kbd></td></tr>
+<tr><td><code>ControlRight</code></td><td><kbd>Control</kbd> or <kbd>⌃</kbd></td></tr>
+<tr><td><code>Enter</code></td><td><kbd>Enter</kbd> or <kbd>↵</kbd>. Labeled <kbd>Return</kbd> on Apple keyboards.</td></tr>
+<tr><td><code>SuperLeft</code></td><td>The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key.</td></tr>
+<tr><td><code>SuperRight</code></td><td>The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key.</td></tr>
+<tr><td><code>ShiftLeft</code></td><td><kbd>Shift</kbd> or <kbd>⇧</kbd></td></tr>
+<tr><td><code>ShiftRight</code></td><td><kbd>Shift</kbd> or <kbd>⇧</kbd></td></tr>
+<tr><td><code>Space</code></td><td><kbd> </kbd> (space)</td></tr>
+<tr><td><code>Tab</code></td><td><kbd>Tab</kbd> or <kbd>⇥</kbd></td></tr>
+<tr><td><code>Convert</code></td><td>Japanese: <kbd>変</kbd> (henkan)</td></tr>
+<tr><td><code>KanaMode</code></td><td>Japanese: <kbd>カタカナ</kbd>/<kbd>ひらがな</kbd>/<kbd>ローマ字</kbd> (katakana/hiragana/romaji)</td></tr>
+<tr><td><code>Lang1</code></td><td>Korean: HangulMode <kbd>한/영</kbd> (han/yeong)</td></tr>
+</tbody></table>
+</div>
+<p>Japanese (Mac keyboard): <kbd>か</kbd> (kana) |
+| <code>Lang2</code> | Korean: Hanja <kbd>한</kbd> (hanja)</p>
+<p>Japanese (Mac keyboard): <kbd>英</kbd> (eisu) |
+| <code>Lang3</code> | Japanese (word-processing keyboard): Katakana |
+| <code>Lang4</code> | Japanese (word-processing keyboard): Hiragana |
+| <code>Lang5</code> | Japanese (word-processing keyboard): Zenkaku/Hankaku |
+| <code>NonConvert</code> | Japanese: <kbd>無変換</kbd> (muhenkan) |
+| <code>Delete</code> | <kbd>⌦</kbd>. The forward delete key.
+Note that on Apple keyboards, the key labelled <kbd>Delete</kbd> on the main part of
+the keyboard is encoded as [<code>Backspace</code>].</p>
+<p>[<code>Backspace</code>]: Self::Backspace |
+| <code>End</code> | <kbd>Page Down</kbd>, <kbd>End</kbd>, or <kbd>↘</kbd> |
+| <code>Help</code> | <kbd>Help</kbd>. Not present on standard PC keyboards. |
+| <code>Home</code> | <kbd>Home</kbd> or <kbd>↖</kbd> |
+| <code>Insert</code> | <kbd>Insert</kbd> or <kbd>Ins</kbd>. Not present on Apple keyboards. |
+| <code>PageDown</code> | <kbd>Page Down</kbd>, <kbd>PgDn</kbd>, or <kbd>⇟</kbd> |
+| <code>PageUp</code> | <kbd>Page Up</kbd>, <kbd>PgUp</kbd>, or <kbd>⇞</kbd> |
+| <code>ArrowDown</code> | <kbd>↓</kbd> |
+| <code>ArrowLeft</code> | <kbd>←</kbd> |
+| <code>ArrowRight</code> | <kbd>→</kbd> |
+| <code>ArrowUp</code> | <kbd>↑</kbd> |
+| <code>NumLock</code> | On the Mac, this is used for the numpad <kbd>Clear</kbd> key. |
+| <code>Numpad0</code> | <kbd>0 Ins</kbd> on a keyboard. <kbd>0</kbd> on a phone or remote control |
+| <code>Numpad1</code> | <kbd>1 End</kbd> on a keyboard. <kbd>1</kbd> or <kbd>1 QZ</kbd> on a phone or remote control |
+| <code>Numpad2</code> | <kbd>2 ↓</kbd> on a keyboard. <kbd>2 ABC</kbd> on a phone or remote control |
+| <code>Numpad3</code> | <kbd>3 PgDn</kbd> on a keyboard. <kbd>3 DEF</kbd> on a phone or remote control |
+| <code>Numpad4</code> | <kbd>4 ←</kbd> on a keyboard. <kbd>4 GHI</kbd> on a phone or remote control |
+| <code>Numpad5</code> | <kbd>5</kbd> on a keyboard. <kbd>5 JKL</kbd> on a phone or remote control |
+| <code>Numpad6</code> | <kbd>6 →</kbd> on a keyboard. <kbd>6 MNO</kbd> on a phone or remote control |
+| <code>Numpad7</code> | <kbd>7 Home</kbd> on a keyboard. <kbd>7 PQRS</kbd> or <kbd>7 PRS</kbd> on a phone
+or remote control |
+| <code>Numpad8</code> | <kbd>8 ↑</kbd> on a keyboard. <kbd>8 TUV</kbd> on a phone or remote control |
+| <code>Numpad9</code> | <kbd>9 PgUp</kbd> on a keyboard. <kbd>9 WXYZ</kbd> or <kbd>9 WXY</kbd> on a phone
+or remote control |
+| <code>NumpadAdd</code> | <kbd>+</kbd> |
+| <code>NumpadBackspace</code> | Found on the Microsoft Natural Keyboard. |
+| <code>NumpadClear</code> | <kbd>C</kbd> or <kbd>A</kbd> (All Clear). Also for use with numpads that have a
+<kbd>Clear</kbd> key that is separate from the <kbd>NumLock</kbd> key. On the Mac, the
+numpad <kbd>Clear</kbd> key is encoded as [<code>NumLock</code>].</p>
+<p>[<code>NumLock</code>]: Self::NumLock |
+| <code>NumpadClearEntry</code> | <kbd>C</kbd> (Clear Entry) |
+| <code>NumpadComma</code> | <kbd>,</kbd> (thousands separator). For locales where the thousands separator
+is a "." (e.g., Brazil), this key may generate a <kbd>.</kbd>. |
+| <code>NumpadDecimal</code> | <kbd>. Del</kbd>. For locales where the decimal separator is "," (e.g.,
+Brazil), this key may generate a <kbd>,</kbd>. |
+| <code>NumpadDivide</code> | <kbd>/</kbd> |
+| <code>NumpadEnter</code> |  |
+| <code>NumpadEqual</code> | <kbd>=</kbd> |
+| <code>NumpadHash</code> | <kbd>#</kbd> on a phone or remote control device. This key is typically found
+below the <kbd>9</kbd> key and to the right of the <kbd>0</kbd> key. |
+| <code>NumpadMemoryAdd</code> | <kbd>M</kbd> Add current entry to the value stored in memory. |
+| <code>NumpadMemoryClear</code> | <kbd>M</kbd> Clear the value stored in memory. |
+| <code>NumpadMemoryRecall</code> | <kbd>M</kbd> Replace the current entry with the value stored in memory. |
+| <code>NumpadMemoryStore</code> | <kbd>M</kbd> Replace the value stored in memory with the current entry. |
+| <code>NumpadMemorySubtract</code> | <kbd>M</kbd> Subtract current entry from the value stored in memory. |
+| <code>NumpadMultiply</code> | <kbd><em></kbd> on a keyboard. For use with numpads that provide mathematical
+operations (<kbd>+</kbd>, <kbd>-</kbd> <kbd></em></kbd> and <kbd>/</kbd>).</p>
+<p>Use <code>NumpadStar</code> for the <kbd><em></kbd> key on phones and remote controls. |
+| <code>NumpadParenLeft</code> | <kbd>(</kbd> Found on the Microsoft Natural Keyboard. |
+| <code>NumpadParenRight</code> | <kbd>)</kbd> Found on the Microsoft Natural Keyboard. |
+| <code>NumpadStar</code> | <kbd></em></kbd> on a phone or remote control device.</p>
+<p>This key is typically found below the <kbd>7</kbd> key and to the left of
+the <kbd>0</kbd> key.</p>
+<p>Use <kbd>"NumpadMultiply"</kbd> for the <kbd>*</kbd> key on
+numeric keypads. |
+| <code>NumpadSubtract</code> | <kbd>-</kbd> |
+| <code>Escape</code> | <kbd>Esc</kbd> or <kbd>⎋</kbd> |
+| <code>Fn</code> | <kbd>Fn</kbd> This is typically a hardware key that does not generate a separate code. |
+| <code>FnLock</code> | <kbd>FLock</kbd> or <kbd>FnLock</kbd>. Function Lock key. Found on the Microsoft
+Natural Keyboard. |
+| <code>PrintScreen</code> | <kbd>PrtScr SysRq</kbd> or <kbd>Print Screen</kbd> |
+| <code>ScrollLock</code> | <kbd>Scroll Lock</kbd> |
+| <code>Pause</code> | <kbd>Pause Break</kbd> |
+| <code>BrowserBack</code> | Some laptops place this key to the left of the <kbd>↑</kbd> key.</p>
+<p>This also the "back" button (triangle) on Android. |
+| <code>BrowserFavorites</code> |  |
+| <code>BrowserForward</code> | Some laptops place this key to the right of the <kbd>↑</kbd> key. |
+| <code>BrowserHome</code> | The "home" button on Android. |
+| <code>BrowserRefresh</code> |  |
+| <code>BrowserSearch</code> |  |
+| <code>BrowserStop</code> |  |
+| <code>Eject</code> | <kbd>Eject</kbd> or <kbd>⏏</kbd>. This key is placed in the function section on some Apple
+keyboards. |
+| <code>LaunchApp1</code> | Sometimes labelled <kbd>My Computer</kbd> on the keyboard |
+| <code>LaunchApp2</code> | Sometimes labelled <kbd>Calculator</kbd> on the keyboard |
+| <code>LaunchMail</code> |  |
+| <code>MediaPlayPause</code> |  |
+| <code>MediaSelect</code> |  |
+| <code>MediaStop</code> |  |
+| <code>MediaTrackNext</code> |  |
+| <code>MediaTrackPrevious</code> |  |
+| <code>Power</code> | This key is placed in the function section on some Apple keyboards, replacing the
+<kbd>Eject</kbd> key. |
+| <code>Sleep</code> |  |
+| <code>AudioVolumeDown</code> |  |
+| <code>AudioVolumeMute</code> |  |
+| <code>AudioVolumeUp</code> |  |
+| <code>WakeUp</code> |  |
+| <code>Meta</code> |  |
+| <code>Hyper</code> |  |
+| <code>Turbo</code> |  |
+| <code>Abort</code> |  |
+| <code>Resume</code> |  |
+| <code>Suspend</code> |  |
+| <code>Again</code> | Found on Sun’s USB keyboard. |
+| <code>Copy</code> | Found on Sun’s USB keyboard. |
+| <code>Cut</code> | Found on Sun’s USB keyboard. |
+| <code>Find</code> | Found on Sun’s USB keyboard. |
+| <code>Open</code> | Found on Sun’s USB keyboard. |
+| <code>Paste</code> | Found on Sun’s USB keyboard. |
+| <code>Props</code> | Found on Sun’s USB keyboard. |
+| <code>Select</code> | Found on Sun’s USB keyboard. |
+| <code>Undo</code> | Found on Sun’s USB keyboard. |
+| <code>Hiragana</code> | Use for dedicated <kbd>ひらがな</kbd> key found on some Japanese word processing keyboards. |
+| <code>Katakana</code> | Use for dedicated <kbd>カタカナ</kbd> key found on some Japanese word processing keyboards. |
+| <code>F1</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F2</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F3</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F4</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F5</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F6</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F7</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F8</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F9</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F10</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F11</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F12</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F13</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F14</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F15</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F16</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F17</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F18</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F19</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F20</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F21</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F22</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F23</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F24</code> | General-purpose function key.
+Usually found at the top of the keyboard. |
+| <code>F25</code> | General-purpose function key. |
+| <code>F26</code> | General-purpose function key. |
+| <code>F27</code> | General-purpose function key. |
+| <code>F28</code> | General-purpose function key. |
+| <code>F29</code> | General-purpose function key. |
+| <code>F30</code> | General-purpose function key. |
+| <code>F31</code> | General-purpose function key. |
+| <code>F32</code> | General-purpose function key. |
+| <code>F33</code> | General-purpose function key. |
+| <code>F34</code> | General-purpose function key. |
+| <code>F35</code> | General-purpose function key. |</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../scripting_api_cs/LiteInput/Input.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../scripting_api_cs/LiteLog.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../scripting_api_cs/LiteInput/Input.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../scripting_api_cs/LiteLog.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

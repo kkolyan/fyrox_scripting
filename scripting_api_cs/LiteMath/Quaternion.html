@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Quaternion - Fyrox Lite</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Fyrox Lite</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/fyrox-book/fyrox-book.github.io/tree/main" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/fyrox-book/fyrox-book.github.io/edit/main/src/scripting_api_cs/LiteMath/Quaternion.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="quaternion"><a class="header" href="#quaternion">Quaternion</a></h1>
+<p>struct in <a href="../../scripting_api_cs.html">FyroxLite</a>.<a href="../LiteMath.html">LiteMath</a></p>
+<h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>(code of this item is picked from Godot Engine in compliance with MIT license).</p>
+<p>A unit quaternion used for representing 3D rotations.
+Quaternions need to be normalized to be used for rotation.</p>
+<p>It is similar to
+<code>Basis</code>
+, which implements matrix
+representation of rotations, and can be parametrized using both
+an axis-angle pair or Euler angles. Basis stores rotation, scale,
+and shearing, while Quaternion only stores rotation.</p>
+<p>Due to its compactness and the way it is stored in memory, certain
+operations (obtaining axis-angle and performing SLERP, in particular)
+are more efficient and robust against floating-point errors.</p>
+<h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td>( float <ins>x</ins>, float <ins>y</ins>, float <ins>z</ins>, float <ins>w</ins> )</td><td>Constructs a <code>Quaternion</code> defined by the given values.</td></tr>
+<tr><td>( <a href="../LiteMath/Basis.html">Basis</a> <ins>basis</ins> )</td><td>Constructs a <code>Quaternion</code> from the given <code>Basis</code> .</td></tr>
+<tr><td>( <a href="../LiteMath/Vector3.html">Vector3</a> <ins>axis</ins>, float <ins>angle</ins> )</td><td>Constructs a <code>Quaternion</code> that will rotate around the given axis  by the specified angle. The axis must be a normalized vector.</td></tr>
+<tr><td>( <a href="../LiteMath/Vector3.html">Vector3</a> <ins>arcFrom</ins>, <a href="../LiteMath/Vector3.html">Vector3</a> <ins>arcTo</ins> )</td><td></td></tr>
+</tbody></table>
+</div>
+<h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td>float</td><td><code>AngleTo</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>to</ins> )</td><td>Returns the angle between this quaternion and <code>name</code> .  This is the magnitude of the angle you would need to rotate  by to get from one to the other.   Note: This method has an abnormally high amount  of floating-point error, so methods such as <code>Mathf.IsZeroApprox(real_t)</code> will not work reliably.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>SphericalCubicInterpolate</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>b</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>preA</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>postB</ins>, float <ins>weight</ins> )</td><td>Performs a spherical cubic interpolation between quaternions <code>name</code> , this quaternion, <code>name</code> , and <code>name</code> , by the given amount <code>name</code> .</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>SphericalCubicInterpolateInTime</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>b</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>preA</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>postB</ins>, float <ins>weight</ins>, float <ins>bT</ins>, float <ins>preAT</ins>, float <ins>postBT</ins> )</td><td>Performs a spherical cubic interpolation between quaternions <code>name</code> , this quaternion, <code>name</code> , and <code>name</code> , by the given amount <code>name</code> .  It can perform smoother interpolation than <code>SphericalCubicInterpolate</code> by the time values.</td></tr>
+<tr><td>float</td><td><code>Dot</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>b</ins> )</td><td>Returns the dot product of two quaternions.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>Exp</code> (  )</td><td></td></tr>
+<tr><td>float</td><td><code>GetAngle</code> (  )</td><td></td></tr>
+<tr><td><a href="../LiteMath/Vector3.html">Vector3</a></td><td><code>GetAxis</code> (  )</td><td></td></tr>
+<tr><td><a href="../LiteMath/Vector3.html">Vector3</a></td><td><code>GetEuler</code> ( <a href="../LiteMath/EulerOrder.html">EulerOrder</a> <ins>order</ins> )</td><td>Returns Euler angles (in the YXZ convention: when decomposing,  first Z, then X, and Y last) corresponding to the rotation  represented by the unit quaternion. Returned vector contains  the rotation angles in the format (X angle, Y angle, Z angle).</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>Inverse</code> (  )</td><td>Returns the inverse of the quaternion.</td></tr>
+<tr><td>bool</td><td><code>IsFinite</code> (  )</td><td>Returns <code>true</code> if this quaternion is finite, by calling <code>Mathf.IsFinite(real_t)</code> on each component.</td></tr>
+<tr><td>bool</td><td><code>IsNormalized</code> (  )</td><td>Returns whether the quaternion is normalized or not.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>Log</code> (  )</td><td></td></tr>
+<tr><td>float</td><td><code>Length</code> (  )</td><td>Returns the length (magnitude) of the quaternion.    Equivalent to <code>Mathf.Sqrt(LengthSquared)</code> .</td></tr>
+<tr><td>float</td><td><code>LengthSquared</code> (  )</td><td>Returns the squared length (squared magnitude) of the quaternion.  This method runs faster than <code>Length</code> , so prefer it if  you need to compare quaternions or need the squared length for some formula.  Equivalent to <code>Dot(this)</code> .</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>Normalized</code> (  )</td><td>Returns a copy of the quaternion, normalized to unit length.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>Slerp</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>to</ins>, float <ins>weight</ins> )</td><td>Returns the result of the spherical linear interpolation between  this quaternion and <code>name</code> by amount <code>name</code> .   Note: Both quaternions must be normalized.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>Slerpni</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>to</ins>, float <ins>weight</ins> )</td><td>Returns the result of the spherical linear interpolation between  this quaternion and <code>name</code> by amount <code>name</code> , but without  checking if the rotation path is not bigger than 90 degrees.</td></tr>
+<tr><td>bool</td><td><code>Equals</code> ( object? <ins>obj</ins> )</td><td>Returns <code>true</code> if this quaternion and <code>name</code> are equal.</td></tr>
+<tr><td>bool</td><td><code>Equals</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>other</ins> )</td><td>Returns <code>true</code> if this quaternion and <code>name</code> are equal.</td></tr>
+<tr><td>bool</td><td><code>IsEqualApprox</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>other</ins> )</td><td>Returns <code>true</code> if this quaternion and <code>name</code> are approximately equal,  by running <code>Mathf.IsEqualApprox(real_t, real_t)</code> on each component.</td></tr>
+<tr><td>int</td><td><code>GetHashCode</code> (  )</td><td>Serves as the hash function for <code>Quaternion</code> .</td></tr>
+<tr><td>string</td><td><code>ToString</code> (  )</td><td>Converts this <code>Quaternion</code> to a string.</td></tr>
+<tr><td>string</td><td><code>ToString</code> ( string? <ins>format</ins> )</td><td>Converts this <code>Quaternion</code> to a string with the given <code>name</code> .</td></tr>
+</tbody></table>
+</div>
+<h2 id="static-properties"><a class="header" href="#static-properties">Static Properties</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Access</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>Identity</code></td><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td>get</td><td>The identity quaternion, representing no rotation.  Equivalent to an identity <code>Basis</code> matrix. If a vector is transformed by  an identity quaternion, it will not change.  Equivalent to <code>new Quaternion(0, 0, 0, 1)</code> .</td></tr>
+</tbody></table>
+</div>
+<h2 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>FromEuler</code> ( <a href="../LiteMath/Vector3.html">Vector3</a> <ins>eulerYXZ</ins> )</td><td>Constructs a <code>Quaternion</code> that will perform a rotation specified by  Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last),  given in the vector format as (X angle, Y angle, Z angle).</td></tr>
+</tbody></table>
+</div>
+<h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>*</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>right</ins> )</td><td>Composes these two quaternions by multiplying them together.  This has the effect of rotating the second quaternion  (the child) by the first quaternion (the parent).</td></tr>
+<tr><td><a href="../LiteMath/Vector3.html">Vector3</a></td><td><code>*</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>quaternion</ins>, <a href="../LiteMath/Vector3.html">Vector3</a> <ins>vector</ins> )</td><td>Returns a Vector3 rotated (multiplied) by the quaternion.</td></tr>
+<tr><td><a href="../LiteMath/Vector3.html">Vector3</a></td><td><code>*</code> ( <a href="../LiteMath/Vector3.html">Vector3</a> <ins>vector</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>quaternion</ins> )</td><td>Returns a Vector3 rotated (multiplied) by the inverse quaternion. <code>vector * quaternion</code> is equivalent to <code>quaternion.Inverse() * vector</code> . See <code>Inverse</code> .</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>+</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>right</ins> )</td><td>Adds each component of the left <code>Quaternion</code> to the right <code>Quaternion</code> . This operation is not  meaningful on its own, but it can be used as a part of a  larger expression, such as approximating an intermediate  rotation between two nearby rotations.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>-</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>right</ins> )</td><td>Subtracts each component of the left <code>Quaternion</code> by the right <code>Quaternion</code> . This operation is not  meaningful on its own, but it can be used as a part of a  larger expression.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>-</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>quat</ins> )</td><td>Returns the negative value of the <code>Quaternion</code> .  This is the same as writing <code>new Quaternion(-q.X, -q.Y, -q.Z, -q.W)</code> . This operation  results in a quaternion that represents the same rotation.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>*</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, float <ins>right</ins> )</td><td>Multiplies each component of the <code>Quaternion</code> by the given <code>real_t</code> . This operation is not  meaningful on its own, but it can be used as a part of a  larger expression.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>*</code> ( float <ins>left</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>right</ins> )</td><td>Multiplies each component of the <code>Quaternion</code> by the given <code>real_t</code> . This operation is not  meaningful on its own, but it can be used as a part of a  larger expression.</td></tr>
+<tr><td><a href="../LiteMath/Quaternion.html">Quaternion</a></td><td><code>/</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, float <ins>right</ins> )</td><td>Divides each component of the <code>Quaternion</code> by the given <code>real_t</code> . This operation is not  meaningful on its own, but it can be used as a part of a  larger expression.</td></tr>
+<tr><td>bool</td><td><code>==</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>right</ins> )</td><td>Returns <code>true</code> if the quaternions are exactly equal.  Note: Due to floating-point precision errors, consider using <code>IsEqualApprox</code> instead, which is more reliable.</td></tr>
+<tr><td>bool</td><td><code>!=</code> ( <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>left</ins>, <a href="../LiteMath/Quaternion.html">Quaternion</a> <ins>right</ins> )</td><td>Returns <code>true</code> if the quaternions are not equal.  Note: Due to floating-point precision errors, consider using <code>IsEqualApprox</code> instead, which is more reliable.</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../scripting_api_cs/LiteMath/Mathf.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../scripting_api_cs/LiteMath/Vector2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../scripting_api_cs/LiteMath/Mathf.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../scripting_api_cs/LiteMath/Vector2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
