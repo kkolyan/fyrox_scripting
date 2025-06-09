@@ -1,5 +1,5 @@
 ---@uuid 12371d19-9f1a-4286-8486-add4ebaadaec
----@class Bullet : Script
+---@class Bullet : NodeScript
 ---@field velocity Vector3
 ---@field remaining_sec number
 ---@field author_collider Node

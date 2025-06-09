@@ -20,11 +20,11 @@ const HEADER: &str = "
 pub fn generate_lua_annotations(domain: &Domain) -> Module {
     let mut mods = Module::root();
 
-    mods.add_child(Module::code("Script", format!("{}
+    mods.add_child(Module::code("NodeScript", format!("{}
 
-			---@class Script
+			---@class NodeScript
 			---@field node Node
-			Script = {{}}
+			NodeScript = {{}}
 
 			function script_class() end
 		", HEADER.trim()).as_str().deindent()));

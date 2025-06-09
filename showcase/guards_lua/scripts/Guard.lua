@@ -1,5 +1,5 @@
 ---@uuid 9f8183d3-2a4a-4951-a6e6-5fbc9c479e2e
----@class Guard : Script
+---@class Guard : NodeScript
 ---@field private reloading_sec number
 ---@field reload_delay_sec number
 ---@field gun_height number

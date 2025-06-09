@@ -1,5 +1,5 @@
 ---@uuid c69ae5fa-de26-4ee5-b70c-113df285f6e2
----@class GuardChief : Script
+---@class GuardChief : NodeScript
 ---@field gaurd_prefab Prefab
 ---@field initial_count number
 ---@field private initialized boolean

@@ -1,5 +1,5 @@
 ---@uuid c5671d19-9f1a-4286-8486-add4ebaadaec
----@class Player : Script
+---@class Player : NodeScript
 ---@field sensitivity number
 ---@field camera Node
 ---@field power number

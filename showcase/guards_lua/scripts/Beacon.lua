@@ -1,5 +1,5 @@
 ---@uuid 7c259fd2-fdb9-453b-a7ef-19cdd85428cc
----@class Beacon : Script
+---@class Beacon : NodeScript
 Beacon = script_class()
 
 function Beacon:on_update()

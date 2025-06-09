@@ -4,8 +4,8 @@
 
 ---@diagnostic disable: missing-return, lowercase-global, missing-fields
 
----@class Script
+---@class NodeScript
 ---@field node Node
-Script = {}
+NodeScript = {}
 
 function script_class() end

@@ -139,11 +139,11 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
 
     let parent_class = parent_class.as_deref();
 
-    if parent_class.is_none() || !(parent_class.unwrap() == "Script" || parent_class.unwrap() == "GlobalScript") {
-        errors.push("parent class is required to be either Script or GlobalScript".to_string());
+    if parent_class.is_none() || !(parent_class.unwrap() == "NodeScript" || parent_class.unwrap() == "GlobalScript") {
+        errors.push("parent class is required to be either NodeScript or GlobalScript".to_string());
     };
-    if parent_class.is_some() && parent_class.unwrap() == "Script" && uuid.is_none() {
-        errors.push("uuid tag is required for class extending Script".to_string());
+    if parent_class.is_some() && parent_class.unwrap() == "NodeScript" && uuid.is_none() {
+        errors.push("uuid tag is required for class extending NodeScript".to_string());
     }
     if !errors.is_empty() {
         return Err(errors);
@@ -154,7 +154,7 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
         .map(|(i, v)| (v.name.clone(), i))
         .collect();
     let kind =  match parent_class.unwrap() {
-        "Script" => ScriptKind::Node,
+        "NodeScript" => ScriptKind::Node,
         "GlobalScript" => ScriptKind::Global,
         unknown => panic!("unknown ScriptKind constant: {:?}", unknown),
     };
