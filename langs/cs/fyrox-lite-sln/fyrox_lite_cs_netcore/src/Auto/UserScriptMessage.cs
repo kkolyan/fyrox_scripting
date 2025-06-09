@@ -13,4 +13,5 @@ namespace FyroxLite;
 [StructLayout(LayoutKind.Sequential)]
 internal unsafe partial struct UserScriptMessage {
     internal long id;
+    internal NativeClassId class_id;
 }

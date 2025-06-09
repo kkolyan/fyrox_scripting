@@ -1,5 +1,4 @@
 use std::{
-    ffi::{c_char, CString},
     fmt::Display,
 };
 use std::fmt::{Debug, Formatter};
@@ -25,7 +24,7 @@ pub struct NativeInstanceId {
 #[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq)]
 pub struct NativeClassId {
-    pub value: i32,
+    pub value: i64,
 }
 
 impl Debug for NativeClassId {
@@ -270,6 +269,7 @@ pub type DisposeScript = extern "C" fn(script: NativeInstanceId);
 #[derive(Debug, Clone, Copy)]
 pub struct UserScriptMessage {
     pub id: i64,
+    pub class_id: NativeClassId,
 }
 
 #[repr(C)]

@@ -118,7 +118,7 @@ public class Guard : NodeScript
 
     protected override void OnStart()
     {
-        Node.SubscribeTo();
+        Node.SubscribeTo<BulletHitMessage>();
     }
 
     protected override void OnUpdate(float dt)

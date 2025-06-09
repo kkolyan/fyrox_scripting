@@ -12,5 +12,5 @@ namespace FyroxLite;
 
 [StructLayout(LayoutKind.Sequential)]
 internal unsafe partial struct NativeClassId {
-    internal int value;
+    internal long value;
 }

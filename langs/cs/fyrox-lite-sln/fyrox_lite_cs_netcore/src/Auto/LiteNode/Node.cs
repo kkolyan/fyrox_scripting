@@ -133,12 +133,12 @@ public partial struct Node : IEquatable<Node>
         #endregion
     }
 
-    public void SubscribeTo()
+    public void SubscribeTo<T>()
     {
         #region native call
         unsafe {
             
-            fyrox_lite_lite_node_LiteNode_subscribe_to(this);
+            fyrox_lite_lite_node_LiteNode_subscribe_to(this, NativeClassId.By<T>.Resolve());
         }
         #endregion
     }
@@ -277,7 +277,7 @@ public partial struct Node : IEquatable<Node>
     private static unsafe partial void_result fyrox_lite_lite_node_LiteNode_set_local_rotation(Node self, NativeQuaternion* value);
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
-    private static unsafe partial void fyrox_lite_lite_node_LiteNode_subscribe_to(Node self);
+    private static unsafe partial void fyrox_lite_lite_node_LiteNode_subscribe_to(Node self, NativeClassId class_id);
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial Node_optional fyrox_lite_lite_node_LiteNode_find_collider_in_children(Node self);

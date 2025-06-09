@@ -16,7 +16,7 @@ use lite_macro::lite_api;
 
 use crate::{lite_physics::LiteRigidBody, script_context::with_script_context};
 use fyrox::graph::BaseSceneGraph;
-use crate::script_context::StaticSc;
+use fyrox::script::DynamicallyTypedScriptMessagePayload;
 
 #[derive(Clone, Copy, Eq, PartialEq, Default)]
 pub struct LiteNode {
@@ -163,7 +163,7 @@ impl LiteNode {
             ctx.message_sender
                 .as_mut()
                 .expect("message sender unavailable")
-                .send_hierarchical(self.handle, routing, payload);
+                .send_hierarchical_dynamic(self.handle, routing, payload);
         });
     }
 
@@ -185,11 +185,12 @@ impl LiteNode {
         })
     }
 
-    pub fn subscribe_to<T: UserScript>(&self, _stub: T::UserScriptGenericStub) {
+    pub fn subscribe_to<T: UserScript>(&self, _stub: T::UserScriptGenericStub, class_id: T::ClassId) {
         with_script_context(|ctx| {
+            let packed_class_id = T::pack_class_id(class_id);
             ctx.message_dispatcher.as_mut()
-            .expect("cannot subscribe from on_message callback. do it in on_init, on_start or on_update")
-            .subscribe_to::<T::UserScriptMessage>(self.handle);
+                .expect("cannot subscribe from on_message callback. do it in on_init, on_start or on_update")
+                .subscribe_dynamic_to(self.handle, packed_class_id);
         });
     }
 

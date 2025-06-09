@@ -29,7 +29,7 @@ public class Player : NodeScript
 
     protected override void OnStart()
     {
-        Node.SubscribeTo();
+        Node.SubscribeTo<BulletHitMessage>();
     }
 
     protected override void OnMessage(object message)

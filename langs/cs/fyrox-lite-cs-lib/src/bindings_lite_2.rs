@@ -1550,8 +1550,13 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_set_local_rotation(
 }
 
 #[no_mangle]
-pub extern "C" fn fyrox_lite_lite_node_LiteNode_subscribe_to(this: NativeNode) -> () {
-    let ret = fyrox_lite::lite_node::LiteNode::from(this).subscribe_to::<crate::UserScriptImpl>(());
+pub extern "C" fn fyrox_lite_lite_node_LiteNode_subscribe_to(
+    this: NativeNode,
+    class_id: NativeClassId,
+) -> () {
+    let class_id = class_id.into();
+    let ret = fyrox_lite::lite_node::LiteNode::from(this)
+        .subscribe_to::<crate::UserScriptImpl>((), class_id);
     ret.into()
 }
 

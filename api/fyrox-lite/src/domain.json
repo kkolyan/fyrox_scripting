@@ -1448,6 +1448,11 @@
                   "name": "_stub",
                   "ty": "UserScriptGenericStub",
                   "variadic": false
+                },
+                {
+                  "name": "class_id",
+                  "ty": "ClassName",
+                  "variadic": false
                 }
               ]
             }

@@ -83,9 +83,16 @@ public static class ScriptsMetadataExtractor
 
         PropertySetters.Register(type, propertySetters);
 
+        var classId = scripts.Count + 1;
+        if (classId > NativeClassId.MaxScriptClassCount)
+        {
+            throw new Exception($"WTF: attempt to use more than {NativeClassId.MaxScriptClassCount} script classes. " +
+                                $"{NativeClassId.MaxScriptClassCount} seemed to be MORE THAN reasonable limitation. " +
+                                $"Please report your case to developer.");
+        }
         var metadata = new NativeScriptMetadata
         {
-            id = new NativeClassId(scripts.Count + 1),
+            id = new NativeClassId(classId),
             uuid = NativeString.FromFacade(uuid.ToString()),
             kind = kind,
             name = NativeString.FromFacade(type.Name),
