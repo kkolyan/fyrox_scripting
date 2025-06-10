@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
-use fyrox::script::{DynamicTypeId, DynamicallyTypedScriptMessagePayload, ScriptMessagePayload, ScriptTrait};
+use fyrox::script::{DynamicTypeId, ScriptMessagePayload, ScriptTrait};
 
 pub trait ClassId: LiteDataType + Clone {
     fn lookup_class_name(&self) -> String;
@@ -14,7 +14,7 @@ pub trait UserScript: Sized + LiteDataType {
 
     type ClassId: ClassId;
     type LangSpecificError: Clone + Debug;
-    type UserScriptMessage: DynamicallyTypedScriptMessagePayload + LiteDataType;
+    type UserScriptMessage: ScriptMessagePayload + LiteDataType;
     type UserScriptGenericStub: LiteDataType + Copy;
     
     fn pack_class_id(class_id: &Self::ClassId) -> DynamicTypeId;

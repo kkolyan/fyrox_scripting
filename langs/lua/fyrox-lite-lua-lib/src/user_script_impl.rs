@@ -12,7 +12,7 @@ use crate::{
 };
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
-use fyrox::script::{DynamicTypeId, DynamicallyTypedScriptMessagePayload};
+use fyrox::script::{DynamicTypeId, ScriptMessagePayload};
 use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::spi::ClassId;
@@ -208,16 +208,16 @@ impl LuaUserScriptMessageEnvelope {
     }
 }
 
-impl DynamicallyTypedScriptMessagePayload for LuaUserScriptMessageEnvelope {
+impl ScriptMessagePayload for LuaUserScriptMessageEnvelope {
     fn as_any_ref(&self) -> &dyn Any {
         self
     }
 
-    fn as_any_mut(&mut self) -> &mut dyn Any {
+    fn as_any_mut(&mut self) -> &mut dyn std::any::Any {
         self
     }
 
-    fn get_dynamic_type_id(&self) -> DynamicTypeId {
-        TypedUserData::pack_class_id(&self.class)
+    fn get_dynamic_type_id(&self) -> Option<DynamicTypeId> {
+        Some(TypedUserData::pack_class_id(&self.class))
     }
 }

@@ -12,7 +12,7 @@ use fyrox::{
         visitor::prelude::*, TypeUuidProvider,
     },
     scene::{node::Node, Scene},
-    script::{ScriptContext, ScriptTrait},
+    script::{ScriptContext, ScriptTrait, ScriptMessagePayload},
 };
 use std::ops::Add;
 
@@ -53,7 +53,7 @@ impl Bullet {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, ScriptMessagePayload)]
 pub struct BulletHit {}
 
 impl ScriptTrait for Bullet {

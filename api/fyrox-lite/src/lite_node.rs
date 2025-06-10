@@ -16,7 +16,6 @@ use lite_macro::lite_api;
 
 use crate::{lite_physics::LiteRigidBody, script_context::with_script_context};
 use fyrox::graph::BaseSceneGraph;
-use fyrox::script::DynamicallyTypedScriptMessagePayload;
 
 #[derive(Clone, Copy, Eq, PartialEq, Default)]
 pub struct LiteNode {
@@ -163,7 +162,7 @@ impl LiteNode {
             ctx.message_sender
                 .as_mut()
                 .expect("message sender unavailable")
-                .send_hierarchical_dynamic(self.handle, routing, payload);
+                .send_hierarchical(self.handle, routing, payload);
         });
     }
 

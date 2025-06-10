@@ -1,7 +1,7 @@
 use std::any::Any;
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
-use fyrox::script::{DynamicTypeId, DynamicallyTypedScriptMessagePayload, PluginsRefMut};
+use fyrox::script::{DynamicTypeId, ScriptMessagePayload};
 use fyrox_lite::{spi::UserScript, LiteDataType};
 use fyrox_lite::script_context::with_script_context;
 use fyrox_lite::script_object_residence::ScriptResidence;
@@ -116,7 +116,7 @@ impl ClassId for NativeClassId {
     }
 }
 
-impl DynamicallyTypedScriptMessagePayload for AutoDispose<UserScriptMessage> {
+impl ScriptMessagePayload for AutoDispose<UserScriptMessage> {
     fn as_any_ref(&self) -> &dyn Any {
         self
     }
@@ -125,7 +125,7 @@ impl DynamicallyTypedScriptMessagePayload for AutoDispose<UserScriptMessage> {
         self
     }
 
-    fn get_dynamic_type_id(&self) -> DynamicTypeId {
-        UnpackedObject::pack_class_id(&self.inner().class_id)
+    fn get_dynamic_type_id(&self) -> Option<DynamicTypeId> {
+        Some(UnpackedObject::pack_class_id(&self.inner().class_id))
     }
 }
