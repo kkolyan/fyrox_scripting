@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'www/**'
+      - 'README.md'
   pull_request:
 
 jobs:
