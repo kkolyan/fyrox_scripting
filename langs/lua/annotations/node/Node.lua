@@ -28,11 +28,15 @@ function Node_instance:as_rigid_body() end
 
 function Node_instance:destroy() end
 
+---@generic M
 ---@param routing RoutingStrategy
----@param payload any
-function Node_instance:send_hierarchical(routing, payload) end
+---@param payload_type `M`
+---@param payload M
+function Node_instance:send_hierarchical(routing, payload_type, payload) end
 
-function Node_instance:subscribe_to() end
+---@generic T
+---@param class_id `T`
+function Node_instance:subscribe_to(class_id) end
 
 ---@return Node?
 function Node_instance:find_collider_in_children() end

@@ -37,7 +37,10 @@ pub fn generate_methods(
         };
 
         let input_names = params.iter()
-            .map(|it| it.name.as_str())
+            .flat_map(|it| match it.ty {
+                DataType::UserScriptMessage => vec![format!("{}_type", it.name.as_str()), it.name.to_string()],
+                _ => vec![it.name.to_string()],
+            })
             .to_vec()
             .join(", ");
 
@@ -51,7 +54,10 @@ pub fn generate_methods(
 
         let param_types = params
             .iter()
-            .map(|it| type_to_mlua(&it.ty, ctx))
+            .flat_map(|it| match it.ty {
+                DataType::UserScriptMessage => vec!["mlua::Value".to_string(), "mlua::Value".to_string()],
+                _ => vec![type_to_mlua(&it.ty, ctx)],
+            })
             .to_vec()
             .join(", ");
 

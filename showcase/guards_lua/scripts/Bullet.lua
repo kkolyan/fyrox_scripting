@@ -49,7 +49,7 @@ function Bullet:on_update(dt)
 
     for i, hit in ipairs(results) do
         if hit.collider ~= self.author_collider then
-            hit.collider:send_hierarchical(RoutingStrategy.Up, { type = Bullet.HitMessage, fraction = self.fraction })
+            hit.collider:send_hierarchical(RoutingStrategy.Up, Bullet.HitMessage, { fraction = self.fraction })
             self.node:destroy()
             return;
         end

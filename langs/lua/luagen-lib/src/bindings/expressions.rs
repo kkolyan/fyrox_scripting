@@ -23,8 +23,7 @@ pub fn mlua_to_rust_expr(param: &str, ty: &DataType, ctx: &GenerationContext) ->
         ),
         DataType::UserScript => param.to_string(),
         DataType::UserScriptMessage => {
-            // we use Lua interpreter as long as we use the process, so its lifetime is effectively static.
-            format!("Traitor::new(send_wrapper::SendWrapper::new(unsafe {{ std::mem::transmute::<mlua::Value<'_>, mlua::Value<'static>>({}) }} ))", param)
+            format!("LuaUserScriptMessageEnvelope::new({}_type, {})?", param, param)
         }
         DataType::UserScriptGenericStub => "Default::default()".to_string(),
         DataType::Object(class_name) => {

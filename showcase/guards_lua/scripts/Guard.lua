@@ -103,7 +103,7 @@ function Guard:on_init()
 end
 
 function Guard:on_start()
-    self.node:subscribe_to();
+    self.node:subscribe_to(Bullet.HitMessage);
 end
 
 function Guard:on_update(dt)
@@ -116,8 +116,8 @@ function Guard:on_update(dt)
     end
 end
 
-function Guard:on_message(message)
-    if message.type == Bullet.HitMessage and message.fraction ~= FRACTION_GUARDS then
+function Guard:on_message(type, message)
+    if type == Bullet.HitMessage and message.fraction ~= FRACTION_GUARDS then
         self.node:destroy()
         GlobalScript:get("Game"):inc_frags()
         print("guard killed!")

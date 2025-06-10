@@ -60,11 +60,11 @@ function Player:on_init()
 end
 
 function Player:on_start()
-    self.node:subscribe_to()
+    self.node:subscribe_to(Bullet.HitMessage)
 end
 
-function Player:on_message(message)
-    if message.type == Bullet.HitMessage and message.fraction ~= FRACTION_PLAYER then
+function Player:on_message(type, message)
+    if type == Bullet.HitMessage and message.fraction ~= FRACTION_PLAYER then
         GlobalScript:get("Game"):inc_wounds()
         print("player wounded!")
     end

@@ -83,7 +83,10 @@ pub fn methods(s: &mut String, class: &EngineClass, instance: bool) {
             .to_vec();
         let arg_names = params
             .iter()
-            .map(|it| it.name.to_string())
+            .flat_map(|it| match &it.ty {
+                DataType::UserScriptMessage => vec![format!("{}_type", &it.name), it.name.to_string()],
+                _ => vec![it.name.to_string()],
+            })
             .to_vec()
             .join(", ");
 
@@ -91,13 +94,33 @@ pub fn methods(s: &mut String, class: &EngineClass, instance: bool) {
             writelnu!(s, "---@generic T");
         }
 
+        if params.iter().any(|it| matches!(it.ty, DataType::UserScriptMessage)) {
+            writelnu!(s, "---@generic M");
+        }
+
         for param in params.iter() {
-            writelnu!(
-                s,
-                "---@param {} {}",
-                &param.name,
-                &type_rust_to_lua(&param.ty)
-            );
+            match &param.ty {
+                DataType::UserScriptMessage => {
+                    writelnu!(
+                        s,
+                        "---@param {}_type `M`",
+                        &param.name
+                    );
+                    writelnu!(
+                        s,
+                        "---@param {} M",
+                        &param.name
+                    );
+                }
+                _ => {
+                    writelnu!(
+                        s,
+                        "---@param {} {}",
+                        &param.name,
+                        &type_rust_to_lua(&param.ty)
+                    );
+                },
+            }
         }
 
         let method_result = analyze_method_result(method);

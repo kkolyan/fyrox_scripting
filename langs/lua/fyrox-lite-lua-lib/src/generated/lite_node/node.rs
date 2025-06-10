@@ -19,7 +19,7 @@ use crate::{
     script_object::ScriptObject,
     typed_userdata::TypedUserData,
     user_data_plus::{FyroxUserData, Traitor, UserDataClass},
-    user_script_impl::UserScriptProxy,
+    user_script_impl::{LuaUserScriptMessageEnvelope, UserScriptProxy},
 };
 
 impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
@@ -65,23 +65,23 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
             "send_hierarchical",
             |lua,
              this,
-             (routing, payload): (
+             (routing, payload_type, payload): (
                 TypedUserData<Traitor<fyrox_lite::lite_node::LiteRoutingStrategy>>,
+                mlua::Value,
                 mlua::Value,
             )| {
                 let routing = routing.borrow()?.inner().clone().into();
-                let payload = Traitor::new(send_wrapper::SendWrapper::new(unsafe {
-                    std::mem::transmute::<mlua::Value<'_>, mlua::Value<'static>>(payload)
-                }));
+                let payload = LuaUserScriptMessageEnvelope::new(payload_type, payload)?;
                 let ret =
                     this.send_hierarchical::<TypedUserData<UserScriptProxy>>(routing, payload);
                 let ret = ret;
                 Ok(ret)
             },
         );
-        methods.add_method_mut("subscribe_to", |lua, this, (): ()| {
+        methods.add_method_mut("subscribe_to", |lua, this, (class_id): (mlua::String)| {
             let _stub = Default::default();
-            let ret = this.subscribe_to::<TypedUserData<UserScriptProxy>>(_stub);
+            let class_id = class_id.to_str()?.to_string();
+            let ret = this.subscribe_to::<TypedUserData<UserScriptProxy>>(_stub, class_id);
             let ret = ret;
             Ok(ret)
         });

@@ -15,7 +15,7 @@ pub fn type_rust_to_lua(ty: &DataType) -> String {
         DataType::ClassName => format!("`T`"),
         DataType::Vec(item_ty) => format!("{}[]", type_rust_to_lua(item_ty)),
         DataType::UserScript => format!("T"),
-        DataType::UserScriptMessage => format!("any"),
+        DataType::UserScriptMessage => panic!("UserScriptMessage type is not supported here"),
         DataType::UserScriptGenericStub => {
             panic!("UserScriptGenericStub is not allowed in this context")
         }

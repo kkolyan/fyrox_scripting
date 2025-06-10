@@ -28,7 +28,7 @@ impl UserScript for UnpackedObject {
 
     type UserScriptGenericStub = ();
 
-    fn pack_class_id(class_id: Self::ClassId) -> DynamicTypeId {
+    fn pack_class_id(class_id: &Self::ClassId) -> DynamicTypeId {
         class_id.value
     }
 
@@ -126,6 +126,6 @@ impl DynamicallyTypedScriptMessagePayload for AutoDispose<UserScriptMessage> {
     }
 
     fn get_dynamic_type_id(&self) -> DynamicTypeId {
-        self.inner().class_id.value
+        UnpackedObject::pack_class_id(&self.inner().class_id)
     }
 }

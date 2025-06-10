@@ -19,7 +19,7 @@ use crate::{
     script_object::ScriptObject,
     typed_userdata::TypedUserData,
     user_data_plus::{FyroxUserData, Traitor, UserDataClass},
-    user_script_impl::UserScriptProxy,
+    user_script_impl::{LuaUserScriptMessageEnvelope, UserScriptProxy},
 };
 
 impl FyroxUserData for fyrox_lite::lite_physics::LiteRigidBody {

@@ -187,7 +187,7 @@ impl LiteNode {
 
     pub fn subscribe_to<T: UserScript>(&self, _stub: T::UserScriptGenericStub, class_id: T::ClassId) {
         with_script_context(|ctx| {
-            let packed_class_id = T::pack_class_id(class_id);
+            let packed_class_id = T::pack_class_id(&class_id);
             ctx.message_dispatcher.as_mut()
                 .expect("cannot subscribe from on_message callback. do it in on_init, on_start or on_update")
                 .subscribe_dynamic_to(self.handle, packed_class_id);

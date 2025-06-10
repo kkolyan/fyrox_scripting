@@ -17,7 +17,7 @@ pub trait UserScript: Sized + LiteDataType {
     type UserScriptMessage: DynamicallyTypedScriptMessagePayload + LiteDataType;
     type UserScriptGenericStub: LiteDataType + Copy;
     
-    fn pack_class_id(class_id: Self::ClassId) -> DynamicTypeId;
+    fn pack_class_id(class_id: &Self::ClassId) -> DynamicTypeId;
     fn unpack_class_id(class_id: DynamicTypeId) -> Self::ClassId;
 
     fn extract_from(

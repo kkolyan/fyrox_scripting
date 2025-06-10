@@ -1,4 +1,7 @@
+use std::any::Any;
+use std::cell::RefCell;
 use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::mem;
 
 use crate::lua_lang::LuaLang;
@@ -9,11 +12,13 @@ use crate::{
 };
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
+use fyrox::script::{DynamicTypeId, DynamicallyTypedScriptMessagePayload};
 use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::spi::ClassId;
 use fyrox_lite::{script_context::with_script_context, spi::UserScript, LiteDataType};
 use mlua::{UserDataRef, Value};
+use mlua::prelude::LuaResult;
 use send_wrapper::SendWrapper;
 
 #[derive(Clone, Debug)]
@@ -62,16 +67,19 @@ impl UserScriptProxy {
     }
 }
 
+type ClassIdImpl = String;
+type UserScriptMessageImpl = LuaUserScriptMessageEnvelope;
+
 impl<'a> UserScript for TypedUserData<'a, UserScriptProxy> {
     type Plugin = LuaPlugin;
 
     type ProxyScript = ExternalScriptProxy;
 
-    type ClassId = String;
+    type ClassId = ClassIdImpl;
 
     type LangSpecificError = mlua::Error;
 
-    type UserScriptMessage = Traitor<SendWrapper<Value<'static>>>;
+    type UserScriptMessage = UserScriptMessageImpl;
 
     type UserScriptGenericStub = ();
 
@@ -148,8 +156,68 @@ impl<'a> UserScript for TypedUserData<'a, UserScriptProxy> {
         let obj = lua_vm().create_userdata(UserScriptProxy::Node(script_object))?;
         Ok(TypedUserData::<UserScriptProxy>::new(obj))
     }
+
+    fn pack_class_id(class_id: &Self::ClassId) -> DynamicTypeId {
+        CLASS_MAPPINGS.with_borrow_mut(|x| {
+            let v = x.packed.get(class_id);
+            let Some(v) = v else {
+                let new_type_id = (x.packed.len() + 1) as DynamicTypeId;
+                x.packed.insert(class_id.clone(), new_type_id);
+                x.unpacked.insert(new_type_id, class_id.clone());
+                return new_type_id
+            };
+            *v
+        })
+    }
+
+    fn unpack_class_id(class_id: DynamicTypeId) -> Self::ClassId {
+        CLASS_MAPPINGS.with_borrow(|x| {
+            x.unpacked.get(&class_id).unwrap().clone()
+        })
+    }
 }
 
-impl LiteDataType for Traitor<SendWrapper<Value<'static>>> {}
+thread_local! {
+    static CLASS_MAPPINGS: RefCell<ClassMappings> = Default::default();
+}
+
+#[derive(Default)]
+struct ClassMappings {
+    unpacked: HashMap<DynamicTypeId, ClassIdImpl>,
+    packed: HashMap<ClassIdImpl, DynamicTypeId>,
+}
+
+impl LiteDataType for UserScriptMessageImpl {}
 
 impl<'a> LiteDataType for TypedUserData<'a, UserScriptProxy> {}
+
+#[derive(Debug, Clone)]
+pub struct LuaUserScriptMessageEnvelope {
+    pub class: String,
+    pub message: Traitor<SendWrapper<Value<'static>>>,
+}
+
+impl LuaUserScriptMessageEnvelope {
+    pub fn new(ty: Value, value: Value) -> LuaResult<Self> {
+        // Traitor::new(send_wrapper::SendWrapper::new(unsafe {{ std::mem::transmute::<mlua::Value<'_>, mlua::Value<'static>>({}) }} ))
+        Ok(Self {
+            class: ty.to_string().map_err(|err| lua_error!("Failed to get class name from argument. error: {}", err))?,
+            // we use Lua interpreter as long as we use the process, so its lifetime is effectively static.
+            message: Traitor::new(SendWrapper::new(unsafe { mem::transmute::<Value<'_>, Value<'static>>(value) } )),
+        })
+    }
+}
+
+impl DynamicallyTypedScriptMessagePayload for LuaUserScriptMessageEnvelope {
+    fn as_any_ref(&self) -> &dyn Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn Any {
+        self
+    }
+
+    fn get_dynamic_type_id(&self) -> DynamicTypeId {
+        TypedUserData::pack_class_id(&self.class)
+    }
+}
