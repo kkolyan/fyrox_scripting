@@ -1,7 +1,4 @@
-.idea
-/target
-*.log
+/.annotations
 /settings.ron
-.vscode
-/*.lua
-.cargo
+*.log
+/.idea

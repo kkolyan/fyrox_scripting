@@ -1,6 +1,6 @@
 //! Editor with your game connected to it as a plugin.
 
-use std::env;
+use std::{env, fs};
 use std::path::{Path, PathBuf};
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
@@ -29,6 +29,9 @@ fn main() {
     env::set_current_dir(&project_dir).unwrap();
 
     println!("project directory: {}", project_dir.display());
+
+    extract_annotations();
+    create_gitignore();
 
     let settings = ensure_lua_profiles(&project_dir);
 
@@ -69,6 +72,29 @@ fn main() {
     }
 
     editor.run(event_loop)
+}
+
+fn create_gitignore() {
+    if fs::exists(".gitignore").unwrap() {
+        let _ = fs::write(".gitignore", "/.annotations\n/settings.ron\n*.log\n/.idea\n");
+    }
+}
+
+fn extract_annotations() {
+
+    const ANNOTATIONS_SUB_DIR: &str = ".annotations";
+    
+    if !fs::exists(ANNOTATIONS_SUB_DIR).unwrap() {
+        fs::create_dir_all(ANNOTATIONS_SUB_DIR).unwrap();
+        let src = env::current_exe().unwrap().parent().unwrap().join("fyrox_lite_lua_annotations.tar.gz");
+
+        if src.exists() {
+            println!("extracting annotations");
+            comprexor::Extractor::new(src.to_str().unwrap(), ANNOTATIONS_SUB_DIR).extract().unwrap();
+        } else {
+            println!("WARNING: annotations not found at {}", src.display());
+        }
+    }
 }
 
 fn ensure_lua_profiles(_working_dir: &PathBuf) -> Settings {

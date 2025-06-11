@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ -e "$1" ]; then
-  echo "Error: specified path points to existing file or directory. Non-existing path required" >&2
+  echo "Error: specified path points to existing file or directory. Non-existing path required for Fyrox Lua SDK" >&2
   exit 1
 fi
 
@@ -21,5 +21,9 @@ mkdir -p "$INSTALL_DIR"
 
 cp target/debug/fyrox_lite_lua.exe $INSTALL_DIR
 cp target/debug/fyroxed_lua.exe $INSTALL_DIR
+
+cd langs/lua/annotations
+tar -czf $INSTALL_DIR/fyrox_lite_lua_annotations.tar.gz *
+cd ../../..
 
 echo "Fyrox Lua SDK has been installed to $INSTALL_DIR"
