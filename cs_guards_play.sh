@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 cd "$(dirname "$0")"
 set -e
-
-INSTALL_DIR=$(realpath target/fyrox_cs_sdk)
+INSTALL_DIR=target/fyrox_cs_sdk
+mkdir -p $INSTALL_DIR
+INSTALL_DIR=$(realpath $INSTALL_DIR)
 
 # remove installation to detect possible regression asap
 rm -rf $INSTALL_DIR
