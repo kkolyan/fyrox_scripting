@@ -1,30 +1,28 @@
-using FyroxLite;
-
 [Uuid("c5671d19-9f1a-4286-8486-add4ebaadaec")]
 public class Player : NodeScript
 {
-    private float sensitivity;
-    private Node camera;
-    private float power;
-    private Prefab bullet;
-    private float initial_bullet_velocity;
-    private float shooting_range;
-    private float reload_delay_sec;
+    private float _sensitivity;
+    private Node _camera;
+    private float _power;
+    private Prefab _bullet;
+    private float _initialBulletVelocity;
+    private float _shootingRange;
+    private float _reloadDelaySec;
 
-    [HideInInspector] [Transient] private float ReloadSec;
+    [HideInInspector] [Transient] private float _reloadSec;
 
-    [HideInInspector] [Transient] private bool Published;
+    [HideInInspector] [Transient] private bool _published;
 
-    [HideInInspector] [Transient] private Node Collider;
+    [HideInInspector] [Transient] private Node _collider;
 
-    [HideInInspector] [Transient] private float AimY;
+    [HideInInspector] [Transient] private float _aimY;
 
     private const int FractionPlayer = 0;
 
     protected override void OnInit()
     {
         Window.CursorGrab = CursorGrabMode.Confined;
-        Collider = Node.FindColliderInChildren() ?? throw new Exception("player collider missing");
+        _collider = Node.FindColliderInChildren() ?? throw new Exception("player collider missing");
     }
 
     protected override void OnStart()
@@ -43,22 +41,22 @@ public class Player : NodeScript
 
     protected override void OnUpdate(float dt)
     {
-        if (ReloadSec > 0.0f)
+        if (_reloadSec > 0.0f)
         {
-            ReloadSec -= dt;
+            _reloadSec -= dt;
         }
 
-        if (!Published)
+        if (!_published)
         {
-            Published = true;
-            GlobalScript.Get<Game>().player = Node;
+            _published = true;
+            GlobalScript.Get<Game>().Player = Node;
         }
 
         if (Input.IsMouseButtonPressed(Input.MouseLeft))
         {
-            if (ReloadSec <= 0.0f)
+            if (_reloadSec <= 0.0f)
             {
-                ReloadSec = reload_delay_sec;
+                _reloadSec = _reloadDelaySec;
                 Fire();
             }
         }
@@ -93,32 +91,32 @@ public class Player : NodeScript
             moveDelta = moveDelta.Normalized();
         }
 
-        Node.AsRigidBody().Value.ApplyForce(Node.LocalRotation * moveDelta * power);
+        Node.AsRigidBody().Value.ApplyForce(Node.LocalRotation * moveDelta * _power);
     }
 
     private void Turn(float x)
     {
-        Node.LocalRotation *= new Quaternion(Vector3.Up, sensitivity * x);
+        Node.LocalRotation *= new Quaternion(Vector3.Up, _sensitivity * x);
     }
 
     private void Aim(float y)
     {
-        AimY += y * sensitivity;
-        AimY = Mathf.Clamp(AimY, -MathF.PI / 2.0f, MathF.PI / 2.0f);
+        _aimY += y * _sensitivity;
+        _aimY = Mathf.Clamp(_aimY, -MathF.PI / 2.0f, MathF.PI / 2.0f);
 
-        camera.LocalRotation = new Quaternion(Vector3.Left, AimY);
+        _camera.LocalRotation = new Quaternion(Vector3.Left, _aimY);
     }
 
     private void Fire()
     {
         Bullet.Spawn(new Bullet.BulletSeed
         {
-            Prefab = bullet,
-            Origin = camera.GlobalPosition,
-            Direction = camera.GlobalRotation * Vector3.Forward,
-            InitialVelocity = initial_bullet_velocity,
-            AuthorCollider = Collider,
-            Range = shooting_range,
+            Prefab = _bullet,
+            Origin = _camera.GlobalPosition,
+            Direction = _camera.GlobalRotation * Vector3.Forward,
+            InitialVelocity = _initialBulletVelocity,
+            AuthorCollider = _collider,
+            Range = _shootingRange,
             Fraction = FractionPlayer,
         });
     }

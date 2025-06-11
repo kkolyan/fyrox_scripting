@@ -26,4 +26,10 @@
             <Pack>false</Pack>
         </Content>
     </ItemGroup>
+    <PropertyGroup>
+        <!--
+        Avoid "Field '*' is never assigned" warnings, massively produced for Fyrox script fields.
+         -->
+        <NoWarn>CS0649</NoWarn>
+    </PropertyGroup>
 </Project>

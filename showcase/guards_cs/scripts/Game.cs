@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using FyroxLite;
+
 
 public class Game : GlobalScript
 {
-    public Node player;
-    [Transient] public List<Vector3> beacons;
-    private int frags;
-    private int wounds;
-    private Text hud;
+    public Node Player;
+    [Transient] public List<Vector3>? Beacons;
+    private int _frags;
+    private int _wounds;
+    private Text _hud;
 
     protected override void OnGlobalInit(string? initialSceneOverride)
     {
         Scene.LoadAsync(initialSceneOverride ?? "data/scene.rgs");
 
-        hud = Text.New(new TextBuilder
+        _hud = Text.New(new TextBuilder
         {
             FontSize = 40,
             Foreground = new Brush
@@ -24,7 +22,7 @@ public class Game : GlobalScript
             }
         });
 
-        beacons = new List<Vector3>();
+        Beacons = new List<Vector3>();
     }
 
     protected override void OnGlobalUpdate()
@@ -34,16 +32,16 @@ public class Game : GlobalScript
             Console.WriteLine("User requested exit");
             Environment.Exit(0);
         }
-        hud.TextAsync = $"Wounds: {wounds}\nKilled Guards: {frags}";
+        _hud.TextAsync = $"Wounds: {_wounds}\nKilled Guards: {_frags}";
     }
 
     public void IncFrags()
     {
-        frags += 1;
+        _frags += 1;
     }
 
     public void IncWounds()
     {
-        wounds += 1;
+        _wounds += 1;
     }
 }

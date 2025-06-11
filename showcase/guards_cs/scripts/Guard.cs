@@ -1,37 +1,32 @@
-using System;
-using System.Collections.Generic;
-using FyroxLite;
 
 [Uuid("9f8183d3-2a4a-4951-a6e6-5fbc9c479e2e")]
 public class Guard : NodeScript
 {
-    private float reload_delay_sec;
-    private float gun_height;
-    private float switch_waypoint_timeout_sec;
-    private Prefab bullet_prefab;
-    private float initial_bullet_velocity;
-    private float attack_range;
-    private float beacon_reached_distance;
-    private float move_power;
-    
-    private float move_power1;
+    private float _reloadDelaySec;
+    private float _gunHeight;
+    private float _switchWaypointTimeoutSec;
+    private Prefab _bulletPrefab;
+    private float _initialBulletVelocity;
+    private float _attackRange;
+    private float _beaconReachedDistance;
+    private float _movePower;
  
-    [HideInInspector] [Transient] private float reloading_sec;   
-    [HideInInspector] [Transient] private float waypoint_sec;
-    [HideInInspector] [Transient] private Vector3? current_waypoint;
-    [HideInInspector] [Transient] private Node collider;
-    [HideInInspector] [Transient] private int id;
+    [HideInInspector] [Transient] private float _reloadingSec;   
+    [HideInInspector] [Transient] private float _waypointSec;
+    [HideInInspector] [Transient] private Vector3? _currentWaypoint;
+    [HideInInspector] [Transient] private Node _collider;
+    [HideInInspector] [Transient] private int _id;
 
     private const int FRACTION_GUARDS = 1;
 
     public void Init(int id)
     {
-        this.id = id;
+        this._id = id;
     }
 
     private bool TryAttackPlayer()
     {
-        var playerPos = GlobalScript.Get<Game>().player.GlobalPosition;
+        var playerPos = GlobalScript.Get<Game>().Player.GlobalPosition;
         var selfPos = Node.GlobalPosition;
         var sightVector = playerPos - selfPos;
 
@@ -39,15 +34,15 @@ public class Guard : NodeScript
         {
             Bullet.Spawn(new Bullet.BulletSeed
             {
-                Prefab = bullet_prefab,
-                Origin = selfPos + Vector3.Up * gun_height,
+                Prefab = _bulletPrefab,
+                Origin = selfPos + Vector3.Up * _gunHeight,
                 Direction = sightVector,
-                InitialVelocity = initial_bullet_velocity,
-                AuthorCollider = collider,
-                Range = attack_range,
+                InitialVelocity = _initialBulletVelocity,
+                AuthorCollider = _collider,
+                Range = _attackRange,
                 Fraction = FRACTION_GUARDS
             });
-            reloading_sec = reload_delay_sec;
+            _reloadingSec = _reloadDelaySec;
             return true;
         }
 
@@ -66,7 +61,7 @@ public class Guard : NodeScript
         foreach (var hit in results)
         {
             var node = hit.Collider;
-            if (node != collider)
+            if (node != _collider)
             {
                 while (node.Alive)
                 {
@@ -87,33 +82,33 @@ public class Guard : NodeScript
 
     private void MoveToWaypoint(float dt)
     {
-        waypoint_sec += dt;
-        if (waypoint_sec > switch_waypoint_timeout_sec)
+        _waypointSec += dt;
+        if (_waypointSec > _switchWaypointTimeoutSec)
         {
-            current_waypoint = null;
-            waypoint_sec = 0.0f;
+            _currentWaypoint = null;
+            _waypointSec = 0.0f;
         }
 
-        if (current_waypoint == null)
+        if (_currentWaypoint == null)
         {
-            var beacons = GlobalScript.Get<Game>().beacons;
-            current_waypoint = beacons[new Random().Next(beacons.Count)];
+            var beacons = GlobalScript.Get<Game>().Beacons;
+            _currentWaypoint = beacons[new Random().Next(beacons.Count)];
         }
 
-        var vectorToBeacon = current_waypoint.Value - Node.LocalPosition;
-        if (vectorToBeacon.Length() < beacon_reached_distance)
+        var vectorToBeacon = _currentWaypoint.Value - Node.LocalPosition;
+        if (vectorToBeacon.Length() < _beaconReachedDistance)
         {
-            current_waypoint = null;
+            _currentWaypoint = null;
         }
         else
         {
-            Node.AsRigidBody().Value.ApplyForce(vectorToBeacon.Normalized() * move_power);
+            Node.AsRigidBody().Value.ApplyForce(vectorToBeacon.Normalized() * _movePower);
         }
     }
 
     protected override void OnInit()
     {
-        collider = Node.FindColliderInChildren() ?? throw new Exception("Collider not found under Guard node");
+        _collider = Node.FindColliderInChildren() ?? throw new Exception("Collider not found under Guard node");
     }
 
     protected override void OnStart()
@@ -123,12 +118,12 @@ public class Guard : NodeScript
 
     protected override void OnUpdate(float dt)
     {
-        if (reloading_sec > 0.0f)
+        if (_reloadingSec > 0.0f)
         {
-            reloading_sec -= dt;
+            _reloadingSec -= dt;
         }
 
-        if (reloading_sec > 0.0f || !TryAttackPlayer())
+        if (_reloadingSec > 0.0f || !TryAttackPlayer())
         {
             MoveToWaypoint(dt);
         }

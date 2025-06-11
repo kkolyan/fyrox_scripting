@@ -1,10 +1,9 @@
-using FyroxLite;
 
 [Uuid("c69ae5fa-de26-4ee5-b70c-113df285f6e2")]
 public class GuardChief : NodeScript
 {
-    private Prefab gaurd_prefab;
-    private float initial_count;
+    private Prefab _gaurdPrefab;
+    private float _initialCount;
     
     
     
@@ -23,15 +22,15 @@ public class GuardChief : NodeScript
         if (!initialized)
         {
             initialized = true;
-            for (int i = 1; i <= initial_count; i++)
+            for (int i = 1; i <= _initialCount; i++)
             {
-                var beacons = GlobalScript.Get<Game>().beacons;
+                var beacons = GlobalScript.Get<Game>().Beacons;
                 if (beacons.Count > 0)
                 {
                     var position = beacons[new Random().Next(beacons.Count)];
                     var angle = (float)(new Random().NextDouble() * 2 * Math.PI);
 
-                    var guard = gaurd_prefab.InstantiateAt(position, new Quaternion(Vector3.Up, angle));
+                    var guard = _gaurdPrefab.InstantiateAt(position, new Quaternion(Vector3.Up, angle));
                     guard.FindScript<Guard>().Init(i);
 
                     Log.Info($"Guard spawned at {position}");
