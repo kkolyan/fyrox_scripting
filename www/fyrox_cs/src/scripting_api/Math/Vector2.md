@@ -1,15 +1,18 @@
 # Vector2
 struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Description
 
 (code of this item is picked from Godot Engine in compliance with MIT license).
 
  2-element structure that can be used to represent positions in 2D space or any other pair of numeric values.
 
+
 ## Constructors
 | Signature | Description |
 |---|---|
 | ( float <ins>x</ins>, float <ins>y</ins> ) |  Constructs a new `Vector2` with the given components.      |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -67,6 +70,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | int | `GetHashCode` (  ) |  Serves as the hash function for `Vector2` .    |
 | string | `ToString` (  ) |  Converts this `Vector2` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Vector2` to a string with the given `name` .    |
+
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -77,10 +81,12 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `Down` | [Vector2](../Math/Vector2.md) | get |  Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to `new Vector2(0, 1)` .  |
 | `Right` | [Vector2](../Math/Vector2.md) | get |  Right unit vector. Represents the direction of right.  Equivalent to `new Vector2(1, 0)` .  |
 | `Left` | [Vector2](../Math/Vector2.md) | get |  Left unit vector. Represents the direction of left.  Equivalent to `new Vector2(-1, 0)` .  |
+
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|
 | [Vector2](../Math/Vector2.md) | `FromAngle` ( float <ins>angle</ins> ) |  Creates a unit Vector2 rotated to the given angle. This is equivalent to doing `Vector2(Mathf.Cos(angle), Mathf.Sin(angle))` or `Vector2.Right.Rotated(angle)` .      |
+
 ## Operators
 | Return Type | Signature | Description |
 |---|---|---|

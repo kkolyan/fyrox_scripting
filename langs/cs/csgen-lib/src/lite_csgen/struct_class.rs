@@ -8,7 +8,7 @@ use gen_common::templating::render;
 use lite_model::{DataType, Field, StructClass};
 use crate::lite_csgen::{api_types, wrappers};
 use crate::lite_csgen::api_types::CsType;
-use crate::lite_csgen::doc::StringExt;
+use gen_common::doc::strExt;
 use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub(crate) fn generate_bindings(class: &StructClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {

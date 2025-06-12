@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use gen_common::by_package::extract_package;
+use gen_common::doc::strExt;
 use gen_common::writelnu;
 use lite_model::{ClassName, StructClass};
 
@@ -10,10 +11,10 @@ pub fn generate_struct(s: &mut String, class: &StructClass, naming: Naming, clas
     let package = naming.package_name(extract_package(&class.rust_struct_path));
     writelnu!(s, "struct in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
     if !class.description.is_empty() {
-        writelnu!(s, "## Description");
-        writelnu!(s, "{}", class.description);
+        writelnu!(s, "\n## Description");
+        writelnu!(s, "{}", class.description.md2html());
     }
-    writelnu!(s, "## Fields");
+    writelnu!(s, "\n## Fields");
 
     writelnu!(s, "| Name | Type | Description |");
     writelnu!(s, "|---|---|---|");
@@ -23,7 +24,7 @@ pub fn generate_struct(s: &mut String, class: &StructClass, naming: Naming, clas
             "| `{}` | {} | {} |",
             naming.member_name(&field.name),
             type_rust_to_md(&field.ty, class_page_links),
-            ""
+            field.description.md2html().replace("\n", " ")
         );
     }
 }

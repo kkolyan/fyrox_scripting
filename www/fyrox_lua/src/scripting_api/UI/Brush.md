@@ -1,11 +1,13 @@
 # Brush
 struct in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
+
 ## Description
-Brush defines a way to fill an arbitrary surface.
+<p>Brush defines a way to fill an arbitrary surface.</p>
+
 ## Fields
 | Name | Type | Description |
 |---|---|---|
-| `solid_color` | [Color](../Color/Color.md)? |  |
-| `linear_gradient` | [LinearGradient](../UI/LinearGradient.md)? |  |
-| `radial_gradient` | [RadialGradient](../UI/RadialGradient.md)? |  |
+| `solid_color` | [Color](../Color/Color.md)? | <p>A brush, that fills a surface with a solid color.</p> |
+| `linear_gradient` | [LinearGradient](../UI/LinearGradient.md)? | <p>A brush, that fills a surface with a linear gradient, which is defined by two points in local coordinates and a set of stop points. See [<code>GradientPoint</code>] for more info.</p> |
+| `radial_gradient` | [RadialGradient](../UI/RadialGradient.md)? | <p>A brush, that fills a surface with a radial gradient, which is defined by a center point in local coordinates and a set of stop points. See [<code>GradientPoint</code>] for more info.</p> |
 

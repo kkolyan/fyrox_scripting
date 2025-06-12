@@ -3,7 +3,7 @@ use gen_common::context::GenerationContext;
 use gen_common::templating::render;
 use lite_model::{DataType, EnumClass, StructClass};
 use crate::lite_csgen::api_types;
-use crate::lite_csgen::doc::StringExt;
+use gen_common::doc::strExt;
 use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub(crate) fn generate_bindings(class: &EnumClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {

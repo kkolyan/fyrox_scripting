@@ -1,10 +1,12 @@
 # Mathf
 class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Description
 
 (code of this item is picked from Godot Engine in compliance with MIT license).
 
  Provides constants and static methods for common mathematical functions.
+
 
 ## Constants
 | Name | Type | Value | Description |
@@ -16,6 +18,7 @@ class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `E` | float | (real_t)2.7182818284590452353602874714M |  The natural number `e` .  |
 | `Sqrt2` | float | (real_t)1.4142135623730950488016887242M |  The square root of 2.  |
 | `Epsilon` | float | EpsilonF |  A very small number used for float comparison with error tolerance.  1e-06 with single-precision floats, but 1e-14 if `REAL_T_IS_DOUBLE` .  |
+
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|

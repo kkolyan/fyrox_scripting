@@ -1,15 +1,18 @@
 # Vector3
 struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Description
 
 (code of this item is picked from Godot Engine in compliance with MIT license).
 
  3-element structure that can be used to represent positions in 3D space or any other pair of numeric values.
 
+
 ## Constructors
 | Signature | Description |
 |---|---|
 | ( float <ins>x</ins>, float <ins>y</ins>, float <ins>z</ins> ) |  Constructs a new `Vector3` with the given components.        |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -64,6 +67,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | int | `GetHashCode` (  ) |  Serves as the hash function for `Vector3` .    |
 | string | `ToString` (  ) |  Converts this `Vector3` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Vector3` to a string with the given `name` .    |
+
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -82,6 +86,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `ModelBottom` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the bottom side (down) of imported 3D assets.  |
 | `ModelFront` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the front side (facing forward) of imported 3D assets.  |
 | `ModelRear` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the rear side (back) of imported 3D assets.  |
+
 ## Operators
 | Return Type | Signature | Description |
 |---|---|---|

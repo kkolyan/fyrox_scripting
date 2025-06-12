@@ -15,6 +15,3 @@ gen-common = { workspace = true }
 syn = { workspace = true }
 quote = { workspace = true }
 proc-macro2 ={ workspace = true }
-pulldown-cmark = "0.13.0"
-#quick-xml = "0.37.5"
-xml = "0.8.20"

@@ -4,12 +4,12 @@ use itertools::Itertools;
 use to_vec::ToVec;
 use gen_common::code_model::{Module};
 use gen_common::context::GenerationContext;
+use gen_common::doc::strExt;
 use gen_common::properties::{Getter, Setter};
 use gen_common::templating::{render, render_string};
 use lite_model::{Class, ConstantValue, DataType, EngineClass, Literal, Method, StructClass};
 use crate::lite_csgen::{api_types, wrappers};
 use crate::lite_csgen::api_types::CsType;
-use crate::lite_csgen::doc::StringExt;
 use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {

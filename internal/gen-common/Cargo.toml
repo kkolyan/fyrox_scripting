@@ -11,3 +11,5 @@ extend = { workspace = true }
 convert_case = { workspace = true }
 to_vec = { workspace = true }
 itertools = { workspace = true }
+pulldown-cmark = "0.13.0"
+xml = "0.8.20"

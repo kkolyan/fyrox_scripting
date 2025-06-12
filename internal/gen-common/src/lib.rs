@@ -5,6 +5,7 @@ pub mod code_model;
 pub mod fmt;
 pub mod properties;
 pub mod methods;
+pub mod doc;
 
 #[macro_export]
 macro_rules! writelnu {

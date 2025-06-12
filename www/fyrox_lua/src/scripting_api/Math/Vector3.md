@@ -1,11 +1,13 @@
 # Vector3
 class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
 | `x` | float | get / set |  |
 | `y` | float | get / set |  |
 | `z` | float | get / set |  |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -15,6 +17,7 @@ class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | [Vector3](../Math/Vector3.md) | `sub` ( [Vector3](../Math/Vector3.md) <ins>o</ins> ) |  |
 | float | `magnitude` (  ) |  |
 | void | `normalize_inplace` (  ) |  |
+
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -22,6 +25,7 @@ class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `Y` | [Vector3](../Math/Vector3.md) | get |  |
 | `Z` | [Vector3](../Math/Vector3.md) | get |  |
 | `ZERO` | [Vector3](../Math/Vector3.md) | get |  |
+
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|

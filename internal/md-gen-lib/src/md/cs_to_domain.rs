@@ -99,7 +99,7 @@ fn generate_package(
     }
 
     if !classes.is_empty() {
-        writelnu!(s, "## Classes");
+        writelnu!(s, "\n## Classes");
         for x in classes.iter() {
             writelnu!(
                 s,
@@ -112,7 +112,7 @@ fn generate_package(
     }
 
     if !structs.is_empty() {
-        writelnu!(s, "## Structs");
+        writelnu!(s, "\n## Structs");
         for x in structs.iter() {
             writelnu!(
                 s,
@@ -125,7 +125,7 @@ fn generate_package(
     }
 
     if !enums.is_empty() {
-        writelnu!(s, "## Enums");
+        writelnu!(s, "\n## Enums");
         for x in enums.iter() {
             writelnu!(
                 s,
@@ -249,12 +249,12 @@ fn class_to_md(
         );
     }
     if !class.description.is_empty() {
-        writelnu!(s, "## Description");
+        writelnu!(s, "\n## Description");
         writelnu!(s, "{}", cs_docs_to_string(&class.description, "\n"));
     }
 
     if !class.constructors.is_empty() {
-        writelnu!(s, "## Constructors");
+        writelnu!(s, "\n## Constructors");
         render_constructors(
             &mut s,
             class.constructors.iter().to_vec().as_slice(),
@@ -264,36 +264,36 @@ fn class_to_md(
 
     let constants = class.fields.iter().filter(|it| it.is_const).to_vec();
     if !constants.is_empty() {
-        writelnu!(s, "## Constants");
+        writelnu!(s, "\n## Constants");
         render_constants(&mut s, &constants, class_page_links);
     }
 
     let properties = class.properties.iter().filter(|it| !it.is_static).to_vec();
     if !properties.is_empty() {
-        writelnu!(s, "## Properties");
+        writelnu!(s, "\n## Properties");
         render_properties(&mut s, properties.as_slice(), class_page_links);
     }
 
     let methods = class.methods.iter().filter(|it| !it.is_static).to_vec();
     if !methods.is_empty() {
-        writelnu!(s, "## Methods");
+        writelnu!(s, "\n## Methods");
         render_methods(&mut s, methods.as_slice(), class_page_links);
     }
 
     let mut static_props = class.properties.iter().filter(|it| it.is_static).to_vec();
     if !static_props.is_empty() {
-        writelnu!(s, "## Static Properties");
+        writelnu!(s, "\n## Static Properties");
         render_properties(&mut s, static_props.as_slice(), class_page_links);
     }
 
     let static_methods = class.methods.iter().filter(|it| it.is_static).to_vec();
     if !static_methods.is_empty() {
-        writelnu!(s, "## Static Methods");
+        writelnu!(s, "\n## Static Methods");
         render_methods(&mut s, static_methods.as_slice(), class_page_links);
     }
 
     if !class.operators.is_empty() {
-        writelnu!(s, "## Operators");
+        writelnu!(s, "\n## Operators");
         render_methods(
             &mut s,
             class.operators.iter().to_vec().as_slice(),
@@ -439,11 +439,11 @@ fn enum_to_md(
     writelnu!(s, "# {}", &class.name);
     writelnu!(s, "enum in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
     if !class.description.is_empty() {
-        writelnu!(s, "## Description");
+        writelnu!(s, "\n## Description");
         writelnu!(s, "{}", cs_docs_to_string(&class.description, "\n"));
     }
 
-    writelnu!(s, "## Properties");
+    writelnu!(s, "\n## Properties");
     writelnu!(s, "| Property | Description |");
     writelnu!(s, "|---|---|");
     for variant in class.members.iter() {

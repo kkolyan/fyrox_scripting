@@ -1,10 +1,11 @@
 # FeatureKind
 enum in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
+
 ## Properties
 | Property | Description |
 |---|---|
-| `Vertex` | Shape-dependent identifier of a vertex. |
-| `Edge` | Shape-dependent identifier of an edge. |
-| `Face` | Shape-dependent identifier of a face. |
-| `Unknown` | Unknown identifier. |
+| `Vertex` | <p>Shape-dependent identifier of a vertex.</p> |
+| `Edge` | <p>Shape-dependent identifier of an edge.</p> |
+| `Face` | <p>Shape-dependent identifier of a face.</p> |
+| `Unknown` | <p>Unknown identifier.</p> |
 

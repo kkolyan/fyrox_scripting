@@ -795,13 +795,11 @@ dependencies = [
  "itertools 0.13.0",
  "lite-model",
  "proc-macro2",
- "pulldown-cmark",
  "quote",
  "serde",
  "serde_json",
  "syn 2.0.87",
  "to_vec",
- "xml",
 ]
 
 [[package]]
@@ -1712,9 +1710,11 @@ dependencies = [
  "extend",
  "itertools 0.13.0",
  "lite-model",
+ "pulldown-cmark",
  "serde",
  "serde_json",
  "to_vec",
+ "xml",
 ]
 
 [[package]]

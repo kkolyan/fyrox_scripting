@@ -1,5 +1,6 @@
 # Basis
 struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Description
 
 (code of this item is picked from Godot Engine in compliance with MIT license).
@@ -17,6 +18,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
  For more information, read this documentation article:
  https://docs.godotengine.org/en/latest/tutorials/math/matrices_and_transforms.html
 
+
 ## Constructors
 | Signature | Description |
 |---|---|
@@ -24,6 +26,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | ( [Vector3](../Math/Vector3.md) <ins>axis</ins>, float <ins>angle</ins> ) |  Constructs a pure rotation basis matrix, rotated around the given `name` by `name` (in radians). The axis must be a normalized vector.      |
 | ( [Vector3](../Math/Vector3.md) <ins>column0</ins>, [Vector3](../Math/Vector3.md) <ins>column1</ins>, [Vector3](../Math/Vector3.md) <ins>column2</ins> ) |  Constructs a basis matrix from 3 axis vectors (matrix columns).        |
 | ( float <ins>xx</ins>, float <ins>yx</ins>, float <ins>zx</ins>, float <ins>xy</ins>, float <ins>yy</ins>, float <ins>zy</ins>, float <ins>xz</ins>, float <ins>yz</ins>, float <ins>zz</ins> ) |  Constructs a transformation matrix from the given components.  Arguments are named such that xy is equal to calling `X.Y` .                    |
+
 ## Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -34,6 +37,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `Column1` | [Vector3](../Math/Vector3.md) | get / set |  Column 1 of the basis matrix (the Y vector).  Equivalent to `Y` and array index `[1]` .  |
 | `Column2` | [Vector3](../Math/Vector3.md) | get / set |  Column 2 of the basis matrix (the Z vector).  Equivalent to `Z` and array index `[2]` .  |
 | `Scale` | [Vector3](../Math/Vector3.md) | get |  Assuming that the matrix is the combination of a rotation and scaling,  return the absolute value of scaling factors along each axis.  |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -56,6 +60,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | int | `GetHashCode` (  ) |  Serves as the hash function for `Basis` .    |
 | string | `ToString` (  ) |  Converts this `Basis` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Basis` to a string with the given `name` .    |
+
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -63,6 +68,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `FlipX` | [Basis](../Math/Basis.md) | get |  The basis that will flip something along the X axis when used in a transformation.  Equivalent to `new Basis(Vector3.Left, Vector3.Up, Vector3.Back)` .  |
 | `FlipY` | [Basis](../Math/Basis.md) | get |  The basis that will flip something along the Y axis when used in a transformation.  Equivalent to `new Basis(Vector3.Right, Vector3.Down, Vector3.Back)` .  |
 | `FlipZ` | [Basis](../Math/Basis.md) | get |  The basis that will flip something along the Z axis when used in a transformation.  Equivalent to `new Basis(Vector3.Right, Vector3.Up, Vector3.Forward)` .  |
+
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -70,6 +76,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | [Basis](../Math/Basis.md) | `LookingAt` ( [Vector3](../Math/Vector3.md) <ins>target</ins>, [Vector3](../Math/Vector3.md) <ins>up</ins> ) |  The same as LookingAt  |
 | [Basis](../Math/Basis.md) | `FromEuler` ( [Vector3](../Math/Vector3.md) <ins>euler</ins>, [EulerOrder](../Math/EulerOrder.md) <ins>order</ins> ) |  Constructs a Basis matrix from Euler angles in the specified rotation order. By default, use YXZ order (most common).      |
 | [Basis](../Math/Basis.md) | `FromScale` ( [Vector3](../Math/Vector3.md) <ins>scale</ins> ) |  Constructs a pure scale basis matrix with no rotation or shearing.  The scale values are set as the main diagonal of the matrix,  and all of the other parts of the matrix are zero.      |
+
 ## Operators
 | Return Type | Signature | Description |
 |---|---|---|

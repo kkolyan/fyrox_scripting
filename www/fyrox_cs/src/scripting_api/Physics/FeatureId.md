@@ -1,7 +1,9 @@
 # FeatureId
 struct in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
+
 ## Description
-Shape-dependent identifier.
+<p>Shape-dependent identifier.</p>
+
 ## Fields
 | Name | Type | Description |
 |---|---|---|

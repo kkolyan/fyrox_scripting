@@ -14,6 +14,7 @@ use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 use std::fmt::Display;
 use to_vec::ToVec;
+use gen_common::doc::strExt;
 
 struct Property<'a> {
     name: &'a str,
@@ -33,37 +34,37 @@ pub fn generate_engine(
     let package = naming.package_name(extract_package(&class.rust_struct_path));
     writelnu!(s, "class in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
     if !class.description.is_empty() {
-        writelnu!(s, "## Description");
-        writelnu!(s, "{}", class.description);
+        writelnu!(s, "\n## Description");
+        writelnu!(s, "{}", class.description.md2html());
     }
 
     let constants = class.constants.as_slice();
     if !constants.is_empty() {
-        writelnu!(s, "## Constants");
+        writelnu!(s, "\n## Constants");
         render_constants(s, constants, naming, class_page_links);
     }
 
     let properties = extract_properties(class, true);
     if !properties.is_empty() {
-        writelnu!(s, "## Properties");
+        writelnu!(s, "\n## Properties");
         render_properties(s, properties.as_slice(), naming, class_page_links);
     }
 
     let methods = extract_regular_methods(class, true);
     if !methods.is_empty() {
-        writelnu!(s, "## Methods");
+        writelnu!(s, "\n## Methods");
         render_methods(s, methods.as_slice(), naming, class_page_links);
     }
 
     let mut static_props = extract_properties(class, false);
     if !static_props.is_empty() {
-        writelnu!(s, "## Static Properties");
+        writelnu!(s, "\n## Static Properties");
         render_properties(s, static_props.as_slice(), naming, class_page_links);
     }
 
     let static_methods = extract_regular_methods(class, false);
     if !static_methods.is_empty() {
-        writelnu!(s, "## Static Methods");
+        writelnu!(s, "\n## Static Methods");
         render_methods(s, static_methods.as_slice(), naming, class_page_links);
     }
 }
@@ -108,7 +109,7 @@ fn render_methods(
                     naming.param_name(&it.name)
                 ))
                 .join(", "),
-            &method.description
+            &method.description.md2html().replace("\n", " ")
         );
     }
 }
@@ -134,7 +135,7 @@ fn render_properties(
             naming.member_name(prop.name),
             type_rust_to_md(prop.ty, class_page_links),
             access,
-            prop.description
+            prop.description.md2html().replace("\n", " ")
         );
     }
 }
@@ -154,7 +155,7 @@ fn render_constants(
             naming.member_name(&constant.const_name),
             type_rust_to_md(&constant.ty, class_page_links),
             constant_to_display(&constant.value),
-            &constant.description
+            &constant.description.md2html().replace("\n", " ")
         );
     }
 }
@@ -221,8 +222,8 @@ fn extract_properties(class: &EngineClass, instance: bool) -> Vec<Property> {
                 name: prop,
                 description: format!(
                     "{}{}",
-                    get.map(|it| it.description.as_str()).unwrap_or(""),
-                    get.map(|it| it.description.as_str()).unwrap_or("")
+                    get.map(|it| it.description.as_str()).unwrap_or("").md2html().replace("\n", " "),
+                    set.map(|it| it.description.as_str()).unwrap_or("").md2html().replace("\n", " "),
                 ),
                 ty,
                 read: get_ty.is_some(),

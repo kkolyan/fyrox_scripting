@@ -1,6 +1,6 @@
 # Summary
 
-- [Getting Started](introduction.md)
+- [Getting started](introduction.md)
 - [Scripting API (Lua)](scripting_api.md)
   - [Color](scripting_api/Color.md)
     - [Color](scripting_api/Color/Color.md)

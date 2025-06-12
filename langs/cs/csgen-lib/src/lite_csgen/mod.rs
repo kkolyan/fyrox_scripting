@@ -11,7 +11,6 @@ pub mod api_types;
 pub mod write_cs;
 pub mod wrappers;
 pub mod gen_rs;
-mod doc;
 
 pub fn generate_cs_facade(domain: &Domain) -> (Module, RustEmitter) {
     let ctx = GenerationContext {

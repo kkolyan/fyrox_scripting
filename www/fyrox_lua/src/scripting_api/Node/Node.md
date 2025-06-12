@@ -1,5 +1,6 @@
 # Node
 class in [FyroxLite](../../scripting_api.md).[Node](../Node.md)
+
 ## Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -12,13 +13,14 @@ class in [FyroxLite](../../scripting_api.md).[Node](../Node.md)
 | `parent` | [Node](../Node/Node.md) | get |  |
 | `global_rotation` | [Quaternion](../Math/Quaternion.md) | get |  |
 | `tag` | string | get / set |  |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
 | [RigidBody](../Physics/RigidBody.md)? | `as_rigid_body` (  ) |  |
 | void | `destroy` (  ) |  |
-| void | `send_hierarchical` ( [RoutingStrategy](../Node/RoutingStrategy.md) <ins>routing</ins>, object <ins>payload</ins> ) | Sends a hierarchical script message with the given payload. |
-| void | `subscribe_to` (  ) |  |
+| void | `send_hierarchical` ( [RoutingStrategy](../Node/RoutingStrategy.md) <ins>routing</ins>, object <ins>payload</ins> ) | <p>Sends a hierarchical script message with the given payload.</p> |
+| void | `subscribe_to` <`T`> (  ) |  |
 | [Node](../Node/Node.md)? | `find_collider_in_children` (  ) |  |
 | `T` | `add_script` <`T`> (  ) |  |
 | `T`? | `find_script` <`T`> (  ) |  |

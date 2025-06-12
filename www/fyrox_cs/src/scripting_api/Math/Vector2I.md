@@ -1,15 +1,18 @@
 # Vector2I
 struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Description
 
 (code of this item is picked from Godot Engine in compliance with MIT license).
 
  2-element structure that can be used to represent 2D grid coordinates or pairs of integers.
 
+
 ## Constructors
 | Signature | Description |
 |---|---|
 | ( int <ins>x</ins>, int <ins>y</ins> ) |  Constructs a new `Vector2I` with the given components.      |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -36,6 +39,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | int | `GetHashCode` (  ) |  Serves as the hash function for `Vector2I` .    |
 | string | `ToString` (  ) |  Converts this `Vector2I` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Vector2I` to a string with the given `name` .    |
+
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
@@ -47,6 +51,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | `Down` | [Vector2I](../Math/Vector2I.md) | get |  Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to `new Vector2I(0, 1)` .  |
 | `Right` | [Vector2I](../Math/Vector2I.md) | get |  Right unit vector. Represents the direction of right.  Equivalent to `new Vector2I(1, 0)` .  |
 | `Left` | [Vector2I](../Math/Vector2I.md) | get |  Left unit vector. Represents the direction of left.  Equivalent to `new Vector2I(-1, 0)` .  |
+
 ## Operators
 | Return Type | Signature | Description |
 |---|---|---|

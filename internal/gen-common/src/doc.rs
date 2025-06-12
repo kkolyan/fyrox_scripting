@@ -7,10 +7,10 @@ use to_vec::ToVec;
 use xml::name::{Name, OwnedName};
 use xml::reader::XmlEvent;
 use xml::writer::XmlEvent as WriterEvent;
-use xml::{writer, EmitterConfig, EventReader, EventWriter};
+use xml::{EmitterConfig, EventReader, EventWriter};
 
 #[extend::ext]
-pub impl String {
+pub impl str {
     fn to_doc(&self, indent: &str) -> String {
         self.md2html()
             .html2xmldoc()
@@ -31,12 +31,12 @@ pub impl String {
         let parser = Parser::new_ext(self, Options::all());
         let mut html_output = String::new();
         push_html(&mut html_output, parser);
-        html_output
+        html_output.trim().to_string()
     }
 
     fn html2xmldoc(&self) -> String {
         if self.is_empty() {
-            return self.clone();
+            return self.to_string();
         }
 
         let mapping: HashMap<&str, Vec<&str>> = HashMap::from_iter([

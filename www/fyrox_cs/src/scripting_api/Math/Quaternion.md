@@ -1,5 +1,6 @@
 # Quaternion
 struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+
 ## Description
 
 (code of this item is picked from Godot Engine in compliance with MIT license).
@@ -18,6 +19,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
  operations (obtaining axis-angle and performing SLERP, in particular)
  are more efficient and robust against floating-point errors.
 
+
 ## Constructors
 | Signature | Description |
 |---|---|
@@ -25,6 +27,7 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | ( [Basis](../Math/Basis.md) <ins>basis</ins> ) |  Constructs a `Quaternion` from the given `Basis` .    |
 | ( [Vector3](../Math/Vector3.md) <ins>axis</ins>, float <ins>angle</ins> ) |  Constructs a `Quaternion` that will rotate around the given axis  by the specified angle. The axis must be a normalized vector.      |
 | ( [Vector3](../Math/Vector3.md) <ins>arcFrom</ins>, [Vector3](../Math/Vector3.md) <ins>arcTo</ins> ) |  |
+
 ## Methods
 | Return Type | Signature | Description |
 |---|---|---|
@@ -51,14 +54,17 @@ struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | int | `GetHashCode` (  ) |  Serves as the hash function for `Quaternion` .    |
 | string | `ToString` (  ) |  Converts this `Quaternion` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Quaternion` to a string with the given `name` .    |
+
 ## Static Properties
 | Name | Type | Access | Description |
 |---|---|---|---|
 | `Identity` | [Quaternion](../Math/Quaternion.md) | get |  The identity quaternion, representing no rotation.  Equivalent to an identity `Basis` matrix. If a vector is transformed by  an identity quaternion, it will not change.  Equivalent to `new Quaternion(0, 0, 0, 1)` .  |
+
 ## Static Methods
 | Return Type | Signature | Description |
 |---|---|---|
 | [Quaternion](../Math/Quaternion.md) | `FromEuler` ( [Vector3](../Math/Vector3.md) <ins>eulerYXZ</ins> ) |  Constructs a `Quaternion` that will perform a rotation specified by  Euler angles (in the YXZ convention: when decomposing, first Z, then X, and Y last),  given in the vector format as (X angle, Y angle, Z angle).    |
+
 ## Operators
 | Return Type | Signature | Description |
 |---|---|---|

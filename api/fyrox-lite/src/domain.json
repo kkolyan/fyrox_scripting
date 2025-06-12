@@ -1239,55 +1239,6 @@
     },
     {
       "Engine": {
-        "class_name": "LiteText",
-        "rust_struct_path": "fyrox_lite::lite_ui::LiteText",
-        "methods": [
-          {
-            "instance": true,
-            "method_name": "set_text_async",
-            "signature": {
-              "params": [
-                {
-                  "name": "text",
-                  "ty": "String",
-                  "variadic": false
-                }
-              ]
-            },
-            "description": "sets the text of UI element. applied at the end of frame."
-          },
-          {
-            "instance": true,
-            "method_name": "get_text",
-            "signature": {
-              "return_ty": "String"
-            },
-            "description": "current value (`set_text_async` doesn't affect this immediately)"
-          },
-          {
-            "instance": false,
-            "method_name": "new",
-            "signature": {
-              "params": [
-                {
-                  "name": "state",
-                  "ty": {
-                    "Object": "TextBuilder"
-                  },
-                  "variadic": false
-                }
-              ],
-              "return_ty": {
-                "Object": "LiteText"
-              }
-            }
-          }
-        ],
-        "description": "Text is a simple widget that allows you to print text on screen. It has various options like word wrapping, text\nalignment, and so on.\n\n## How to create\n\nAn instance of the [`Text`] widget could be created like so:\n\n```rust\n# use fyrox_ui::{\n#     core::pool::Handle,\n#     text::TextBuilder, widget::WidgetBuilder, UiNode, UserInterface\n# };\nfn create_text(ui: &mut UserInterface, text: &str) -> Handle<UiNode> {\nTextBuilder::new(WidgetBuilder::new())\n.with_text(text)\n.build(&mut ui.build_ctx())\n}\n```\n\n## Text alignment and word wrapping\n\nThere are various text alignment options for both vertical and horizontal axes. Typical alignment values are:\n[`HorizontalAlignment::Left`], [`HorizontalAlignment::Center`], [`HorizontalAlignment::Right`] for horizontal axis,\nand [`VerticalAlignment::Top`], [`VerticalAlignment::Center`], [`VerticalAlignment::Bottom`] for vertical axis. An\ninstance of centered text could be created like so:\n\n```rust,no_run\n# use fyrox_ui::{\n#     core::pool::Handle,\n#     text::TextBuilder, widget::WidgetBuilder, HorizontalAlignment, UiNode, UserInterface,\n#     VerticalAlignment,\n# };\nfn create_centered_text(ui: &mut UserInterface, text: &str) -> Handle<UiNode> {\nTextBuilder::new(WidgetBuilder::new())\n.with_horizontal_text_alignment(HorizontalAlignment::Center)\n.with_vertical_text_alignment(VerticalAlignment::Center)\n.with_text(text)\n.build(&mut ui.build_ctx())\n}\n```\n\nWhat's the difference between widget's alignment and text-specific? Widget's alignment operates on a bounding rectangle\nof the text and text-specific alignment operates on line-basis. This means that if you set [`HorizontalAlignment::Center`]\nas widget's alignment, your text lines won't be centered, instead they'll be aligned at the left and the entire text block\nwill be aligned at center.\n\nLong text is usually needs to wrap on available bounds, there are three possible options for word wrapping:\n[`WrapMode::NoWrap`], [`WrapMode::Letter`], [`WrapMode::Word`]. An instance of text with word-based wrapping could\nbe created like so:\n\n```rust,no_run\n# use fyrox_ui::{\n#     core::pool::Handle,\n#     formatted_text::WrapMode, text::TextBuilder, widget::WidgetBuilder, UiNode,\n#     UserInterface,\n# };\nfn create_text_with_word_wrap(ui: &mut UserInterface, text: &str) -> Handle<UiNode> {\nTextBuilder::new(WidgetBuilder::new())\n.with_wrap(WrapMode::Word)\n.with_text(text)\n.build(&mut ui.build_ctx())\n}\n```\n\n## Background\n\nIf you need to have a text with some background, you should use [`crate::border::Border`] widget as a parent widget of your\ntext. **Caveat:** [`WidgetBuilder::with_background`] is ignored for [`Text`] widget!\n\n```rust,no_run\n# use fyrox_ui::{\n#     core::{color::Color, pool::Handle},\n#     border::BorderBuilder, brush::Brush, text::TextBuilder, widget::WidgetBuilder, UiNode,\n#     UserInterface,\n# };\n#\nfn create_text_with_background(ui: &mut UserInterface, text: &str) -> Handle<UiNode> {\nlet text_widget =\nTextBuilder::new(WidgetBuilder::new().with_foreground(Brush::Solid(Color::RED).into()))\n.with_text(text)\n.build(&mut ui.build_ctx());\nBorderBuilder::new(\nWidgetBuilder::new()\n.with_child(text_widget) // <-- Text is now a child of the border\n.with_background(Brush::Solid(Color::opaque(50, 50, 50)).into()),\n)\n.build(&mut ui.build_ctx())\n}\n```\n\nKeep in mind that now the text widget is a child widget of the border, so if you need to position the text, you should\nposition the border, not the text.\n\n## Fonts and colors\n\nTo set a color of the text just use [`WidgetBuilder::with_foreground`] while building the text instance:\n\n```rust,no_run\n# use fyrox_ui::{\n#     core::{color::Color, pool::Handle},\n#     brush::Brush, text::TextBuilder, widget::WidgetBuilder, UiNode, UserInterface\n# };\nfn create_text(ui: &mut UserInterface, text: &str) -> Handle<UiNode> {\n//               vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\nTextBuilder::new(WidgetBuilder::new().with_foreground(Brush::Solid(Color::RED).into()))\n.with_text(text)\n.build(&mut ui.build_ctx())\n}\n```\n\nBy default, text is created with default font, however it is possible to set any custom font:\n\n```rust\n# use fyrox_resource::manager::ResourceManager;\n# use fyrox_ui::{\n#     core::{futures::executor::block_on, pool::Handle},\n#     text::TextBuilder,\n#     font::{Font, FontResource},\n#     widget::WidgetBuilder,\n#     UiNode, UserInterface,\n# };\n\nfn create_text(ui: &mut UserInterface, resource_manager: &ResourceManager, text: &str) -> Handle<UiNode> {\nTextBuilder::new(WidgetBuilder::new())\n.with_font(resource_manager.request::<Font>(\"path/to/your/font.ttf\"))\n.with_text(text)\n.with_font_size(20.0f32.into())\n.build(&mut ui.build_ctx())\n}\n```\n\nPlease refer to [`crate::font::Font`] chapter to learn more about fonts.\n\n### Font size\n\nUse [`fyrox::gui::text::TextBuilder::with_font_size`] or send [`TextMessage::font_size`] to your Text widget instance\nto set the font size of it.\n\n## Shadows\n\nText widget supports shadows effect to add contrast to your text, which could be useful to make text readable independent\non the background colors. This effect could be used for subtitles. Shadows are pretty easy to add, all you need to do\nis to enable them, setup desired thickness, offset and brush (solid color or gradient).\n\n```rust,no_run\n# use fyrox_ui::{\n#     core::{algebra::Vector2, color::Color, pool::Handle},\n#     brush::Brush, text::TextBuilder, widget::WidgetBuilder, UiNode, UserInterface\n# };\n#\nfn create_red_text_with_black_shadows(ui: &mut UserInterface, text: &str) -> Handle<UiNode> {\nTextBuilder::new(WidgetBuilder::new().with_foreground(Brush::Solid(Color::RED).into()))\n.with_text(text)\n// Enable shadows.\n.with_shadow(true)\n// Black shadows.\n.with_shadow_brush(Brush::Solid(Color::BLACK))\n// 1px thick.\n.with_shadow_dilation(1.0)\n// Offset the shadow slightly to the right-bottom.\n.with_shadow_offset(Vector2::new(1.0, 1.0))\n.build(&mut ui.build_ctx())\n}\n```\n\n## Messages\n\nText widget can accept the following list of messages at runtime (respective constructors are name with small letter -\n`TextMessage::Text -> TextMessage::text(widget_handle, direction, text)`):\n\n- [`TextMessage::Text`] - sets new text for a `Text` widget.\n- [`TextMessage::Wrap`] - sets new [wrapping mode](Text#text-alignment-and-word-wrapping).\n- [`TextMessage::Font`] - sets new [font](Text#fonts-and-colors)\n- [`TextMessage::VerticalAlignment`] and `TextMessage::HorizontalAlignment` sets\n[vertical and horizontal](Text#text-alignment-and-word-wrapping) text alignment respectively.\n- [`TextMessage::Shadow`] - enables or disables [shadow casting](Text#shadows)\n- [`TextMessage::ShadowDilation`] - sets \"thickness\" of the shadows under the tex.\n- [`TextMessage::ShadowBrush`] - sets shadow brush (allows you to change color and even make shadow with color gradients).\n- [`TextMessage::ShadowOffset`] - sets offset of the shadows.\n\nAn example of changing text at runtime could be something like this:\n\n```rust\n# use fyrox_ui::{\n#     core::pool::Handle,\n#     message::{MessageDirection},\n#     UiNode, UserInterface,\n#     text::TextMessage\n# };\nfn request_change_text(ui: &UserInterface, text_widget_handle: Handle<UiNode>, text: &str) {\nui.send_message(TextMessage::text(\ntext_widget_handle,\nMessageDirection::ToWidget,\ntext.to_owned(),\n))\n}\n```\n\nPlease keep in mind, that like any other situation when you \"changing\" something via messages, you should remember\nthat the change is **not** immediate."
-      }
-    },
-    {
-      "Engine": {
         "class_name": "Log",
         "rust_struct_path": "fyrox_lite::lite_log::LiteLog",
         "methods": [
@@ -1913,6 +1864,47 @@
             }
           }
         ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Text",
+        "rust_struct_path": "fyrox_lite::lite_ui::LiteText",
+        "methods": [
+          {
+            "instance": true,
+            "method_name": "set_text_async",
+            "signature": {
+              "params": [
+                {
+                  "name": "text",
+                  "ty": "String",
+                  "variadic": false
+                }
+              ]
+            },
+            "description": "sets the text of UI element. applied at the end of frame."
+          },
+          {
+            "instance": false,
+            "method_name": "new",
+            "signature": {
+              "params": [
+                {
+                  "name": "state",
+                  "ty": {
+                    "Object": "TextBuilder"
+                  },
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Text"
+              }
+            }
+          }
+        ],
+        "description": "Text is a simple widget that allows you to print text on screen. It has various options like word wrapping, text\nalignment, and so on."
       }
     },
     {
