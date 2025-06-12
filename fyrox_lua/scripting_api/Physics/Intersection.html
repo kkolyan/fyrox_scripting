@@ -177,11 +177,11 @@
 <p>A ray intersection result.</p>
 <h2 id="fields"><a class="header" href="#fields">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>collider</code></td><td><a href="../Node/Node.html">Node</a></td><td></td></tr>
-<tr><td><code>normal</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td></td></tr>
-<tr><td><code>position</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td></td></tr>
-<tr><td><code>feature</code></td><td><a href="../Physics/FeatureId.html">FeatureId</a></td><td></td></tr>
-<tr><td><code>toi</code></td><td>float</td><td></td></tr>
+<tr><td><code>collider</code></td><td><a href="../Node/Node.html">Node</a></td><td><p>A handle of the collider with which intersection was detected.</p></td></tr>
+<tr><td><code>normal</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td><p>A normal at the intersection position.</p></td></tr>
+<tr><td><code>position</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td><p>A position of the intersection in world coordinates.</p></td></tr>
+<tr><td><code>feature</code></td><td><a href="../Physics/FeatureId.html">FeatureId</a></td><td><p>Additional data that contains a kind of the feature with which intersection was detected as well as its index.</p> <h1 id="important-notes"><a class="header" href="#important-notes">Important notes.</a></h1> <p>FeatureId::Face might have index that is greater than amount of triangles in a triangle mesh, this means that intersection was detected from “back” side of a face. To “fix” that index, simply subtract amount of triangles of a triangle mesh from the value.</p></td></tr>
+<tr><td><code>toi</code></td><td>float</td><td><p>Distance from the ray origin.</p></td></tr>
 </tbody></table>
 </div>
                     </main>

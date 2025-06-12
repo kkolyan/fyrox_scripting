@@ -389,7 +389,7 @@ end
 <p>Utility class to poll player input events</p>
 <h2 id="constants-1"><a class="header" href="#constants-1">Constants</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Value</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>MouseLeft</code></td><td>int</td><td>0</td><td>Left Mouse Button ID</td></tr>
+<tr><td><code>MouseLeft</code></td><td>int</td><td>0</td><td><p>Left Mouse Button ID</p></td></tr>
 <tr><td><code>MouseRight</code></td><td>int</td><td>1</td><td></td></tr>
 <tr><td><code>MouseMiddle</code></td><td>int</td><td>2</td><td></td></tr>
 <tr><td><code>MouseBack</code></td><td>int</td><td>3</td><td></td></tr>
@@ -404,7 +404,7 @@ end
 </div>
 <h2 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td>bool</td><td><code>is_mouse_button_down</code> ( int <ins>button</ins> )</td><td>is mouse button with ID <code>button</code> is in pressed state?</td></tr>
+<tr><td>bool</td><td><code>is_mouse_button_down</code> ( int <ins>button</ins> )</td><td><p>is mouse button with ID <code>button</code> is in pressed state?</p></td></tr>
 <tr><td>bool</td><td><code>is_mouse_button_up</code> ( int <ins>button</ins> )</td><td></td></tr>
 <tr><td>bool</td><td><code>is_mouse_button_pressed</code> ( int <ins>button</ins> )</td><td></td></tr>
 <tr><td>bool</td><td><code>is_key_down</code> ( <a href="scripting_api/Input/../Input/KeyCode.html">KeyCode</a> <ins>key</ins> )</td><td></td></tr>
@@ -414,271 +414,205 @@ end
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="keycode"><a class="header" href="#keycode">KeyCode</a></h1>
 <p>enum in <a href="scripting_api/Input/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Input/../Input.html">Input</a></p>
 <h2 id="description-2"><a class="header" href="#description-2">Description</a></h2>
-<p>Basically a copy of <code>winit</code>'s <a href="https://docs.rs/winit/0.29.15/i686-pc-windows-msvc/winit/keyboard/enum.KeyCode.html"><code>KeyCode</code></a>, which is mostly inspired by UI Events Specification’s <a href="https://w3c.github.io/uievents-code/#code-value-tables"><code>KeyboardEvent.code</code></a>.</p>
+<p>Basically a copy of <code>winit</code>’s <a href="https://docs.rs/winit/0.29.15/i686-pc-windows-msvc/winit/keyboard/enum.KeyCode.html"><code>KeyCode</code></a>, which is mostly inspired by UI Events Specification’s <a href="https://w3c.github.io/uievents-code/#code-value-tables"><code>KeyboardEvent.code</code></a>.</p>
 <h2 id="properties"><a class="header" href="#properties">Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>Backquote</code></td><td><kbd>`</kbd> on a US keyboard. This is also called a backtick or grave.</td></tr>
-<tr><td>This is the <kbd>半角</kbd>/<kbd>全角</kbd>/<kbd>漢字</kbd></td><td></td></tr>
-<tr><td>(hankaku/zenkaku/kanji) key on Japanese keyboards</td><td></td></tr>
-<tr><td><code>Backslash</code></td><td>Used for both the US <kbd>\</kbd> (on the 101-key layout) and also for the key</td></tr>
-<tr><td>located between the <kbd>"</kbd> and <kbd>Enter</kbd> keys on row C of the 102-,</td><td></td></tr>
-<tr><td>104- and 106-key layouts.</td><td></td></tr>
-<tr><td>Labeled <kbd>#</kbd> on a UK (102) keyboard.</td><td></td></tr>
-<tr><td><code>BracketLeft</code></td><td><kbd>[</kbd> on a US keyboard.</td></tr>
-<tr><td><code>BracketRight</code></td><td><kbd>]</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Comma</code></td><td><kbd>,</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit0</code></td><td><kbd>0</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit1</code></td><td><kbd>1</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit2</code></td><td><kbd>2</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit3</code></td><td><kbd>3</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit4</code></td><td><kbd>4</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit5</code></td><td><kbd>5</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit6</code></td><td><kbd>6</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit7</code></td><td><kbd>7</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit8</code></td><td><kbd>8</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Digit9</code></td><td><kbd>9</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Equal</code></td><td><kbd>=</kbd> on a US keyboard.</td></tr>
-<tr><td><code>IntlBackslash</code></td><td>Located between the left <kbd>Shift</kbd> and <kbd>Z</kbd> keys.</td></tr>
-<tr><td>Labeled <kbd>\</kbd> on a UK keyboard.</td><td></td></tr>
-<tr><td><code>IntlRo</code></td><td>Located between the <kbd>/</kbd> and right <kbd>Shift</kbd> keys.</td></tr>
-<tr><td>Labeled <kbd>\</kbd> (ro) on a Japanese keyboard.</td><td></td></tr>
-<tr><td><code>IntlYen</code></td><td>Located between the <kbd>=</kbd> and <kbd>Backspace</kbd> keys.</td></tr>
-<tr><td>Labeled <kbd>¥</kbd> (yen) on a Japanese keyboard. <kbd>\</kbd> on a</td><td></td></tr>
-<tr><td>Russian keyboard.</td><td></td></tr>
-<tr><td><code>A</code></td><td><kbd>a</kbd> on a US keyboard.</td></tr>
-<tr><td>Labeled <kbd>q</kbd> on an AZERTY (e.g., French) keyboard.</td><td></td></tr>
-<tr><td><code>B</code></td><td><kbd>b</kbd> on a US keyboard.</td></tr>
-<tr><td><code>C</code></td><td><kbd>c</kbd> on a US keyboard.</td></tr>
-<tr><td><code>D</code></td><td><kbd>d</kbd> on a US keyboard.</td></tr>
-<tr><td><code>E</code></td><td><kbd>e</kbd> on a US keyboard.</td></tr>
-<tr><td><code>F</code></td><td><kbd>f</kbd> on a US keyboard.</td></tr>
-<tr><td><code>G</code></td><td><kbd>g</kbd> on a US keyboard.</td></tr>
-<tr><td><code>H</code></td><td><kbd>h</kbd> on a US keyboard.</td></tr>
-<tr><td><code>I</code></td><td><kbd>i</kbd> on a US keyboard.</td></tr>
-<tr><td><code>J</code></td><td><kbd>j</kbd> on a US keyboard.</td></tr>
-<tr><td><code>K</code></td><td><kbd>k</kbd> on a US keyboard.</td></tr>
-<tr><td><code>L</code></td><td><kbd>l</kbd> on a US keyboard.</td></tr>
-<tr><td><code>M</code></td><td><kbd>m</kbd> on a US keyboard.</td></tr>
-<tr><td><code>N</code></td><td><kbd>n</kbd> on a US keyboard.</td></tr>
-<tr><td><code>O</code></td><td><kbd>o</kbd> on a US keyboard.</td></tr>
-<tr><td><code>P</code></td><td><kbd>p</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Q</code></td><td><kbd>q</kbd> on a US keyboard.</td></tr>
-<tr><td>Labeled <kbd>a</kbd> on an AZERTY (e.g., French) keyboard.</td><td></td></tr>
-<tr><td><code>R</code></td><td><kbd>r</kbd> on a US keyboard.</td></tr>
-<tr><td><code>S</code></td><td><kbd>s</kbd> on a US keyboard.</td></tr>
-<tr><td><code>T</code></td><td><kbd>t</kbd> on a US keyboard.</td></tr>
-<tr><td><code>U</code></td><td><kbd>u</kbd> on a US keyboard.</td></tr>
-<tr><td><code>V</code></td><td><kbd>v</kbd> on a US keyboard.</td></tr>
-<tr><td><code>W</code></td><td><kbd>w</kbd> on a US keyboard.</td></tr>
-<tr><td>Labeled <kbd>z</kbd> on an AZERTY (e.g., French) keyboard.</td><td></td></tr>
-<tr><td><code>X</code></td><td><kbd>x</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Y</code></td><td><kbd>y</kbd> on a US keyboard.</td></tr>
-<tr><td>Labeled <kbd>z</kbd> on a QWERTZ (e.g., German) keyboard.</td><td></td></tr>
-<tr><td><code>Z</code></td><td><kbd>z</kbd> on a US keyboard.</td></tr>
-<tr><td>Labeled <kbd>w</kbd> on an AZERTY (e.g., French) keyboard, and <kbd>y</kbd> on a</td><td></td></tr>
-<tr><td>QWERTZ (e.g., German) keyboard.</td><td></td></tr>
-<tr><td><code>Minus</code></td><td><kbd>-</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Period</code></td><td><kbd>.</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Quote</code></td><td><kbd>'</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Semicolon</code></td><td><kbd>;</kbd> on a US keyboard.</td></tr>
-<tr><td><code>Slash</code></td><td><kbd>/</kbd> on a US keyboard.</td></tr>
-<tr><td><code>AltLeft</code></td><td><kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>.</td></tr>
-<tr><td><code>AltRight</code></td><td><kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>.</td></tr>
-<tr><td>This is labeled <kbd>AltGr</kbd> on many keyboard layouts.</td><td></td></tr>
-<tr><td><code>Backspace</code></td><td><kbd>Backspace</kbd> or <kbd>⌫</kbd>.</td></tr>
-<tr><td>Labeled <kbd>Delete</kbd> on Apple keyboards.</td><td></td></tr>
-<tr><td><code>CapsLock</code></td><td><kbd>CapsLock</kbd> or <kbd>⇪</kbd></td></tr>
-<tr><td><code>ContextMenu</code></td><td>The application context menu key, which is typically found between the right</td></tr>
-<tr><td><kbd>Super</kbd> key and the right <kbd>Control</kbd> key.</td><td></td></tr>
-<tr><td><code>ControlLeft</code></td><td><kbd>Control</kbd> or <kbd>⌃</kbd></td></tr>
-<tr><td><code>ControlRight</code></td><td><kbd>Control</kbd> or <kbd>⌃</kbd></td></tr>
-<tr><td><code>Enter</code></td><td><kbd>Enter</kbd> or <kbd>↵</kbd>. Labeled <kbd>Return</kbd> on Apple keyboards.</td></tr>
-<tr><td><code>SuperLeft</code></td><td>The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key.</td></tr>
-<tr><td><code>SuperRight</code></td><td>The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key.</td></tr>
-<tr><td><code>ShiftLeft</code></td><td><kbd>Shift</kbd> or <kbd>⇧</kbd></td></tr>
-<tr><td><code>ShiftRight</code></td><td><kbd>Shift</kbd> or <kbd>⇧</kbd></td></tr>
-<tr><td><code>Space</code></td><td><kbd> </kbd> (space)</td></tr>
-<tr><td><code>Tab</code></td><td><kbd>Tab</kbd> or <kbd>⇥</kbd></td></tr>
-<tr><td><code>Convert</code></td><td>Japanese: <kbd>変</kbd> (henkan)</td></tr>
-<tr><td><code>KanaMode</code></td><td>Japanese: <kbd>カタカナ</kbd>/<kbd>ひらがな</kbd>/<kbd>ローマ字</kbd> (katakana/hiragana/romaji)</td></tr>
-<tr><td><code>Lang1</code></td><td>Korean: HangulMode <kbd>한/영</kbd> (han/yeong)</td></tr>
+<tr><td><code>Backquote</code></td><td><p><kbd>`</kbd> on a US keyboard. This is also called a backtick or grave. This is the <kbd>半角</kbd>/<kbd>全角</kbd>/<kbd>漢字</kbd> (hankaku/zenkaku/kanji) key on Japanese keyboards</p></td></tr>
+<tr><td><code>Backslash</code></td><td><p>Used for both the US <kbd>&lt;/kbd&gt; (on the 101-key layout) and also for the key located between the <kbd>“</kbd> and <kbd>Enter</kbd> keys on row C of the 102-, 104- and 106-key layouts. Labeled <kbd>#</kbd> on a UK (102) keyboard.</p></td></tr>
+<tr><td><code>BracketLeft</code></td><td><p><kbd>[</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>BracketRight</code></td><td><p><kbd>]</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Comma</code></td><td><p><kbd>,</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit0</code></td><td><p><kbd>0</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit1</code></td><td><p><kbd>1</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit2</code></td><td><p><kbd>2</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit3</code></td><td><p><kbd>3</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit4</code></td><td><p><kbd>4</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit5</code></td><td><p><kbd>5</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit6</code></td><td><p><kbd>6</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit7</code></td><td><p><kbd>7</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit8</code></td><td><p><kbd>8</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Digit9</code></td><td><p><kbd>9</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Equal</code></td><td><p><kbd>=</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>IntlBackslash</code></td><td><p>Located between the left <kbd>Shift</kbd> and <kbd>Z</kbd> keys. Labeled <kbd>&lt;/kbd&gt; on a UK keyboard.</p></td></tr>
+<tr><td><code>IntlRo</code></td><td><p>Located between the <kbd>/</kbd> and right <kbd>Shift</kbd> keys. Labeled <kbd>&lt;/kbd&gt; (ro) on a Japanese keyboard.</p></td></tr>
+<tr><td><code>IntlYen</code></td><td><p>Located between the <kbd>=</kbd> and <kbd>Backspace</kbd> keys. Labeled <kbd>¥</kbd> (yen) on a Japanese keyboard. <kbd>&lt;/kbd&gt; on a Russian keyboard.</p></td></tr>
+<tr><td><code>A</code></td><td><p><kbd>a</kbd> on a US keyboard. Labeled <kbd>q</kbd> on an AZERTY (e.g., French) keyboard.</p></td></tr>
+<tr><td><code>B</code></td><td><p><kbd>b</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>C</code></td><td><p><kbd>c</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>D</code></td><td><p><kbd>d</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>E</code></td><td><p><kbd>e</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>F</code></td><td><p><kbd>f</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>G</code></td><td><p><kbd>g</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>H</code></td><td><p><kbd>h</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>I</code></td><td><p><kbd>i</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>J</code></td><td><p><kbd>j</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>K</code></td><td><p><kbd>k</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>L</code></td><td><p><kbd>l</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>M</code></td><td><p><kbd>m</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>N</code></td><td><p><kbd>n</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>O</code></td><td><p><kbd>o</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>P</code></td><td><p><kbd>p</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Q</code></td><td><p><kbd>q</kbd> on a US keyboard. Labeled <kbd>a</kbd> on an AZERTY (e.g., French) keyboard.</p></td></tr>
+<tr><td><code>R</code></td><td><p><kbd>r</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>S</code></td><td><p><kbd>s</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>T</code></td><td><p><kbd>t</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>U</code></td><td><p><kbd>u</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>V</code></td><td><p><kbd>v</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>W</code></td><td><p><kbd>w</kbd> on a US keyboard. Labeled <kbd>z</kbd> on an AZERTY (e.g., French) keyboard.</p></td></tr>
+<tr><td><code>X</code></td><td><p><kbd>x</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Y</code></td><td><p><kbd>y</kbd> on a US keyboard. Labeled <kbd>z</kbd> on a QWERTZ (e.g., German) keyboard.</p></td></tr>
+<tr><td><code>Z</code></td><td><p><kbd>z</kbd> on a US keyboard. Labeled <kbd>w</kbd> on an AZERTY (e.g., French) keyboard, and <kbd>y</kbd> on a QWERTZ (e.g., German) keyboard.</p></td></tr>
+<tr><td><code>Minus</code></td><td><p><kbd>-</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Period</code></td><td><p><kbd>.</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Quote</code></td><td><p><kbd>’</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Semicolon</code></td><td><p><kbd>;</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>Slash</code></td><td><p><kbd>/</kbd> on a US keyboard.</p></td></tr>
+<tr><td><code>AltLeft</code></td><td><p><kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>.</p></td></tr>
+<tr><td><code>AltRight</code></td><td><p><kbd>Alt</kbd>, <kbd>Option</kbd>, or <kbd>⌥</kbd>. This is labeled <kbd>AltGr</kbd> on many keyboard layouts.</p></td></tr>
+<tr><td><code>Backspace</code></td><td><p><kbd>Backspace</kbd> or <kbd>⌫</kbd>. Labeled <kbd>Delete</kbd> on Apple keyboards.</p></td></tr>
+<tr><td><code>CapsLock</code></td><td><p><kbd>CapsLock</kbd> or <kbd>⇪</kbd></p></td></tr>
+<tr><td><code>ContextMenu</code></td><td><p>The application context menu key, which is typically found between the right <kbd>Super</kbd> key and the right <kbd>Control</kbd> key.</p></td></tr>
+<tr><td><code>ControlLeft</code></td><td><p><kbd>Control</kbd> or <kbd>⌃</kbd></p></td></tr>
+<tr><td><code>ControlRight</code></td><td><p><kbd>Control</kbd> or <kbd>⌃</kbd></p></td></tr>
+<tr><td><code>Enter</code></td><td><p><kbd>Enter</kbd> or <kbd>↵</kbd>. Labeled <kbd>Return</kbd> on Apple keyboards.</p></td></tr>
+<tr><td><code>SuperLeft</code></td><td><p>The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key.</p></td></tr>
+<tr><td><code>SuperRight</code></td><td><p>The Windows, <kbd>⌘</kbd>, <kbd>Command</kbd>, or other OS symbol key.</p></td></tr>
+<tr><td><code>ShiftLeft</code></td><td><p><kbd>Shift</kbd> or <kbd>⇧</kbd></p></td></tr>
+<tr><td><code>ShiftRight</code></td><td><p><kbd>Shift</kbd> or <kbd>⇧</kbd></p></td></tr>
+<tr><td><code>Space</code></td><td><p><kbd> </kbd> (space)</p></td></tr>
+<tr><td><code>Tab</code></td><td><p><kbd>Tab</kbd> or <kbd>⇥</kbd></p></td></tr>
+<tr><td><code>Convert</code></td><td><p>Japanese: <kbd>変</kbd> (henkan)</p></td></tr>
+<tr><td><code>KanaMode</code></td><td><p>Japanese: <kbd>カタカナ</kbd>/<kbd>ひらがな</kbd>/<kbd>ローマ字</kbd> (katakana/hiragana/romaji)</p></td></tr>
+<tr><td><code>Lang1</code></td><td><p>Korean: HangulMode <kbd>한/영</kbd> (han/yeong)</p> <p>Japanese (Mac keyboard): <kbd>か</kbd> (kana)</p></td></tr>
+<tr><td><code>Lang2</code></td><td><p>Korean: Hanja <kbd>한</kbd> (hanja)</p> <p>Japanese (Mac keyboard): <kbd>英</kbd> (eisu)</p></td></tr>
+<tr><td><code>Lang3</code></td><td><p>Japanese (word-processing keyboard): Katakana</p></td></tr>
+<tr><td><code>Lang4</code></td><td><p>Japanese (word-processing keyboard): Hiragana</p></td></tr>
+<tr><td><code>Lang5</code></td><td><p>Japanese (word-processing keyboard): Zenkaku/Hankaku</p></td></tr>
+<tr><td><code>NonConvert</code></td><td><p>Japanese: <kbd>無変換</kbd> (muhenkan)</p></td></tr>
+<tr><td><code>Delete</code></td><td><p><kbd>⌦</kbd>. The forward delete key. Note that on Apple keyboards, the key labelled <kbd>Delete</kbd> on the main part of the keyboard is encoded as <a href="scripting_api/Input/Self::Backspace"><code>Backspace</code></a>.</p></td></tr>
+<tr><td><code>End</code></td><td><p><kbd>Page Down</kbd>, <kbd>End</kbd>, or <kbd>↘</kbd></p></td></tr>
+<tr><td><code>Help</code></td><td><p><kbd>Help</kbd>. Not present on standard PC keyboards.</p></td></tr>
+<tr><td><code>Home</code></td><td><p><kbd>Home</kbd> or <kbd>↖</kbd></p></td></tr>
+<tr><td><code>Insert</code></td><td><p><kbd>Insert</kbd> or <kbd>Ins</kbd>. Not present on Apple keyboards.</p></td></tr>
+<tr><td><code>PageDown</code></td><td><p><kbd>Page Down</kbd>, <kbd>PgDn</kbd>, or <kbd>⇟</kbd></p></td></tr>
+<tr><td><code>PageUp</code></td><td><p><kbd>Page Up</kbd>, <kbd>PgUp</kbd>, or <kbd>⇞</kbd></p></td></tr>
+<tr><td><code>ArrowDown</code></td><td><p><kbd>↓</kbd></p></td></tr>
+<tr><td><code>ArrowLeft</code></td><td><p><kbd>←</kbd></p></td></tr>
+<tr><td><code>ArrowRight</code></td><td><p><kbd>→</kbd></p></td></tr>
+<tr><td><code>ArrowUp</code></td><td><p><kbd>↑</kbd></p></td></tr>
+<tr><td><code>NumLock</code></td><td><p>On the Mac, this is used for the numpad <kbd>Clear</kbd> key.</p></td></tr>
+<tr><td><code>Numpad0</code></td><td><p><kbd>0 Ins</kbd> on a keyboard. <kbd>0</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad1</code></td><td><p><kbd>1 End</kbd> on a keyboard. <kbd>1</kbd> or <kbd>1 QZ</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad2</code></td><td><p><kbd>2 ↓</kbd> on a keyboard. <kbd>2 ABC</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad3</code></td><td><p><kbd>3 PgDn</kbd> on a keyboard. <kbd>3 DEF</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad4</code></td><td><p><kbd>4 ←</kbd> on a keyboard. <kbd>4 GHI</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad5</code></td><td><p><kbd>5</kbd> on a keyboard. <kbd>5 JKL</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad6</code></td><td><p><kbd>6 →</kbd> on a keyboard. <kbd>6 MNO</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad7</code></td><td><p><kbd>7 Home</kbd> on a keyboard. <kbd>7 PQRS</kbd> or <kbd>7 PRS</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad8</code></td><td><p><kbd>8 ↑</kbd> on a keyboard. <kbd>8 TUV</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>Numpad9</code></td><td><p><kbd>9 PgUp</kbd> on a keyboard. <kbd>9 WXYZ</kbd> or <kbd>9 WXY</kbd> on a phone or remote control</p></td></tr>
+<tr><td><code>NumpadAdd</code></td><td><p><kbd>+</kbd></p></td></tr>
+<tr><td><code>NumpadBackspace</code></td><td><p>Found on the Microsoft Natural Keyboard.</p></td></tr>
+<tr><td><code>NumpadClear</code></td><td><p><kbd>C</kbd> or <kbd>A</kbd> (All Clear). Also for use with numpads that have a <kbd>Clear</kbd> key that is separate from the <kbd>NumLock</kbd> key. On the Mac, the numpad <kbd>Clear</kbd> key is encoded as <a href="scripting_api/Input/Self::NumLock"><code>NumLock</code></a>.</p></td></tr>
+<tr><td><code>NumpadClearEntry</code></td><td><p><kbd>C</kbd> (Clear Entry)</p></td></tr>
+<tr><td><code>NumpadComma</code></td><td><p><kbd>,</kbd> (thousands separator). For locales where the thousands separator is a “.” (e.g., Brazil), this key may generate a <kbd>.</kbd>.</p></td></tr>
+<tr><td><code>NumpadDecimal</code></td><td><p><kbd>. Del</kbd>. For locales where the decimal separator is “,” (e.g., Brazil), this key may generate a <kbd>,</kbd>.</p></td></tr>
+<tr><td><code>NumpadDivide</code></td><td><p><kbd>/</kbd></p></td></tr>
+<tr><td><code>NumpadEnter</code></td><td></td></tr>
+<tr><td><code>NumpadEqual</code></td><td><p><kbd>=</kbd></p></td></tr>
+<tr><td><code>NumpadHash</code></td><td><p><kbd>#</kbd> on a phone or remote control device. This key is typically found below the <kbd>9</kbd> key and to the right of the <kbd>0</kbd> key.</p></td></tr>
+<tr><td><code>NumpadMemoryAdd</code></td><td><p><kbd>M</kbd> Add current entry to the value stored in memory.</p></td></tr>
+<tr><td><code>NumpadMemoryClear</code></td><td><p><kbd>M</kbd> Clear the value stored in memory.</p></td></tr>
+<tr><td><code>NumpadMemoryRecall</code></td><td><p><kbd>M</kbd> Replace the current entry with the value stored in memory.</p></td></tr>
+<tr><td><code>NumpadMemoryStore</code></td><td><p><kbd>M</kbd> Replace the value stored in memory with the current entry.</p></td></tr>
+<tr><td><code>NumpadMemorySubtract</code></td><td><p><kbd>M</kbd> Subtract current entry from the value stored in memory.</p></td></tr>
+<tr><td><code>NumpadMultiply</code></td><td><p><kbd><em></kbd> on a keyboard. For use with numpads that provide mathematical operations (<kbd>+</kbd>, <kbd>-</kbd> <kbd></em></kbd> and <kbd>/</kbd>).</p> <p>Use <code>NumpadStar</code> for the <kbd>*</kbd> key on phones and remote controls.</p></td></tr>
+<tr><td><code>NumpadParenLeft</code></td><td><p><kbd>(</kbd> Found on the Microsoft Natural Keyboard.</p></td></tr>
+<tr><td><code>NumpadParenRight</code></td><td><p><kbd>)</kbd> Found on the Microsoft Natural Keyboard.</p></td></tr>
+<tr><td><code>NumpadStar</code></td><td><p><kbd><em></kbd> on a phone or remote control device.</p> <p>This key is typically found below the <kbd>7</kbd> key and to the left of the <kbd>0</kbd> key.</p> <p>Use <kbd>“NumpadMultiply”</kbd> for the <kbd></em></kbd> key on numeric keypads.</p></td></tr>
+<tr><td><code>NumpadSubtract</code></td><td><p><kbd>-</kbd></p></td></tr>
+<tr><td><code>Escape</code></td><td><p><kbd>Esc</kbd> or <kbd>⎋</kbd></p></td></tr>
+<tr><td><code>Fn</code></td><td><p><kbd>Fn</kbd> This is typically a hardware key that does not generate a separate code.</p></td></tr>
+<tr><td><code>FnLock</code></td><td><p><kbd>FLock</kbd> or <kbd>FnLock</kbd>. Function Lock key. Found on the Microsoft Natural Keyboard.</p></td></tr>
+<tr><td><code>PrintScreen</code></td><td><p><kbd>PrtScr SysRq</kbd> or <kbd>Print Screen</kbd></p></td></tr>
+<tr><td><code>ScrollLock</code></td><td><p><kbd>Scroll Lock</kbd></p></td></tr>
+<tr><td><code>Pause</code></td><td><p><kbd>Pause Break</kbd></p></td></tr>
+<tr><td><code>BrowserBack</code></td><td><p>Some laptops place this key to the left of the <kbd>↑</kbd> key.</p> <p>This also the “back” button (triangle) on Android.</p></td></tr>
+<tr><td><code>BrowserFavorites</code></td><td></td></tr>
+<tr><td><code>BrowserForward</code></td><td><p>Some laptops place this key to the right of the <kbd>↑</kbd> key.</p></td></tr>
+<tr><td><code>BrowserHome</code></td><td><p>The “home” button on Android.</p></td></tr>
+<tr><td><code>BrowserRefresh</code></td><td></td></tr>
+<tr><td><code>BrowserSearch</code></td><td></td></tr>
+<tr><td><code>BrowserStop</code></td><td></td></tr>
+<tr><td><code>Eject</code></td><td><p><kbd>Eject</kbd> or <kbd>⏏</kbd>. This key is placed in the function section on some Apple keyboards.</p></td></tr>
+<tr><td><code>LaunchApp1</code></td><td><p>Sometimes labelled <kbd>My Computer</kbd> on the keyboard</p></td></tr>
+<tr><td><code>LaunchApp2</code></td><td><p>Sometimes labelled <kbd>Calculator</kbd> on the keyboard</p></td></tr>
+<tr><td><code>LaunchMail</code></td><td></td></tr>
+<tr><td><code>MediaPlayPause</code></td><td></td></tr>
+<tr><td><code>MediaSelect</code></td><td></td></tr>
+<tr><td><code>MediaStop</code></td><td></td></tr>
+<tr><td><code>MediaTrackNext</code></td><td></td></tr>
+<tr><td><code>MediaTrackPrevious</code></td><td></td></tr>
+<tr><td><code>Power</code></td><td><p>This key is placed in the function section on some Apple keyboards, replacing the <kbd>Eject</kbd> key.</p></td></tr>
+<tr><td><code>Sleep</code></td><td></td></tr>
+<tr><td><code>AudioVolumeDown</code></td><td></td></tr>
+<tr><td><code>AudioVolumeMute</code></td><td></td></tr>
+<tr><td><code>AudioVolumeUp</code></td><td></td></tr>
+<tr><td><code>WakeUp</code></td><td></td></tr>
+<tr><td><code>Meta</code></td><td></td></tr>
+<tr><td><code>Hyper</code></td><td></td></tr>
+<tr><td><code>Turbo</code></td><td></td></tr>
+<tr><td><code>Abort</code></td><td></td></tr>
+<tr><td><code>Resume</code></td><td></td></tr>
+<tr><td><code>Suspend</code></td><td></td></tr>
+<tr><td><code>Again</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Copy</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Cut</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Find</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Open</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Paste</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Props</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Select</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Undo</code></td><td><p>Found on Sun’s USB keyboard.</p></td></tr>
+<tr><td><code>Hiragana</code></td><td><p>Use for dedicated <kbd>ひらがな</kbd> key found on some Japanese word processing keyboards.</p></td></tr>
+<tr><td><code>Katakana</code></td><td><p>Use for dedicated <kbd>カタカナ</kbd> key found on some Japanese word processing keyboards.</p></td></tr>
+<tr><td><code>F1</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F2</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F3</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F4</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F5</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F6</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F7</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F8</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F9</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F10</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F11</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F12</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F13</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F14</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F15</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F16</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F17</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F18</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F19</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F20</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F21</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F22</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F23</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F24</code></td><td><p>General-purpose function key. Usually found at the top of the keyboard.</p></td></tr>
+<tr><td><code>F25</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F26</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F27</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F28</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F29</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F30</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F31</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F32</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F33</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F34</code></td><td><p>General-purpose function key.</p></td></tr>
+<tr><td><code>F35</code></td><td><p>General-purpose function key.</p></td></tr>
 </tbody></table>
-</div>
-<p>Japanese (Mac keyboard): <kbd>か</kbd> (kana) |
-| <code>Lang2</code> | Korean: Hanja <kbd>한</kbd> (hanja)</p>
-<p>Japanese (Mac keyboard): <kbd>英</kbd> (eisu) |
-| <code>Lang3</code> | Japanese (word-processing keyboard): Katakana |
-| <code>Lang4</code> | Japanese (word-processing keyboard): Hiragana |
-| <code>Lang5</code> | Japanese (word-processing keyboard): Zenkaku/Hankaku |
-| <code>NonConvert</code> | Japanese: <kbd>無変換</kbd> (muhenkan) |
-| <code>Delete</code> | <kbd>⌦</kbd>. The forward delete key.
-Note that on Apple keyboards, the key labelled <kbd>Delete</kbd> on the main part of
-the keyboard is encoded as [<code>Backspace</code>].</p>
-<p>[<code>Backspace</code>]: Self::Backspace |
-| <code>End</code> | <kbd>Page Down</kbd>, <kbd>End</kbd>, or <kbd>↘</kbd> |
-| <code>Help</code> | <kbd>Help</kbd>. Not present on standard PC keyboards. |
-| <code>Home</code> | <kbd>Home</kbd> or <kbd>↖</kbd> |
-| <code>Insert</code> | <kbd>Insert</kbd> or <kbd>Ins</kbd>. Not present on Apple keyboards. |
-| <code>PageDown</code> | <kbd>Page Down</kbd>, <kbd>PgDn</kbd>, or <kbd>⇟</kbd> |
-| <code>PageUp</code> | <kbd>Page Up</kbd>, <kbd>PgUp</kbd>, or <kbd>⇞</kbd> |
-| <code>ArrowDown</code> | <kbd>↓</kbd> |
-| <code>ArrowLeft</code> | <kbd>←</kbd> |
-| <code>ArrowRight</code> | <kbd>→</kbd> |
-| <code>ArrowUp</code> | <kbd>↑</kbd> |
-| <code>NumLock</code> | On the Mac, this is used for the numpad <kbd>Clear</kbd> key. |
-| <code>Numpad0</code> | <kbd>0 Ins</kbd> on a keyboard. <kbd>0</kbd> on a phone or remote control |
-| <code>Numpad1</code> | <kbd>1 End</kbd> on a keyboard. <kbd>1</kbd> or <kbd>1 QZ</kbd> on a phone or remote control |
-| <code>Numpad2</code> | <kbd>2 ↓</kbd> on a keyboard. <kbd>2 ABC</kbd> on a phone or remote control |
-| <code>Numpad3</code> | <kbd>3 PgDn</kbd> on a keyboard. <kbd>3 DEF</kbd> on a phone or remote control |
-| <code>Numpad4</code> | <kbd>4 ←</kbd> on a keyboard. <kbd>4 GHI</kbd> on a phone or remote control |
-| <code>Numpad5</code> | <kbd>5</kbd> on a keyboard. <kbd>5 JKL</kbd> on a phone or remote control |
-| <code>Numpad6</code> | <kbd>6 →</kbd> on a keyboard. <kbd>6 MNO</kbd> on a phone or remote control |
-| <code>Numpad7</code> | <kbd>7 Home</kbd> on a keyboard. <kbd>7 PQRS</kbd> or <kbd>7 PRS</kbd> on a phone
-or remote control |
-| <code>Numpad8</code> | <kbd>8 ↑</kbd> on a keyboard. <kbd>8 TUV</kbd> on a phone or remote control |
-| <code>Numpad9</code> | <kbd>9 PgUp</kbd> on a keyboard. <kbd>9 WXYZ</kbd> or <kbd>9 WXY</kbd> on a phone
-or remote control |
-| <code>NumpadAdd</code> | <kbd>+</kbd> |
-| <code>NumpadBackspace</code> | Found on the Microsoft Natural Keyboard. |
-| <code>NumpadClear</code> | <kbd>C</kbd> or <kbd>A</kbd> (All Clear). Also for use with numpads that have a
-<kbd>Clear</kbd> key that is separate from the <kbd>NumLock</kbd> key. On the Mac, the
-numpad <kbd>Clear</kbd> key is encoded as [<code>NumLock</code>].</p>
-<p>[<code>NumLock</code>]: Self::NumLock |
-| <code>NumpadClearEntry</code> | <kbd>C</kbd> (Clear Entry) |
-| <code>NumpadComma</code> | <kbd>,</kbd> (thousands separator). For locales where the thousands separator
-is a "." (e.g., Brazil), this key may generate a <kbd>.</kbd>. |
-| <code>NumpadDecimal</code> | <kbd>. Del</kbd>. For locales where the decimal separator is "," (e.g.,
-Brazil), this key may generate a <kbd>,</kbd>. |
-| <code>NumpadDivide</code> | <kbd>/</kbd> |
-| <code>NumpadEnter</code> |  |
-| <code>NumpadEqual</code> | <kbd>=</kbd> |
-| <code>NumpadHash</code> | <kbd>#</kbd> on a phone or remote control device. This key is typically found
-below the <kbd>9</kbd> key and to the right of the <kbd>0</kbd> key. |
-| <code>NumpadMemoryAdd</code> | <kbd>M</kbd> Add current entry to the value stored in memory. |
-| <code>NumpadMemoryClear</code> | <kbd>M</kbd> Clear the value stored in memory. |
-| <code>NumpadMemoryRecall</code> | <kbd>M</kbd> Replace the current entry with the value stored in memory. |
-| <code>NumpadMemoryStore</code> | <kbd>M</kbd> Replace the value stored in memory with the current entry. |
-| <code>NumpadMemorySubtract</code> | <kbd>M</kbd> Subtract current entry from the value stored in memory. |
-| <code>NumpadMultiply</code> | <kbd><em></kbd> on a keyboard. For use with numpads that provide mathematical
-operations (<kbd>+</kbd>, <kbd>-</kbd> <kbd></em></kbd> and <kbd>/</kbd>).</p>
-<p>Use <code>NumpadStar</code> for the <kbd><em></kbd> key on phones and remote controls. |
-| <code>NumpadParenLeft</code> | <kbd>(</kbd> Found on the Microsoft Natural Keyboard. |
-| <code>NumpadParenRight</code> | <kbd>)</kbd> Found on the Microsoft Natural Keyboard. |
-| <code>NumpadStar</code> | <kbd></em></kbd> on a phone or remote control device.</p>
-<p>This key is typically found below the <kbd>7</kbd> key and to the left of
-the <kbd>0</kbd> key.</p>
-<p>Use <kbd>"NumpadMultiply"</kbd> for the <kbd>*</kbd> key on
-numeric keypads. |
-| <code>NumpadSubtract</code> | <kbd>-</kbd> |
-| <code>Escape</code> | <kbd>Esc</kbd> or <kbd>⎋</kbd> |
-| <code>Fn</code> | <kbd>Fn</kbd> This is typically a hardware key that does not generate a separate code. |
-| <code>FnLock</code> | <kbd>FLock</kbd> or <kbd>FnLock</kbd>. Function Lock key. Found on the Microsoft
-Natural Keyboard. |
-| <code>PrintScreen</code> | <kbd>PrtScr SysRq</kbd> or <kbd>Print Screen</kbd> |
-| <code>ScrollLock</code> | <kbd>Scroll Lock</kbd> |
-| <code>Pause</code> | <kbd>Pause Break</kbd> |
-| <code>BrowserBack</code> | Some laptops place this key to the left of the <kbd>↑</kbd> key.</p>
-<p>This also the "back" button (triangle) on Android. |
-| <code>BrowserFavorites</code> |  |
-| <code>BrowserForward</code> | Some laptops place this key to the right of the <kbd>↑</kbd> key. |
-| <code>BrowserHome</code> | The "home" button on Android. |
-| <code>BrowserRefresh</code> |  |
-| <code>BrowserSearch</code> |  |
-| <code>BrowserStop</code> |  |
-| <code>Eject</code> | <kbd>Eject</kbd> or <kbd>⏏</kbd>. This key is placed in the function section on some Apple
-keyboards. |
-| <code>LaunchApp1</code> | Sometimes labelled <kbd>My Computer</kbd> on the keyboard |
-| <code>LaunchApp2</code> | Sometimes labelled <kbd>Calculator</kbd> on the keyboard |
-| <code>LaunchMail</code> |  |
-| <code>MediaPlayPause</code> |  |
-| <code>MediaSelect</code> |  |
-| <code>MediaStop</code> |  |
-| <code>MediaTrackNext</code> |  |
-| <code>MediaTrackPrevious</code> |  |
-| <code>Power</code> | This key is placed in the function section on some Apple keyboards, replacing the
-<kbd>Eject</kbd> key. |
-| <code>Sleep</code> |  |
-| <code>AudioVolumeDown</code> |  |
-| <code>AudioVolumeMute</code> |  |
-| <code>AudioVolumeUp</code> |  |
-| <code>WakeUp</code> |  |
-| <code>Meta</code> |  |
-| <code>Hyper</code> |  |
-| <code>Turbo</code> |  |
-| <code>Abort</code> |  |
-| <code>Resume</code> |  |
-| <code>Suspend</code> |  |
-| <code>Again</code> | Found on Sun’s USB keyboard. |
-| <code>Copy</code> | Found on Sun’s USB keyboard. |
-| <code>Cut</code> | Found on Sun’s USB keyboard. |
-| <code>Find</code> | Found on Sun’s USB keyboard. |
-| <code>Open</code> | Found on Sun’s USB keyboard. |
-| <code>Paste</code> | Found on Sun’s USB keyboard. |
-| <code>Props</code> | Found on Sun’s USB keyboard. |
-| <code>Select</code> | Found on Sun’s USB keyboard. |
-| <code>Undo</code> | Found on Sun’s USB keyboard. |
-| <code>Hiragana</code> | Use for dedicated <kbd>ひらがな</kbd> key found on some Japanese word processing keyboards. |
-| <code>Katakana</code> | Use for dedicated <kbd>カタカナ</kbd> key found on some Japanese word processing keyboards. |
-| <code>F1</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F2</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F3</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F4</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F5</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F6</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F7</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F8</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F9</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F10</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F11</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F12</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F13</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F14</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F15</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F16</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F17</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F18</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F19</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F20</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F21</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F22</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F23</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F24</code> | General-purpose function key.
-Usually found at the top of the keyboard. |
-| <code>F25</code> | General-purpose function key. |
-| <code>F26</code> | General-purpose function key. |
-| <code>F27</code> | General-purpose function key. |
-| <code>F28</code> | General-purpose function key. |
-| <code>F29</code> | General-purpose function key. |
-| <code>F30</code> | General-purpose function key. |
-| <code>F31</code> | General-purpose function key. |
-| <code>F32</code> | General-purpose function key. |
-| <code>F33</code> | General-purpose function key. |
-| <code>F34</code> | General-purpose function key. |
-| <code>F35</code> | General-purpose function key. |</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="log"><a class="header" href="#log">Log</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="log"><a class="header" href="#log">Log</a></h1>
 <p>package in <a href="scripting_api/../scripting_api.html">FyroxLite</a></p>
 <h2 id="classes-2"><a class="header" href="#classes-2">Classes</a></h2>
 <ul>
@@ -825,8 +759,8 @@ Usually found at the top of the keyboard. |
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="scripting_api/Node/../Physics/RigidBody.html">RigidBody</a>?</td><td><code>as_rigid_body</code> (  )</td><td></td></tr>
 <tr><td>void</td><td><code>destroy</code> (  )</td><td></td></tr>
-<tr><td>void</td><td><code>send_hierarchical</code> ( <a href="scripting_api/Node/../Node/RoutingStrategy.html">RoutingStrategy</a> <ins>routing</ins>, object <ins>payload</ins> )</td><td>Sends a hierarchical script message with the given payload.</td></tr>
-<tr><td>void</td><td><code>subscribe_to</code> (  )</td><td></td></tr>
+<tr><td>void</td><td><code>send_hierarchical</code> ( <a href="scripting_api/Node/../Node/RoutingStrategy.html">RoutingStrategy</a> <ins>routing</ins>, object <ins>payload</ins> )</td><td><p>Sends a hierarchical script message with the given payload.</p></td></tr>
+<tr><td>void</td><td><code>subscribe_to</code> &lt;<code>T</code>&gt; (  )</td><td></td></tr>
 <tr><td><a href="scripting_api/Node/../Node/Node.html">Node</a>?</td><td><code>find_collider_in_children</code> (  )</td><td></td></tr>
 <tr><td><code>T</code></td><td><code>add_script</code> &lt;<code>T</code>&gt; (  )</td><td></td></tr>
 <tr><td><code>T</code>?</td><td><code>find_script</code> &lt;<code>T</code>&gt; (  )</td><td></td></tr>
@@ -836,8 +770,8 @@ Usually found at the top of the keyboard. |
 <p>enum in <a href="scripting_api/Node/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Node/../Node.html">Node</a></p>
 <h2 id="properties-5"><a class="header" href="#properties-5">Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>Up</code></td><td>An message will be passed to the specified root node and then to every node up in the hierarchy.</td></tr>
-<tr><td><code>Down</code></td><td>An message will be passed to every node down the tree in the hierarchy.</td></tr>
+<tr><td><code>Up</code></td><td><p>An message will be passed to the specified root node and then to every node up in the hierarchy.</p></td></tr>
+<tr><td><code>Down</code></td><td><p>An message will be passed to every node down the tree in the hierarchy.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="physics"><a class="header" href="#physics">Physics</a></h1>
 <p>package in <a href="scripting_api/../scripting_api.html">FyroxLite</a></p>
@@ -870,17 +804,17 @@ Usually found at the top of the keyboard. |
 <p>enum in <a href="scripting_api/Physics/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Physics/../Physics.html">Physics</a></p>
 <h2 id="properties-6"><a class="header" href="#properties-6">Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>Vertex</code></td><td>Shape-dependent identifier of a vertex.</td></tr>
-<tr><td><code>Edge</code></td><td>Shape-dependent identifier of an edge.</td></tr>
-<tr><td><code>Face</code></td><td>Shape-dependent identifier of a face.</td></tr>
-<tr><td><code>Unknown</code></td><td>Unknown identifier.</td></tr>
+<tr><td><code>Vertex</code></td><td><p>Shape-dependent identifier of a vertex.</p></td></tr>
+<tr><td><code>Edge</code></td><td><p>Shape-dependent identifier of an edge.</p></td></tr>
+<tr><td><code>Face</code></td><td><p>Shape-dependent identifier of a face.</p></td></tr>
+<tr><td><code>Unknown</code></td><td><p>Unknown identifier.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="interactiongroups"><a class="header" href="#interactiongroups">InteractionGroups</a></h1>
 <p>struct in <a href="scripting_api/Physics/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Physics/../Physics.html">Physics</a></p>
 <h2 id="fields-1"><a class="header" href="#fields-1">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>memberships</code></td><td>int</td><td></td></tr>
-<tr><td><code>filter</code></td><td>int</td><td></td></tr>
+<tr><td><code>memberships</code></td><td>int</td><td><p>Groups memberships.</p></td></tr>
+<tr><td><code>filter</code></td><td>int</td><td><p>Groups filter.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="intersection"><a class="header" href="#intersection">Intersection</a></h1>
 <p>struct in <a href="scripting_api/Physics/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Physics/../Physics.html">Physics</a></p>
@@ -888,25 +822,24 @@ Usually found at the top of the keyboard. |
 <p>A ray intersection result.</p>
 <h2 id="fields-2"><a class="header" href="#fields-2">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>collider</code></td><td><a href="scripting_api/Physics/../Node/Node.html">Node</a></td><td></td></tr>
-<tr><td><code>normal</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td></td></tr>
-<tr><td><code>position</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td></td></tr>
-<tr><td><code>feature</code></td><td><a href="scripting_api/Physics/../Physics/FeatureId.html">FeatureId</a></td><td></td></tr>
-<tr><td><code>toi</code></td><td>float</td><td></td></tr>
+<tr><td><code>collider</code></td><td><a href="scripting_api/Physics/../Node/Node.html">Node</a></td><td><p>A handle of the collider with which intersection was detected.</p></td></tr>
+<tr><td><code>normal</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td><p>A normal at the intersection position.</p></td></tr>
+<tr><td><code>position</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td><p>A position of the intersection in world coordinates.</p></td></tr>
+<tr><td><code>feature</code></td><td><a href="scripting_api/Physics/../Physics/FeatureId.html">FeatureId</a></td><td><p>Additional data that contains a kind of the feature with which intersection was detected as well as its index.</p> <h1 id="important-notes"><a class="header" href="#important-notes">Important notes.</a></h1> <p>FeatureId::Face might have index that is greater than amount of triangles in a triangle mesh, this means that intersection was detected from “back” side of a face. To “fix” that index, simply subtract amount of triangles of a triangle mesh from the value.</p></td></tr>
+<tr><td><code>toi</code></td><td>float</td><td><p>Distance from the ray origin.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="physics-1"><a class="header" href="#physics-1">Physics</a></h1>
 <p>class in <a href="scripting_api/Physics/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Physics/../Physics.html">Physics</a></p>
 <h2 id="constants-2"><a class="header" href="#constants-2">Constants</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Value</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>EXCLUDE_FIXED</code></td><td>int</td><td>1 &lt;&lt; 1</td><td>Exclude from the query any collider attached to a fixed rigid-body and colliders with no rigid-body attached.</td></tr>
-<tr><td><code>EXCLUDE_KINEMATIC</code></td><td>int</td><td>1 &lt;&lt; 2</td><td>Exclude from the query any collider attached to a kinematic rigid-body.</td></tr>
-<tr><td><code>EXCLUDE_DYNAMIC</code></td><td>int</td><td>1 &lt;&lt; 3</td><td>Exclude from the query any collider attached to a dynamic rigid-body.</td></tr>
-<tr><td><code>EXCLUDE_SENSORS</code></td><td>int</td><td>1 &lt;&lt; 4</td><td>Exclude from the query any collider that is a sensor.</td></tr>
-<tr><td><code>EXCLUDE_SOLIDS</code></td><td>int</td><td>1 &lt;&lt; 5</td><td>Exclude from the query any collider that is not a sensor.</td></tr>
+<tr><td><code>EXCLUDE_FIXED</code></td><td>int</td><td>1 &lt;&lt; 1</td><td><p>Exclude from the query any collider attached to a fixed rigid-body and colliders with no rigid-body attached.</p></td></tr>
+<tr><td><code>EXCLUDE_KINEMATIC</code></td><td>int</td><td>1 &lt;&lt; 2</td><td><p>Exclude from the query any collider attached to a kinematic rigid-body.</p></td></tr>
+<tr><td><code>EXCLUDE_DYNAMIC</code></td><td>int</td><td>1 &lt;&lt; 3</td><td><p>Exclude from the query any collider attached to a dynamic rigid-body.</p></td></tr>
+<tr><td><code>EXCLUDE_SENSORS</code></td><td>int</td><td>1 &lt;&lt; 4</td><td><p>Exclude from the query any collider that is a sensor.</p></td></tr>
+<tr><td><code>EXCLUDE_SOLIDS</code></td><td>int</td><td>1 &lt;&lt; 5</td><td><p>Exclude from the query any collider that is not a sensor.</p></td></tr>
 <tr><td><code>ONLY_DYNAMIC</code></td><td>int</td><td>LitePhysics :: EXCLUDE_FIXED</td><td>LitePhysics :: EXCLUDE_KINEMATIC</td></tr>
 <tr><td><code>ONLY_KINEMATIC</code></td><td>int</td><td>LitePhysics :: EXCLUDE_DYNAMIC</td><td>LitePhysics :: EXCLUDE_FIXED</td></tr>
 <tr><td><code>ONLY_FIXED</code></td><td>int</td><td>LitePhysics :: EXCLUDE_DYNAMIC</td><td>LitePhysics :: EXCLUDE_KINEMATIC</td></tr>
-<tr><td>(this will not exclude colliders not attached to any rigid-body).</td><td></td><td></td><td></td></tr>
 </tbody></table>
 </div>
 <h2 id="static-methods-6"><a class="header" href="#static-methods-6">Static Methods</a></h2>
@@ -917,11 +850,11 @@ Usually found at the top of the keyboard. |
 <p>struct in <a href="scripting_api/Physics/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Physics/../Physics.html">Physics</a></p>
 <h2 id="fields-3"><a class="header" href="#fields-3">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>ray_origin</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td></td></tr>
-<tr><td><code>ray_direction</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td></td></tr>
-<tr><td><code>max_len</code></td><td>float</td><td></td></tr>
-<tr><td><code>groups</code></td><td><a href="scripting_api/Physics/../Physics/InteractionGroups.html">InteractionGroups</a>?</td><td></td></tr>
-<tr><td><code>sort_results</code></td><td>bool</td><td></td></tr>
+<tr><td><code>ray_origin</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td><p>A ray origin.</p></td></tr>
+<tr><td><code>ray_direction</code></td><td><a href="scripting_api/Physics/../Math/Vector3.html">Vector3</a></td><td><p>A ray direction. Can be non-normalized.</p></td></tr>
+<tr><td><code>max_len</code></td><td>float</td><td><p>Maximum distance of cast.</p></td></tr>
+<tr><td><code>groups</code></td><td><a href="scripting_api/Physics/../Physics/InteractionGroups.html">InteractionGroups</a>?</td><td><p>Groups to check.</p></td></tr>
+<tr><td><code>sort_results</code></td><td>bool</td><td><p>Whether to sort intersections from closest to farthest.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="rigidbody"><a class="header" href="#rigidbody">RigidBody</a></h1>
 <p>class in <a href="scripting_api/Physics/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Physics/../Physics.html">Physics</a></p>
@@ -939,7 +872,7 @@ Usually found at the top of the keyboard. |
 <p>class in <a href="scripting_api/Plugin/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Plugin/../Plugin.html">Plugin</a></p>
 <h2 id="static-methods-7"><a class="header" href="#static-methods-7">Static Methods</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>T</code></td><td><code>get</code> &lt;<code>T</code>&gt; (  )</td><td>find a plugin script by name</td></tr>
+<tr><td><code>T</code></td><td><code>get</code> &lt;<code>T</code>&gt; (  )</td><td><p>find a global script by type</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="prefab"><a class="header" href="#prefab">Prefab</a></h1>
 <p>package in <a href="scripting_api/../scripting_api.html">FyroxLite</a></p>
@@ -986,37 +919,40 @@ Usually found at the top of the keyboard. |
 <p>Brush defines a way to fill an arbitrary surface.</p>
 <h2 id="fields-4"><a class="header" href="#fields-4">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>solid_color</code></td><td><a href="scripting_api/UI/../Color/Color.html">Color</a>?</td><td></td></tr>
-<tr><td><code>linear_gradient</code></td><td><a href="scripting_api/UI/../UI/LinearGradient.html">LinearGradient</a>?</td><td></td></tr>
-<tr><td><code>radial_gradient</code></td><td><a href="scripting_api/UI/../UI/RadialGradient.html">RadialGradient</a>?</td><td></td></tr>
+<tr><td><code>solid_color</code></td><td><a href="scripting_api/UI/../Color/Color.html">Color</a>?</td><td><p>A brush, that fills a surface with a solid color.</p></td></tr>
+<tr><td><code>linear_gradient</code></td><td><a href="scripting_api/UI/../UI/LinearGradient.html">LinearGradient</a>?</td><td><p>A brush, that fills a surface with a linear gradient, which is defined by two points in local coordinates and a set of stop points. See [<code>GradientPoint</code>] for more info.</p></td></tr>
+<tr><td><code>radial_gradient</code></td><td><a href="scripting_api/UI/../UI/RadialGradient.html">RadialGradient</a>?</td><td><p>A brush, that fills a surface with a radial gradient, which is defined by a center point in local coordinates and a set of stop points. See [<code>GradientPoint</code>] for more info.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="gradientpoint"><a class="header" href="#gradientpoint">GradientPoint</a></h1>
 <p>struct in <a href="scripting_api/UI/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/UI/../UI.html">UI</a></p>
 <h2 id="fields-5"><a class="header" href="#fields-5">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>stop</code></td><td>float</td><td></td></tr>
-<tr><td><code>color</code></td><td><a href="scripting_api/UI/../Color/Color.html">Color</a></td><td></td></tr>
+<tr><td><code>stop</code></td><td>float</td><td><p>A distance from an origin of the gradient.</p></td></tr>
+<tr><td><code>color</code></td><td><a href="scripting_api/UI/../Color/Color.html">Color</a></td><td><p>Color of the point.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="lineargradient"><a class="header" href="#lineargradient">LinearGradient</a></h1>
 <p>struct in <a href="scripting_api/UI/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/UI/../UI.html">UI</a></p>
 <h2 id="fields-6"><a class="header" href="#fields-6">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>from</code></td><td><a href="scripting_api/UI/../Math/Vector2.html">Vector2</a></td><td></td></tr>
-<tr><td><code>to</code></td><td><a href="scripting_api/UI/../Math/Vector2.html">Vector2</a></td><td></td></tr>
-<tr><td><code>stops</code></td><td>List&lt; <a href="scripting_api/UI/../UI/GradientPoint.html">GradientPoint</a> &gt;</td><td></td></tr>
+<tr><td><code>from</code></td><td><a href="scripting_api/UI/../Math/Vector2.html">Vector2</a></td><td><p>Beginning of the gradient in local coordinates.</p></td></tr>
+<tr><td><code>to</code></td><td><a href="scripting_api/UI/../Math/Vector2.html">Vector2</a></td><td><p>End of the gradient in local coordinates.</p></td></tr>
+<tr><td><code>stops</code></td><td>List&lt; <a href="scripting_api/UI/../UI/GradientPoint.html">GradientPoint</a> &gt;</td><td><p>Stops of the gradient.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="radialgradient"><a class="header" href="#radialgradient">RadialGradient</a></h1>
 <p>struct in <a href="scripting_api/UI/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/UI/../UI.html">UI</a></p>
 <h2 id="fields-7"><a class="header" href="#fields-7">Fields</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>center</code></td><td><a href="scripting_api/UI/../Math/Vector2.html">Vector2</a></td><td></td></tr>
-<tr><td><code>stops</code></td><td>List&lt; <a href="scripting_api/UI/../UI/GradientPoint.html">GradientPoint</a> &gt;</td><td></td></tr>
+<tr><td><code>center</code></td><td><a href="scripting_api/UI/../Math/Vector2.html">Vector2</a></td><td><p>Center of the gradient in local coordinates.</p></td></tr>
+<tr><td><code>stops</code></td><td>List&lt; <a href="scripting_api/UI/../UI/GradientPoint.html">GradientPoint</a> &gt;</td><td><p>Stops of the gradient.</p></td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="text"><a class="header" href="#text">Text</a></h1>
 <p>class in <a href="scripting_api/UI/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/UI/../UI.html">UI</a></p>
+<h2 id="description-6"><a class="header" href="#description-6">Description</a></h2>
+<p>Text is a simple widget that allows you to print text on screen. It has various options like word wrapping, text
+alignment, and so on.</p>
 <h2 id="properties-7"><a class="header" href="#properties-7">Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Access</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>text_async</code></td><td>string</td><td>set</td><td></td></tr>
+<tr><td><code>text_async</code></td><td>string</td><td>set</td><td><p>sets the text of UI element. applied at the end of frame.</p></td></tr>
 </tbody></table>
 </div>
 <h2 id="static-methods-9"><a class="header" href="#static-methods-9">Static Methods</a></h2>
@@ -1046,26 +982,11 @@ Usually found at the top of the keyboard. |
 <p>enum in <a href="scripting_api/Window/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Window/../Window.html">Window</a></p>
 <h2 id="properties-8"><a class="header" href="#properties-8">Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>None</code></td><td>No grabbing of the cursor is performed.</td></tr>
-<tr><td><code>Confined</code></td><td>The cursor is confined to the window area.</td></tr>
+<tr><td><code>None</code></td><td><p>No grabbing of the cursor is performed.</p></td></tr>
+<tr><td><code>Confined</code></td><td><p>The cursor is confined to the window area.</p> <p>There’s no guarantee that the cursor will be hidden. You should hide it by yourself if you want to do so.</p> <h2 id="platform-specific"><a class="header" href="#platform-specific">Platform-specific</a></h2> <ul> <li><strong>macOS:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li> <li><strong>iOS / Android / Web:</strong> Always returns an [<code>ExternalError::NotSupported</code>].</li> </ul></td></tr>
+<tr><td><code>Locked</code></td><td><p>The cursor is locked inside the window area to the certain position.</p> <p>There’s no guarantee that the cursor will be hidden. You should hide it by yourself if you want to do so.</p> <h2 id="platform-specific-1"><a class="header" href="#platform-specific-1">Platform-specific</a></h2> <ul> <li><strong>X11 / Windows:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li> <li><strong>iOS / Android:</strong> Always returns an [<code>ExternalError::NotSupported</code>].</li> </ul></td></tr>
 </tbody></table>
-</div>
-<p>There's no guarantee that the cursor will be hidden. You should hide it by yourself if you
-want to do so.</p>
-<h2 id="platform-specific"><a class="header" href="#platform-specific">Platform-specific</a></h2>
-<ul>
-<li><strong>macOS:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li>
-<li><strong>iOS / Android / Web:</strong> Always returns an [<code>ExternalError::NotSupported</code>]. |
-| <code>Locked</code> | The cursor is locked inside the window area to the certain position.</li>
-</ul>
-<p>There's no guarantee that the cursor will be hidden. You should hide it by yourself if you
-want to do so.</p>
-<h2 id="platform-specific-1"><a class="header" href="#platform-specific-1">Platform-specific</a></h2>
-<ul>
-<li><strong>X11 / Windows:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li>
-<li><strong>iOS / Android:</strong> Always returns an [<code>ExternalError::NotSupported</code>]. |</li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="window-1"><a class="header" href="#window-1">Window</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="window-1"><a class="header" href="#window-1">Window</a></h1>
 <p>class in <a href="scripting_api/Window/../../scripting_api.html">FyroxLite</a>.<a href="scripting_api/Window/../Window.html">Window</a></p>
 <h2 id="static-properties-4"><a class="header" href="#static-properties-4">Static Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Access</th><th>Description</th></tr></thead><tbody>

@@ -175,26 +175,11 @@
 <p>enum in <a href="../../scripting_api.html">FyroxLite</a>.<a href="../Window.html">Window</a></p>
 <h2 id="properties"><a class="header" href="#properties">Properties</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>None</code></td><td>No grabbing of the cursor is performed.</td></tr>
-<tr><td><code>Confined</code></td><td>The cursor is confined to the window area.</td></tr>
+<tr><td><code>None</code></td><td><p>No grabbing of the cursor is performed.</p></td></tr>
+<tr><td><code>Confined</code></td><td><p>The cursor is confined to the window area.</p> <p>There’s no guarantee that the cursor will be hidden. You should hide it by yourself if you want to do so.</p> <h2 id="platform-specific"><a class="header" href="#platform-specific">Platform-specific</a></h2> <ul> <li><strong>macOS:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li> <li><strong>iOS / Android / Web:</strong> Always returns an [<code>ExternalError::NotSupported</code>].</li> </ul></td></tr>
+<tr><td><code>Locked</code></td><td><p>The cursor is locked inside the window area to the certain position.</p> <p>There’s no guarantee that the cursor will be hidden. You should hide it by yourself if you want to do so.</p> <h2 id="platform-specific-1"><a class="header" href="#platform-specific-1">Platform-specific</a></h2> <ul> <li><strong>X11 / Windows:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li> <li><strong>iOS / Android:</strong> Always returns an [<code>ExternalError::NotSupported</code>].</li> </ul></td></tr>
 </tbody></table>
 </div>
-<p>There's no guarantee that the cursor will be hidden. You should hide it by yourself if you
-want to do so.</p>
-<h2 id="platform-specific"><a class="header" href="#platform-specific">Platform-specific</a></h2>
-<ul>
-<li><strong>macOS:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li>
-<li><strong>iOS / Android / Web:</strong> Always returns an [<code>ExternalError::NotSupported</code>]. |
-| <code>Locked</code> | The cursor is locked inside the window area to the certain position.</li>
-</ul>
-<p>There's no guarantee that the cursor will be hidden. You should hide it by yourself if you
-want to do so.</p>
-<h2 id="platform-specific-1"><a class="header" href="#platform-specific-1">Platform-specific</a></h2>
-<ul>
-<li><strong>X11 / Windows:</strong> Not implemented. Always returns [<code>ExternalError::NotSupported</code>] for now.</li>
-<li><strong>iOS / Android:</strong> Always returns an [<code>ExternalError::NotSupported</code>]. |</li>
-</ul>
-
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
