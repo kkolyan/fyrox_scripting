@@ -10,6 +10,7 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_node::LiteNode
+
 public partial struct Node : IEquatable<Node>
 {
     #region internal fields and constructor
@@ -21,6 +22,7 @@ public partial struct Node : IEquatable<Node>
     }
     #endregion
 
+    
     public RigidBody? AsRigidBody()
     {
         #region native call
@@ -31,6 +33,7 @@ public partial struct Node : IEquatable<Node>
         }
         #endregion
     }
+    
     public string Name
     {
         get
@@ -43,6 +46,7 @@ public partial struct Node : IEquatable<Node>
             #endregion
         }
     }
+    
     public bool Alive
     {
         get
@@ -56,6 +60,7 @@ public partial struct Node : IEquatable<Node>
         }
     }
 
+    
     public void Destroy()
     {
         #region native call
@@ -65,6 +70,7 @@ public partial struct Node : IEquatable<Node>
         }
         #endregion
     }
+    
     public Vector3 GlobalPosition
     {
         get
@@ -77,6 +83,7 @@ public partial struct Node : IEquatable<Node>
             #endregion
         }
     }
+    
     public Vector3 LocalPosition
     {
         get
@@ -99,6 +106,7 @@ public partial struct Node : IEquatable<Node>
             #endregion
         }
     }
+    
     public Quaternion LocalRotation
     {
         get
@@ -122,6 +130,8 @@ public partial struct Node : IEquatable<Node>
         }
     }
 
+    
+    /// <para>Sends a hierarchical script message with the given payload.</para>
     public void SendHierarchical(RoutingStrategy routing, object payload)
     {
         #region native call
@@ -133,6 +143,7 @@ public partial struct Node : IEquatable<Node>
         #endregion
     }
 
+    
     public void SubscribeTo<T>()
     {
         #region native call
@@ -143,6 +154,7 @@ public partial struct Node : IEquatable<Node>
         #endregion
     }
 
+    
     public Node? FindColliderInChildren()
     {
         #region native call
@@ -153,6 +165,7 @@ public partial struct Node : IEquatable<Node>
         }
         #endregion
     }
+    
     public bool Valid
     {
         get
@@ -165,6 +178,7 @@ public partial struct Node : IEquatable<Node>
             #endregion
         }
     }
+    
     public Node Parent
     {
         get
@@ -178,6 +192,7 @@ public partial struct Node : IEquatable<Node>
         }
     }
 
+    
     public T AddScript<T>() where T : class
     {
         #region native call
@@ -189,6 +204,7 @@ public partial struct Node : IEquatable<Node>
         #endregion
     }
 
+    
     public T? FindScript<T>() where T : class
     {
         #region native call
@@ -199,6 +215,7 @@ public partial struct Node : IEquatable<Node>
         }
         #endregion
     }
+    
     public Quaternion GlobalRotation
     {
         get
@@ -212,6 +229,7 @@ public partial struct Node : IEquatable<Node>
         }
     }
 
+    
     public bool TagIs(string tag)
     {
         #region native call
@@ -222,6 +240,7 @@ public partial struct Node : IEquatable<Node>
         }
         #endregion
     }
+    
     public string Tag
     {
         get

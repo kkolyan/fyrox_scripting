@@ -10,6 +10,7 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_physics::LiteRigidBody
+
 public partial struct RigidBody : IEquatable<RigidBody>
 {
     #region internal fields and constructor
@@ -21,6 +22,7 @@ public partial struct RigidBody : IEquatable<RigidBody>
     }
     #endregion
 
+    
     public void ApplyForce(Vector3 force)
     {
         #region native call

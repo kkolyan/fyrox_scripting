@@ -10,6 +10,8 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_math::PodVector3
+
+/// <para>Plain internal representation of 3D vector. In scripts, it’s represented by another type with reach functionality.</para>
 [StructLayout(LayoutKind.Sequential)]
 internal partial struct NativeVector3
 {

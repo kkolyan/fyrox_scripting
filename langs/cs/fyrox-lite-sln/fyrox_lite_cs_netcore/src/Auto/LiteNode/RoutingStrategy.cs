@@ -10,8 +10,13 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_node::LiteRoutingStrategy
+
 public enum RoutingStrategy
 {
+    
+    /// <para>An message will be passed to the specified root node and then to every node up in the hierarchy.</para>
     Up,
+    
+    /// <para>An message will be passed to every node down the tree in the hierarchy.</para>
     Down,
 }

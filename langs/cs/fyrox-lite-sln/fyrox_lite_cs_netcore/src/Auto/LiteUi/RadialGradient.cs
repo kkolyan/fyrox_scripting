@@ -10,15 +10,20 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_ui::RadialGradient
+
 [StructLayout(LayoutKind.Sequential)]
 public partial struct RadialGradient
 {
+    
+    /// <para>Center of the gradient in local coordinates.</para>
     public Vector2 Center {
         #region get/set with wrapping/unwrapping
         get => NativeVector2.ToFacade(_center);
         set => _center = NativeVector2.FromFacade(value);
         #endregion
     }
+    
+    /// <para>Stops of the gradient.</para>
     public List<GradientPoint> Stops {
         #region get/set with wrapping/unwrapping
         get => GradientPoint_slice.ToFacade(_stops);

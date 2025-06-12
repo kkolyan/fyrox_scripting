@@ -10,17 +10,36 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_physics::LitePhysics
+
 public static partial class Physics
 {
+    
+    // <para>Exclude from the query any collider attached to a fixed rigid-body and colliders with no rigid-body attached.</para>
     //public const int EXCLUDE_FIXED = 1 << 1;
+    
+    // <para>Exclude from the query any collider attached to a kinematic rigid-body.</para>
     //public const int EXCLUDE_KINEMATIC = 1 << 2;
+    
+    // <para>Exclude from the query any collider attached to a dynamic rigid-body.</para>
     //public const int EXCLUDE_DYNAMIC = 1 << 3;
+    
+    // <para>Exclude from the query any collider that is a sensor.</para>
     //public const int EXCLUDE_SENSORS = 1 << 4;
+    
+    // <para>Exclude from the query any collider that is not a sensor.</para>
     //public const int EXCLUDE_SOLIDS = 1 << 5;
+    
+    // <para>Excludes all colliders not attached to a dynamic rigid-body.</para>
     //public const int ONLY_DYNAMIC = LitePhysics :: EXCLUDE_FIXED | LitePhysics :: EXCLUDE_KINEMATIC;
+    
+    // <para>Excludes all colliders not attached to a kinematic rigid-body.</para>
     //public const int ONLY_KINEMATIC = LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_FIXED;
+    
+    // <para>Exclude all colliders attached to a non-fixed rigid-body
+    // (this will not exclude colliders not attached to any rigid-body).</para>
     //public const int ONLY_FIXED = LitePhysics :: EXCLUDE_DYNAMIC | LitePhysics :: EXCLUDE_KINEMATIC;
 
+    
     public static List<Intersection> CastRay(RayCastOptions opts)
     {
         #region native call

@@ -10,21 +10,31 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_ui::Brush
+
+/// <para>Brush defines a way to fill an arbitrary surface.</para>
 [StructLayout(LayoutKind.Sequential)]
 public partial struct Brush
 {
+    
+    /// <para>A brush, that fills a surface with a solid color.</para>
     public Color? SolidColor {
         #region get/set with wrapping/unwrapping
         get => NativeColor_optional.ToFacade(_solid_color);
         set => _solid_color = NativeColor_optional.FromFacade(value);
         #endregion
     }
+    
+    /// <para>A brush, that fills a surface with a linear gradient, which is defined by two points in local coordinates
+    /// and a set of stop points. See [<c>GradientPoint</c>] for more info.</para>
     public LinearGradient? LinearGradient {
         #region get/set with wrapping/unwrapping
         get => LinearGradient_optional.ToFacade(_linear_gradient);
         set => _linear_gradient = LinearGradient_optional.FromFacade(value);
         #endregion
     }
+    
+    /// <para>A brush, that fills a surface with a radial gradient, which is defined by a center point in local coordinates
+    /// and a set of stop points. See [<c>GradientPoint</c>] for more info.</para>
     public RadialGradient? RadialGradient {
         #region get/set with wrapping/unwrapping
         get => RadialGradient_optional.ToFacade(_radial_gradient);

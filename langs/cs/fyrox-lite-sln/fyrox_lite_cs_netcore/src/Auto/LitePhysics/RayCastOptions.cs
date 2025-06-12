@@ -10,33 +10,44 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_physics::LiteRayCastOptions
+
 [StructLayout(LayoutKind.Sequential)]
 public partial struct RayCastOptions
 {
+    
+    /// <para>A ray origin.</para>
     public Vector3 RayOrigin {
         #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_ray_origin);
         set => _ray_origin = NativeVector3.FromFacade(value);
         #endregion
     }
+    
+    /// <para>A ray direction. Can be non-normalized.</para>
     public Vector3 RayDirection {
         #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_ray_direction);
         set => _ray_direction = NativeVector3.FromFacade(value);
         #endregion
     }
+    
+    /// <para>Maximum distance of cast.</para>
     public float MaxLen {
         #region trivial get/set
         get => _max_len;
         set => _max_len = value;
         #endregion
     }
+    
+    /// <para>Groups to check.</para>
     public InteractionGroups? Groups {
         #region get/set with wrapping/unwrapping
         get => InteractionGroups_optional.ToFacade(_groups);
         set => _groups = InteractionGroups_optional.FromFacade(value);
         #endregion
     }
+    
+    /// <para>Whether to sort intersections from closest to farthest.</para>
     public bool SortResults {
         #region get/set with wrapping/unwrapping
         get => NativeBool.ToFacade(_sort_results);

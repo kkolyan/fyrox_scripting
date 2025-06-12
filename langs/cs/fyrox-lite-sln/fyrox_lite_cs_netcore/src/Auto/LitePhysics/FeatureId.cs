@@ -10,15 +10,19 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_physics::LiteFeatureId
+
+/// <para>Shape-dependent identifier.</para>
 [StructLayout(LayoutKind.Sequential)]
 public partial struct FeatureId
 {
+    
     public FeatureKind Kind {
         #region trivial get/set
         get => _kind;
         set => _kind = value;
         #endregion
     }
+    
     public int Id {
         #region trivial get/set
         get => _id;

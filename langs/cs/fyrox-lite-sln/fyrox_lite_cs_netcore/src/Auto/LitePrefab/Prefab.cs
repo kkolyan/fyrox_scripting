@@ -10,6 +10,7 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_prefab::LitePrefab
+
 public partial struct Prefab : IEquatable<Prefab>
 {
     #region internal fields and constructor
@@ -21,6 +22,7 @@ public partial struct Prefab : IEquatable<Prefab>
     }
     #endregion
 
+    
     public Node InstantiateAt(Vector3 position, Quaternion orientation)
     {
         #region native call

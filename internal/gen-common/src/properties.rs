@@ -6,12 +6,14 @@ pub struct Getter {
     pub instance: bool,
     pub prop_name: String,
     pub prop_type: DataType,
+    pub description: String,
 }
 pub struct Setter {
     pub instance: bool,
     pub prop_name: String,
     pub prop_type: DataType,
     pub has_result: bool,
+    pub description: String,
 }
 
 pub fn is_setter(method: &Method) -> bool {
@@ -37,6 +39,7 @@ impl Setter {
                 prop_name,
                 prop_type,
                 has_result: may_fail,
+                description: method.description.clone(),
             });
         }
         None
@@ -53,6 +56,7 @@ impl Getter {
                 instance: method.instance,
                 prop_name,
                 prop_type,
+                description: method.description.clone(),
             });
         }
         None

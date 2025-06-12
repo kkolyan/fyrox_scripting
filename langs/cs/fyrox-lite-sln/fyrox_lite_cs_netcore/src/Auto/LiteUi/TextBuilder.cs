@@ -10,15 +10,18 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_ui::TextBuilder
+
 [StructLayout(LayoutKind.Sequential)]
 public partial struct TextBuilder
 {
+    
     public Brush? Foreground {
         #region get/set with wrapping/unwrapping
         get => Brush_optional.ToFacade(_foreground);
         set => _foreground = Brush_optional.FromFacade(value);
         #endregion
     }
+    
     public float? FontSize {
         #region get/set with wrapping/unwrapping
         get => float_optional.ToFacade(_font_size);

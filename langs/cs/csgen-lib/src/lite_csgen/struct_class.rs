@@ -8,19 +8,23 @@ use gen_common::templating::render;
 use lite_model::{DataType, Field, StructClass};
 use crate::lite_csgen::{api_types, wrappers};
 use crate::lite_csgen::api_types::CsType;
+use crate::lite_csgen::doc::StringExt;
 use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub(crate) fn generate_bindings(class: &StructClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {
     let mut s = String::new();
     let class_name = api_types::type_cs(&DataType::Object(class.class_name.clone())).to_blittable();
     let is_implemented_externally = api_types::is_implemented_externally(&class.class_name);
+    let doc = class.description.to_doc("            ");
     render(&mut s, r#"
             // ${rust_path}
+            ${doc}
             [StructLayout(LayoutKind.Sequential)]
             ${visibility} partial struct ${class}
             {
     "#, [
         ("visibility", &if is_implemented_externally {"internal"} else {"public"}),
+        ("doc", &doc),
         ("class", &class_name),
         ("rust_path", &class.rust_struct_path)
     ]);
@@ -81,9 +85,11 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
     let ty = api_types::type_cs(&field.ty);
     let facade_name = field.name.to_case(Case::Pascal);
     let private_name = format!("_{}", field.name);
+    let doc = field.description.to_doc("                ");
     match &ty {
         CsType::Blittable(ty) => {
             render(s, r#"
+                ${doc}
                 public ${type} ${facade_name} {
                     #region trivial get/set
                     get => ${private_name};
@@ -92,12 +98,14 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
                 }
                 "#, [
                 ("type", &ty),
+                ("doc", &doc),
                 ("private_name", &private_name),
                 ("facade_name", &facade_name),
             ]);
         }
         CsType::Mapped { facade, blittable, .. } => {
             render(s, r#"
+                ${doc}
                 public ${facade_ty} ${facade_name} {
                     #region get/set with wrapping/unwrapping
                     get => ${blittable_ty}.ToFacade(${private_name});
@@ -106,6 +114,7 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
                 }
                 "#, [
                 ("blittable_ty", &blittable),
+                ("doc", &doc),
                 ("facade_ty", &facade),
                 ("private_name", &private_name),
                 ("facade_name", &facade_name),

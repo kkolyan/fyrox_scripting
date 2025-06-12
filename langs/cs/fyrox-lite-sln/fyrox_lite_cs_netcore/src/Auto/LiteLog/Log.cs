@@ -10,9 +10,11 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_log::LiteLog
+
 public static partial class Log
 {
 
+    
     public static void Info(string msg)
     {
         #region native call
@@ -23,6 +25,7 @@ public static partial class Log
         #endregion
     }
 
+    
     public static void Warn(string msg)
     {
         #region native call
@@ -33,6 +36,7 @@ public static partial class Log
         #endregion
     }
 
+    
     public static void Err(string msg)
     {
         #region native call

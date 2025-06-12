@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 use convert_case::{Case, Casing};
+use itertools::Itertools;
 use to_vec::ToVec;
 use gen_common::code_model::{Module};
 use gen_common::context::GenerationContext;
@@ -8,6 +9,7 @@ use gen_common::templating::{render, render_string};
 use lite_model::{Class, ConstantValue, DataType, EngineClass, Literal, Method, StructClass};
 use crate::lite_csgen::{api_types, wrappers};
 use crate::lite_csgen::api_types::CsType;
+use crate::lite_csgen::doc::StringExt;
 use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {
@@ -26,29 +28,36 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
     });
     let mut s = String::new();
 
+    let doc = class.description.to_doc("            ");
+
     if class.class_name.0 == "GlobalScript" {
         // do not want to expose "abstract" flag to domain model for the single possible case
         render(&mut s, r#"
             // ${rust_path}
+            ${doc}
             public abstract partial class ${class}
             {
             "#, [
             ("class", &class.class_name),
+            ("doc", &doc),
             ("rust_path", &class.rust_struct_path),
         ]);
     }
     else if static_class {
         render(&mut s, r#"
             // ${rust_path}
+            ${doc}
             public static partial class ${class}
             {
             "#, [
             ("class", &class.class_name),
+            ("doc", &doc),
             ("rust_path", &class.rust_struct_path),
         ]);
     } else {
         render(&mut s, r#"
             // ${rust_path}
+            ${doc}
             public partial struct ${class} : IEquatable<${class}>
             {
                 #region internal fields and constructor
@@ -62,6 +71,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
 
             "#, [
             ("class", &class.class_name),
+            ("doc", &doc),
             ("rust_path", &class.rust_struct_path),
         ]);;
     }
@@ -78,6 +88,8 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
     rust.emit_statement(generate_rust_conversions(class, static_class, ctx));
 
     for constant in class.constants.iter() {
+        let doc = constant.description.to_doc_commented("                ");
+
         let value = match &constant.value {
             ConstantValue::Literal(it) => match it {
                 Literal::Bool(it) => format!("{}", it),
@@ -87,20 +99,25 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
             },
             ConstantValue::ComplexExpression(expr) => {
                 render(&mut s, r#"
+                ${doc}
                 //public const ${type} ${name} = ${value};
                 "#, [
                     ("type", &api_types::type_cs(&constant.ty).to_facade()),
+                    ("doc", &doc),
                     ("name", &constant.const_name),
                     ("value", &expr)
                 ]);
                 continue;
             }
         };
+        let doc = constant.description.to_doc("                ");
 
         render(&mut s, r#"
+                ${doc}
                 public const ${type} ${name} = ${value};
                 "#, [
             ("type", &api_types::type_cs(&constant.ty).to_facade()),
+            ("doc", &doc),
             ("name", &constant.const_name),
             ("value", &value)
         ]);
@@ -226,12 +243,20 @@ fn generate_property(s: &mut String, class: &EngineClass, getter: Option<Getter>
 
     let ty_marshalling = api_types::type_cs(prop_type);
 
+    let desc = getter.as_ref()
+        .map(|it| it.description.clone())
+        .unwrap_or_else(|| setter.as_ref().unwrap().description.clone());
+
+    let doc = desc.to_doc("                ");
+
     render(s, r#"
+                ${doc}
                 public ${static}${property_type} ${property_name}
                 {
     "#, [
         ("static", &if !instance { "static " } else { "" }),
         ("property_name", &prop_name.to_case(Case::Pascal)),
+        ("doc", &doc),
         ("property_type", &ty_marshalling.to_facade()),
     ]);
 
@@ -330,12 +355,14 @@ fn generate_method(
                 "#, [("name", &param.name)]);
         }
     }
+    let doc = method.description.to_doc("                ");
 
     if let Some(return_ty) = &method.signature.return_ty {
         let return_ty = api_types::type_cs(return_ty);
         let rendered_return_ty = if has_class_name_arg { return_ty.to_facade_generic() } else { return_ty.to_facade() };
         render(s, r#"
 
+                ${doc}
                 public ${static}${return_ty} ${name}${generics}(${input_params})${generic_where}
                 {
                     #region native call
@@ -348,6 +375,7 @@ fn generate_method(
                 }
             "#, [
             ("static", &if !method.instance { "static " } else { "" }),
+            ("doc", &doc),
             ("return_ty", &rendered_return_ty),
             ("ret_expr", &if return_ty.is_mapped() { format!("{}.ToFacade(__ret)", return_ty.to_blittable()) } else { "__ret".to_string() }),
             ("return", &if rendered_return_ty == "void" {""} else {"return "}),
@@ -365,6 +393,7 @@ fn generate_method(
     } else {
         render(s, r#"
 
+                ${doc}
                 public ${static}void ${name}${generics}(${input_params})
                 {
                     #region native call
@@ -376,6 +405,7 @@ fn generate_method(
                 }
         "#, [
             ("static", &if !method.instance { "static " } else { "" }),
+            ("doc", &doc),
             ("name", &method.method_name.to_case(Case::Pascal)),
             ("rust_name", &method.method_name),
             ("input_params", &input_params.join(", ")),

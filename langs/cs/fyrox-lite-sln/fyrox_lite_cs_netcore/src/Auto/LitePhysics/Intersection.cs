@@ -10,33 +10,49 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_physics::LiteIntersection
+
+/// <para>A ray intersection result.</para>
 [StructLayout(LayoutKind.Sequential)]
 public partial struct Intersection
 {
+    
+    /// <para>A handle of the collider with which intersection was detected.</para>
     public Node Collider {
         #region trivial get/set
         get => _collider;
         set => _collider = value;
         #endregion
     }
+    
+    /// <para>A normal at the intersection position.</para>
     public Vector3 Normal {
         #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_normal);
         set => _normal = NativeVector3.FromFacade(value);
         #endregion
     }
+    
+    /// <para>A position of the intersection in world coordinates.</para>
     public Vector3 Position {
         #region get/set with wrapping/unwrapping
         get => NativeVector3.ToFacade(_position);
         set => _position = NativeVector3.FromFacade(value);
         #endregion
     }
+    
+    /// <para>Additional data that contains a kind of the feature with which
+    /// intersection was detected as well as its index.</para><para><b>Important notes.</b></para><para>FeatureId::Face might have index that is greater than amount of triangles in
+    /// a triangle mesh, this means that intersection was detected from “back” side of
+    /// a face. To “fix” that index, simply subtract amount of triangles of a triangle
+    /// mesh from the value.</para>
     public FeatureId Feature {
         #region trivial get/set
         get => _feature;
         set => _feature = value;
         #endregion
     }
+    
+    /// <para>Distance from the ray origin.</para>
     public float Toi {
         #region trivial get/set
         get => _toi;

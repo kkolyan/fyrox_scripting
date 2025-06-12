@@ -10,9 +10,12 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_plugin::LiteGlobalScript
+
 public abstract partial class GlobalScript
 {
 
+    
+    /// <para>find a global script by type</para>
     public static T Get<T>() where T : class
     {
         #region native call

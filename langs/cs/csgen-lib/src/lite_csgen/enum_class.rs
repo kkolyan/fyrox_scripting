@@ -3,21 +3,35 @@ use gen_common::context::GenerationContext;
 use gen_common::templating::render;
 use lite_model::{DataType, EnumClass, StructClass};
 use crate::lite_csgen::api_types;
+use crate::lite_csgen::doc::StringExt;
 use crate::lite_csgen::gen_rs::RustEmitter;
 
 pub(crate) fn generate_bindings(class: &EnumClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {
     let mut s = String::new();
 
+    let doc = class.description.to_doc("            ");
+
     render(&mut s, r#"
             // ${rust_path}
+            ${doc}
             public enum ${class}
             {
-            "#, [("class", &class.class_name), ("rust_path", &class.rust_struct_path)]);
+            "#, [
+                ("doc", &doc),
+                ("class", &class.class_name),
+        ("rust_path", &class.rust_struct_path)
+    ]);
 
     for variant in class.variants.iter() {
+
+        let doc = variant.description.to_doc("                ");
         render(&mut s, r#"
+                ${doc}
                 ${name},
-        "#, [("name", &variant.tag)]);
+        "#, [
+            ("doc", &doc),
+            ("name", &variant.tag)
+        ]);
     }
 
     render(&mut s, r#"

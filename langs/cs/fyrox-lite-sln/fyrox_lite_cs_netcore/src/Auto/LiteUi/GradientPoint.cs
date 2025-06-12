@@ -10,15 +10,20 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_ui::GradientPoint
+
 [StructLayout(LayoutKind.Sequential)]
 public partial struct GradientPoint
 {
+    
+    /// <para>A distance from an origin of the gradient.</para>
     public float Stop {
         #region trivial get/set
         get => _stop;
         set => _stop = value;
         #endregion
     }
+    
+    /// <para>Color of the point.</para>
     public Color Color {
         #region get/set with wrapping/unwrapping
         get => NativeColor.ToFacade(_color);

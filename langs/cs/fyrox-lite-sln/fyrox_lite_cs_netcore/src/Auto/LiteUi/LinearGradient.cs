@@ -10,21 +10,28 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_ui::LinearGradient
+
 [StructLayout(LayoutKind.Sequential)]
 public partial struct LinearGradient
 {
+    
+    /// <para>Beginning of the gradient in local coordinates.</para>
     public Vector2 From {
         #region get/set with wrapping/unwrapping
         get => NativeVector2.ToFacade(_from);
         set => _from = NativeVector2.FromFacade(value);
         #endregion
     }
+    
+    /// <para>End of the gradient in local coordinates.</para>
     public Vector2 To {
         #region get/set with wrapping/unwrapping
         get => NativeVector2.ToFacade(_to);
         set => _to = NativeVector2.FromFacade(value);
         #endregion
     }
+    
+    /// <para>Stops of the gradient.</para>
     public List<GradientPoint> Stops {
         #region get/set with wrapping/unwrapping
         get => GradientPoint_slice.ToFacade(_stops);

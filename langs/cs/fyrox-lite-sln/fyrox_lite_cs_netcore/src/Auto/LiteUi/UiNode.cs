@@ -10,6 +10,7 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_ui::LiteUiNode
+
 public static partial class UiNode
 {
 

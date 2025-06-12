@@ -10,6 +10,7 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_math::PodVector2
+
 [StructLayout(LayoutKind.Sequential)]
 internal partial struct NativeVector2
 {

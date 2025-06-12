@@ -10,9 +10,11 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_scene::LiteScene
+
 public static partial class Scene
 {
 
+    
     public static void LoadAsync(string scene_path)
     {
         #region native call

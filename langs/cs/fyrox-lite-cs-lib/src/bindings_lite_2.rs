@@ -3744,6 +3744,205 @@ impl From<NativeLinearGradient_result>
 
 #[repr(C)]
 #[derive(Clone, Copy)]
+pub struct NativeLiteText {
+    pub handle: NativeHandle,
+}
+
+impl From<fyrox_lite::lite_ui::LiteText> for NativeLiteText {
+    fn from(value: fyrox_lite::lite_ui::LiteText) -> Self {
+        Self {
+            handle: NativeHandle::from_u128(value.to_external()),
+        }
+    }
+}
+
+impl From<NativeLiteText> for fyrox_lite::lite_ui::LiteText {
+    fn from(value: NativeLiteText) -> Self {
+        Self::from_external(value.handle.as_u128())
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_lite_ui_LiteText_set_text_async(
+    this: NativeLiteText,
+    text: NativeString,
+) -> () {
+    let text = text.into();
+    let ret = fyrox_lite::lite_ui::LiteText::from(this).set_text_async(text);
+    ret.into()
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_lite_ui_LiteText_get_text(this: NativeLiteText) -> NativeString {
+    let ret = fyrox_lite::lite_ui::LiteText::from(this).get_text();
+    ret.into()
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_lite_ui_LiteText_new(state: *mut NativeTextBuilder) -> NativeLiteText {
+    let state = unsafe { *state }.into();
+    let ret = fyrox_lite::lite_ui::LiteText::new(state);
+    ret.into()
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeLiteText_optional {
+    pub value: NativeLiteText,
+    pub has_value: i32,
+}
+
+impl From<Option<fyrox_lite::lite_ui::LiteText>> for NativeLiteText_optional {
+    fn from(value: Option<fyrox_lite::lite_ui::LiteText>) -> Self {
+        match value {
+            Some(it) => Self {
+                value: it.into(),
+                has_value: 1,
+            },
+            None => Self {
+                value: unsafe { std::mem::zeroed() },
+                has_value: 0,
+            },
+        }
+    }
+}
+
+impl From<NativeLiteText_optional> for Option<fyrox_lite::lite_ui::LiteText> {
+    fn from(value: NativeLiteText_optional) -> Self {
+        if value.has_value != 0 {
+            Some(value.value.into())
+        } else {
+            None
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeLiteText_result {
+    pub ok: i32,
+    pub value: NativeLiteText_result_value,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub union NativeLiteText_result_value {
+    ok: NativeLiteText,
+    err: NativeString,
+}
+
+impl NativeLiteText_result {
+    pub fn into_result_shallow(self) -> Result<NativeLiteText, crate::LangSpecificError> {
+        unsafe {
+            if self.ok != 0 {
+                Ok(self.value.ok)
+            } else {
+                Err(self.value.err.into())
+            }
+        }
+    }
+    pub fn into_result(self) -> Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError> {
+        unsafe {
+            if self.ok != 0 {
+                Ok(self.value.ok.into())
+            } else {
+                Err(self.value.err.into())
+            }
+        }
+    }
+}
+
+impl From<Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError>>
+    for NativeLiteText_result
+{
+    fn from(value: Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError>) -> Self {
+        match value {
+            Ok(it) => Self {
+                ok: 1,
+                value: NativeLiteText_result_value { ok: it.into() },
+            },
+            Err(err) => Self {
+                ok: 0,
+                value: NativeLiteText_result_value { err: err.into() },
+            },
+        }
+    }
+}
+
+impl From<NativeLiteText_result>
+    for Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError>
+{
+    fn from(value: NativeLiteText_result) -> Self {
+        value.into_result()
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeLiteText_optional_result {
+    pub ok: i32,
+    pub value: NativeLiteText_optional_result_value,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub union NativeLiteText_optional_result_value {
+    ok: NativeLiteText_optional,
+    err: NativeString,
+}
+
+impl NativeLiteText_optional_result {
+    pub fn into_result_shallow(self) -> Result<NativeLiteText_optional, crate::LangSpecificError> {
+        unsafe {
+            if self.ok != 0 {
+                Ok(self.value.ok)
+            } else {
+                Err(self.value.err.into())
+            }
+        }
+    }
+    pub fn into_result(
+        self,
+    ) -> Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError> {
+        unsafe {
+            if self.ok != 0 {
+                Ok(self.value.ok.into())
+            } else {
+                Err(self.value.err.into())
+            }
+        }
+    }
+}
+
+impl From<Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError>>
+    for NativeLiteText_optional_result
+{
+    fn from(
+        value: Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError>,
+    ) -> Self {
+        match value {
+            Ok(it) => Self {
+                ok: 1,
+                value: NativeLiteText_optional_result_value { ok: it.into() },
+            },
+            Err(err) => Self {
+                ok: 0,
+                value: NativeLiteText_optional_result_value { err: err.into() },
+            },
+        }
+    }
+}
+
+impl From<NativeLiteText_optional_result>
+    for Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError>
+{
+    fn from(value: NativeLiteText_optional_result) -> Self {
+        value.into_result()
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
 pub struct NativeRadialGradient {
     pub center: NativeVector2,
     pub stops: NativeGradientPoint_slice,
@@ -3914,195 +4113,6 @@ impl From<NativeRadialGradient_result>
     for Result<fyrox_lite::lite_ui::RadialGradient, crate::LangSpecificError>
 {
     fn from(value: NativeRadialGradient_result) -> Self {
-        value.into_result()
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeText {
-    pub handle: NativeHandle,
-}
-
-impl From<fyrox_lite::lite_ui::LiteText> for NativeText {
-    fn from(value: fyrox_lite::lite_ui::LiteText) -> Self {
-        Self {
-            handle: NativeHandle::from_u128(value.to_external()),
-        }
-    }
-}
-
-impl From<NativeText> for fyrox_lite::lite_ui::LiteText {
-    fn from(value: NativeText) -> Self {
-        Self::from_external(value.handle.as_u128())
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn fyrox_lite_lite_ui_LiteText_set_text_async(
-    this: NativeText,
-    text: NativeString,
-) -> () {
-    let text = text.into();
-    let ret = fyrox_lite::lite_ui::LiteText::from(this).set_text_async(text);
-    ret.into()
-}
-
-#[no_mangle]
-pub extern "C" fn fyrox_lite_lite_ui_LiteText_new(state: *mut NativeTextBuilder) -> NativeText {
-    let state = unsafe { *state }.into();
-    let ret = fyrox_lite::lite_ui::LiteText::new(state);
-    ret.into()
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeText_optional {
-    pub value: NativeText,
-    pub has_value: i32,
-}
-
-impl From<Option<fyrox_lite::lite_ui::LiteText>> for NativeText_optional {
-    fn from(value: Option<fyrox_lite::lite_ui::LiteText>) -> Self {
-        match value {
-            Some(it) => Self {
-                value: it.into(),
-                has_value: 1,
-            },
-            None => Self {
-                value: unsafe { std::mem::zeroed() },
-                has_value: 0,
-            },
-        }
-    }
-}
-
-impl From<NativeText_optional> for Option<fyrox_lite::lite_ui::LiteText> {
-    fn from(value: NativeText_optional) -> Self {
-        if value.has_value != 0 {
-            Some(value.value.into())
-        } else {
-            None
-        }
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeText_result {
-    pub ok: i32,
-    pub value: NativeText_result_value,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub union NativeText_result_value {
-    ok: NativeText,
-    err: NativeString,
-}
-
-impl NativeText_result {
-    pub fn into_result_shallow(self) -> Result<NativeText, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok)
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
-    pub fn into_result(self) -> Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok.into())
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
-}
-
-impl From<Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError>> for NativeText_result {
-    fn from(value: Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError>) -> Self {
-        match value {
-            Ok(it) => Self {
-                ok: 1,
-                value: NativeText_result_value { ok: it.into() },
-            },
-            Err(err) => Self {
-                ok: 0,
-                value: NativeText_result_value { err: err.into() },
-            },
-        }
-    }
-}
-
-impl From<NativeText_result> for Result<fyrox_lite::lite_ui::LiteText, crate::LangSpecificError> {
-    fn from(value: NativeText_result) -> Self {
-        value.into_result()
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeText_optional_result {
-    pub ok: i32,
-    pub value: NativeText_optional_result_value,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub union NativeText_optional_result_value {
-    ok: NativeText_optional,
-    err: NativeString,
-}
-
-impl NativeText_optional_result {
-    pub fn into_result_shallow(self) -> Result<NativeText_optional, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok)
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
-    pub fn into_result(
-        self,
-    ) -> Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok.into())
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
-}
-
-impl From<Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError>>
-    for NativeText_optional_result
-{
-    fn from(
-        value: Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError>,
-    ) -> Self {
-        match value {
-            Ok(it) => Self {
-                ok: 1,
-                value: NativeText_optional_result_value { ok: it.into() },
-            },
-            Err(err) => Self {
-                ok: 0,
-                value: NativeText_optional_result_value { err: err.into() },
-            },
-        }
-    }
-}
-
-impl From<NativeText_optional_result>
-    for Result<Option<fyrox_lite::lite_ui::LiteText>, crate::LangSpecificError>
-{
-    fn from(value: NativeText_optional_result) -> Self {
         value.into_result()
     }
 }

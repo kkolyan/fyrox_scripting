@@ -10,8 +10,10 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_window::LiteWindow
+
 public static partial class Window
 {
+    
     public static CursorGrabMode CursorGrab
     {
         set

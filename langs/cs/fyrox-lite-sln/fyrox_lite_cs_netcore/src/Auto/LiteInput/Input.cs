@@ -10,14 +10,24 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_input::Input
+
+/// <para>Utility class to poll player input events</para>
 public static partial class Input
 {
+    
+    /// <para>Left Mouse Button ID</para>
     public const int MouseLeft = 0;
+    
     public const int MouseRight = 1;
+    
     public const int MouseMiddle = 2;
+    
     public const int MouseBack = 3;
+    
     public const int MouseForward = 4;
 
+    
+    /// <para>is mouse button with ID <c>button</c> is in pressed state?</para>
     public static bool IsMouseButtonDown(int button)
     {
         #region native call
@@ -29,6 +39,7 @@ public static partial class Input
         #endregion
     }
 
+    
     public static bool IsMouseButtonUp(int button)
     {
         #region native call
@@ -40,6 +51,7 @@ public static partial class Input
         #endregion
     }
 
+    
     public static bool IsMouseButtonPressed(int button)
     {
         #region native call
@@ -51,6 +63,7 @@ public static partial class Input
         #endregion
     }
 
+    
     public static bool IsKeyDown(KeyCode key)
     {
         #region native call
@@ -62,6 +75,7 @@ public static partial class Input
         #endregion
     }
 
+    
     public static bool IsKeyUp(KeyCode key)
     {
         #region native call
@@ -73,6 +87,7 @@ public static partial class Input
         #endregion
     }
 
+    
     public static bool IsKeyPressed(KeyCode key)
     {
         #region native call
@@ -83,6 +98,7 @@ public static partial class Input
         }
         #endregion
     }
+    
     public static Vector2 MouseMove
     {
         get
@@ -95,6 +111,7 @@ public static partial class Input
             #endregion
         }
     }
+    
     public static Vector2 MouseScroll
     {
         get

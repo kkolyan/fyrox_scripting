@@ -10,15 +10,20 @@ using System.Collections;
 namespace FyroxLite;
 
 // fyrox_lite::lite_physics::LiteInteractionGroups
+
 [StructLayout(LayoutKind.Sequential)]
 public partial struct InteractionGroups
 {
+    
+    /// <para>Groups memberships.</para>
     public int Memberships {
         #region trivial get/set
         get => _memberships;
         set => _memberships = value;
         #endregion
     }
+    
+    /// <para>Groups filter.</para>
     public int Filter {
         #region trivial get/set
         get => _filter;
