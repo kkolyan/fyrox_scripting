@@ -31,7 +31,7 @@ pub impl str {
         let parser = Parser::new_ext(self, Options::all());
         let mut html_output = String::new();
         push_html(&mut html_output, parser);
-        html_output.trim().to_string()
+        html_output.trim().replace("<kbd>\\</kbd>", "<kbd>\\\\</kbd>").to_string()
     }
 
     fn html2xmldoc(&self) -> String {

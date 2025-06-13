@@ -8,7 +8,7 @@ enum in [FyroxLite](../../scripting_api.md).[Input](../Input.md)
 | Property | Description |
 |---|---|
 | `Backquote` | <p><kbd>`</kbd> on a US keyboard. This is also called a backtick or grave. This is the <kbd>半角</kbd>/<kbd>全角</kbd>/<kbd>漢字</kbd> (hankaku/zenkaku/kanji) key on Japanese keyboards</p> |
-| `Backslash` | <p>Used for both the US <kbd>\</kbd> (on the 101-key layout) and also for the key located between the <kbd>“</kbd> and <kbd>Enter</kbd> keys on row C of the 102-, 104- and 106-key layouts. Labeled <kbd>#</kbd> on a UK (102) keyboard.</p> |
+| `Backslash` | <p>Used for both the US <kbd>\\</kbd> (on the 101-key layout) and also for the key located between the <kbd>“</kbd> and <kbd>Enter</kbd> keys on row C of the 102-, 104- and 106-key layouts. Labeled <kbd>#</kbd> on a UK (102) keyboard.</p> |
 | `BracketLeft` | <p><kbd>[</kbd> on a US keyboard.</p> |
 | `BracketRight` | <p><kbd>]</kbd> on a US keyboard.</p> |
 | `Comma` | <p><kbd>,</kbd> on a US keyboard.</p> |
@@ -23,9 +23,9 @@ enum in [FyroxLite](../../scripting_api.md).[Input](../Input.md)
 | `Digit8` | <p><kbd>8</kbd> on a US keyboard.</p> |
 | `Digit9` | <p><kbd>9</kbd> on a US keyboard.</p> |
 | `Equal` | <p><kbd>=</kbd> on a US keyboard.</p> |
-| `IntlBackslash` | <p>Located between the left <kbd>Shift</kbd> and <kbd>Z</kbd> keys. Labeled <kbd>\</kbd> on a UK keyboard.</p> |
-| `IntlRo` | <p>Located between the <kbd>/</kbd> and right <kbd>Shift</kbd> keys. Labeled <kbd>\</kbd> (ro) on a Japanese keyboard.</p> |
-| `IntlYen` | <p>Located between the <kbd>=</kbd> and <kbd>Backspace</kbd> keys. Labeled <kbd>¥</kbd> (yen) on a Japanese keyboard. <kbd>\</kbd> on a Russian keyboard.</p> |
+| `IntlBackslash` | <p>Located between the left <kbd>Shift</kbd> and <kbd>Z</kbd> keys. Labeled <kbd>\\</kbd> on a UK keyboard.</p> |
+| `IntlRo` | <p>Located between the <kbd>/</kbd> and right <kbd>Shift</kbd> keys. Labeled <kbd>\\</kbd> (ro) on a Japanese keyboard.</p> |
+| `IntlYen` | <p>Located between the <kbd>=</kbd> and <kbd>Backspace</kbd> keys. Labeled <kbd>¥</kbd> (yen) on a Japanese keyboard. <kbd>\\</kbd> on a Russian keyboard.</p> |
 | `A` | <p><kbd>a</kbd> on a US keyboard. Labeled <kbd>q</kbd> on an AZERTY (e.g., French) keyboard.</p> |
 | `B` | <p><kbd>b</kbd> on a US keyboard.</p> |
 | `C` | <p><kbd>c</kbd> on a US keyboard.</p> |
