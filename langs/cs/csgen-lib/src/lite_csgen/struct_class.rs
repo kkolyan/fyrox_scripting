@@ -15,7 +15,7 @@ pub(crate) fn generate_bindings(class: &StructClass, ctx: &GenerationContext, ru
     let mut s = String::new();
     let class_name = api_types::type_cs(&DataType::Object(class.class_name.clone())).to_blittable();
     let is_implemented_externally = api_types::is_implemented_externally(&class.class_name);
-    let doc = class.description.to_doc("            ");
+    let doc = class.description.to_xmldoc("            ");
     render(&mut s, r#"
             // ${rust_path}
             ${doc}
@@ -85,7 +85,7 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
     let ty = api_types::type_cs(&field.ty);
     let facade_name = field.name.to_case(Case::Pascal);
     let private_name = format!("_{}", field.name);
-    let doc = field.description.to_doc("                ");
+    let doc = field.description.to_xmldoc("                ");
     match &ty {
         CsType::Blittable(ty) => {
             render(s, r#"

@@ -1,5 +1,9 @@
+---@meta
 -- Code below is not intended to be executed. It contains annotations for VSCode and other compatible IDEs.
--- More about Lua annotations format: https://luals.github.io/wiki/annotations
+-- More about Lua annotations format:
+-- https://luals.github.io/wiki/annotations
+-- https://github.com/LuaLS/lua-language-server/wiki/Annotations
+--
 -- This file is auto-generated, do not edit it manually.
 
 ---@diagnostic disable: missing-return, lowercase-global, missing-fields
@@ -9,7 +13,7 @@
 -----------------------------------------------------------
 
 ---@class RadialGradient
----@field center Vector2
----@field stops GradientPoint[]
+---@field center Vector2 ---<p>Center of the gradient in local coordinates.</p>
+---@field stops GradientPoint[] ---<p>Stops of the gradient.</p>
 RadialGradient_instance = {}
 

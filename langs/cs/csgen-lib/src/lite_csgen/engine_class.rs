@@ -28,7 +28,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
     });
     let mut s = String::new();
 
-    let doc = class.description.to_doc("            ");
+    let doc = class.description.to_xmldoc("            ");
 
     if class.class_name.0 == "GlobalScript" {
         // do not want to expose "abstract" flag to domain model for the single possible case
@@ -88,7 +88,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
     rust.emit_statement(generate_rust_conversions(class, static_class, ctx));
 
     for constant in class.constants.iter() {
-        let doc = constant.description.to_doc_commented("                ");
+        let doc = constant.description.to_xmldoc_commented("                ");
 
         let value = match &constant.value {
             ConstantValue::Literal(it) => match it {
@@ -110,7 +110,7 @@ pub(crate) fn generate_bindings(class: &EngineClass, ctx: &GenerationContext, ru
                 continue;
             }
         };
-        let doc = constant.description.to_doc("                ");
+        let doc = constant.description.to_xmldoc("                ");
 
         render(&mut s, r#"
                 ${doc}
@@ -247,7 +247,7 @@ fn generate_property(s: &mut String, class: &EngineClass, getter: Option<Getter>
         .map(|it| it.description.clone())
         .unwrap_or_else(|| setter.as_ref().unwrap().description.clone());
 
-    let doc = desc.to_doc("                ");
+    let doc = desc.to_xmldoc("                ");
 
     render(s, r#"
                 ${doc}
@@ -355,7 +355,7 @@ fn generate_method(
                 "#, [("name", &param.name)]);
         }
     }
-    let doc = method.description.to_doc("                ");
+    let doc = method.description.to_xmldoc("                ");
 
     if let Some(return_ty) = &method.signature.return_ty {
         let return_ty = api_types::type_cs(return_ty);

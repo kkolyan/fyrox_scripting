@@ -11,16 +11,34 @@ use xml::{EmitterConfig, EventReader, EventWriter};
 
 #[extend::ext]
 pub impl str {
-    fn to_doc(&self, indent: &str) -> String {
-        self.md2html()
+    fn to_luadoc(&self, indent: &str) -> String {
+        self
+            .md2html()
+            .lines()
+            .map(|it| format!("{}--- {}\n", indent, it))
+            .join("")
+            .to_string()
+    }
+    fn to_luadoc_inline(&self) -> String {
+        self
+            .md2html()
+            .lines()
+            .join(" ")
+            .trim()
+            .to_string()
+    }
+    fn to_xmldoc(&self, indent: &str) -> String {
+        self
+            .md2html()
             .html2xmldoc()
             .lines()
             .map(|it| format!("\n{}/// {}", indent, it))
             .join("")
     }
 
-    fn to_doc_commented(&self, indent: &str) -> String {
-        self.md2html()
+    fn to_xmldoc_commented(&self, indent: &str) -> String {
+        self
+            .md2html()
             .html2xmldoc()
             .lines()
             .map(|it| format!("\n{}// {}", indent, it))

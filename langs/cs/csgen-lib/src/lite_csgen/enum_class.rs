@@ -9,7 +9,7 @@ use crate::lite_csgen::gen_rs::RustEmitter;
 pub(crate) fn generate_bindings(class: &EnumClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {
     let mut s = String::new();
 
-    let doc = class.description.to_doc("            ");
+    let doc = class.description.to_xmldoc("            ");
 
     render(&mut s, r#"
             // ${rust_path}
@@ -24,7 +24,7 @@ pub(crate) fn generate_bindings(class: &EnumClass, ctx: &GenerationContext, rust
 
     for variant in class.variants.iter() {
 
-        let doc = variant.description.to_doc("                ");
+        let doc = variant.description.to_xmldoc("                ");
         render(&mut s, r#"
                 ${doc}
                 ${name},

@@ -3,12 +3,14 @@ use std::collections::{HashMap, HashSet};
 use lite_model::{DataType, EngineClass, Method};
 use to_vec::ToVec;
 use gen_common::{methods::analyze_method_result, properties::{is_getter, is_setter}, writelnu};
+use gen_common::doc::strExt;
 use crate::{
     annotations::type_to_lua::type_rust_to_lua,
 };
 
 pub fn generate_engine(s: &mut String, class: &EngineClass) {
     writelnu!(s, "");
+    s.push_str(class.description.to_luadoc("").as_str());
     writelnu!(s, "---@class {}_static", class.class_name);
     properties(s, class, false);
     writelnu!(s, "{} = {{}}", class.class_name);
@@ -25,7 +27,7 @@ pub fn generate_engine(s: &mut String, class: &EngineClass) {
 fn properties(s: &mut String, class: &EngineClass, instance: bool) {
     if !instance {
         for c in class.constants.iter() {
-            writelnu!(s, "---@field {} {}", &c.const_name, type_rust_to_lua(&c.ty),);
+            writelnu!(s, "---@field {} {} ---{}", &c.const_name, type_rust_to_lua(&c.ty), c.description.to_luadoc_inline());
         }
     }
     let mut prop_names: Vec<&str> = Default::default();
@@ -51,10 +53,12 @@ fn properties(s: &mut String, class: &EngineClass, instance: bool) {
         }
     }
     for prop in prop_names {
-        let get_ty = getters
-            .get(prop)
+        let getter = getters
+            .get(prop);
+        let get_ty = getter
             .map(|it| it.signature.return_ty.as_ref().unwrap());
-        let set_ty = setters.get(prop).map(|it| &it.signature.params[0].ty);
+        let setter = setters.get(prop);
+        let set_ty = setter.map(|it| &it.signature.params[0].ty);
         let mut types = HashSet::new();
         get_ty.map(|it| types.insert(it));
         set_ty.map(|it| types.insert(it));
@@ -62,7 +66,8 @@ fn properties(s: &mut String, class: &EngineClass, instance: bool) {
             panic!("conflicting accessors for {}::{}", class.class_name, prop);
         }
         let ty = types.into_iter().next().unwrap();
-        writelnu!(s, "---@field {} {}", prop, type_rust_to_lua(ty));
+        let desc = getter.map(|it| &it.description).unwrap_or_else(|| &setter.as_ref().unwrap().description);
+        writelnu!(s, "---@field {} {} {}", prop, type_rust_to_lua(ty), desc.to_luadoc_inline());
     }
 }
 
@@ -75,6 +80,7 @@ pub fn methods(s: &mut String, class: &EngineClass, instance: bool) {
             continue;
         }
         *s += "\n";
+        s.push_str(method.description.to_luadoc("").as_str());
         let params = method
             .signature
             .params

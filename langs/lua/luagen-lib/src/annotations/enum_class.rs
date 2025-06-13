@@ -5,20 +5,22 @@ use lite_model::{
     EnumClass, EnumValue,
 };
 use to_vec::ToVec;
-
+use gen_common::doc::strExt;
 use crate::{
     annotations::type_to_lua::type_rust_to_lua
 };
 
 pub fn generate_enum(s: &mut String, class: &EnumClass) {
     writelnu!(s, "");
+	s.push_str(class.description.to_luadoc("").as_str());
     writelnu!(s, "---@class {}_static", class.class_name);
+	writelnu!(s, "{} = {{}}", class.class_name);
     variant_constructors(s, class);
     writelnu!(s, "{} = {{}}", class.class_name);
 
     writelnu!(s, "");
     writelnu!(s, "---@class {}", class.class_name);
-    variant_accessors(s, class);
+    // variant_accessors(s, class);
     writelnu!(s, "{}_instance = {{}}", class.class_name);
 }
 
@@ -26,6 +28,7 @@ pub fn variant_constructors(s: &mut String, class: &EnumClass) {
     for variant in class.variants.iter() {
         if matches!(variant.value, EnumValue::Unit) {
             writelnu!(s, "");
+			writelnu!(s, "{}", variant.description.to_luadoc(""));
             writelnu!(s, "---@type {}", class.class_name);
             writelnu!(s, "{}.{} = {{}}", class.class_name, variant.tag)
         } else {

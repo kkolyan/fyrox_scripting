@@ -1,5 +1,9 @@
+---@meta
 -- Code below is not intended to be executed. It contains annotations for VSCode and other compatible IDEs.
--- More about Lua annotations format: https://luals.github.io/wiki/annotations
+-- More about Lua annotations format:
+-- https://luals.github.io/wiki/annotations
+-- https://github.com/LuaLS/lua-language-server/wiki/Annotations
+--
 -- This file is auto-generated, do not edit it manually.
 
 ---@diagnostic disable: missing-return, lowercase-global, missing-fields
@@ -9,12 +13,12 @@
 -----------------------------------------------------------
 
 ---@class Vector2_static
----@field ZERO Vector2
+---@field ZERO Vector2 
 Vector2 = {}
 
 ---@class Vector2
----@field x number
----@field y number
+---@field x number 
+---@field y number 
 Vector2_instance = {}
 
 ---@param x number
