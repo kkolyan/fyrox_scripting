@@ -1,6 +1,6 @@
 # Window
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [Window](lite_window/../Window/Window.md)
-## Enums
-* [CursorGrabMode](lite_window/../Window/CursorGrabMode.md)
+* [CursorGrabMode](Window/../Window/CursorGrabMode.md)
+* [Window](Window/../Window/Window.md)

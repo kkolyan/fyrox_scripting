@@ -25,4 +25,3 @@ class in [FyroxLite](../../scripting_api.md).[Node](../Node.md)
 | `T` | `AddScript` <`T`> (  ) |  |
 | `T`? | `FindScript` <`T`> (  ) |  |
 | bool | `TagIs` ( string <ins>tag</ins> ) |  |
-

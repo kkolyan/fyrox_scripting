@@ -6,4 +6,3 @@ struct in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
 |---|---|---|
 | `Stop` | float | <p>A distance from an origin of the gradient.</p> |
 | `Color` | [Color](../UI/Color.md) | <p>Color of the point.</p> |
-

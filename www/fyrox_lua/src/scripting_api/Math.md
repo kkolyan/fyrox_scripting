@@ -1,7 +1,8 @@
 # Math
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [Quaternion](lite_math/../Math/Quaternion.md)
-* [Vector2](lite_math/../Math/Vector2.md)
-* [Vector2I](lite_math/../Math/Vector2I.md)
-* [Vector3](lite_math/../Math/Vector3.md)
+* [Vector2I](Math/../Math/Vector2I.md)
+* [Vector2](Math/../Math/Vector2.md)
+* [Quaternion](Math/../Math/Quaternion.md)
+* [Vector3](Math/../Math/Vector3.md)

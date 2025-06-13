@@ -1,8 +1,6 @@
 # Input
 package in [FyroxLite](../scripting_api.md)
 ## Description
-User input utilities
-## Classes
-* [Input](lite_input/../Input/Input.md)
-## Enums
-* [KeyCode](lite_input/../Input/KeyCode.md)
+User input utilities## Classes
+* [Input](Input/../Input/Input.md)
+* [KeyCode](Input/../Input/KeyCode.md)

@@ -17,4 +17,3 @@ class in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
 | Return Type | Signature | Description |
 |---|---|---|
 | List< [Intersection](../Physics/Intersection.md) > | `cast_ray` ( [RayCastOptions](../Physics/RayCastOptions.md) <ins>opts</ins> ) |  |
-

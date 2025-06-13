@@ -7,7 +7,7 @@ public abstract class NodeScript
     [HideInInspector]
     [Transient]
     internal Node _node;
-    public ref Node Node => ref _node;
+    public Node Node => _node;
 
     protected internal virtual void OnInit()
     {

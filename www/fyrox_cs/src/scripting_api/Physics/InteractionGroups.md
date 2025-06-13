@@ -6,4 +6,3 @@ struct in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
 |---|---|---|
 | `Memberships` | int | <p>Groups memberships.</p> |
 | `Filter` | int | <p>Groups filter.</p> |
-

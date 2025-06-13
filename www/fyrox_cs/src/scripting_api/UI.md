@@ -1,12 +1,12 @@
 # UI
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [Text](lite_ui/../UI/Text.md)
-* [UiNode](lite_ui/../UI/UiNode.md)
-## Structs
-* [Brush](lite_ui/../UI/Brush.md)
-* [Color](lite_ui/../UI/Color.md)
-* [GradientPoint](lite_ui/../UI/GradientPoint.md)
-* [LinearGradient](lite_ui/../UI/LinearGradient.md)
-* [RadialGradient](lite_ui/../UI/RadialGradient.md)
-* [TextBuilder](lite_ui/../UI/TextBuilder.md)
+* [TextBuilder](UI/../UI/TextBuilder.md)
+* [GradientPoint](UI/../UI/GradientPoint.md)
+* [Color](UI/../UI/Color.md)
+* [LinearGradient](UI/../UI/LinearGradient.md)
+* [Brush](UI/../UI/Brush.md)
+* [RadialGradient](UI/../UI/RadialGradient.md)
+* [Text](UI/../UI/Text.md)
+* [UiNode](UI/../UI/UiNode.md)

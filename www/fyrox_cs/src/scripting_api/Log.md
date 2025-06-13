@@ -1,4 +1,5 @@
 # Log
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [Log](lite_log/../Log/Log.md)
+* [Log](Log/../Log/Log.md)

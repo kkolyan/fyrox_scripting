@@ -144,4 +144,3 @@ class in [FyroxLite](../../scripting_api.md).[Color](../Color.md)
 | `LIGHT_GRAY` | [Color](../Color/Color.md) | color_to_lite (fyrox :: core :: color :: Color :: LIGHT_GRAY) |  |
 | `GAINSBORO` | [Color](../Color/Color.md) | color_to_lite (fyrox :: core :: color :: Color :: GAINSBORO) |  |
 | `WHITE_SMOKE` | [Color](../Color/Color.md) | color_to_lite (fyrox :: core :: color :: Color :: WHITE_SMOKE) |  |
-

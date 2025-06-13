@@ -6,4 +6,3 @@ struct in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
 |---|---|---|
 | `Foreground` | [Brush](../UI/Brush.md)? |  |
 | `FontSize` | float? |  |
-

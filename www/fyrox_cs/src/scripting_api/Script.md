@@ -1,4 +1,6 @@
 # Script
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [GlobalScript](lite_script/../Script/GlobalScript.md)
+* [GlobalScript](Script/../Script/GlobalScript.md)
+* [NodeScript](Script/../Script/NodeScript.md)

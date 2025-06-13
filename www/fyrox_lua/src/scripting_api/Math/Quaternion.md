@@ -12,4 +12,3 @@ class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 |---|---|---|
 | [Quaternion](../Math/Quaternion.md) | `face_towards` ( [Vector3](../Math/Vector3.md) <ins>dir</ins>, [Vector3](../Math/Vector3.md) <ins>up</ins> ) |  |
 | [Quaternion](../Math/Quaternion.md) | `from_axis_angle` ( [Vector3](../Math/Vector3.md) <ins>axis</ins>, float <ins>angle</ins> ) |  |
-

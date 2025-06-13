@@ -70,6 +70,10 @@ impl Module {
             children: Default::default(),
         }
     }
+    
+    pub fn set_code(&mut self, code: impl Display) {
+        self.code = Some(code.to_string());
+    }
 
     pub fn add_child(&mut self, m: Module) {
         self.children.insert(m.name.clone(), m);

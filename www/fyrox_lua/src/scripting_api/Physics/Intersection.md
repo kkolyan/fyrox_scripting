@@ -12,4 +12,3 @@ struct in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
 | `position` | [Vector3](../Math/Vector3.md) | <p>A position of the intersection in world coordinates.</p> |
 | `feature` | [FeatureId](../Physics/FeatureId.md) | <p>Additional data that contains a kind of the feature with which intersection was detected as well as its index.</p> <h1>Important notes.</h1> <p>FeatureId::Face might have index that is greater than amount of triangles in a triangle mesh, this means that intersection was detected from “back” side of a face. To “fix” that index, simply subtract amount of triangles of a triangle mesh from the value.</p> |
 | `toi` | float | <p>Distance from the ray origin.</p> |
-

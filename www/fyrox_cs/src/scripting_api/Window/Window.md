@@ -5,4 +5,3 @@ class in [FyroxLite](../../scripting_api.md).[Window](../Window.md)
 | Name | Type | Access | Description |
 |---|---|---|---|
 | `CursorGrab` | [CursorGrabMode](../Window/CursorGrabMode.md) | set |  |
-

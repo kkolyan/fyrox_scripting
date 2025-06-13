@@ -161,14 +161,16 @@ class Program
                 {
                     continue;
                 }
+
+                var accessorList = prop.AccessorList;
                 props.Add(new CsProperty
                 {
                     name = prop.Identifier.Text,
                     description = DocsExtract.ExtractDocs(prop),
                     is_static = prop.Modifiers.Any(it => it.ToString() == "static"),
                     ty = ExtractType(prop.Type),
-                    get = prop.AccessorList.Accessors.Any(it => it.Keyword.ToString() == "get"),
-                    set = prop.AccessorList.Accessors.Any(it => it.Keyword.ToString() == "set"),
+                    get = accessorList?.Accessors.Any(it => it.Keyword.ToString() == "get") ?? true,
+                    set = accessorList?.Accessors.Any(it => it.Keyword.ToString() == "set") ?? false,
                 });
             }
 

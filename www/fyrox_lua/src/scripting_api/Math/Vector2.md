@@ -26,4 +26,3 @@ class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
 | Return Type | Signature | Description |
 |---|---|---|
 | [Vector2](../Math/Vector2.md) | `new` ( float <ins>x</ins>, float <ins>y</ins> ) |  |
-

@@ -8,4 +8,3 @@ struct in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
 | `G` | byte |  |
 | `B` | byte |  |
 | `A` | byte |  |
-

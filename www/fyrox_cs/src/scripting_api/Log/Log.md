@@ -7,4 +7,3 @@ class in [FyroxLite](../../scripting_api.md).[Log](../Log.md)
 | void | `Info` ( string <ins>msg</ins> ) |  |
 | void | `Warn` ( string <ins>msg</ins> ) |  |
 | void | `Err` ( string <ins>msg</ins> ) |  |
-

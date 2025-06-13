@@ -201,4 +201,3 @@ enum in [FyroxLite](../../scripting_api.md).[Input](../Input.md)
 | `F33` | <p>General-purpose function key.</p> |
 | `F34` | <p>General-purpose function key.</p> |
 | `F35` | <p>General-purpose function key.</p> |
-

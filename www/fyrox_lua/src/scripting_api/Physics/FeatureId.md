@@ -9,4 +9,3 @@ struct in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
 |---|---|---|
 | `kind` | [FeatureKind](../Physics/FeatureKind.md) |  |
 | `id` | int |  |
-

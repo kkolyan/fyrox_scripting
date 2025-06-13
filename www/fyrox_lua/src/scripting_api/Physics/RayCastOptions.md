@@ -9,4 +9,3 @@ struct in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
 | `max_len` | float | <p>Maximum distance of cast.</p> |
 | `groups` | [InteractionGroups](../Physics/InteractionGroups.md)? | <p>Groups to check.</p> |
 | `sort_results` | bool | <p>Whether to sort intersections from closest to farthest.</p> |
-

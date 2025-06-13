@@ -8,8 +8,11 @@ use itertools::Itertools;
 use lite_model::{Class, ClassName, Domain};
 use std::collections::{BTreeMap, HashMap};
 use std::fs;
+use std::fs::DirEntry;
+use std::path::PathBuf;
 use std::process::{Command, Stdio};
 use to_vec::ToVec;
+use crate::md::sections::{Section, Sections};
 
 pub struct CSharpDomain {
     pub packages: Vec<CSharpPackage>,
@@ -46,22 +49,20 @@ impl CSharpType {
 }
 
 impl CSharpDomain {
-    pub fn generate_md(&self, class_page_links: &HashMap<ClassName, String>) -> Module {
-        let mut root = Module::root();
+    pub fn generate_md(&self, class_page_links: &HashMap<ClassName, String>) -> Sections {
+        let mut root = Sections::default();
 
         for package in &self.packages {
-            let mut package_mod = Module::code(
-                package.name.clone(),
-                generate_package(package, class_page_links),
-            );
+            let mut package_mod = Section::new(package.name.clone(), None);
             for (_, ty) in package.items.iter().sorted_by_key(|(ty, _)| ty.as_str()) {
-                let m = match ty {
+                match ty {
                     CSharpType::Class(ty) => {
-                        class_to_md(ty, package.name.as_str(), class_page_links)
+                        package_mod.classes.insert(ty.name.clone(), class_to_md(ty, package.name.as_str(), class_page_links));
                     }
-                    CSharpType::Enum(ty) => enum_to_md(ty, package.name.as_str(), class_page_links),
+                    CSharpType::Enum(ty) => {
+                        package_mod.enums.insert(ty.name.clone(), enum_to_md(ty, package.name.as_str(), class_page_links));
+                    },
                 };
-                package_mod.add_child(m);
             }
             root.add_child(package_mod);
         }
@@ -166,58 +167,7 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
                     .to_string_lossy()
                     .ends_with(".cs")
                 {
-                    println!(
-                        "processing file {}",
-                        type_candidate.path().to_string_lossy()
-                    );
-                    let output =
-                        Command::new("internal/cs_dumper_sln/bin/Debug/net8.0/cs_dumper.exe")
-                            .args([
-                                type_candidate.path().as_os_str(),
-                                // format!("internal/md-gen-lib/{}.json", entry.file_name().display()).as_ref(),
-                            ])
-                            .stdout(Stdio::piped())
-                            .spawn()
-                            .unwrap()
-                            .wait_with_output()
-                            .unwrap();
-                    // fs::write(
-                    //     format!(
-                    //         "internal/md-gen-lib/{}.json",
-                    //         type_candidate.file_name().display()
-                    //     ),
-                    //     &output.stdout,
-                    // )
-                    // .unwrap();
-
-                    let cs_file = String::from_utf8_lossy(&output.stdout);
-                    let cs_file = serde_json::from_str::<CsFile>(&cs_file).unwrap();
-                    for ty in cs_file.classes.iter() {
-                        let new_ty = CSharpType::Class(ty.clone());
-                        println!("adding type: {}", ty.name.as_str());
-                        let existing = items.get_mut(ty.name.as_str());
-                        match existing {
-                            None => {
-                                items.insert(ty.name.clone(), new_ty);
-                            }
-                            Some(existing) => {
-                                existing.merge_into(new_ty);
-                            }
-                        }
-                    }
-                    for ty in cs_file.enums.iter() {
-                        let new_ty = CSharpType::Enum(ty.clone());
-                        println!("adding type: {}", ty.name.as_str());
-                        let existing = items.get_mut(ty.name.as_str());
-                        match existing {
-                            None => {
-                                items.insert(ty.name.clone(), new_ty);
-                            }
-                            Some(existing) => {
-                                existing.merge_into(new_ty);
-                            }
-                        }
-                    }
+                    process_file(&mut items, type_candidate.path());
                 }
             }
             packages.push(CSharpPackage {
@@ -226,7 +176,65 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
             })
         }
     }
+    let mut script_package = Default::default();
+    process_file(
+        &mut script_package,
+        "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Scripting/NodeScript.cs".into(),
+    );
+    packages.push(CSharpPackage { name: "Script".to_string(), items: script_package });
+
     CSharpDomain { packages }
+}
+
+fn process_file(items: &mut HashMap<String, CSharpType>, path: PathBuf) {
+    println!("processing file {}", path.to_string_lossy());
+    let output = Command::new("internal/cs_dumper_sln/bin/Debug/net8.0/cs_dumper.exe")
+        .args([
+            path.as_os_str(),
+            // format!("internal/md-gen-lib/{}.json", entry.file_name().display()).as_ref(),
+        ])
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap()
+        .wait_with_output()
+        .unwrap();
+    // fs::write(
+    //     format!(
+    //         "internal/md-gen-lib/{}.json",
+    //         type_candidate.file_name().display()
+    //     ),
+    //     &output.stdout,
+    // )
+    // .unwrap();
+
+    let cs_file = String::from_utf8_lossy(&output.stdout);
+    let cs_file = serde_json::from_str::<CsFile>(&cs_file).unwrap();
+    for ty in cs_file.classes.iter() {
+        let new_ty = CSharpType::Class(ty.clone());
+        println!("adding type: {}", ty.name.as_str());
+        let existing = items.get_mut(ty.name.as_str());
+        match existing {
+            None => {
+                items.insert(ty.name.clone(), new_ty);
+            }
+            Some(existing) => {
+                existing.merge_into(new_ty);
+            }
+        }
+    }
+    for ty in cs_file.enums.iter() {
+        let new_ty = CSharpType::Enum(ty.clone());
+        println!("adding type: {}", ty.name.as_str());
+        let existing = items.get_mut(ty.name.as_str());
+        match existing {
+            None => {
+                items.insert(ty.name.clone(), new_ty);
+            }
+            Some(existing) => {
+                existing.merge_into(new_ty);
+            }
+        }
+    }
 }
 
 fn class_to_md(
@@ -437,7 +445,10 @@ fn enum_to_md(
 ) -> Module {
     let mut s = "".to_string();
     writelnu!(s, "# {}", &class.name);
-    writelnu!(s, "enum in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
+    writelnu!(
+        s,
+        "enum in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)"
+    );
     if !class.description.is_empty() {
         writelnu!(s, "\n## Description");
         writelnu!(s, "{}", cs_docs_to_string(&class.description, "\n"));

@@ -14,4 +14,3 @@ alignment, and so on.</p>
 | Return Type | Signature | Description |
 |---|---|---|
 | [Text](../UI/Text.md) | `New` ( [TextBuilder](../UI/TextBuilder.md) <ins>state</ins> ) |  |
-

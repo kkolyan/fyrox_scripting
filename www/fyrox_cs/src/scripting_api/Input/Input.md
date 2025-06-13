@@ -28,4 +28,3 @@ class in [FyroxLite](../../scripting_api.md).[Input](../Input.md)
 | bool | `IsKeyDown` ( [KeyCode](../Input/KeyCode.md) <ins>key</ins> ) |  |
 | bool | `IsKeyUp` ( [KeyCode](../Input/KeyCode.md) <ins>key</ins> ) |  |
 | bool | `IsKeyPressed` ( [KeyCode](../Input/KeyCode.md) <ins>key</ins> ) |  |
-

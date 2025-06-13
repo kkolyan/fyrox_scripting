@@ -1,4 +1,5 @@
 # Scene
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [Scene](lite_scene/../Scene/Scene.md)
+* [Scene](Scene/../Scene/Scene.md)

@@ -1,6 +1,6 @@
 # Node
 package in [FyroxLite](../scripting_api.md)
+## Description
 ## Classes
-* [Node](lite_node/../Node/Node.md)
-## Enums
-* [RoutingStrategy](lite_node/../Node/RoutingStrategy.md)
+* [Node](Node/../Node/Node.md)
+* [RoutingStrategy](Node/../Node/RoutingStrategy.md)
