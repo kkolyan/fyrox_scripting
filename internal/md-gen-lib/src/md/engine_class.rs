@@ -35,7 +35,7 @@ pub fn generate_engine(
     writelnu!(s, "class in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
     if !class.description.is_empty() {
         writelnu!(s, "\n## Description");
-        writelnu!(s, "{}", class.description.md2html());
+        writelnu!(s, "{}", class.description.to_book());
     }
 
     let constants = class.constants.as_slice();
@@ -109,7 +109,7 @@ fn render_methods(
                     naming.param_name(&it.name)
                 ))
                 .join(", "),
-            &method.description.md2html().replace("\n", " ")
+            &method.description.to_book().replace("\n", " ")
         );
     }
 }
@@ -135,7 +135,7 @@ fn render_properties(
             naming.member_name(prop.name),
             type_rust_to_md(prop.ty, class_page_links),
             access,
-            prop.description.md2html().replace("\n", " ")
+            prop.description.to_book().replace("\n", " ")
         );
     }
 }
@@ -155,7 +155,7 @@ fn render_constants(
             naming.member_name(&constant.const_name),
             type_rust_to_md(&constant.ty, class_page_links),
             constant_to_display(&constant.value),
-            &constant.description.md2html().replace("\n", " ")
+            &constant.description.to_book().replace("\n", " ")
         );
     }
 }
@@ -222,8 +222,8 @@ fn extract_properties(class: &EngineClass, instance: bool) -> Vec<Property> {
                 name: prop,
                 description: format!(
                     "{}{}",
-                    get.map(|it| it.description.as_str()).unwrap_or("").md2html().replace("\n", " "),
-                    set.map(|it| it.description.as_str()).unwrap_or("").md2html().replace("\n", " "),
+                    get.map(|it| it.description.as_str()).unwrap_or("").to_book().replace("\n", " "),
+                    set.map(|it| it.description.as_str()).unwrap_or("").to_book().replace("\n", " "),
                 ),
                 ty,
                 read: get_ty.is_some(),

@@ -45,11 +45,16 @@ pub impl str {
             .join("")
     }
 
+    fn to_book(&self) -> String {
+        self.md2html()
+            .replace("<kbd>\\</kbd>", "<kbd>\\\\</kbd>").to_string()
+    }
+
     fn md2html(&self) -> String {
         let parser = Parser::new_ext(self, Options::all());
         let mut html_output = String::new();
         push_html(&mut html_output, parser);
-        html_output.trim().replace("<kbd>\\</kbd>", "<kbd>\\\\</kbd>").to_string()
+        html_output.trim().to_string()
     }
 
     fn html2xmldoc(&self) -> String {
@@ -127,6 +132,6 @@ pub impl str {
                 Err(err) => panic!("{:?}. source:\n{}", err, self),
             }
         }
-        String::from_utf8(out).unwrap()
+        String::from_utf8(out).unwrap().replace("<c>\\\\</c>", "<c>\\</c>")
     }
 }

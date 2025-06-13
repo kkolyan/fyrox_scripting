@@ -13,7 +13,7 @@ pub fn generate_enum(s: &mut String, class: &EnumClass, naming: Naming, x1: &Has
 	writelnu!(s, "enum in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
 	if !class.description.is_empty() {
 		writelnu!(s, "\n## Description");
-		writelnu!(s, "{}", class.description.md2html());
+		writelnu!(s, "{}", class.description.to_book());
 	}
 	
 	writelnu!(s, "\n## Properties");
@@ -26,6 +26,6 @@ pub fn generate_enum(s: &mut String, class: &EnumClass, naming: Naming, x1: &Has
     );
 	writelnu!(s, "|---|---|");
 	for variant in class.variants.iter() {
-		writelnu!(s, "| `{}` | {} |", variant.tag, variant.description.md2html().replace("\n", " "));
+		writelnu!(s, "| `{}` | {} |", variant.tag, variant.description.to_book().replace("\n", " "));
 	}
 }

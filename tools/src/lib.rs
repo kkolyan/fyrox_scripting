@@ -1,3 +1,7 @@
+pub mod csgen;
+pub mod luagen;
+pub mod mdgen;
+
 use std::fs;
 
 use lite_model::Domain;

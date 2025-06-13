@@ -78,7 +78,7 @@ impl UserScript for UnpackedObject {
         })
     }
 
-    fn find_plugin_script(class: &Self::ClassId) -> Result<Self, Self::LangSpecificError> {
+    fn find_global_script(class: &Self::ClassId) -> Result<Self, Self::LangSpecificError> {
         with_script_context(|it| {
             match &it.plugins {
                 None => Err(format!("global scripts not available in this context")),

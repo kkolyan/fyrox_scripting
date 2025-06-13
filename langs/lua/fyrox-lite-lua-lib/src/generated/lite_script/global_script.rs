@@ -22,7 +22,7 @@ use crate::{
     user_script_impl::{LuaUserScriptMessageEnvelope, UserScriptProxy},
 };
 
-impl FyroxUserData for fyrox_lite::lite_plugin::LiteGlobalScript {
+impl FyroxUserData for fyrox_lite::lite_script::LiteGlobalScript {
     const CLASS_NAME: &'static str = "GlobalScript";
 
     fn add_instance_methods<'lua, M: mlua::UserDataMethods<'lua, Traitor<Self>>>(methods: &mut M) {
@@ -36,7 +36,7 @@ impl FyroxUserData for fyrox_lite::lite_plugin::LiteGlobalScript {
         methods.add_method_mut("get", |lua, this, (class_id): (mlua::String)| {
             let class_id = class_id.to_str()?.to_string();
             let _stub = Default::default();
-            let ret = fyrox_lite::lite_plugin::LiteGlobalScript::get::<
+            let ret = fyrox_lite::lite_script::LiteGlobalScript::get::<
                 TypedUserData<UserScriptProxy>,
             >(class_id, _stub);
             let ret = match ret {

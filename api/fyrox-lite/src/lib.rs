@@ -1,4 +1,4 @@
-pub mod lite_plugin;
+pub mod lite_script;
 pub mod lite_log;
 pub mod lite_math;
 pub mod spi;

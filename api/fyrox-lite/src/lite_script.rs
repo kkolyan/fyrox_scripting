@@ -9,6 +9,6 @@ pub struct LiteGlobalScript;
 impl LiteGlobalScript {
 	/// find a global script by type
 	pub fn get<T: UserScript>(class_id: T::ClassId, _stub: T::UserScriptGenericStub) -> Result<T, T::LangSpecificError> {
-		T::find_plugin_script(&class_id)
+		T::find_global_script(&class_id)
 	}
 }

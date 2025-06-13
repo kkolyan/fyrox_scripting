@@ -109,7 +109,7 @@ impl<'a> UserScript for TypedUserData<'a, UserScriptProxy> {
         Ok(ExternalScriptProxy { name, data })
     }
 
-    fn find_plugin_script(class: &Self::ClassId) -> Result<Self, Self::LangSpecificError> {
+    fn find_global_script(class: &Self::ClassId) -> Result<Self, Self::LangSpecificError> {
         with_script_context(|ctx| {
             let Some(plugins) = ctx.plugins.as_mut() else {
                 return Err(lua_error!("plugins not available here"));

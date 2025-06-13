@@ -1,5 +1,5 @@
 # GlobalScript
-class in [FyroxLite](../../scripting_api.md).[Plugin](../Plugin.md)
+class in [FyroxLite](../../scripting_api.md).[Script](../Script.md)
 
 ## Static Methods
 | Return Type | Signature | Description |

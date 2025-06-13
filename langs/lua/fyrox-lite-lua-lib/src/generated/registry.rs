@@ -6,7 +6,7 @@ pub fn register_classes(lua: &mlua::Lua) {
 
     fyrox_lite::lite_physics::LiteFeatureKind::register_class(lua);
 
-    fyrox_lite::lite_plugin::LiteGlobalScript::register_class(lua);
+    fyrox_lite::lite_script::LiteGlobalScript::register_class(lua);
 
     fyrox_lite::lite_input::Input::register_class(lua);
 

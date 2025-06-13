@@ -2813,21 +2813,6 @@ impl From<NativeRigidBody_optional_result>
 
 #[repr(C)]
 #[derive(Clone, Copy)]
-pub struct NativeGlobalScript {
-    pub handle: NativeHandle,
-}
-
-#[no_mangle]
-pub extern "C" fn fyrox_lite_lite_plugin_LiteGlobalScript_get(
-    class_id: NativeClassId,
-) -> NativeInstanceId_result {
-    let class_id = class_id.into();
-    let ret = fyrox_lite::lite_plugin::LiteGlobalScript::get::<crate::UserScriptImpl>(class_id, ());
-    ret.into()
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
 pub struct NativePrefab {
     pub handle: NativeHandle,
 }
@@ -3027,6 +3012,21 @@ pub struct NativeScene {
 pub extern "C" fn fyrox_lite_lite_scene_LiteScene_load_async(scene_path: NativeString) -> () {
     let scene_path = scene_path.into();
     let ret = fyrox_lite::lite_scene::LiteScene::load_async(scene_path);
+    ret.into()
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeGlobalScript {
+    pub handle: NativeHandle,
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_lite_script_LiteGlobalScript_get(
+    class_id: NativeClassId,
+) -> NativeInstanceId_result {
+    let class_id = class_id.into();
+    let ret = fyrox_lite::lite_script::LiteGlobalScript::get::<crate::UserScriptImpl>(class_id, ());
     ret.into()
 }
 

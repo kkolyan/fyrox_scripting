@@ -28,7 +28,7 @@ pub fn variant_constructors(s: &mut String, class: &EnumClass) {
     for variant in class.variants.iter() {
         if matches!(variant.value, EnumValue::Unit) {
             writelnu!(s, "");
-			writelnu!(s, "{}", variant.description.to_luadoc(""));
+			s.push_str(variant.description.to_luadoc("").as_str());
             writelnu!(s, "---@type {}", class.class_name);
             writelnu!(s, "{}.{} = {{}}", class.class_name, variant.tag)
         } else {

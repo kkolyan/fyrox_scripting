@@ -31,7 +31,7 @@ pub trait UserScript: Sized + LiteDataType {
 
     fn new_instance(node: Handle<Node>, class_id: &Self::ClassId) -> Result<Self, Self::LangSpecificError>;
 
-    fn find_plugin_script(class_name: &Self::ClassId) -> Result<Self, Self::LangSpecificError>;
+    fn find_global_script(class_name: &Self::ClassId) -> Result<Self, Self::LangSpecificError>;
 
     fn create_error(msg: &str) -> Self::LangSpecificError;
 }

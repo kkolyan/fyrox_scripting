@@ -12,7 +12,7 @@ pub fn generate_struct(s: &mut String, class: &StructClass, naming: Naming, clas
     writelnu!(s, "struct in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)");
     if !class.description.is_empty() {
         writelnu!(s, "\n## Description");
-        writelnu!(s, "{}", class.description.md2html());
+        writelnu!(s, "{}", class.description.to_book());
     }
     writelnu!(s, "\n## Fields");
 
@@ -24,7 +24,7 @@ pub fn generate_struct(s: &mut String, class: &StructClass, naming: Naming, clas
             "| `{}` | {} | {} |",
             naming.member_name(&field.name),
             type_rust_to_md(&field.ty, class_page_links),
-            field.description.md2html().replace("\n", " ")
+            field.description.to_book().replace("\n", " ")
         );
     }
 }
