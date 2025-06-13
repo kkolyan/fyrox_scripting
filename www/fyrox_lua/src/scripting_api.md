@@ -5,7 +5,7 @@
 * [Node](scripting_api/Node.md)
 * [Physics](scripting_api/Physics.md)
 * [Plugin](scripting_api/Plugin.md)
-* [Prefab](scripting_api/Prefab.md)
 * [Scene](scripting_api/Scene.md)
+* [Script](scripting_api/Script.md)
 * [UI](scripting_api/Ui.md)
 * [Window](scripting_api/Window.md)
