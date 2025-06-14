@@ -12,12 +12,12 @@ if [ -e "$1" ]; then
   exit 1
 fi
 
-INSTALL_DIR=$(realpath $1)
+INSTALL_DIR=$1
+mkdir -p $INSTALL_DIR
+INSTALL_DIR=$(realpath $INSTALL_DIR)
 
 cargo build -p fyrox_lite_lua
 cargo build -p fyroxed_lua
-
-mkdir -p "$INSTALL_DIR"
 
 cp target/debug/fyrox_lite_lua.exe $INSTALL_DIR
 cp target/debug/fyroxed_lua.exe $INSTALL_DIR

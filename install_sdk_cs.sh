@@ -12,9 +12,9 @@ if [ -e "$1" ]; then
   exit 1
 fi
 
-INSTALL_DIR=$(realpath $1)
-
-mkdir -p "$INSTALL_DIR"
+INSTALL_DIR=$1
+mkdir -p $INSTALL_DIR
+INSTALL_DIR=$(realpath $INSTALL_DIR)
 
 # build Rust parts of Fyrox C# SDK
 

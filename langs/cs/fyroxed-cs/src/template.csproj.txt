@@ -16,12 +16,32 @@
     <ItemGroup>
         <Using Include="FyroxLite" />
     </ItemGroup>
-    <ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
         <Reference Include="fyrox_lite_cs_netcore">
             <HintPath>${editor_installation_path}/fyrox_lite_cs_netcore.dll</HintPath>
             <Private>True</Private>
         </Reference>
         <Content Include="${editor_installation_path}/fyrox_lite_cs.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>false</Pack>
+        </Content>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+        <Reference Include="fyrox_lite_cs_netcore">
+            <HintPath>${editor_installation_path}/fyrox_lite_cs_netcore.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Content Include="${editor_installation_path}/libfyrox_lite_cs.dylib">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>false</Pack>
+        </Content>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+        <Reference Include="fyrox_lite_cs_netcore">
+            <HintPath>${editor_installation_path}/fyrox_lite_cs_netcore.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Content Include="${editor_installation_path}/libfyrox_lite_cs.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <Pack>false</Pack>
         </Content>

@@ -18,6 +18,13 @@ public partial class Program
         bool isCli;
         if (args.Length < 1)
         {
+            // There are usability issues on Macos, and on Linux probably too.
+            // Let's support UI selector for Windows only
+            if (!OperatingSystem.IsWindows())
+            {
+                Console.WriteLine("usage: ./fyroxed_cs_netcore <path to the project>");
+                return;
+            }
             isCli = false;
             var projectDirectoryPtr = AskUserForProjectDirectory();
             if (projectDirectoryPtr == IntPtr.Zero)

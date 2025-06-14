@@ -17,22 +17,31 @@ public partial class Launcher
 
     public static void RunGame()
     {
-        /*
-        necessary to avoid following crash on Windows:
-        thread 'main' panicked at 'OleInitialize failed! Result was: `RPC_E_CHANGED_MODE`.
-        Make sure other crates are not using multithreaded COM library on the same thread or disable drag and drop support.'
-
-        Actually, this can be solved by `[STAThread]` over the Main method, but that's on user side, so let's keep user from such crucial things.
-        */
-
-        var thread = new Thread(() => Run(editor: false, editorWorkingDir: null, playerAssembly: Assembly.GetEntryAssembly()));
         if (OperatingSystem.IsWindows())
         {
-            thread.SetApartmentState(ApartmentState.STA);
-        }
+            /*
+            necessary to avoid following crash on Windows:
+            thread 'main' panicked at 'OleInitialize failed! Result was: `RPC_E_CHANGED_MODE`.
+            Make sure other crates are not using multithreaded COM library on the same thread or disable drag and drop support.'
 
-        thread.Start();
-        thread.Join();
+            Actually, this can be solved by `[STAThread]` over the Main method, but that's on user side, so let's keep user from such crucial things.
+            */
+
+            var thread = new Thread(RunGameInternal);
+            thread.SetApartmentState(ApartmentState.STA);
+
+            thread.Start();
+            thread.Join();
+        }
+        else
+        {
+            RunGameInternal();
+        }
+    }
+
+    private static void RunGameInternal()
+    {
+        Run(editor: false, editorWorkingDir: null, playerAssembly: Assembly.GetEntryAssembly());
     }
 
     internal static void Run(bool editor, string? editorWorkingDir, Assembly? playerAssembly)
