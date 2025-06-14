@@ -12,6 +12,188 @@ use fyrox_lite::externalizable::Externalizable;
 
 #[repr(C)]
 #[derive(Clone, Copy)]
+pub struct NativeColor {
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
+    pub a: u8,
+}
+
+impl From<fyrox_lite::lite_color::LiteColor> for NativeColor {
+    fn from(__value: fyrox_lite::lite_color::LiteColor) -> Self {
+        let r = __value.r.into();
+        let g = __value.g.into();
+        let b = __value.b.into();
+        let a = __value.a.into();
+        Self { r, g, b, a }
+    }
+}
+
+impl From<NativeColor> for fyrox_lite::lite_color::LiteColor {
+    fn from(__value: NativeColor) -> Self {
+        let r = __value.r.into();
+        let g = __value.g.into();
+        let b = __value.b.into();
+        let a = __value.a.into();
+        Self { r, g, b, a }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeColor_optional {
+    pub value: NativeColor,
+    pub has_value: i32,
+}
+
+impl From<Option<fyrox_lite::lite_color::LiteColor>> for NativeColor_optional {
+    fn from(value: Option<fyrox_lite::lite_color::LiteColor>) -> Self {
+        match value {
+            Some(it) => Self {
+                value: it.into(),
+                has_value: 1,
+            },
+            None => Self {
+                value: unsafe { std::mem::zeroed() },
+                has_value: 0,
+            },
+        }
+    }
+}
+
+impl From<NativeColor_optional> for Option<fyrox_lite::lite_color::LiteColor> {
+    fn from(value: NativeColor_optional) -> Self {
+        if value.has_value != 0 {
+            Some(value.value.into())
+        } else {
+            None
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeColor_slice {
+    pub begin: *mut NativeColor,
+    pub len: i32,
+}
+
+impl Default for NativeColor_slice {
+    fn default() -> Self {
+        Self {
+            begin: std::ptr::null_mut(),
+            len: 0,
+        }
+    }
+}
+
+impl From<Vec<fyrox_lite::lite_color::LiteColor>> for NativeColor_slice {
+    fn from(value: Vec<fyrox_lite::lite_color::LiteColor>) -> Self {
+        let len = value.len() as i32;
+        if len == 0 {
+            return Self::default();
+        }
+        let native_vec: Vec<NativeColor> = value.into_iter().map(|it| it.into()).collect();
+        let begin = crate::Arena::allocate_vec(native_vec);
+        Self { begin, len }
+    }
+}
+
+impl From<NativeColor_slice> for Vec<fyrox_lite::lite_color::LiteColor> {
+    fn from(value: NativeColor_slice) -> Self {
+        let mut vec = Vec::new();
+        unsafe {
+            for i in 0..value.len {
+                let v = *value.begin.add(i as usize);
+                vec.push(v.into());
+            }
+        }
+        vec
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_upload_fyrox_lite_lite_color_LiteColor_slice(
+    data: NativeColor_slice,
+) -> NativeColor_slice {
+    let mut vec = Vec::new();
+    unsafe {
+        for i in 0..data.len {
+            let v = *data.begin.add(i as usize);
+            vec.push(v);
+        }
+    }
+    let ptr = crate::Arena::allocate_vec(vec);
+    NativeColor_slice {
+        begin: ptr,
+        len: data.len,
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeColor_result {
+    pub ok: i32,
+    pub value: NativeColor_result_value,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub union NativeColor_result_value {
+    ok: NativeColor,
+    err: NativeString,
+}
+
+impl NativeColor_result {
+    pub fn into_result_shallow(self) -> Result<NativeColor, crate::LangSpecificError> {
+        unsafe {
+            if self.ok != 0 {
+                Ok(self.value.ok)
+            } else {
+                Err(self.value.err.into())
+            }
+        }
+    }
+    pub fn into_result(
+        self,
+    ) -> Result<fyrox_lite::lite_color::LiteColor, crate::LangSpecificError> {
+        unsafe {
+            if self.ok != 0 {
+                Ok(self.value.ok.into())
+            } else {
+                Err(self.value.err.into())
+            }
+        }
+    }
+}
+
+impl From<Result<fyrox_lite::lite_color::LiteColor, crate::LangSpecificError>>
+    for NativeColor_result
+{
+    fn from(value: Result<fyrox_lite::lite_color::LiteColor, crate::LangSpecificError>) -> Self {
+        match value {
+            Ok(it) => Self {
+                ok: 1,
+                value: NativeColor_result_value { ok: it.into() },
+            },
+            Err(err) => Self {
+                ok: 0,
+                value: NativeColor_result_value { err: err.into() },
+            },
+        }
+    }
+}
+
+impl From<NativeColor_result>
+    for Result<fyrox_lite::lite_color::LiteColor, crate::LangSpecificError>
+{
+    fn from(value: NativeColor_result) -> Self {
+        value.into_result()
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
 pub struct NativeInput {
     pub handle: NativeHandle,
 }
@@ -3207,182 +3389,6 @@ impl From<Result<fyrox_lite::lite_ui::Brush, crate::LangSpecificError>> for Nati
 
 impl From<NativeBrush_result> for Result<fyrox_lite::lite_ui::Brush, crate::LangSpecificError> {
     fn from(value: NativeBrush_result) -> Self {
-        value.into_result()
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeColor {
-    pub r: u8,
-    pub g: u8,
-    pub b: u8,
-    pub a: u8,
-}
-
-impl From<fyrox_lite::lite_ui::Color> for NativeColor {
-    fn from(__value: fyrox_lite::lite_ui::Color) -> Self {
-        let r = __value.r.into();
-        let g = __value.g.into();
-        let b = __value.b.into();
-        let a = __value.a.into();
-        Self { r, g, b, a }
-    }
-}
-
-impl From<NativeColor> for fyrox_lite::lite_ui::Color {
-    fn from(__value: NativeColor) -> Self {
-        let r = __value.r.into();
-        let g = __value.g.into();
-        let b = __value.b.into();
-        let a = __value.a.into();
-        Self { r, g, b, a }
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeColor_optional {
-    pub value: NativeColor,
-    pub has_value: i32,
-}
-
-impl From<Option<fyrox_lite::lite_ui::Color>> for NativeColor_optional {
-    fn from(value: Option<fyrox_lite::lite_ui::Color>) -> Self {
-        match value {
-            Some(it) => Self {
-                value: it.into(),
-                has_value: 1,
-            },
-            None => Self {
-                value: unsafe { std::mem::zeroed() },
-                has_value: 0,
-            },
-        }
-    }
-}
-
-impl From<NativeColor_optional> for Option<fyrox_lite::lite_ui::Color> {
-    fn from(value: NativeColor_optional) -> Self {
-        if value.has_value != 0 {
-            Some(value.value.into())
-        } else {
-            None
-        }
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeColor_slice {
-    pub begin: *mut NativeColor,
-    pub len: i32,
-}
-
-impl Default for NativeColor_slice {
-    fn default() -> Self {
-        Self {
-            begin: std::ptr::null_mut(),
-            len: 0,
-        }
-    }
-}
-
-impl From<Vec<fyrox_lite::lite_ui::Color>> for NativeColor_slice {
-    fn from(value: Vec<fyrox_lite::lite_ui::Color>) -> Self {
-        let len = value.len() as i32;
-        if len == 0 {
-            return Self::default();
-        }
-        let native_vec: Vec<NativeColor> = value.into_iter().map(|it| it.into()).collect();
-        let begin = crate::Arena::allocate_vec(native_vec);
-        Self { begin, len }
-    }
-}
-
-impl From<NativeColor_slice> for Vec<fyrox_lite::lite_ui::Color> {
-    fn from(value: NativeColor_slice) -> Self {
-        let mut vec = Vec::new();
-        unsafe {
-            for i in 0..value.len {
-                let v = *value.begin.add(i as usize);
-                vec.push(v.into());
-            }
-        }
-        vec
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn fyrox_lite_upload_fyrox_lite_lite_ui_Color_slice(
-    data: NativeColor_slice,
-) -> NativeColor_slice {
-    let mut vec = Vec::new();
-    unsafe {
-        for i in 0..data.len {
-            let v = *data.begin.add(i as usize);
-            vec.push(v);
-        }
-    }
-    let ptr = crate::Arena::allocate_vec(vec);
-    NativeColor_slice {
-        begin: ptr,
-        len: data.len,
-    }
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeColor_result {
-    pub ok: i32,
-    pub value: NativeColor_result_value,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub union NativeColor_result_value {
-    ok: NativeColor,
-    err: NativeString,
-}
-
-impl NativeColor_result {
-    pub fn into_result_shallow(self) -> Result<NativeColor, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok)
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
-    pub fn into_result(self) -> Result<fyrox_lite::lite_ui::Color, crate::LangSpecificError> {
-        unsafe {
-            if self.ok != 0 {
-                Ok(self.value.ok.into())
-            } else {
-                Err(self.value.err.into())
-            }
-        }
-    }
-}
-
-impl From<Result<fyrox_lite::lite_ui::Color, crate::LangSpecificError>> for NativeColor_result {
-    fn from(value: Result<fyrox_lite::lite_ui::Color, crate::LangSpecificError>) -> Self {
-        match value {
-            Ok(it) => Self {
-                ok: 1,
-                value: NativeColor_result_value { ok: it.into() },
-            },
-            Err(err) => Self {
-                ok: 0,
-                value: NativeColor_result_value { err: err.into() },
-            },
-        }
-    }
-}
-
-impl From<NativeColor_result> for Result<fyrox_lite::lite_ui::Color, crate::LangSpecificError> {
-    fn from(value: NativeColor_result) -> Self {
         value.into_result()
     }
 }

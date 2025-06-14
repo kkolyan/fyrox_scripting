@@ -200,13 +200,22 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
         }
     }
     let mut script_package = Default::default();
+    let mut color_package = Default::default();
     process_file(
         &mut script_package,
         "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Scripting/NodeScript.cs".into(),
     );
+    process_file(
+        &mut color_package,
+        "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Manual/Color.cs".into(),
+    );
     packages.push(CSharpPackage {
         name: "Script".to_string(),
         items: script_package,
+    });
+    packages.push(CSharpPackage {
+        name: "Color".to_string(),
+        items: color_package,
     });
 
     CSharpDomain { packages }

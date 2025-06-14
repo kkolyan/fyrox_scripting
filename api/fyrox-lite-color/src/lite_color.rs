@@ -1,3 +1,4 @@
+use fyrox_lite::lite_color::LiteColor;
 use lite_macro::lite_api;
 
 #[derive(Debug, Clone, Copy, PartialOrd, PartialEq, Eq)]
@@ -166,14 +167,14 @@ const fn color_to_lite(value: fyrox::core::color::Color) -> Color {
     }
 }
 
-impl From<Color> for fyrox_lite::lite_ui::Color {
+impl From<Color> for LiteColor {
     fn from(Color { r, g, b, a }: Color) -> Self {
         Self { r, g, b, a }
     }
 }
 
-impl From<fyrox_lite::lite_ui::Color> for Color {
-    fn from(fyrox_lite::lite_ui::Color { r, g, b, a }: fyrox_lite::lite_ui::Color) -> Self {
+impl From<LiteColor> for Color {
+    fn from(LiteColor { r, g, b, a }: LiteColor) -> Self {
         Self { r, g, b, a }
     }
 }

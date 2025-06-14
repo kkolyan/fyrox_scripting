@@ -20,5 +20,6 @@ pub(crate) mod resource_registry;
 pub mod lite_input;
 pub mod global_script_object_residence;
 pub mod global_script_object;
+pub mod lite_color;
 
 pub use crate::spi::LiteDataType;

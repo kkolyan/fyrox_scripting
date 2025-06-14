@@ -2,6 +2,8 @@
 
 - [Getting Started](introduction.md)
 - [Scripting API (C#)](./scripting_api.md)
+  - [Color](scripting_api/Color.md)
+    - [Color](scripting_api/Color/Color.md)
   - [Input](scripting_api/Input.md)
     - [Input](scripting_api/Input/Input.md)
     - [KeyCode](scripting_api/Input/KeyCode.md)
@@ -35,7 +37,6 @@
     - [NodeScript](scripting_api/Script/NodeScript.md)
   - [UI](scripting_api/UI.md)
     - [Brush](scripting_api/UI/Brush.md)
-    - [Color](scripting_api/UI/Color.md)
     - [GradientPoint](scripting_api/UI/GradientPoint.md)
     - [LinearGradient](scripting_api/UI/LinearGradient.md)
     - [RadialGradient](scripting_api/UI/RadialGradient.md)

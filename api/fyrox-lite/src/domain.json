@@ -1,6 +1,10 @@
 {
   "packages": [
     {
+      "name": "fyrox_lite::lite_color",
+      "description": ""
+    },
+    {
       "name": "fyrox_lite::lite_input",
       "description": "User input utilities"
     },
@@ -81,7 +85,7 @@
     {
       "Struct": {
         "class_name": "Color",
-        "rust_struct_path": "fyrox_lite::lite_ui::Color",
+        "rust_struct_path": "fyrox_lite::lite_color::LiteColor",
         "fields": [
           {
             "name": "r",

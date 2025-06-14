@@ -11,6 +11,7 @@ use lite_macro::lite_api;
 use crate::{
     externalizable::Externalizable, lite_math::PodVector2, script_context::with_script_context,
 };
+use crate::lite_color::LiteColor;
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct LiteUiNode {
@@ -92,21 +93,6 @@ impl Externalizable for LiteText {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialOrd, PartialEq, Eq)]
-#[lite_api]
-pub struct Color {
-    pub r: u8,
-    pub g: u8,
-    pub b: u8,
-    pub a: u8,
-}
-
-impl From<Color> for color::Color {
-    fn from(value: Color) -> Self {
-        color::Color::from_rgba(value.r, value.g, value.b, value.a)
-    }
-}
-
 impl From<Brush> for brush::Brush {
     fn from(value: Brush) -> Self {
         if let Some(color) = value.solid_color {
@@ -141,7 +127,7 @@ pub struct TextBuilder {
 #[lite_api]
 pub struct Brush {
     /// A brush, that fills a surface with a solid color.
-    pub solid_color: Option<Color>,
+    pub solid_color: Option<LiteColor>,
 
     /// A brush, that fills a surface with a linear gradient, which is defined by two points in local coordinates
     /// and a set of stop points. See [`GradientPoint`] for more info.
@@ -177,7 +163,7 @@ pub struct GradientPoint {
     /// A distance from an origin of the gradient.
     pub stop: f32,
     /// Color of the point.
-    pub color: Color,
+    pub color: LiteColor,
 }
 
 impl From<GradientPoint> for brush::GradientPoint {

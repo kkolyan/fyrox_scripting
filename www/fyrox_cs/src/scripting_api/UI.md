@@ -4,7 +4,6 @@ package
 
 ## Classes
 * [Brush](UI/../UI/Brush.md)
-* [Color](UI/../UI/Color.md)
 * [GradientPoint](UI/../UI/GradientPoint.md)
 * [LinearGradient](UI/../UI/LinearGradient.md)
 * [RadialGradient](UI/../UI/RadialGradient.md)

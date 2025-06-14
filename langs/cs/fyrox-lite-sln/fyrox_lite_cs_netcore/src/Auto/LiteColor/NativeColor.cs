@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Collections;
 namespace FyroxLite;
 
-// fyrox_lite::lite_ui::Color
+// fyrox_lite::lite_color::LiteColor
 
 [StructLayout(LayoutKind.Sequential)]
 internal partial struct NativeColor
@@ -100,14 +100,14 @@ internal partial struct NativeColor_slice
         {
             fixed (NativeColor* buffer_ptr = _uploadBuffer)
             {
-                var native_slice = fyrox_lite_upload_fyrox_lite_lite_ui_Color_slice(new NativeColor_slice(buffer_ptr, self.Count));
+                var native_slice = fyrox_lite_upload_fyrox_lite_lite_color_LiteColor_slice(new NativeColor_slice(buffer_ptr, self.Count));
                 return native_slice;
             }
         }
     }
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
-    internal static unsafe partial NativeColor_slice fyrox_lite_upload_fyrox_lite_lite_ui_Color_slice(NativeColor_slice managed);
+    internal static unsafe partial NativeColor_slice fyrox_lite_upload_fyrox_lite_lite_color_LiteColor_slice(NativeColor_slice managed);
 }
 
 [StructLayout(LayoutKind.Sequential)]
