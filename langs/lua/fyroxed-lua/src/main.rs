@@ -17,12 +17,23 @@ fn main() {
     let project_dir: PathBuf = if args.len() > 1 {
         PathBuf::from(&args[1])
     } else {
-        let s = ask_user::ask_user_for_directory("Fyrox Lua SDK: choose project directory");
-        match s {
-            None => {
-                return;
+        // There are usability issues on Macos, and on Linux probably too.
+        // Let's support UI selector for Windows only
+        
+        #[cfg(target_os = "windows")]
+        {
+            let s = ask_user::ask_user_for_directory("Fyrox Lua SDK: choose project directory");
+            match s {
+                None => {
+                    return;
+                }
+                Some(s) => s.into()
             }
-            Some(s) => s.into()
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            println!("usage: ./fyroxed_lua <path to the project>");
+            return;
         }
     };
     let project_dir = dunce::canonicalize(project_dir).unwrap();
@@ -104,17 +115,32 @@ fn ensure_lua_profiles(_working_dir: &PathBuf) -> Settings {
     };
     settings.build.profiles.clear();
     let sdk_dir = env::current_exe().unwrap().parent().unwrap().to_path_buf();
+
+    #[cfg(target_os = "windows")]
+    let build = CommandDescriptor {
+        command: format!("cmd"),
+        args: vec!["/C".to_string(), "echo".to_string()],
+        environment_variables: vec![],
+    };
+
+    #[cfg(not(target_os = "windows"))]
+    let build = CommandDescriptor {
+        command: format!("sh"),
+        args: vec!["-c".to_string(), "echo".to_string()],
+        environment_variables: vec![],
+    };
+
     settings.build.profiles.push(BuildProfile {
         name: "Lua Project".to_string(),
-        build_commands: vec![
-            CommandDescriptor {
-                command: format!("cmd"),
-                args: vec!["/C".to_string(), "echo".to_string()],
-                environment_variables: vec![],
-            }
-        ],
+        build_commands: vec![build],
         run_command: CommandDescriptor {
+
+            #[cfg(target_os = "windows")]
             command: format!("{}/fyrox_lite_lua.exe", sdk_dir.display()),
+
+            #[cfg(not(target_os = "windows"))]
+            command: format!("{}/fyrox_lite_lua", sdk_dir.display()),
+
             args: vec![],
             environment_variables: vec![],
         },

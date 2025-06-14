@@ -19,8 +19,20 @@ INSTALL_DIR=$(realpath $INSTALL_DIR)
 cargo build -p fyrox_lite_lua
 cargo build -p fyroxed_lua
 
-cp target/debug/fyrox_lite_lua.exe $INSTALL_DIR
-cp target/debug/fyroxed_lua.exe $INSTALL_DIR
+os=$(./os.sh)
+if [[ "$os" == "Windows" ]]; then
+  cp target/debug/fyrox_lite_lua.exe $INSTALL_DIR
+  cp target/debug/fyroxed_lua.exe $INSTALL_DIR
+elif [[ "$os" == "Macos" ]]; then
+  cp target/debug/fyrox_lite_lua $INSTALL_DIR
+  cp target/debug/fyroxed_lua $INSTALL_DIR
+elif [[ "$os" == "Linux" ]]; then
+  cp target/debug/fyrox_lite_lua $INSTALL_DIR
+  cp target/debug/fyroxed_lua $INSTALL_DIR
+else
+    echo "Unknown OS: $os"
+    exit -1
+fi
 
 cd langs/lua/annotations
 tar -czf $INSTALL_DIR/fyrox_lite_lua_annotations.tar.gz *
