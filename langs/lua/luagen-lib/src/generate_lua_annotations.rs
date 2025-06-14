@@ -22,9 +22,16 @@ const HEADER: &str = "
 ";
 
 pub fn generate_lua_annotations(domain: &Domain) -> Module {
-    let mut mods = Module::root();
+    let manual = generate_lua_annotations_manual();
+    let mut from_domain = generate_lua_annotations_from_domain(domain);
+    from_domain.merge(manual);
+    from_domain
+}
 
-    mods.add_child(Module::code("NodeScript", format!("{}
+fn generate_lua_annotations_manual() -> Module {
+    let mut root = Module::root();
+    let mut script = Module::no_code("Script");
+    script.add_child(Module::code("NodeScript", format!("{}
 
 			---@class NodeScript
 			---@field node Node
@@ -32,6 +39,12 @@ pub fn generate_lua_annotations(domain: &Domain) -> Module {
 
 			function script_class() end
 		", HEADER.trim()).as_str().deindent()));
+    root.add_child(script);
+    root
+}
+
+fn generate_lua_annotations_from_domain(domain: &Domain) -> Module {
+    let mut mods = Module::root();
 
     let by_package = classes_by_package(domain);
     for (package, classes) in by_package {

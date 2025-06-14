@@ -1,9 +1,10 @@
 use gen_common::code_model::Module;
 use gen_common::writelnu;
 use itertools::Itertools;
-use md_gen_lib::md::cs_to_domain::{generate_cs_defined_domain, CSharpDomain};
+use md_gen_lib::md::cs_to_domain::{generate_cs_defined_domain, CSharpDomain, CSharpPackage, CSharpType};
 use md_gen_lib::Naming;
 use std::fs;
+use md_gen_lib::md::csharp_metamodel::{CsClass, CsProperty, CsType};
 
 pub fn main() {
     generate_script_reference(Naming::Cs, "www/fyrox_cs", generate_md_cs());
@@ -37,7 +38,30 @@ fn generate_md_cs() -> Module {
 
 fn generate_md_lua() -> Module {
     let domain = crate::get_combined_domain();
-    let cs_domain = CSharpDomain { packages: vec![] };
+    let mut script_package = CSharpPackage::new("Script");
+    script_package.add_item(CSharpType::Class(CsClass {
+        name: "NodeScript".to_string(),
+        ns: "".to_string(),
+        is_struct: false,
+        methods: vec![],
+        operators: vec![],
+        constructors: vec![],
+        fields: vec![],
+        properties: vec![
+            CsProperty {
+                name: "node".to_string(),
+                is_static: false,
+                ty: CsType { name: "Node".to_string(), args: vec![] },
+                get: true,
+                set: false,
+                description: vec![],
+            }
+        ],
+        description: vec![],
+    }));
+    let cs_domain = CSharpDomain { packages: vec![
+        script_package
+    ] };
     md_gen_lib::generate_md::generate_md(&domain, &cs_domain, Naming::Lua)
 }
 

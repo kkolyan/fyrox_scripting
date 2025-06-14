@@ -1,9 +1,8 @@
 use std::collections::HashMap;
+use itertools::Itertools;
 use gen_common::code_model::Module;
-use gen_common::doc::strExt;
 use gen_common::writelnu;
 use lite_model::ClassName;
-use crate::Naming;
 
 #[derive(Default)]
 pub struct Sections {
@@ -65,7 +64,7 @@ impl Section {
 
         if !self.classes.is_empty() {
             writelnu!(s, "## Classes");
-            for x in self.classes.into_values() {
+            for x in self.classes.into_values().sorted_by_key(|it| it.name.to_string()) {
                 writelnu!(
                     s,
                     "* [{}]({}/{})",
@@ -79,7 +78,7 @@ impl Section {
 
         if !self.structs.is_empty() {
             writelnu!(s, "## Structs");
-            for x in self.structs.into_values() {
+            for x in self.structs.into_values().sorted_by_key(|it| it.name.to_string()) {
                 writelnu!(
                     s,
                     "* [{}]({}/{})",
@@ -93,7 +92,7 @@ impl Section {
 
         if !self.enums.is_empty() {
             writelnu!(s, "## Enums");
-            for x in self.enums.into_values() {
+            for x in self.enums.into_values().sorted_by_key(|it| it.name.to_string()) {
                 writelnu!(
                     s,
                     "* [{}]({}/{})",

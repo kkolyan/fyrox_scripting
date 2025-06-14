@@ -1,8 +1,9 @@
 use crate::md::csharp_metamodel::{
     CsClass, CsConstructor, CsEnum, CsField, CsFile, CsMethod, CsProperty, CsType, CsXmlNode,
 };
+use crate::md::sections::{Section, Sections};
 use crate::Naming;
-use gen_common::code_model::{HierarchicalCodeBase, Module};
+use gen_common::code_model::{Module};
 use gen_common::writelnu;
 use itertools::Itertools;
 use lite_model::{Class, ClassName, Domain};
@@ -12,7 +13,6 @@ use std::fs::DirEntry;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
 use to_vec::ToVec;
-use crate::md::sections::{Section, Sections};
 
 pub struct CSharpDomain {
     pub packages: Vec<CSharpPackage>,
@@ -26,6 +26,23 @@ pub struct CSharpPackage {
 pub enum CSharpType {
     Class(CsClass),
     Enum(CsEnum),
+}
+
+impl CSharpPackage {
+    pub fn new(name: &str) -> CSharpPackage {
+        CSharpPackage {
+            name: name.to_string(),
+            items: HashMap::new(),
+        }
+    }
+
+    pub fn add_item(&mut self, item: CSharpType) {
+        let name = match &item {
+            CSharpType::Class(it) => it.name.clone(),
+            CSharpType::Enum(it) => it.name.clone(),
+        };
+        self.items.insert(name, item);
+    }
 }
 
 impl CSharpType {
@@ -57,11 +74,17 @@ impl CSharpDomain {
             for (_, ty) in package.items.iter().sorted_by_key(|(ty, _)| ty.as_str()) {
                 match ty {
                     CSharpType::Class(ty) => {
-                        package_mod.classes.insert(ty.name.clone(), class_to_md(ty, package.name.as_str(), class_page_links));
+                        package_mod.classes.insert(
+                            ty.name.clone(),
+                            class_to_md(ty, package.name.as_str(), class_page_links),
+                        );
                     }
                     CSharpType::Enum(ty) => {
-                        package_mod.enums.insert(ty.name.clone(), enum_to_md(ty, package.name.as_str(), class_page_links));
-                    },
+                        package_mod.enums.insert(
+                            ty.name.clone(),
+                            enum_to_md(ty, package.name.as_str(), class_page_links),
+                        );
+                    }
                 };
             }
             root.add_child(package_mod);
@@ -181,7 +204,10 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
         &mut script_package,
         "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Scripting/NodeScript.cs".into(),
     );
-    packages.push(CSharpPackage { name: "Script".to_string(), items: script_package });
+    packages.push(CSharpPackage {
+        name: "Script".to_string(),
+        items: script_package,
+    });
 
     CSharpDomain { packages }
 }

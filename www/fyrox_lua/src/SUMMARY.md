@@ -31,6 +31,7 @@
     - [Scene](scripting_api/Scene/Scene.md)
   - [Script](scripting_api/Script.md)
     - [GlobalScript](scripting_api/Script/GlobalScript.md)
+    - [NodeScript](scripting_api/Script/NodeScript.md)
   - [UI](scripting_api/UI.md)
     - [Brush](scripting_api/UI/Brush.md)
     - [GradientPoint](scripting_api/UI/GradientPoint.md)
