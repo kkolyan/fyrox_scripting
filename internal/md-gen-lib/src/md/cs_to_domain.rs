@@ -456,6 +456,12 @@ fn type_cs_to_md(ty: &CsType, class_page_links: &HashMap<ClassName, String>) -> 
             type_cs_to_md(ty.args.first().unwrap(), class_page_links)
         );
     }
+    if ty.name == "ref" {
+        return format!(
+            "ref {}",
+            type_cs_to_md(ty.args.first().unwrap(), class_page_links)
+        );
+    }
     let type_display = class_page_links
         .get(&ClassName(ty.name.clone()))
         .map(|it| format!("[{}]({})", &ty.name, it))

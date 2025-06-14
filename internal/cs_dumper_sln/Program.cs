@@ -228,7 +228,7 @@ class Program
             // OmittedTypeArgumentSyntax it => new CsType {name = ""},
             // PointerTypeSyntax it => new CsType {name = ""},
             PredefinedTypeSyntax it => new CsType { name = it.Keyword.ToString() },
-            // RefTypeSyntax it => new CsType {name = ""},
+            RefTypeSyntax it => new CsType {name = "ref", args = [ExtractType(it.Type)]},
             // ScopedTypeSyntax it => new CsType {name = ""},
             TupleTypeSyntax it => new CsType {name = type.ToString()},
             _ => throw new NotImplementedException(type.ToString()),
