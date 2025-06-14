@@ -1,5 +1,5 @@
 # Color
-class in [FyroxLite](../../scripting_api.md).[Color](../Color.md)
+class in [Color](../Color.md)
 
 ## Constants
 | Name | Type | Value | Description |

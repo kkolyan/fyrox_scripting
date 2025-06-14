@@ -1,5 +1,5 @@
 # CursorGrabMode
-enum in [FyroxLite](../../scripting_api.md).[Window](../Window.md)
+enum in [Window](../Window.md)
 
 ## Properties
 | Property | Description |

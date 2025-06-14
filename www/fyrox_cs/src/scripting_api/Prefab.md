@@ -1,5 +1,6 @@
 # Prefab
-package in [FyroxLite](../scripting_api.md)
+package
 ## Description
+
 ## Classes
 * [Prefab](Prefab/../Prefab/Prefab.md)

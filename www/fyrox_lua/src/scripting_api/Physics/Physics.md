@@ -1,5 +1,5 @@
 # Physics
-class in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
+class in [Physics](../Physics.md)
 
 ## Constants
 | Name | Type | Value | Description |

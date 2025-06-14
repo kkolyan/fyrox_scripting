@@ -1,5 +1,5 @@
 # Vector2I
-struct in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+struct in [Math](../Math.md)
 
 ## Description
 

@@ -1,5 +1,5 @@
 # TextBuilder
-struct in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
+struct in [UI](../UI.md)
 
 ## Fields
 | Name | Type | Description |

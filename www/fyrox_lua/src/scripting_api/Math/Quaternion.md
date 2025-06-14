@@ -1,5 +1,5 @@
 # Quaternion
-class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+class in [Math](../Math.md)
 
 ## Methods
 | Return Type | Signature | Description |

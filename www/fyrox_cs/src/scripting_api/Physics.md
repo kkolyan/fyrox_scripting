@@ -1,6 +1,7 @@
 # Physics
-package in [FyroxLite](../scripting_api.md)
+package
 ## Description
+
 ## Classes
 * [FeatureId](Physics/../Physics/FeatureId.md)
 * [FeatureKind](Physics/../Physics/FeatureKind.md)

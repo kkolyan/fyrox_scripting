@@ -1,5 +1,5 @@
 # Node
-class in [FyroxLite](../../scripting_api.md).[Node](../Node.md)
+class in [Node](../Node.md)
 
 ## Properties
 | Name | Type | Access | Description |

@@ -1,5 +1,5 @@
 # Prefab
-class in [FyroxLite](../../scripting_api.md).[Prefab](../Prefab.md)
+class in [Prefab](../Prefab.md)
 
 ## Methods
 | Return Type | Signature | Description |

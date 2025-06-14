@@ -53,13 +53,14 @@ impl Section {
         let package = self.name.as_str();
         let mut s = "".to_string();
         writelnu!(s, "# {}", package);
-        writelnu!(s, "package in [FyroxLite](../scripting_api.md)");
+        writelnu!(s, "package");
 
         let mut section = Module::no_code(&self.name);
 
         if let Some(description) = self.description {
             writelnu!(s, "## Description");
             s.push_str(&description);
+            writelnu!(s, "");
         }
 
         if !self.classes.is_empty() {

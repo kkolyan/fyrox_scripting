@@ -1,5 +1,5 @@
 # FeatureKind
-enum in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
+enum in [Physics](../Physics.md)
 
 ## Properties
 | Property | Description |

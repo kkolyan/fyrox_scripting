@@ -1,2 +1,2 @@
 # UiNode
-class in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
+class in [UI](../UI.md)

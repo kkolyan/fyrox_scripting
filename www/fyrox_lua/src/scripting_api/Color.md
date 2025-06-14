@@ -1,5 +1,6 @@
 # Color
-package in [FyroxLite](../scripting_api.md)
+package
 ## Description
+
 ## Classes
 * [Color](Color/../Color/Color.md)

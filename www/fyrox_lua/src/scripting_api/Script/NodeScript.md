@@ -1,5 +1,5 @@
 # NodeScript
-class in [FyroxLite](../../scripting_api.md).[Script](../Script.md)
+class in [Script](../Script.md)
 
 ## Properties
 | Name | Type | Access | Description |

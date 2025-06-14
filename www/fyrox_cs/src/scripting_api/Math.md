@@ -1,6 +1,7 @@
 # Math
-package in [FyroxLite](../scripting_api.md)
+package
 ## Description
+
 ## Classes
 * [Basis](Math/../Math/Basis.md)
 * [Mathf](Math/../Math/Mathf.md)

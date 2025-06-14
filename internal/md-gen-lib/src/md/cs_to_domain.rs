@@ -99,7 +99,7 @@ fn generate_package(
 ) -> String {
     let mut s = "".to_string();
     writelnu!(s, "# {}", &package.name);
-    writelnu!(s, "package in [FyroxLite](../scripting_api.md)");
+    writelnu!(s, "package");
 
     let mut classes = vec![];
     let mut structs = vec![];
@@ -274,12 +274,12 @@ fn class_to_md(
     if class.is_struct {
         writelnu!(
             s,
-            "struct in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)",
+            "struct in [{package}](../{package}.md)",
         );
     } else {
         writelnu!(
             s,
-            "class in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)",
+            "class in [{package}](../{package}.md)",
         );
     }
     if !class.description.is_empty() {
@@ -473,7 +473,7 @@ fn enum_to_md(
     writelnu!(s, "# {}", &class.name);
     writelnu!(
         s,
-        "enum in [FyroxLite](../../scripting_api.md).[{package}](../{package}.md)"
+        "enum in [{package}](../{package}.md)"
     );
     if !class.description.is_empty() {
         writelnu!(s, "\n## Description");

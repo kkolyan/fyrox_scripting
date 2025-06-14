@@ -1,5 +1,5 @@
 # RoutingStrategy
-enum in [FyroxLite](../../scripting_api.md).[Node](../Node.md)
+enum in [Node](../Node.md)
 
 ## Properties
 | Property | Description |

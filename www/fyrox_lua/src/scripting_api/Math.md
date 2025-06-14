@@ -1,6 +1,7 @@
 # Math
-package in [FyroxLite](../scripting_api.md)
+package
 ## Description
+
 ## Classes
 * [Quaternion](Math/../Math/Quaternion.md)
 * [Vector2](Math/../Math/Vector2.md)

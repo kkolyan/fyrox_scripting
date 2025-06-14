@@ -1,5 +1,5 @@
 # Intersection
-struct in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
+struct in [Physics](../Physics.md)
 
 ## Description
 <p>A ray intersection result.</p>

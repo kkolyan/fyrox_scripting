@@ -1,5 +1,5 @@
 # Input
-class in [FyroxLite](../../scripting_api.md).[Input](../Input.md)
+class in [Input](../Input.md)
 
 ## Description
 <p>Utility class to poll player input events</p>

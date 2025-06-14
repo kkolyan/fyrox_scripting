@@ -1,5 +1,5 @@
 # Vector3
-class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+class in [Math](../Math.md)
 
 ## Properties
 | Name | Type | Access | Description |

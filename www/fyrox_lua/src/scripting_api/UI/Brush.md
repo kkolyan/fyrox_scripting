@@ -1,5 +1,5 @@
 # Brush
-struct in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
+struct in [UI](../UI.md)
 
 ## Description
 <p>Brush defines a way to fill an arbitrary surface.</p>

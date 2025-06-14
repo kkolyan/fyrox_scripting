@@ -1,5 +1,5 @@
 # KeyCode
-enum in [FyroxLite](../../scripting_api.md).[Input](../Input.md)
+enum in [Input](../Input.md)
 
 ## Description
 <p>Basically a copy of <code>winit</code>’s <a href="https://docs.rs/winit/0.29.15/i686-pc-windows-msvc/winit/keyboard/enum.KeyCode.html"><code>KeyCode</code></a>, which is mostly inspired by UI Events Specification’s <a href="https://w3c.github.io/uievents-code/#code-value-tables"><code>KeyboardEvent.code</code></a>.</p>

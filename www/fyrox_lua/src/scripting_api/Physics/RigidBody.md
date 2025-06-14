@@ -1,5 +1,5 @@
 # RigidBody
-class in [FyroxLite](../../scripting_api.md).[Physics](../Physics.md)
+class in [Physics](../Physics.md)
 
 ## Methods
 | Return Type | Signature | Description |

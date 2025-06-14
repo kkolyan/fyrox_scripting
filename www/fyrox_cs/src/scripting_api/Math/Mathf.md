@@ -1,5 +1,5 @@
 # Mathf
-class in [FyroxLite](../../scripting_api.md).[Math](../Math.md)
+class in [Math](../Math.md)
 
 ## Description
 

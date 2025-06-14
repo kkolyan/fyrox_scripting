@@ -1,5 +1,5 @@
 # Text
-class in [FyroxLite](../../scripting_api.md).[UI](../UI.md)
+class in [UI](../UI.md)
 
 ## Description
 <p>Text is a simple widget that allows you to print text on screen. It has various options like word wrapping, text
