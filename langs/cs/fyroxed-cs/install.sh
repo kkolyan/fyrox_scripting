@@ -7,7 +7,7 @@ INSTALL_DIR=$1
 cd ../../..
 cargo build -p fyroxed-cs
 
-os=$(./os.sh)
+os=$(./bash/utils/os.sh)
 if [[ "$os" == "Windows" ]]; then
     cp target/debug/fyroxed_cs.dll $INSTALL_DIR
     cp target/debug/fyroxed_cs.pdb $INSTALL_DIR

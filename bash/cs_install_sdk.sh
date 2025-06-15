@@ -2,6 +2,8 @@
 cd "$(dirname "$0")"
 set -e
 
+cd ..
+
 if [ -z "$1" ]; then
   echo "Error: First argument should be a path where to install Fyrox C# SDK" >&2
   exit 1

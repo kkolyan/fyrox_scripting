@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-cd "$(dirname "$0")"
-set -e
 
 if [[ "$OSTYPE" == "msys" ]]; then
     echo "Windows"

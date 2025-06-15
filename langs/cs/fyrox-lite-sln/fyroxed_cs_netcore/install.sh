@@ -9,7 +9,7 @@ cp bin/Debug/net8.0/fyroxed_cs_netcore.dll $INSTALL_DIR
 cp bin/Debug/net8.0/fyroxed_cs_netcore.pdb $INSTALL_DIR
 cp bin/Debug/net8.0/fyroxed_cs_netcore.runtimeconfig.json $INSTALL_DIR
 
-os=$(./../../../../os.sh)
+os=$(./../../../../bash/utils/os.sh)
 if [[ "$os" == "Windows" ]]; then
     cp bin/Debug/net8.0/fyroxed_cs_netcore.exe $INSTALL_DIR
 elif [[ "$os" == "Macos" ]]; then

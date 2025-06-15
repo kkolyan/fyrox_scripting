@@ -2,9 +2,12 @@
 cd "$(dirname "$0")"
 set -e
 
-rm -rf target/sdk_lua && ./install_sdk_lua.sh target/sdk_lua
+cd ..
 
-os=$(./os.sh)
+rm -rf target/sdk_lua
+./bash/lua_install_sdk.sh target/sdk_lua
+
+os=$(./bash/utils/os.sh)
 if [[ "$os" == "Windows" ]]; then
     ./target/sdk_lua/fyroxed_lua.exe $*
 elif [[ "$os" == "Macos" ]]; then

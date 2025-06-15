@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 cd "$(dirname "$0")"
 set -e
+
+cd ..
+
 INSTALL_DIR=target/fyrox_cs_sdk
 mkdir -p $INSTALL_DIR
 INSTALL_DIR=$(realpath $INSTALL_DIR)

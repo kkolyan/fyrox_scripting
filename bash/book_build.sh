@@ -2,6 +2,8 @@
 cd "$(dirname "$0")"
 set -e
 
+cd ..
+
 #cargo run --bin mdgen
 
 rm -rf ./www/public
