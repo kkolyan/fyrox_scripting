@@ -171,6 +171,7 @@ class Program
                     ty = ExtractType(prop.Type),
                     get = accessorList?.Accessors.Any(it => it.Keyword.ToString() == "get") ?? true,
                     set = accessorList?.Accessors.Any(it => it.Keyword.ToString() == "set") ?? false,
+                    expression = prop.ExpressionBody?.Expression?.ToFullString(),
                 });
             }
 

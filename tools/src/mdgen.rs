@@ -54,6 +54,7 @@ fn generate_md_lua() -> Module {
                 ty: CsType { name: "Node".to_string(), args: vec![] },
                 get: true,
                 set: false,
+                expression: None,
                 description: vec![],
             }
         ],

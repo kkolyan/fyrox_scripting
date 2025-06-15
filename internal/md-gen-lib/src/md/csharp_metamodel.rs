@@ -88,6 +88,7 @@ pub struct CsProperty {
     pub ty: CsType,
     pub get: bool,
     pub set: bool,
+    pub expression: Option<String>,
     #[serde(default)]
     pub description: Vec<CsXmlNode>,
 }

@@ -39,13 +39,15 @@ public class DocsExtract
             {
                 if (node is XmlElementSyntax e)
                 {
+                    var attrsDict = CollectAttrs<T>(e.StartTag.Attributes);
                     yield return new CsXmlNode
                     {
                         element = new CsXmlElement
                         {
                             name = e.StartTag.Name.ToString(),
                             children = ToDto(new SyntaxListEnumeratorAdapter<XmlNodeSyntax>(e.Content.GetEnumerator()))
-                                .DropNulls().ToList()
+                                .DropNulls().ToList(),
+                            attrs = attrsDict,
                         }
                     };
                     continue;
@@ -59,34 +61,7 @@ public class DocsExtract
 
                 if (node is XmlEmptyElementSyntax empty)
                 {
-                    var attrsDict = new Dictionary<string, string>();
-                    foreach (var attr in empty.Attributes)
-                    {
-                        string value;
-                        if (attr is XmlCrefAttributeSyntax cref)
-                        {
-                            if (cref.Cref is NameMemberCrefSyntax member)
-                            {
-                                value = member.Name.ToString();
-                            }
-                            else if (cref.Cref is QualifiedCrefSyntax q)
-                            {
-                                value = q.ToString();
-                            }
-                            else throw new NotImplementedException($"unknown cref type: {cref.Cref}");
-                        }
-                        else if (attr is XmlNameAttributeSyntax name)
-                        {
-                            value = name.Name.ToString();
-                        }
-                        else if (attr is XmlTextAttributeSyntax text)
-                        {
-                            value = text.TextTokens.ToString();
-                        }
-                        else throw new NotImplementedException($"unknown attribute type: {attr}");
-
-                        attrsDict.Add(attr.Name.ToString(), value);
-                    }
+                    var attrsDict = CollectAttrs<T>(empty.Attributes);
 
                     yield return new CsXmlNode
                     {
@@ -105,6 +80,40 @@ public class DocsExtract
             yield return Unknown(next);
             continue;
         }
+    }
+
+    private static Dictionary<string, string> CollectAttrs<T>(SyntaxList<XmlAttributeSyntax> attributes) where T : SyntaxNode
+    {
+        var attrsDict = new Dictionary<string, string>();
+        foreach (var attr in attributes)
+        {
+            string value;
+            if (attr is XmlCrefAttributeSyntax cref)
+            {
+                if (cref.Cref is NameMemberCrefSyntax member)
+                {
+                    value = member.Name.ToString();
+                }
+                else if (cref.Cref is QualifiedCrefSyntax q)
+                {
+                    value = q.ToString();
+                }
+                else throw new NotImplementedException($"unknown cref type: {cref.Cref}");
+            }
+            else if (attr is XmlNameAttributeSyntax name)
+            {
+                value = name.Name.ToString();
+            }
+            else if (attr is XmlTextAttributeSyntax text)
+            {
+                value = text.TextTokens.ToString();
+            }
+            else throw new NotImplementedException($"unknown attribute type: {attr}");
+
+            attrsDict.Add(attr.Name.ToString(), value);
+        }
+
+        return attrsDict;
     }
 
     private static CsXmlNode Unknown(object n)

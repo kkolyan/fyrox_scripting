@@ -70,6 +70,7 @@ public class CsProperty
     public CsType ty;
     public bool get;
     public bool set;
+    public string? expression;
     public List<CsXmlNode> description;
 }
 

@@ -41,16 +41,16 @@ struct in [Math](../Math.md)
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Vector2I` to a string with the given `name` .    |
 
 ## Static Properties
-| Name | Type | Access | Description |
-|---|---|---|---|
-| `MinValue` | [Vector2I](../Math/Vector2I.md) | get |  Min vector, a vector with all components equal to `int.MinValue` . Can be used as a negative integer equivalent of `Vector2.Inf` .  Equivalent to `new Vector2I(int.MinValue, int.MinValue)` .  |
-| `MaxValue` | [Vector2I](../Math/Vector2I.md) | get |  Max vector, a vector with all components equal to `int.MaxValue` . Can be used as an integer equivalent of `Vector2.Inf` .  Equivalent to `new Vector2I(int.MaxValue, int.MaxValue)` .  |
-| `Zero` | [Vector2I](../Math/Vector2I.md) | get |  Zero vector, a vector with all components set to `0` .  Equivalent to `new Vector2I(0, 0)` .  |
-| `One` | [Vector2I](../Math/Vector2I.md) | get |  One vector, a vector with all components set to `1` .  Equivalent to `new Vector2I(1, 1)` .  |
-| `Up` | [Vector2I](../Math/Vector2I.md) | get |  Up unit vector. Y is down in 2D, so this vector points -Y.  Equivalent to `new Vector2I(0, -1)` .  |
-| `Down` | [Vector2I](../Math/Vector2I.md) | get |  Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to `new Vector2I(0, 1)` .  |
-| `Right` | [Vector2I](../Math/Vector2I.md) | get |  Right unit vector. Represents the direction of right.  Equivalent to `new Vector2I(1, 0)` .  |
-| `Left` | [Vector2I](../Math/Vector2I.md) | get |  Left unit vector. Represents the direction of left.  Equivalent to `new Vector2I(-1, 0)` .  |
+| Name | Type | Access | Description | Initializer |
+|---|---|---|---|---|
+| `MinValue` | [Vector2I](../Math/Vector2I.md) | get |  Min vector, a vector with all components equal to `int.MinValue` . Can be used as a negative integer equivalent of `Vector2.Inf` .  Equivalent to `new Vector2I(int.MinValue, int.MinValue)` .  |  |
+| `MaxValue` | [Vector2I](../Math/Vector2I.md) | get |  Max vector, a vector with all components equal to `int.MaxValue` . Can be used as an integer equivalent of `Vector2.Inf` .  Equivalent to `new Vector2I(int.MaxValue, int.MaxValue)` .  |  |
+| `Zero` | [Vector2I](../Math/Vector2I.md) | get |  Zero vector, a vector with all components set to `0` .  Equivalent to `new Vector2I(0, 0)` .  |  |
+| `One` | [Vector2I](../Math/Vector2I.md) | get |  One vector, a vector with all components set to `1` .  Equivalent to `new Vector2I(1, 1)` .  |  |
+| `Up` | [Vector2I](../Math/Vector2I.md) | get |  Up unit vector. Y is down in 2D, so this vector points -Y.  Equivalent to `new Vector2I(0, -1)` .  |  |
+| `Down` | [Vector2I](../Math/Vector2I.md) | get |  Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to `new Vector2I(0, 1)` .  |  |
+| `Right` | [Vector2I](../Math/Vector2I.md) | get |  Right unit vector. Represents the direction of right.  Equivalent to `new Vector2I(1, 0)` .  |  |
+| `Left` | [Vector2I](../Math/Vector2I.md) | get |  Left unit vector. Represents the direction of left.  Equivalent to `new Vector2I(-1, 0)` .  |  |
 
 ## Operators
 | Return Type | Signature | Description |

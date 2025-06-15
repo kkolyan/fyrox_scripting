@@ -10,9 +10,12 @@ use lite_model::{Class, ClassName, Domain};
 use std::collections::{BTreeMap, HashMap};
 use std::fs;
 use std::fs::DirEntry;
+use std::ops::Deref;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
+use regex::Regex;
 use to_vec::ToVec;
+use once_cell::unsync::Lazy;
 
 pub struct CSharpDomain {
     pub packages: Vec<CSharpPackage>,
@@ -326,7 +329,7 @@ fn class_to_md(
     let mut static_props = class.properties.iter().filter(|it| it.is_static).to_vec();
     if !static_props.is_empty() {
         writelnu!(s, "\n## Static Properties");
-        render_properties(&mut s, static_props.as_slice(), class_page_links);
+        render_static_properties(&mut s, static_props.as_slice(), class_page_links);
     }
 
     let static_methods = class.methods.iter().filter(|it| it.is_static).to_vec();
@@ -423,6 +426,46 @@ fn render_properties(
             type_cs_to_md(&prop.ty, class_page_links),
             access,
             cs_docs_to_string(&prop.description, " ")
+        );
+    }
+}
+
+fn render_static_properties(
+    s: &mut String,
+    props: &[&CsProperty],
+    class_page_links: &HashMap<ClassName, String>,
+) {
+    writelnu!(s, "| Name | Type | Access | Description | Initializer |");
+    writelnu!(s, "|---|---|---|---|---|");
+    for prop in props {
+        let access = match (prop.get, prop.set) {
+            (true, false) => "get",
+            (false, true) => "set",
+            (true, true) => "get / set",
+            _ => unreachable!(),
+        };
+
+        thread_local! {
+            static COLOR_RE: Lazy<Regex> = Lazy::new(|| {
+                Regex::new(r"new Color\(0x([0-9A-Fa-f]{6})[0-9A-Fa-f]{2}\)").unwrap()
+            });
+        }
+
+        let result = COLOR_RE.with(|re| {
+            re.deref().replace_all(
+                prop.expression.as_deref().unwrap_or(""),
+                r##"<span style="display:inline-block; width:1em; height:1em; background: #$1; vertical-align:middle"></span> `#$1`"##
+            )
+        });
+
+        writelnu!(
+            s,
+            "| `{}` | {} | {} | {} | {} |",
+            prop.name,
+            type_cs_to_md(&prop.ty, class_page_links),
+            access,
+            cs_docs_to_string(&prop.description, " "),
+            result,
         );
     }
 }
@@ -525,6 +568,11 @@ fn cs_doc_to_string(doc: &CsXmlNode, line_separator: &str) -> String {
             .to_string();
     }
     if let Some(tag) = &doc.element {
+        if tag.name == "span" {
+            let content = cs_docs_to_string(&tag.children, line_separator);
+            let attrs = tag.attrs.iter().map(|(k,v)| format!("{}={:?}", k, v)).join(" ");
+            return format!("<span {attrs}>{content}</span>");
+        }
         if tag.name == "summary" {
             return cs_docs_to_string(&tag.children, line_separator);
         }

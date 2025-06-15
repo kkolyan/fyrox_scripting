@@ -72,15 +72,15 @@ struct in [Math](../Math.md)
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Vector2` to a string with the given `name` .    |
 
 ## Static Properties
-| Name | Type | Access | Description |
-|---|---|---|---|
-| `Zero` | [Vector2](../Math/Vector2.md) | get |  Zero vector, a vector with all components set to `0` .  Equivalent to `new Vector2(0, 0)` .  |
-| `One` | [Vector2](../Math/Vector2.md) | get |  One vector, a vector with all components set to `1` .  Equivalent to `new Vector2(1, 1)` .  |
-| `Inf` | [Vector2](../Math/Vector2.md) | get |  Infinity vector, a vector with all components set to `Mathf.Inf` .  Equivalent to `new Vector2(Mathf.Inf, Mathf.Inf)` .  |
-| `Up` | [Vector2](../Math/Vector2.md) | get |  Up unit vector. Y is down in 2D, so this vector points -Y.  Equivalent to `new Vector2(0, -1)` .  |
-| `Down` | [Vector2](../Math/Vector2.md) | get |  Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to `new Vector2(0, 1)` .  |
-| `Right` | [Vector2](../Math/Vector2.md) | get |  Right unit vector. Represents the direction of right.  Equivalent to `new Vector2(1, 0)` .  |
-| `Left` | [Vector2](../Math/Vector2.md) | get |  Left unit vector. Represents the direction of left.  Equivalent to `new Vector2(-1, 0)` .  |
+| Name | Type | Access | Description | Initializer |
+|---|---|---|---|---|
+| `Zero` | [Vector2](../Math/Vector2.md) | get |  Zero vector, a vector with all components set to `0` .  Equivalent to `new Vector2(0, 0)` .  |  |
+| `One` | [Vector2](../Math/Vector2.md) | get |  One vector, a vector with all components set to `1` .  Equivalent to `new Vector2(1, 1)` .  |  |
+| `Inf` | [Vector2](../Math/Vector2.md) | get |  Infinity vector, a vector with all components set to `Mathf.Inf` .  Equivalent to `new Vector2(Mathf.Inf, Mathf.Inf)` .  |  |
+| `Up` | [Vector2](../Math/Vector2.md) | get |  Up unit vector. Y is down in 2D, so this vector points -Y.  Equivalent to `new Vector2(0, -1)` .  |  |
+| `Down` | [Vector2](../Math/Vector2.md) | get |  Down unit vector. Y is down in 2D, so this vector points +Y.  Equivalent to `new Vector2(0, 1)` .  |  |
+| `Right` | [Vector2](../Math/Vector2.md) | get |  Right unit vector. Represents the direction of right.  Equivalent to `new Vector2(1, 0)` .  |  |
+| `Left` | [Vector2](../Math/Vector2.md) | get |  Left unit vector. Represents the direction of left.  Equivalent to `new Vector2(-1, 0)` .  |  |
 
 ## Static Methods
 | Return Type | Signature | Description |

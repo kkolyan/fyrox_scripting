@@ -12,3 +12,5 @@ convert_case = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 dunce = "1.0.5"
+regex = "1.11.1"
+once_cell = "1.21.3"
