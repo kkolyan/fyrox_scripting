@@ -236,23 +236,23 @@
 <tr><td>string</td><td><code>ToString</code> ( string? <ins>format</ins> )</td><td>Converts this <code>Vector3</code> to a string with the given <code>name</code> .</td></tr>
 </tbody></table>
 </div>
-<h2 id="static-properties"><a class="header" href="#static-properties">Static Properties</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Access</th><th>Description</th><th>Initializer</th></tr></thead><tbody>
-<tr><td><code>Zero</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Zero vector, a vector with all components set to <code>0</code> .  Equivalent to <code>new Vector3(0, 0, 0)</code> .</td><td></td></tr>
-<tr><td><code>One</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>One vector, a vector with all components set to <code>1</code> .  Equivalent to <code>new Vector3(1, 1, 1)</code> .</td><td></td></tr>
-<tr><td><code>Inf</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Infinity vector, a vector with all components set to <code>Mathf.Inf</code> .  Equivalent to <code>new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf)</code> .</td><td></td></tr>
-<tr><td><code>Up</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Up unit vector.  Equivalent to <code>new Vector3(0, 1, 0)</code> .</td><td></td></tr>
-<tr><td><code>Down</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Down unit vector.  Equivalent to <code>new Vector3(0, -1, 0)</code> .</td><td></td></tr>
-<tr><td><code>Right</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Right unit vector. Represents the local direction of right,  and the global direction of east.  Equivalent to <code>new Vector3(1, 0, 0)</code> .</td><td></td></tr>
-<tr><td><code>Left</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Left unit vector. Represents the local direction of left,  and the global direction of west.  Equivalent to <code>new Vector3(-1, 0, 0)</code> .</td><td></td></tr>
-<tr><td><code>Forward</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Forward unit vector. Represents the local direction of forward,  and the global direction of north.  Equivalent to <code>new Vector3(0, 0, -1)</code> .</td><td></td></tr>
-<tr><td><code>Back</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Back unit vector. Represents the local direction of back,  and the global direction of south.  Equivalent to <code>new Vector3(0, 0, 1)</code> .</td><td></td></tr>
-<tr><td><code>ModelLeft</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Unit vector pointing towards the left side of imported 3D assets.</td><td></td></tr>
-<tr><td><code>ModelRight</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Unit vector pointing towards the right side of imported 3D assets.</td><td></td></tr>
-<tr><td><code>ModelTop</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Unit vector pointing towards the top side (up) of imported 3D assets.</td><td></td></tr>
-<tr><td><code>ModelBottom</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Unit vector pointing towards the bottom side (down) of imported 3D assets.</td><td></td></tr>
-<tr><td><code>ModelFront</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Unit vector pointing towards the front side (facing forward) of imported 3D assets.</td><td></td></tr>
-<tr><td><code>ModelRear</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>get</td><td>Unit vector pointing towards the rear side (back) of imported 3D assets.</td><td></td></tr>
+<h2 id="constants"><a class="header" href="#constants">Constants</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Initializer</th></tr></thead><tbody>
+<tr><td><code>Zero</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Zero vector, a vector with all components set to <code>0</code> .  Equivalent to <code>new Vector3(0, 0, 0)</code> .</td><td>new(0, 0, 0)</td></tr>
+<tr><td><code>One</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>One vector, a vector with all components set to <code>1</code> .  Equivalent to <code>new Vector3(1, 1, 1)</code> .</td><td>new(1, 1, 1)</td></tr>
+<tr><td><code>Inf</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Infinity vector, a vector with all components set to <code>Mathf.Inf</code> .  Equivalent to <code>new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf)</code> .</td><td>new(Mathf.Inf, Mathf.Inf, Mathf.Inf)</td></tr>
+<tr><td><code>Up</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Up unit vector.  Equivalent to <code>new Vector3(0, 1, 0)</code> .</td><td>new(0, 1, 0)</td></tr>
+<tr><td><code>Down</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Down unit vector.  Equivalent to <code>new Vector3(0, -1, 0)</code> .</td><td>new(0, -1, 0)</td></tr>
+<tr><td><code>Right</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Right unit vector. Represents the local direction of right,  and the global direction of east.  Equivalent to <code>new Vector3(1, 0, 0)</code> .</td><td>new(-1, 0, 0)</td></tr>
+<tr><td><code>Left</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Left unit vector. Represents the local direction of left,  and the global direction of west.  Equivalent to <code>new Vector3(-1, 0, 0)</code> .</td><td>new(1, 0, 0)</td></tr>
+<tr><td><code>Forward</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Forward unit vector. Represents the local direction of forward,  and the global direction of north.  Equivalent to <code>new Vector3(0, 0, -1)</code> .</td><td>new(0, 0, 1)</td></tr>
+<tr><td><code>Back</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Back unit vector. Represents the local direction of back,  and the global direction of south.  Equivalent to <code>new Vector3(0, 0, 1)</code> .</td><td>new(0, 0, -1)</td></tr>
+<tr><td><code>ModelLeft</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Unit vector pointing towards the left side of imported 3D assets.</td><td>new(1, 0, 0)</td></tr>
+<tr><td><code>ModelRight</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Unit vector pointing towards the right side of imported 3D assets.</td><td>new(-1, 0, 0)</td></tr>
+<tr><td><code>ModelTop</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Unit vector pointing towards the top side (up) of imported 3D assets.</td><td>new(0, 1, 0)</td></tr>
+<tr><td><code>ModelBottom</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Unit vector pointing towards the bottom side (down) of imported 3D assets.</td><td>new(0, -1, 0)</td></tr>
+<tr><td><code>ModelFront</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Unit vector pointing towards the front side (facing forward) of imported 3D assets.</td><td>new(0, 0, 1)</td></tr>
+<tr><td><code>ModelRear</code></td><td><a href="../Math/Vector3.html">Vector3</a></td><td>Unit vector pointing towards the rear side (back) of imported 3D assets.</td><td>new(0, 0, -1)</td></tr>
 </tbody></table>
 </div>
 <h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
