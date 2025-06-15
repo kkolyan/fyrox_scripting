@@ -59,8 +59,12 @@ fn write_cs_mod(m: &Module, ns: &str, parent_dir: &str, nss: &Vec<String>) {
             s += format!("using {};\n", ns).as_str();
         }
         s += "using System.Drawing;\n".to_string().as_str();
-        s += "using System.Runtime.CompilerServices;\n".to_string().as_str();
-        s += "using System.Runtime.InteropServices;\n".to_string().as_str();
+        s += "using System.Runtime.CompilerServices;\n"
+            .to_string()
+            .as_str();
+        s += "using System.Runtime.InteropServices;\n"
+            .to_string()
+            .as_str();
         s += "using System.Collections;\n".to_string().as_str();
         s += format!("namespace {};\n", ns).as_str();
         s += code.as_str();
