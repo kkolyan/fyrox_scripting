@@ -40,7 +40,7 @@ There is a simple game that written in different scripting languages to demonstr
 * [in Fyrox / Rust (vanilla)](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_vanilla)
 
 ## Credits
-* Special thanks to [Dmitry Stepanov](https://github.com/mrDIMAS), author of Fyrox and other [Fyrox](https://github.com/FyroxEngine/Fyrox/) Contributors for such a powerful and inspiring foundation.
+* Special thanks to [Dmitry Stepanov](https://github.com/mrDIMAS),  author of Fyrox, and other [Fyrox](https://github.com/FyroxEngine/Fyrox/) Contributors for such a powerful and inspiring foundation.
 * Gratefully acknowledge the Godot Engine contributors for its modular design and permissive license, which made it possible to [incorporate portions of its C# code into this project](https://github.com/kkolyan/fyrox_lite/tree/main/langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/FromGodot).
 * Sincere thanks to the open-source community for sharing tools, ideas and knowledge.
 
