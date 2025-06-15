@@ -9,6 +9,7 @@
 #![allow(clippy::manual_map)]
 #![allow(clippy::needless_match)]
 #![allow(clippy::let_unit_value)]
+#![allow(clippy::unit_arg)]
 
 use fyrox_lite::*;
 use fyrox_lite_math::*;
@@ -36,8 +37,8 @@ impl FyroxUserData for fyrox_lite::lite_window::LiteWindow {
     fn add_instance_fields<'lua, F: mlua::UserDataFields<'lua, Traitor<Self>>>(fields: &mut F) {}
     fn add_class_fields<'lua, F: mlua::UserDataFields<'lua, UserDataClass<Self>>>(fields: &mut F) {
         fields.add_field_method_set("cursor_grab", |lua, this, value: TypedUserData<Traitor<fyrox_lite::lite_window::LiteCursorGrabMode>>| {
-                    fyrox_lite::lite_window::LiteWindow::set_cursor_grab(value.borrow()?.inner().clone().into(), );
-                    Ok(())
+                    let value = fyrox_lite::lite_window::LiteWindow::set_cursor_grab(value.borrow()?.inner().clone().into(), );
+                    Ok(value)
                 });
     }
 }

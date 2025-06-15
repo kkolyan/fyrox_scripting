@@ -9,6 +9,7 @@
 #![allow(clippy::manual_map)]
 #![allow(clippy::needless_match)]
 #![allow(clippy::let_unit_value)]
+#![allow(clippy::unit_arg)]
 
 use fyrox_lite::*;
 use fyrox_lite_math::*;
@@ -44,8 +45,8 @@ impl FyroxUserData for fyrox_lite::lite_ui::LiteText {
     }
     fn add_instance_fields<'lua, F: mlua::UserDataFields<'lua, Traitor<Self>>>(fields: &mut F) {
         fields.add_field_method_set("text_async", |lua, this, value: mlua::String| {
-            this.set_text_async(value.to_str()?.to_string());
-            Ok(())
+            let value = this.set_text_async(value.to_str()?.to_string());
+            Ok(value)
         });
     }
     fn add_class_fields<'lua, F: mlua::UserDataFields<'lua, UserDataClass<Self>>>(fields: &mut F) {}

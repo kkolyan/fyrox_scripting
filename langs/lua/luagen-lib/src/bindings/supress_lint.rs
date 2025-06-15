@@ -9,4 +9,5 @@ pub const SUPRESSIONS: &str = "    #![allow(unused_variables)]
 	#![allow(clippy::manual_map)]
 	#![allow(clippy::needless_match)]
 	#![allow(clippy::let_unit_value)]
+    #![allow(clippy::unit_arg)]
 ";

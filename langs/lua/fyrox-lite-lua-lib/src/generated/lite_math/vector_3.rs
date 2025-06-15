@@ -9,6 +9,7 @@
 #![allow(clippy::manual_map)]
 #![allow(clippy::needless_match)]
 #![allow(clippy::let_unit_value)]
+#![allow(clippy::unit_arg)]
 
 use fyrox_lite::*;
 use fyrox_lite_math::*;
@@ -94,16 +95,16 @@ impl FyroxUserData for fyrox_lite_math::lite_math::LiteVector3 {
             Ok(value)
         });
         fields.add_field_method_set("x", |lua, this, value: f32| {
-            this.set_x(value);
-            Ok(())
+            let value = this.set_x(value);
+            Ok(value)
         });
         fields.add_field_method_set("y", |lua, this, value: f32| {
-            this.set_y(value);
-            Ok(())
+            let value = this.set_y(value);
+            Ok(value)
         });
         fields.add_field_method_set("z", |lua, this, value: f32| {
-            this.set_z(value);
-            Ok(())
+            let value = this.set_z(value);
+            Ok(value)
         });
     }
     fn add_class_fields<'lua, F: mlua::UserDataFields<'lua, UserDataClass<Self>>>(fields: &mut F) {

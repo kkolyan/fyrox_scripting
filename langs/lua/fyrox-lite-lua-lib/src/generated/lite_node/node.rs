@@ -9,6 +9,7 @@
 #![allow(clippy::manual_map)]
 #![allow(clippy::needless_match)]
 #![allow(clippy::let_unit_value)]
+#![allow(clippy::unit_arg)]
 
 use fyrox_lite::*;
 use fyrox_lite_math::*;
@@ -181,20 +182,23 @@ impl FyroxUserData for fyrox_lite::lite_node::LiteNode {
         fields.add_field_method_set(
             "local_position",
             |lua, this, value: TypedUserData<Traitor<fyrox_lite_math::lite_math::LiteVector3>>| {
-                this.set_local_position::<TypedUserData<UserScriptProxy>>(
+                let value = this.set_local_position::<TypedUserData<UserScriptProxy>>(
                     value.borrow()?.inner().clone().into(),
                     (),
                 );
-                Ok(())
+                Ok(match value {
+                    Ok(value) => value,
+                    Err(err) => return Err(err),
+                })
             },
         );
         fields.add_field_method_set("local_rotation", |lua, this, value: TypedUserData<Traitor<fyrox_lite_math::lite_math::LiteQuaternion>>| {
-                    this.set_local_rotation::<TypedUserData<UserScriptProxy>>(value.borrow()?.inner().clone().into(), ());
-                    Ok(())
+                    let value = this.set_local_rotation::<TypedUserData<UserScriptProxy>>(value.borrow()?.inner().clone().into(), ());
+                    Ok(match value { Ok(value) => value, Err(err) => return Err(err) })
                 });
         fields.add_field_method_set("tag", |lua, this, value: mlua::String| {
-            this.set_tag(value.to_str()?.to_string());
-            Ok(())
+            let value = this.set_tag(value.to_str()?.to_string());
+            Ok(value)
         });
     }
     fn add_class_fields<'lua, F: mlua::UserDataFields<'lua, UserDataClass<Self>>>(fields: &mut F) {}

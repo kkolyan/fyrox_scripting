@@ -9,6 +9,7 @@
 #![allow(clippy::manual_map)]
 #![allow(clippy::needless_match)]
 #![allow(clippy::let_unit_value)]
+#![allow(clippy::unit_arg)]
 
 use fyrox_lite::*;
 use fyrox_lite_math::*;

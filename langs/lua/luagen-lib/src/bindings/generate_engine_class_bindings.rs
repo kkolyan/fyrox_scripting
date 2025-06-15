@@ -137,8 +137,8 @@ fn generate_setters(s: &mut String, class: &EngineClass, ctx: &GenerationContext
             s,
             r#"
                 fields.add_field_method_set("${field_name}", |lua, this, value: ${input_type}| {
-                    ${target}set_${field_name}${generics}(${expression}, ${stub});
-                    Ok(())
+                    let value = ${target}set_${field_name}${generics}(${expression}, ${stub});
+                    Ok(${output_expression})
                 });
         "#,
             [
@@ -178,6 +178,10 @@ fn generate_setters(s: &mut String, class: &EngineClass, ctx: &GenerationContext
                         true => &"this.",
                         false => &target,
                     },
+                ),
+                (
+                    "output_expression",
+                    &rust_expr_to_mlua(ctx, "value", setter.signature.return_ty.as_ref().unwrap_or(&DataType::Unit)),
                 ),
             ],
         );
