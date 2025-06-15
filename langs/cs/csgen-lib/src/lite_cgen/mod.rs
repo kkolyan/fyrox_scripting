@@ -27,8 +27,7 @@ pub fn generate_c_bindings_lite(domain: &Domain) -> CBindingsLite {
         }
     }
     let mut s = String::new();
-    s +=
-"            #![allow(non_camel_case_types)]
+    s += "            #![allow(non_camel_case_types)]
             #![allow(non_upper_case_globals)]
             #![allow(non_snake_case)]
             #![allow(clippy::useless_conversion)]
