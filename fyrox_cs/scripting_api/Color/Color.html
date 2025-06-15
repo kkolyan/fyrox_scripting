@@ -173,35 +173,100 @@
                     <main>
                         <h1 id="color"><a class="header" href="#color">Color</a></h1>
 <p>struct in <a href="../Color.html">Color</a></p>
+<h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>(code of this item is picked from Godot Engine in compliance with MIT license).</p>
+<p>A color represented by red, green, blue, and alpha (RGBA) components.
+The alpha component is often used for transparency.
+Values are in floating-point and usually range from 0 to 1.
+Some properties (such as
+<code>CanvasItem.Modulate</code>
+) may accept values
+greater than 1 (overbright or HDR colors).</p>
+<p>If you want to supply values in a range of 0 to 255, you should use
+<code>Color8</code>
+and the
+<code>r8</code>
+/
+<code>g8</code>
+/
+<code>b8</code>
+/
+<code>a8</code>
+properties.</p>
 <h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td>( byte <ins>r</ins>, byte <ins>g</ins>, byte <ins>b</ins>, byte <ins>a</ins> )</td><td></td></tr>
+<tr><td>( float <ins>r</ins>, float <ins>g</ins>, float <ins>b</ins>, float <ins>a</ins> )</td><td>Constructs a <code>Color</code> from RGBA values, typically on the range of 0 to 1.</td></tr>
+<tr><td>( <a href="../Color/Color.html">Color</a> <ins>c</ins>, float <ins>a</ins> )</td><td>Constructs a <code>Color</code> from an existing color and an alpha value.</td></tr>
+<tr><td>( uint <ins>rgba</ins> )</td><td>Constructs a <code>Color</code> from an unsigned 32-bit integer in RGBA format  (each byte represents a color channel).</td></tr>
+<tr><td>( ulong <ins>rgba</ins> )</td><td>Constructs a <code>Color</code> from an unsigned 64-bit integer in RGBA format  (each word represents a color channel).</td></tr>
+<tr><td>( string <ins>code</ins> )</td><td>Constructs a <code>Color</code> either from an HTML color code or from a  standardized color name. Supported color names are the same as the <code>Colors</code> constants.</td></tr>
+<tr><td>( string <ins>code</ins>, float <ins>alpha</ins> )</td><td>Constructs a <code>Color</code> either from an HTML color code or from a  standardized color name, with <code>name</code> on the range of 0 to 1. Supported  color names are the same as the <code>Colors</code> constants.</td></tr>
+</tbody></table>
+</div>
+<h2 id="properties"><a class="header" href="#properties">Properties</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Access</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>R8</code></td><td>byte</td><td>get / set</td><td>Wrapper for <code>R</code> that uses the range 0 to 255 instead of 0 to 1.  Getting is equivalent to multiplying by 255 and rounding. Setting is equivalent to dividing by 255.</td></tr>
+<tr><td><code>G8</code></td><td>byte</td><td>get / set</td><td>Wrapper for <code>G</code> that uses the range 0 to 255 instead of 0 to 1.  Getting is equivalent to multiplying by 255 and rounding. Setting is equivalent to dividing by 255.</td></tr>
+<tr><td><code>B8</code></td><td>byte</td><td>get / set</td><td>Wrapper for <code>B</code> that uses the range 0 to 255 instead of 0 to 1.  Getting is equivalent to multiplying by 255 and rounding. Setting is equivalent to dividing by 255.</td></tr>
+<tr><td><code>A8</code></td><td>byte</td><td>get / set</td><td>Wrapper for <code>A</code> that uses the range 0 to 255 instead of 0 to 1.  Getting is equivalent to multiplying by 255 and rounding. Setting is equivalent to dividing by 255.</td></tr>
+<tr><td><code>H</code></td><td>float</td><td>get / set</td><td>The HSV hue of this color, on the range 0 to 1.  Getting is a long process, refer to the source code for details. Setting uses <code>FromHsv</code> .</td></tr>
+<tr><td><code>S</code></td><td>float</td><td>get / set</td><td>The HSV saturation of this color, on the range 0 to 1.  Getting is equivalent to the ratio between the min and max RGB value. Setting uses <code>FromHsv</code> .</td></tr>
+<tr><td><code>V</code></td><td>float</td><td>get / set</td><td>The HSV value (brightness) of this color, on the range 0 to 1.  Getting is equivalent to using <code>Math.Max(float, float)</code> on the RGB components. Setting uses <code>FromHsv</code> .</td></tr>
+<tr><td><code>Luminance</code></td><td>float</td><td>get</td><td>Returns the light intensity of the color, as a value between 0.0 and 1.0 (inclusive).  This is useful when determining light or dark color. Colors with a luminance smaller  than 0.5 can be generally considered dark.  Note: <code>Luminance</code> relies on the color being in the linear color space to  return an accurate relative luminance value. If the color is in the sRGB color space  use <code>SrgbToLinear</code> to convert it to the linear color space first.</td></tr>
 </tbody></table>
 </div>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>SrgbToLinear</code> (  )</td><td></td></tr>
-<tr><td>(float, float, float, float)</td><td><code>SrgbToLinearF32</code> (  )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>LinearToSrgb</code> (  )</td><td></td></tr>
-<tr><td>(float, float, float, float)</td><td><code>AsFloatRgba</code> (  )</td><td></td></tr>
-<tr><td>(float, float, float)</td><td><code>AsFloatRgb</code> (  )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>ToOpaque</code> (  )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Lerp</code> ( <a href="../Color/Color.html">Color</a> <ins>other</ins>, float <ins>t</ins> )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>WithNewAlpha</code> ( byte <ins>a</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Blend</code> ( <a href="../Color/Color.html">Color</a> <ins>over</ins> )</td><td>Returns a new color resulting from blending this color over another.  If the color is opaque, the result is also opaque.  The second color may have a range of alpha values.</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Clamp</code> ( <a href="../Color/Color.html">Color</a>? <ins>min</ins>, <a href="../Color/Color.html">Color</a>? <ins>max</ins> )</td><td>Returns a new color with all components clamped between the  components of <code>name</code> and <code>name</code> using <code>Mathf.Clamp(float, float, float)</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Darkened</code> ( float <ins>amount</ins> )</td><td>Returns a new color resulting from making this color darker  by the specified ratio (on the range of 0 to 1).</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Inverted</code> (  )</td><td>Returns the inverted color: <code>(1 - r, 1 - g, 1 - b, a)</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Lightened</code> ( float <ins>amount</ins> )</td><td>Returns a new color resulting from making this color lighter  by the specified ratio (on the range of 0 to 1).</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Lerp</code> ( <a href="../Color/Color.html">Color</a> <ins>to</ins>, float <ins>weight</ins> )</td><td>Returns the result of the linear interpolation between  this color and <code>name</code> by amount <code>name</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>LinearToSrgb</code> (  )</td><td>Returns the color converted to the sRGB color space.  This method assumes the original color is in the linear color space.  See also <code>SrgbToLinear</code> which performs the opposite operation.</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>SrgbToLinear</code> (  )</td><td>Returns the color converted to linear color space.  This method assumes the original color already is in sRGB color space.  See also <code>LinearToSrgb</code> which performs the opposite operation.</td></tr>
+<tr><td>uint</td><td><code>ToAbgr32</code> (  )</td><td>Returns the color converted to an unsigned 32-bit integer in ABGR  format (each byte represents a color channel).  ABGR is the reversed version of the default format.</td></tr>
+<tr><td>ulong</td><td><code>ToAbgr64</code> (  )</td><td>Returns the color converted to an unsigned 64-bit integer in ABGR  format (each word represents a color channel).  ABGR is the reversed version of the default format.</td></tr>
+<tr><td>uint</td><td><code>ToArgb32</code> (  )</td><td>Returns the color converted to an unsigned 32-bit integer in ARGB  format (each byte represents a color channel).  ARGB is more compatible with DirectX, but not used much in Godot.</td></tr>
+<tr><td>ulong</td><td><code>ToArgb64</code> (  )</td><td>Returns the color converted to an unsigned 64-bit integer in ARGB  format (each word represents a color channel).  ARGB is more compatible with DirectX, but not used much in Godot.</td></tr>
+<tr><td>uint</td><td><code>ToRgba32</code> (  )</td><td>Returns the color converted to an unsigned 32-bit integer in RGBA  format (each byte represents a color channel).  RGBA is Godot's default and recommended format.</td></tr>
+<tr><td>ulong</td><td><code>ToRgba64</code> (  )</td><td>Returns the color converted to an unsigned 64-bit integer in RGBA  format (each word represents a color channel).  RGBA is Godot's default and recommended format.</td></tr>
+<tr><td>string</td><td><code>ToHtml</code> ( bool <ins>includeAlpha</ins> )</td><td>Returns the color's HTML hexadecimal color string in RGBA format.</td></tr>
+<tr><td>void</td><td><code>ToHsv</code> ( float <ins>hue</ins>, float <ins>saturation</ins>, float <ins>value</ins> )</td><td>Converts a color to HSV values. This is equivalent to using each of  the <code>h</code> / <code>s</code> / <code>v</code> properties, but much more efficient.</td></tr>
+<tr><td>bool</td><td><code>Equals</code> ( object? <ins>obj</ins> )</td><td>Returns <code>true</code> if this color and <code>name</code> are equal.</td></tr>
+<tr><td>bool</td><td><code>Equals</code> ( <a href="../Color/Color.html">Color</a> <ins>other</ins> )</td><td>Returns <code>true</code> if the colors are exactly equal.  Note: Due to floating-point precision errors, consider using <code>IsEqualApprox</code> instead, which is more reliable.</td></tr>
+<tr><td>bool</td><td><code>IsEqualApprox</code> ( <a href="../Color/Color.html">Color</a> <ins>other</ins> )</td><td>Returns <code>true</code> if this color and <code>name</code> are approximately equal,  by running <code>Mathf.IsEqualApprox(float, float)</code> on each component.</td></tr>
+<tr><td>int</td><td><code>GetHashCode</code> (  )</td><td>Serves as the hash function for <code>Color</code> .</td></tr>
+<tr><td>string</td><td><code>ToString</code> (  )</td><td>Converts this <code>Color</code> to a string.</td></tr>
+<tr><td>string</td><td><code>ToString</code> ( string? <ins>format</ins> )</td><td>Converts this <code>Color</code> to a string with the given <code>name</code> .</td></tr>
 </tbody></table>
 </div>
 <h2 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Opaque</code> ( byte <ins>r</ins>, byte <ins>g</ins>, byte <ins>b</ins> )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Repeat</code> ( byte <ins>c</ins> )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>RepeatOpaque</code> ( byte <ins>c</ins> )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>FromRgba</code> ( byte <ins>r</ins>, byte <ins>g</ins>, byte <ins>b</ins>, byte <ins>a</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>FromHtml</code> ( ReadOnlySpan <ins>rgba</ins> )</td><td>Constructs a <code>Color</code> from the HTML hexadecimal color string in RGBA format.</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Color8</code> ( byte <ins>r8</ins>, byte <ins>g8</ins>, byte <ins>b8</ins>, byte <ins>a8</ins> )</td><td>Returns a color constructed from integer red, green, blue, and alpha channels.  Each channel should have 8 bits of information ranging from 0 to 255.</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>FromHsv</code> ( float <ins>hue</ins>, float <ins>saturation</ins>, float <ins>value</ins>, float <ins>alpha</ins> )</td><td>Constructs a color from an HSV profile. The <code>name</code> , <code>name</code> , and <code>name</code> are typically  between 0.0 and 1.0.</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>FromRgbe9995</code> ( uint <ins>rgbe</ins> )</td><td>Encodes a <code>Color</code> from a RGBE9995 format integer.  See <code>Image.Format.Rgbe9995</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>FromString</code> ( string <ins>str</ins>, <a href="../Color/Color.html">Color</a> <ins>@default</ins> )</td><td>Constructs a color from the given string, which can be either an HTML color  code or a named color. Returns <code>name</code> if the color cannot  be inferred from the string. Supported color names are the same as the <code>Colors</code> constants.</td></tr>
+<tr><td>bool</td><td><code>HtmlIsValid</code> ( ReadOnlySpan <ins>color</ins> )</td><td>Returns <code>true</code> if <code>name</code> is a valid HTML hexadecimal  color string. The string must be a hexadecimal value (case-insensitive) of either 3,  4, 6 or 8 digits, and may be prefixed by a hash sign ( <code>#</code> ). This method is  identical to <code>StringExtensions.IsValidHtmlColor(string)</code> .</td></tr>
 </tbody></table>
 </div>
 <h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>+</code> ( <a href="../Color/Color.html">Color</a> <ins>a</ins>, <a href="../Color/Color.html">Color</a> <ins>b</ins> )</td><td></td></tr>
-<tr><td><a href="../Color/Color.html">Color</a></td><td><code>-</code> ( <a href="../Color/Color.html">Color</a> <ins>a</ins>, <a href="../Color/Color.html">Color</a> <ins>b</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>+</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Adds each component of the <code>Color</code> with the components of the given <code>Color</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>-</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Subtracts each component of the <code>Color</code> by the components of the given <code>Color</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>-</code> ( <a href="../Color/Color.html">Color</a> <ins>color</ins> )</td><td>Inverts the given color. This is equivalent to <code>Colors.White - c</code> or <code>new Color(1 - c.R, 1 - c.G, 1 - c.B, 1 - c.A)</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>*</code> ( <a href="../Color/Color.html">Color</a> <ins>color</ins>, float <ins>scale</ins> )</td><td>Multiplies each component of the <code>Color</code> by the given <code>float</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>*</code> ( float <ins>scale</ins>, <a href="../Color/Color.html">Color</a> <ins>color</ins> )</td><td>Multiplies each component of the <code>Color</code> by the given <code>float</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>*</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Multiplies each component of the <code>Color</code> by the components of the given <code>Color</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>/</code> ( <a href="../Color/Color.html">Color</a> <ins>color</ins>, float <ins>scale</ins> )</td><td>Divides each component of the <code>Color</code> by the given <code>float</code> .</td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>/</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Divides each component of the <code>Color</code> by the components of the given <code>Color</code> .</td></tr>
+<tr><td>bool</td><td><code>==</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Returns <code>true</code> if the colors are exactly equal.  Note: Due to floating-point precision errors, consider using <code>IsEqualApprox</code> instead, which is more reliable.</td></tr>
+<tr><td>bool</td><td><code>!=</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Returns <code>true</code> if the colors are not equal.  Note: Due to floating-point precision errors, consider using <code>IsEqualApprox</code> instead, which is more reliable.</td></tr>
+<tr><td>bool</td><td><code>&lt;</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Compares two <code>Color</code> s by first checking if  the red value of the <code>name</code> color is less than  the red value of the <code>name</code> color.  If the red values are exactly equal, then it repeats this check  with the green values of the two colors, then with the blue values,  and then with the alpha value.  This operator is useful for sorting colors.</td></tr>
+<tr><td>bool</td><td><code>&gt;</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Compares two <code>Color</code> s by first checking if  the red value of the <code>name</code> color is greater than  the red value of the <code>name</code> color.  If the red values are exactly equal, then it repeats this check  with the green values of the two colors, then with the blue values,  and then with the alpha value.  This operator is useful for sorting colors.</td></tr>
+<tr><td>bool</td><td><code>&lt;=</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Compares two <code>Color</code> s by first checking if  the red value of the <code>name</code> color is less than  or equal to the red value of the <code>name</code> color.  If the red values are exactly equal, then it repeats this check  with the green values of the two colors, then with the blue values,  and then with the alpha value.  This operator is useful for sorting colors.</td></tr>
+<tr><td>bool</td><td><code>&gt;=</code> ( <a href="../Color/Color.html">Color</a> <ins>left</ins>, <a href="../Color/Color.html">Color</a> <ins>right</ins> )</td><td>Compares two <code>Color</code> s by first checking if  the red value of the <code>name</code> color is greater than  or equal to the red value of the <code>name</code> color.  If the red values are exactly equal, then it repeats this check  with the green values of the two colors, then with the blue values,  and then with the alpha value.  This operator is useful for sorting colors.</td></tr>
 </tbody></table>
 </div>
                     </main>
@@ -212,7 +277,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../scripting_api/Input.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../scripting_api/Color/Colors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -226,7 +291,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../scripting_api/Input.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../scripting_api/Color/Colors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
