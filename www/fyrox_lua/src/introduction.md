@@ -1,8 +1,15 @@
+# Dependencies
+| Use case                          | Rust SDK |
+|-----------------------------------|----------|
+| Build Fyrox / C# SDK from sources | Required |
+| Develop scripts & scenes          | -        |
+| Play                              | -        |
+
 # How to Install
-Currently, it needs to be built from sources and only on Windows (temporary limitation).
+Currently, you need to build from source. Examples use .exe for Windows; on other platforms, remove the suffix and use platform-specific paths—it will work the same.
 
 1. Install [Rust](https://rustup.rs/). It's needed only to build SDK.
-2. Install [Git for Windows](https://git-scm.com/downloads). This is needed for the `Git Bash` terminal - required to build the SDK on Windows using shell scripts.
+2. (skip for non-Windows OS-es) Install [Git for Windows](https://git-scm.com/downloads). This is needed for the `Git Bash` terminal - required to build the SDK on Windows using shell scripts.
 3. Run `install_sdk_lua.sh /c/dev/fyrox_lua_sdk` in `Git Bash` terminal. Note: the path must not exist before installation (to prevent mistakes).
 
 # How to use

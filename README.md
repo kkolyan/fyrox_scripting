@@ -19,7 +19,19 @@ Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.h
 * Prebuilt binaries temporary unavailable (due to high pace of development)
 
 ## Supported platforms
-Currently, Windows only. MacOSX and Linux support will be soon. WASM and mobile support is in agenda, but has low priority.
+| Platform    | Edit scripts & scenes | Lua: Play | C#: Play |
+|-------------|-----------------------|-----------|----------|
+| Windows     | ✅                     | ✅         | ✅        |
+| macOS       | ✅                     | ✅         | ✅        |
+| Linux       | ✅                     | ✅         | ✅        |
+| iOS         | ❌                     | 🟡        | 🟠       |
+| Android     | ❌                     | 🟡        | 🟠       |
+| WebAssembly | ❌                     | 🟡        | 🔴       |
+* ✅ Supported
+* 🟡 Relatively easy to support; likely if requested
+* 🟠 Feasible but more complex; likely if broadly requested
+* 🔴 Possible with significant effort; likely if widely requested
+* ❌ No plans to support
 
 ## Examples
 There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently exposed to scripting languages.

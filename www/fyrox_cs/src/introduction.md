@@ -1,9 +1,18 @@
-# How to Install
-Currently, it needs to be built from sources and only on Windows (temporary limitation).
+# Dependencies
 
-1. Install [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer) (later versions probably will work fine too, but not tested)
+| Use case                              | .NET SDK 8.0 | Rust SDK |
+|---------------------------------------|--------------|----------|
+| Build Fyrox / C# SDK from sources     | Required     | Required |
+| Develop scripts & scenes              | Required     | -        |
+| Quick Play                            | Required     | -        |
+| Standalone Play (not implemented yet) | -            | -        |
+
+# How to Install
+Currently, it needs to be built from sources. Examples are for Windows, for other platforms just skip ".exe" suffix and use OS-specific paths, and it will work.
+
+1. Install [.Net SDK 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 2. Install [Rust](https://rustup.rs/). It's needed only to build SDK.
-3. Install [Git for Windows](https://git-scm.com/downloads). This is needed for the `Git Bash` terminal - required to build the SDK on Windows using shell scripts.
+3. (skip for non-Windows OS-es) Install [Git for Windows](https://git-scm.com/downloads). This is needed for the `Git Bash` terminal - required to build the SDK on Windows using shell scripts.
 4. Run `install_sdk_cs.sh /c/dev/fyrox_cs_sdk` in `Git Bash` terminal. Note: the path must not exist before installation (to prevent mistakes).
 
 # How to use
