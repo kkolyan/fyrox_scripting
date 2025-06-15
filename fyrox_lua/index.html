@@ -206,10 +206,12 @@ MyScript = script_class()
 function MyScript:on_update(dt)
 end
 </code></pre>
-<p>Inherit classes from <code>Script</code> to create scripts that can be attached to scene nodes in editor via dropdown on Inspector
+<p>Defined fields are accessible in editor UI and saved into scene files.</p>
+<p>Inherit classes from <code>NodeScript</code> to create scripts that can be attached to scene nodes in editor via dropdown on
+Inspector
 panel at the right. for <code>@uuid</code> annotation value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
 <p>Inherit from <code>GlobalScript</code> to create singleton scripts. Unlike C# scripts, Lua global scripts require UUID.</p>
-<p>For details about <code>Fyrox Lite API</code>, look into <a href="showcase/guards_lua">guards_lua</a> project as a reference.</p>
+<p>Look into <a href="https://github.com/kkolyan/fyrox_lite/tree/main/showcase/guards_lua">guards_cs</a> project as an example.</p>
 <h2 id="scripts-reloading"><a class="header" href="#scripts-reloading">Scripts Reloading</a></h2>
 <p>Editor reloads scripts metadata automatically after their change and window re-focusing. In-game hot reload works the
 same way.</p>

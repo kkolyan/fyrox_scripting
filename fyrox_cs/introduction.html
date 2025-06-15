@@ -191,9 +191,8 @@ use OS-specific paths, and it will work.</p>
 installation (to prevent mistakes).</li>
 </ol>
 <h1 id="how-to-use"><a class="header" href="#how-to-use">How to use</a></h1>
-<p>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet">.NET 9.0 SDK</a> (later versions probably will work fine too,
-but
-not tested).</p>
+<p>Get Fyrox C# SDK.</p>
+<p>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet">.NET 9.0 SDK</a> if it's not installed yet.</p>
 <p>Select a project directory where you'll keep scripts and other resources. Double-click on
 <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> and choose that directory.</p>
 <p>Minimal C# project files will be created automatically and C# project will be automatically compiled.</p>
@@ -202,13 +201,21 @@ for JB Rider generated, for other IDE note that working directory should be the 
 directory).</p>
 <h2 id="scripts"><a class="header" href="#scripts">Scripts</a></h2>
 <p>Inherit classes from <code>NodeScript</code> to create scripts that can be attached to scene nodes in editor via dropdown on
-Inspector panel at the right. Annotate them with using <code>[Uuid(...)]</code> attribute,
-value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
+Inspector panel at the right.</p>
 <p>Inherit from <code>GlobalScript</code> to create singleton scripts (no need for <code>[Uuid(...)]</code> attribute).</p>
-<p>For details about <code>Fyrox Lite API</code>, look into <a href="showcase/guards_cs">guards_cs</a> project as a reference.</p>
+<p>NodeScript classes should be annotatee using <code>[Uuid(...)]</code>
+attribute.
+Consider <a href="https://plugins.jetbrains.com/plugin/27613-fyroxlite?noRedirect=true">JB Rider plugin for Fyrox C#</a> - it
+generates UUID, but also puts attribute if script created via context menu, also it highlight fields. If you use
+different
+IDE,
+UUID
+value <a href="https://www.uuidgenerator.net/">using any online service like this</a>.</p>
+<p>Look into <a href="https://github.com/kkolyan/fyrox_lite/tree/main/showcase/guards_cs">guards_cs</a> project as an example.</p>
 <h2 id="scripts-reloading"><a class="header" href="#scripts-reloading">Scripts Reloading</a></h2>
 <p>Editor reloads scripts metadata automatically after their compilation. In-game hot reload is not supported.</p>
 <h2 id="scenes--assets"><a class="header" href="#scenes--assets">Scenes &amp; Assets</a></h2>
+<p>Original Fyrox engine is 100% relevant in all non-code things, so Fyrox Book is advised for non-code information.</p>
 <ul>
 <li><a href="https://fyrox-book.github.io/beginning/editor_overview.html">Fyrox Book: Editor Overview</a></li>
 <li><a href="https://fyrox-book.github.io/beginning/assets.html">Fyrox Book: Assets</a></li>
