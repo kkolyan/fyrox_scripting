@@ -15,6 +15,25 @@ thread_local! {
     pub static APP: RefCell<Option<ScriptedApp>> = Default::default();
 }
 
+bitflags::bitflags! {
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+    pub struct HasCallback: u8 {
+        const ON_INIT = 0x01;
+        const ON_START = 0x02;
+        const ON_DEINIT = 0x03;
+        const ON_UPDATE = 0x04;
+        const ON_MESSAGE = 0x05;
+    }
+}
+
+bitflags::bitflags! {
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+    pub struct GlobalHasCallback: u8 {
+        const ON_INIT = 0x01;
+        const ON_UPDATE = 0x02;
+    }
+}
+
 pub struct CScriptMetadata {
     pub id: NativeClassId,
     pub md: ScriptMetadata,
@@ -25,11 +44,46 @@ pub struct CScriptMetadata {
     pub has_on_message: bool,
 }
 
+impl CScriptMetadata {
+    pub fn get_callback_set(&self) -> HasCallback {
+        let mut has_callback = HasCallback::empty();
+        if self.has_on_init {
+            has_callback.insert(HasCallback::ON_INIT);
+        }
+        if self.has_on_start {
+            has_callback.insert(HasCallback::ON_START);
+        }
+        if self.has_on_deinit {
+            has_callback.insert(HasCallback::ON_DEINIT);
+        }
+        if self.has_on_update {
+            has_callback.insert(HasCallback::ON_UPDATE);
+        }
+        if self.has_on_message {
+            has_callback.insert(HasCallback::ON_MESSAGE);
+        }
+        has_callback
+    }
+}
+
 pub struct CGlobalScriptMetadata {
     pub id: NativeClassId,
     pub md: ScriptMetadata,
     pub has_on_init: bool,
     pub has_on_update: bool,
+}
+
+impl CGlobalScriptMetadata {
+    pub fn get_callback_set(&self) -> GlobalHasCallback {
+        let mut has_callback = GlobalHasCallback::empty();
+        if self.has_on_init {
+            has_callback.insert(GlobalHasCallback::ON_INIT);
+        }
+        if self.has_on_update {
+            has_callback.insert(GlobalHasCallback::ON_UPDATE);
+        }
+        has_callback
+    }
 }
 
 pub struct ScriptedApp {

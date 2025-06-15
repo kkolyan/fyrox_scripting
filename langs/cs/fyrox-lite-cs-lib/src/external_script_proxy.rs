@@ -3,8 +3,8 @@ use crate::bindings_manual::{NativeClassId, UserScriptMessage};
 use crate::c_lang::CCompatibleLang;
 use crate::errors::ResultTcrateLangSpecificErrorExt;
 use crate::fyrox_c_plugin::CPlugin;
-use crate::scripted_app::ScriptedApp;
 use crate::scripted_app::APP;
+use crate::scripted_app::{HasCallback, ScriptedApp};
 use fyrox::core::reflect::prelude::*;
 use fyrox::core::type_traits::prelude::*;
 use fyrox::core::visitor::prelude::*;
@@ -20,8 +20,8 @@ use std::fmt::Debug;
 
 #[derive(Debug, Clone, ComponentProvider)]
 pub struct ExternalScriptProxy {
-    pub name: String,
     pub class: NativeClassId,
+    pub has_callback: HasCallback,
     pub data: ScriptResidence<CCompatibleLang>,
 }
 
@@ -29,6 +29,9 @@ impl ScriptTrait for ExternalScriptProxy {
     fn on_init(&mut self, ctx: &mut ScriptContext) {
         self.data
             .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed, ctx.handle);
+        if !self.has_callback.contains(HasCallback::ON_INIT) {
+            return;
+        }
         invoke_callback(ctx, |app| {
             (app.functions.on_init)(self.data.inner_unpacked().unwrap().instance.inner())
                 .into_result()
@@ -39,6 +42,9 @@ impl ScriptTrait for ExternalScriptProxy {
     fn on_start(&mut self, ctx: &mut ScriptContext) {
         self.data
             .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed, ctx.handle);
+        if !self.has_callback.contains(HasCallback::ON_START) {
+            return;
+        }
         invoke_callback(ctx, |app| {
             (app.functions.on_start)(self.data.inner_unpacked().unwrap().instance.inner())
                 .into_result()
@@ -47,6 +53,9 @@ impl ScriptTrait for ExternalScriptProxy {
     }
 
     fn on_deinit(&mut self, ctx: &mut fyrox::script::ScriptDeinitContext) {
+        if !self.has_callback.contains(HasCallback::ON_DEINIT) {
+            return;
+        }
         invoke_callback(ctx, |app| {
             (app.functions.on_deinit)(self.data.inner_unpacked().unwrap().instance.inner())
                 .into_result()
@@ -59,6 +68,9 @@ impl ScriptTrait for ExternalScriptProxy {
     fn on_update(&mut self, ctx: &mut ScriptContext) {
         self.data
             .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed, ctx.handle);
+        if !self.has_callback.contains(HasCallback::ON_UPDATE) {
+            return;
+        }
         let dt = ctx.dt;
         invoke_callback(ctx, |app| {
             (app.functions.on_update)(self.data.inner_unpacked().unwrap().instance.inner(), dt)
@@ -77,6 +89,9 @@ impl ScriptTrait for ExternalScriptProxy {
         };
         self.data
             .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed, ctx.handle);
+        if !self.has_callback.contains(HasCallback::ON_MESSAGE) {
+            return;
+        }
         invoke_callback(ctx, |app| {
             (app.functions.on_message)(
                 self.data.inner_unpacked().unwrap().instance.inner(),

@@ -59,10 +59,21 @@ impl UserScript for UnpackedObject {
         self,
         class: &Self::ClassId,
     ) -> Result<Self::ProxyScript, Self::LangSpecificError> {
+        let has_callback = APP.with_borrow(|app| {
+            app.as_ref()
+                .unwrap()
+                .scripts_metadata
+                .as_ref()
+                .unwrap()
+                .node_scripts
+                .get(&self.uuid)
+                .unwrap()
+                .get_callback_set()
+        });
         Ok(ExternalScriptProxy {
-            name: class.lookup_class_name(),
             class: *class,
             data: ScriptResidence::Unpacked(self),
+            has_callback,
         })
     }
 

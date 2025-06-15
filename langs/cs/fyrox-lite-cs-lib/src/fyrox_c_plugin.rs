@@ -3,7 +3,7 @@ use crate::errors::ResultTcrateLangSpecificErrorExt;
 use crate::external_global_script_proxy::ExternalGlobalScriptProxy;
 use crate::external_script_proxy::invoke_callback;
 use crate::external_script_proxy::ExternalScriptProxy;
-use crate::scripted_app::APP;
+use crate::scripted_app::{GlobalHasCallback, APP};
 use fyrox::core::log::Log;
 use fyrox::core::notify::EventKind;
 use fyrox::core::reflect::prelude::*;
@@ -126,6 +126,7 @@ impl Plugin for CPlugin {
         APP.with_borrow(|app| {
             let app = app.as_ref().unwrap();
             for md in app.scripts_metadata.as_ref().unwrap().node_scripts.values() {
+                let callback_set = md.get_callback_set();
                 let def = Arc::new(ScriptDefinition {
                     metadata: md.md.clone(),
                     assembly_name: self.assembly_name(),
@@ -145,9 +146,9 @@ impl Plugin for CPlugin {
                             assembly_name: self.assembly_name(),
                             constructor: Box::new(move || {
                                 Script::new(ExternalScriptProxy {
-                                    name: name.to_string(),
                                     class,
                                     data: ScriptResidence::Packed(NodeScriptObject::new(&def)),
+                                    has_callback: callback_set,
                                 })
                             }),
                         },
@@ -171,6 +172,7 @@ impl Plugin for CPlugin {
                 plugin_scripts.inner_mut().push(ExternalGlobalScriptProxy {
                     name: name.to_string(),
                     class,
+                    has_callback: md.get_callback_set(),
                     data: GlobalScriptResidence::Packed(ScriptObject::new(&def)),
                 });
             }
@@ -181,6 +183,9 @@ impl Plugin for CPlugin {
         Input::init_thread_local_state();
         for script in self.scripts.borrow_mut().0.iter_mut() {
             script.data.ensure_unpacked(&mut self.failed);
+            if !script.has_callback.contains(GlobalHasCallback::ON_INIT) {
+                continue;
+            }
             invoke_callback(&mut context, |app| {
                 let scene_path = scene_path.map(|it| it.to_string()).into();
                 let id = script.data.inner_unpacked().unwrap().instance.inner();
@@ -193,6 +198,9 @@ impl Plugin for CPlugin {
     fn update(&mut self, context: &mut PluginContext) {
         for script in self.scripts.borrow_mut().0.iter_mut() {
             script.data.ensure_unpacked(&mut self.failed);
+            if !script.has_callback.contains(GlobalHasCallback::ON_UPDATE) {
+                continue;
+            }
             invoke_callback(context, |app| {
                 (app.functions.on_game_update)(
                     script.data.inner_unpacked().unwrap().instance.inner(),
