@@ -195,7 +195,22 @@
 <li>Prebuilt binaries temporary unavailable (due to high pace of development)</li>
 </ul>
 <h2 id="supported-platforms"><a class="header" href="#supported-platforms">Supported platforms</a></h2>
-<p>Currently, Windows only. MacOSX and Linux support will be soon. WASM and mobile support is in agenda, but has low priority.</p>
+<div class="table-wrapper"><table><thead><tr><th>Platform</th><th>Edit scripts &amp; scenes</th><th>Lua: Play</th><th>C#: Play</th></tr></thead><tbody>
+<tr><td>Windows</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>macOS</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Linux</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>iOS</td><td>❌</td><td>🟡</td><td>🟠</td></tr>
+<tr><td>Android</td><td>❌</td><td>🟡</td><td>🟠</td></tr>
+<tr><td>WebAssembly</td><td>❌</td><td>🟡</td><td>🔴</td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>✅ Supported</li>
+<li>🟡 Relatively easy to support; likely if requested</li>
+<li>🟠 Feasible but more complex; likely if broadly requested</li>
+<li>🔴 Possible with significant effort; likely if widely requested</li>
+<li>❌ No plans to support</li>
+</ul>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
 <p>There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently exposed to scripting languages.</p>
 <ul>
