@@ -2,7 +2,7 @@
 
 | Use case                              | .Net SDK 9.0 | Rust SDK |
 |---------------------------------------|--------------|----------|
-| Build Fyrox / C# SDK from sources     | Required     | Required |
+| Build Fyrox C# SDK from sources       | Required     | Required |
 | Develop scripts & scenes              | Required     | -        |
 | Quick Play                            | Required     | -        |
 | Standalone Play (not implemented yet) | -            | -        |

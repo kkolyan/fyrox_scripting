@@ -2,7 +2,7 @@
 
 Create games with Rust-based [Fyrox Game Engine](https://fyrox.rs) without coding in Rust.
 
-### [Fyrox / C# ⤴](https://kkolyan.github.io/fyrox_lite/fyrox_cs/index.html)
+### [Fyrox C# ⤴](https://kkolyan.github.io/fyrox_lite/fyrox_cs/index.html)
 
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued
 with [C#](https://learnxinyminutes.com/csharp/) scripting support.
@@ -12,7 +12,7 @@ with [C#](https://learnxinyminutes.com/csharp/) scripting support.
 * Run and compile game from either Fyrox Editor, any IDE (with debug support) or command line.
 * Optional [JB Rider plugin](https://plugins.jetbrains.com/plugin/27613-fyroxlite?noRedirect=true).
 
-### [Fyrox / Lua ⤴](https://kkolyan.github.io/fyrox_lite/fyrox_lua/index.html)
+### [Fyrox Lua ⤴](https://kkolyan.github.io/fyrox_lite/fyrox_lua/index.html)
 
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued
 with [Lua](https://learnxinyminutes.com/lua/) scripting support.
@@ -50,8 +50,8 @@ with [Lua](https://learnxinyminutes.com/lua/) scripting support.
 There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently
 exposed to scripting languages.
 
-* [in Fyrox / C#](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_cs)
-* [in Fyrox / Lua](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_lua)
+* [in Fyrox C#](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_cs)
+* [in Fyrox Lua](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_lua)
 * [in Fyrox / Rust (vanilla)](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_vanilla)
 
 ## Credits
