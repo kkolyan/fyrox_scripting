@@ -1,4 +1,3 @@
-use std::ops::Deref;
 use lite_model::{DataType, Method};
 use crate::methods::{analyze_method_result, MethodResult};
 

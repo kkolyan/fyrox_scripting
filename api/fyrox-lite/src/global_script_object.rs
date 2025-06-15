@@ -3,17 +3,6 @@ use std::{
     sync::Arc,
 };
 
-use fyrox::{
-    asset::Resource,
-    core::{
-        algebra::{UnitQuaternion, Vector3}, pool::Handle, reflect::Reflect, visitor::Visit, Uuid
-    },
-    gui::UiNode,
-    resource::model::Model,
-    scene::node::Node,
-};
-use fyrox::core::algebra::Vector2;
-use crate::lite_node::LiteNode;
 use crate::script_object::{Lang, ScriptFieldValue};
 use super::script_metadata::{ScriptDefinition, ScriptFieldValueType};
 

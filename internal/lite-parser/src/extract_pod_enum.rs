@@ -1,6 +1,5 @@
 use lite_model::{ClassName, EnumClass, EnumValue, EnumVariant, Field, RustQualifiedName};
 use proc_macro2::Span;
-use quote::ToTokens;
 use syn::Ident;
 
 use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};

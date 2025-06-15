@@ -1,11 +1,7 @@
 use fyrox::{
-    core::{color, pool::Handle},
+    core::pool::Handle,
     gui::{brush, message::MessageDirection, text, widget, UiNode},
 };
-use fyrox::gui::{HorizontalAlignment, VerticalAlignment};
-use fyrox::gui::formatted_text::WrapMode;
-use fyrox::gui::text::{Text, TextMessage};
-use fyrox::gui::widget::WidgetBuilder;
 use lite_macro::lite_api;
 
 use crate::{

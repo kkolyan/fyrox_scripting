@@ -9,7 +9,6 @@ pub mod engine_class;
 pub mod enum_class;
 pub mod struct_class;
 pub mod types;
-pub mod simple_from;
 
 pub struct CBindingsLite {
     pub code_rs: String,

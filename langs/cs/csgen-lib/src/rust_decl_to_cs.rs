@@ -4,8 +4,8 @@ use std::str::FromStr;
 use itertools::Itertools;
 use proc_macro2::TokenStream;
 use gen_common::templating::{render, render_string};
-use quote::{quote, ToTokens};
-use syn::{parse2, Attribute, Expr, File, FnArg, Item, ReturnType, Type};
+use quote::ToTokens;
+use syn::{parse2, Attribute, File, FnArg, Item, ReturnType, Type};
 use to_vec::ToVec;
 use gen_common::code_model::{Module};
 

@@ -25,7 +25,7 @@ fn generate_script_reference(naming: Naming, book_dir: &str, code_base: Module) 
         &mut summary_section,
     );
 
-    let mut summary_template = fs::read_to_string(format!("{book_dir}/src/SUMMARY.template.md")).unwrap();
+    let summary_template = fs::read_to_string(format!("{book_dir}/src/SUMMARY.template.md")).unwrap();
     let summary = summary_template.replace("%GENERATED_SECTION%", &summary_section);
     fs::write(format!("{book_dir}/src/SUMMARY.md"), summary).unwrap();
 }

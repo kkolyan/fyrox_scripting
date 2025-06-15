@@ -1,14 +1,11 @@
 //! Executor with your game connected to it as a plugin.
 
-use std::ffi::{c_char, CStr};
-use std::path::PathBuf;
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyrox::dpi::LogicalSize;
 use fyrox::engine::executor::Executor;
 use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
-use fyrox::plugin::DynamicPlugin;
 use fyrox::window::WindowAttributes;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
 

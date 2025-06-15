@@ -6,7 +6,7 @@ use crate::{
     },
 };
 use gen_common::{
-    by_package::classes_by_package, code_model::{HierarchicalCodeBase, Module}, templating::strExt, writelnu
+    by_package::classes_by_package, code_model::Module, templating::strExt, writelnu
 };
 
 const HEADER: &str = "

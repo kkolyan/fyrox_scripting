@@ -1,9 +1,5 @@
-use std::any::TypeId;
-use std::{io, thread};
-use std::io::Write;
 use std::process::exit;
-use fyrox::{asset::Resource, core::{algebra::{UnitQuaternion, Vector3}, pool::Handle, reflect::*}, gui::UiNode, resource::model::Model, scene::node::Node};
-use fyrox::core::algebra::Vector2;
+use fyrox::core::reflect::*;
 use crate::{reflect_base, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, NodeScriptObject}};
 use crate::global_script_object::ScriptObject;
 

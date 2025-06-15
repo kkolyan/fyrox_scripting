@@ -1,6 +1,4 @@
-use std::fmt::Display;
 use convert_case::{Case, Casing};
-use itertools::Itertools;
 use to_vec::ToVec;
 use gen_common::code_model::Module;
 use gen_common::context::GenerationContext;

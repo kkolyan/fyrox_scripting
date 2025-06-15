@@ -1,6 +1,4 @@
-use crate::external_script_proxy::ExternalScriptProxy;
 use crate::lua_lifecycle::{create_plugin, invoke_callback_global};
-use crate::lua_lifecycle::invoke_callback_node;
 use crate::lua_lifecycle::load_script;
 use crate::lua_lifecycle::lua_vm;
 use fyrox::core::log::Log;
@@ -18,7 +16,6 @@ use fyrox::plugin::PluginContext;
 use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::PluginsRefMut;
 use fyrox::walkdir::WalkDir;
-use fyrox_lite::wrapper_reflect;
 use mlua::Value;
 use std::cell::RefCell;
 use std::fmt::Debug;

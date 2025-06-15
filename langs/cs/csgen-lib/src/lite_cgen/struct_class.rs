@@ -1,10 +1,9 @@
-use std::{collections::HashSet, fmt::Display};
+use std::collections::HashSet;
 
 use gen_common::templating::render;
-use lite_model::{ClassName, DataType, StructClass};
-use to_vec::ToVec;
+use lite_model::{ClassName, StructClass};
 
-use super::{simple_from, types};
+use super::types;
 
 pub(crate) fn generate_struct(
     s: &mut String,

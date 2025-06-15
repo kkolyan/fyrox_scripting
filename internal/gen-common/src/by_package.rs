@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use to_vec::ToVec;
-use lite_model::{Class, ClassName, Domain, RustQualifiedName};
+use lite_model::{ClassName, Domain, RustQualifiedName};
 
 pub fn classes_by_package(domain: &Domain) -> Vec<(String, Vec<ClassName>)> {
     let mut by_package: HashMap<String, Vec<ClassName>> = Default::default();

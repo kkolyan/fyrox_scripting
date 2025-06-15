@@ -14,8 +14,7 @@ use fyrox::{
 };
 use fyrox::core::algebra::Vector2;
 use crate::global_script_object::ScriptObject;
-use crate::lite_node::LiteNode;
-use super::script_metadata::{ScriptDefinition, ScriptFieldValueType};
+use super::script_metadata::ScriptDefinition;
 
 /// Useful for persisting script data, but for some languages could be used as a runtime type
 #[derive(Clone)]

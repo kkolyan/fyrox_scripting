@@ -1,6 +1,4 @@
-use crate::arena::Arena;
 use crate::internal_auto::u8_slice;
-use crate::bindings_manual::{NativeString};
 
 impl From<u8_slice> for String {
     fn from(value: u8_slice) -> Self {

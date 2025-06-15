@@ -1,4 +1,3 @@
-use std::fmt::Display;
 use std::ops::Deref;
 use gen_common::context::GenerationContext;
 use lite_model::{ClassName, DataType};

@@ -4,7 +4,6 @@ use fyrox::{
     asset::Resource,
     resource::model::{Model, ModelResourceExtension},
 };
-use fyrox::core::reflect::Reflect;
 use lite_macro::lite_api;
 
 use crate::{

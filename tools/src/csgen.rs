@@ -1,6 +1,5 @@
 use std::fs;
 use csgen_lib::lite_csgen::gen_rs::RustEmitter;
-use gen_common::code_model::Module;
 use gen_common::fmt::fmt_file;
 
 pub fn main() {

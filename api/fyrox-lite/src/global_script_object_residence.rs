@@ -1,5 +1,3 @@
-use convert_case::Case;
-use convert_case::Casing;
 use fyrox::core::log::Log;
 use fyrox::core::visitor::Visit;
 use fyrox::core::visitor::VisitResult;
@@ -7,14 +5,8 @@ use fyrox::core::visitor::Visitor;
 use fyrox::core::Uuid;
 use std::fmt::Debug;
 use std::fmt::Formatter;
-use fyrox::core::pool::Handle;
-use fyrox::scene::node::Node;
-use error::abort_with_backtrace;
 use crate::global_script_object::ScriptObject;
-use crate::script_metadata::ScriptKind;
 use crate::script_object::Lang;
-use crate::script_object::ScriptFieldValue;
-use crate::script_object::NodeScriptObject;
 
 /// Initially, when script is loaded from file (scene or save game), it's in "packed" mode.
 /// First time this script receives `on_update` callback, it's converted to "unpacked", by

@@ -5,7 +5,7 @@ use lite_model::{
 };
 use proc_macro2::Span;
 use quote::ToTokens;
-use syn::{parse_quote_spanned, spanned::Spanned, Expr, Ident, ImplItemFn, ItemFn, TraitBoundModifier, TypeParamBound};
+use syn::{parse_quote_spanned, spanned::Spanned, Expr, Ident, ImplItemFn, TraitBoundModifier, TypeParamBound};
 
 use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 use crate::doc_attr::extract_doc;
@@ -150,7 +150,7 @@ pub fn extract_fn(
         let ty = arg.ty.as_ref();
         types.push(ty.clone());
         match extract_ty(ty, Some(&generic_params)) {
-            Ok(mut it) => {
+            Ok(it) => {
                 // handle #[variadic]
                 let variadic_index = arg
                     .attrs

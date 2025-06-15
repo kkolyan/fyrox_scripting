@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use gen_common::templating::render;
-use lite_model::{Class, ClassName, DataType, Domain, EngineClass};
+use lite_model::{ClassName, DataType, EngineClass};
 use to_vec::ToVec;
 
 use super::types;

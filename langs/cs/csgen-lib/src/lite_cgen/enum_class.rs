@@ -1,15 +1,12 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 use gen_common::templating::render;
 use lite_model::{
-    Class, ClassName, DataType, Domain, EngineClass, EnumClass, EnumValue, EnumVariant, Field,
+    ClassName, DataType, EnumClass, EnumValue, Field,
 };
 use to_vec::ToVec;
 
-use super::{
-    simple_from,
-    types::{self, generate_ffi_type},
-};
+use super::types::{self, generate_ffi_type};
 
 pub(crate) fn generate_enum(
     s: &mut String,
@@ -393,7 +390,7 @@ fn generate_to_native(
                 }
             }
             EnumValue::Tuple { fields } => {
-                let mut field_names = fields.iter().enumerate().map(|(i, _)| format!("_{}", i)).to_vec();
+                let field_names = fields.iter().enumerate().map(|(i, _)| format!("_{}", i)).to_vec();
                 render(
                     s,
                     r#"

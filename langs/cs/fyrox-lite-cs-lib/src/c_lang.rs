@@ -1,14 +1,9 @@
-use std::{cell::RefCell, collections::HashMap, ffi::CString};
-use std::sync::Arc;
-use fyrox::{
-    core::{
-        pool::{Handle, Pool},
+use fyrox::core::{
+        pool::Handle,
         visitor::Visit,
         Uuid,
-    },
-};
+    };
 use fyrox::scene::node::Node;
-use fyrox::script::ScriptMessagePayload;
 use error::abort_with_backtrace;
 use fyrox_lite::{
     externalizable::Externalizable, lite_prefab::LitePrefab, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, NodeScriptObject}, script_object_residence::uuid_of_script
@@ -20,7 +15,7 @@ use crate::{bindings_manual::{
 use crate::bindings_lite_2::{NativeQuaternion, NativeVector2, NativeVector2I, NativeVector3};
 use crate::bindings_manual::{NativeClassId, NativeInstanceId, NativePropertyValue, NativeString, NativeValueType};
 use crate::auto_dispose::AutoDispose;
-use crate::scripted_app::{CScriptMetadata, ScriptedApp, ScriptsMetadata};
+use crate::scripted_app::ScriptsMetadata;
 
 #[derive(Debug, Clone)]
 pub struct CCompatibleLang;

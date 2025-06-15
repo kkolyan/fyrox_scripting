@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use lite_model::DataType;
 use quote::ToTokens;
-use syn::{GenericArgument, Ident, PathArguments, Type};
+use syn::{GenericArgument, Ident};
 
 pub fn extract_ty_path(
     qself: Option<&syn::QSelf>,

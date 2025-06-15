@@ -1,13 +1,12 @@
-use lite_model::{Class, ClassName, DataType, Domain};
+use lite_model::{Class, ClassName, Domain};
 use std::collections::HashMap;
-use std::mem;
 
 use crate::{
     md::{engine_class::generate_engine, enum_class::generate_enum, struct_class::generate_struct},
     Naming,
 };
 use gen_common::by_package::extract_package;
-use gen_common::{by_package::classes_by_package, code_model::{Module}, templating::strExt, writelnu};
+use gen_common::{by_package::classes_by_package, code_model::{Module}, writelnu};
 use crate::md::cs_to_domain::CSharpDomain;
 use crate::md::sections::{Section, Sections};
 

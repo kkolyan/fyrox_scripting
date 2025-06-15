@@ -1,10 +1,9 @@
 use fyrox::core::{log::Log, Uuid};
-use fyrox_lite::{lite_node::LiteNode, lite_prefab::LitePrefab, lite_ui::LiteUiNode, script_context::with_script_context};
+use fyrox_lite::{lite_node::LiteNode, lite_prefab::LitePrefab, lite_ui::LiteUiNode};
 use fyrox_lite_math::lite_math::{LiteQuaternion, LiteVector2, LiteVector2I, LiteVector3};
 use mlua::{MetaMethod, String as LuaString, Table, UserData, UserDataRef, Value};
 
-use crate::{debug::VerboseLuaValue, lua_error, lua_utils::{OptionX, ValueX}, script_class::ScriptClass, script_object::{ScriptFieldValue, NodeScriptObject}, user_data_plus::{FyroxUserData, Traitor}};
-use crate::lua_lang::LuaLang;
+use crate::{debug::VerboseLuaValue, lua_error, lua_utils::{OptionX, ValueX}, script_class::ScriptClass, script_object::ScriptFieldValue, user_data_plus::{FyroxUserData, Traitor}};
 use crate::user_script_impl::UserScriptProxy;
 
 impl UserData for ScriptClass {

@@ -1,6 +1,6 @@
 use std::{
     cell::RefCell,
-    ffi::{c_char, CStr, CString},
+    ffi::{c_char, CString},
     os::raw::c_void,
 };
 
@@ -37,7 +37,7 @@ impl Arena {
             ptr
         })
     }
-    pub(crate) fn allocate_c_str<T>(mut v: String) -> *mut c_char {
+    pub(crate) fn allocate_c_str<T>(v: String) -> *mut c_char {
         ARENA.with_borrow_mut(|arena| {
             let v = CString::new(v).unwrap();
             let ptr = v.into_raw();

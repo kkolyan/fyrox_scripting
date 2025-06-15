@@ -1,15 +1,5 @@
-use std::any::TypeId;
-use fyrox::asset::Resource;
-use fyrox::core::algebra::{UnitQuaternion, Vector2, Vector3};
-use fyrox::core::pool::Handle;
 use fyrox::core::reflect::{FieldMut, FieldRef, Reflect};
-use fyrox::gui::UiNode;
-use fyrox::resource::model::Model;
-use fyrox::scene::node::Node;
-use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::reflect_base;
-use fyrox_lite::script_metadata::ScriptFieldValueType;
-use fyrox_lite::script_object::{Lang, NodeScriptObject, ScriptFieldValue};
 use crate::user_script_impl::UserScriptProxy;
 
 impl Reflect for UserScriptProxy {

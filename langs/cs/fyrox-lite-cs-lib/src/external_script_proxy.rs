@@ -9,7 +9,7 @@ use fyrox_lite::reflect_base;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
 use fyrox_lite::script_object_residence::ScriptResidence;
-use std::any::{Any, TypeId};
+use std::any::Any;
 use std::fmt::Debug;
 use crate::bindings_manual::{NativeClassId, UserScriptMessage};
 use crate::c_lang::CCompatibleLang;

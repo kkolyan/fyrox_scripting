@@ -1,4 +1,3 @@
-use std::fmt::Display;
 use gen_common::context::GenerationContext;
 use gen_common::templating::{render, render_string};
 use lite_model::{DataType};

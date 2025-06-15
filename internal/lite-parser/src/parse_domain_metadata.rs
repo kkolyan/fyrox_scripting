@@ -1,6 +1,6 @@
 use std::fs;
 
-use lite_model::{Class, Domain, EnumValue};
+use lite_model::Domain;
 
 use crate::{load_path::load_path, resolve_classes::resolve_classes};
 

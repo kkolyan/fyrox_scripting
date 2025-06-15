@@ -1,11 +1,9 @@
-use core::panic;
 use std::collections::HashMap;
 use lite_model::{ClassName, EnumClass, EnumValue};
-use to_vec::ToVec;
 use gen_common::by_package::extract_package;
 use gen_common::doc::strExt;
 use gen_common::writelnu;
-use crate::{md::type_to_md::type_rust_to_md, Naming};
+use crate::Naming;
 
 pub fn generate_enum(s: &mut String, class: &EnumClass, naming: Naming, x1: &HashMap<ClassName, String>) {
 	writelnu!(s, "# {}", class.class_name);

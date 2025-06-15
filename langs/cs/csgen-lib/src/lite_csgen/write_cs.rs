@@ -1,7 +1,7 @@
 use std::fs;
 use convert_case::{Case, Casing};
 use to_vec::ToVec;
-use gen_common::code_model::{HierarchicalCodeBase, Module};
+use gen_common::code_model::Module;
 
 pub fn write_cs(dir: &str, code: Module) {
     fs::create_dir_all(dir).unwrap();

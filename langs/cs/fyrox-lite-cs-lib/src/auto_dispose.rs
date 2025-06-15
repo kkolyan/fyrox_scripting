@@ -3,7 +3,7 @@ use std::rc::Rc;
 use send_wrapper::SendWrapper;
 use fyrox_lite::LiteDataType;
 use crate::bindings_manual::NativeScriptAppFunctions;
-use crate::scripted_app::{ScriptedApp, APP};
+use crate::scripted_app::APP;
 
 //==================================================================================================
 

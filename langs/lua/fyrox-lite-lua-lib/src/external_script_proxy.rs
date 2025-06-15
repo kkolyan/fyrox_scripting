@@ -1,7 +1,6 @@
 use super::script_object_residence::ScriptResidence;
 use crate::fyrox_lua_plugin::PluginsRefMut_Ext;
 use crate::lua_lifecycle::{invoke_callback_node, lua_vm};
-use crate::user_data_plus::Traitor;
 use fyrox::core::reflect::prelude::*;
 use fyrox::core::type_traits::prelude::*;
 use fyrox::core::visitor::prelude::*;
@@ -10,10 +9,8 @@ use fyrox::script::ScriptContext;
 use fyrox::script::ScriptTrait;
 use fyrox_lite::reflect_base;
 use mlua::{IntoLua, Value};
-use send_wrapper::SendWrapper;
 use std::any::Any;
 use std::fmt::Debug;
-use fyrox_lite::lite_node::LiteNode;
 use crate::user_script_impl::LuaUserScriptMessageEnvelope;
 
 #[derive(Debug, Clone, ComponentProvider)]

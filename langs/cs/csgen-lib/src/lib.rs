@@ -1,9 +1,8 @@
 use gen_common::code_model::Module;
 use proc_macro2::TokenStream;
 use std::collections::HashSet;
-use std::{fmt::Display, fs, str::FromStr};
+use std::{fs, str::FromStr};
 use syn::{parse2, File};
-use to_vec::ToVec;
 
 pub mod rust_decl_to_cs;
 pub mod lite_cgen;

@@ -5,12 +5,8 @@
 use std::{cell::RefCell, collections::HashMap};
 
 use fyrox::{
-    asset::{
-        untyped::{ResourceHeader, UntypedResource},
-        Resource,
-    },
+    asset::untyped::{ResourceHeader, UntypedResource},
     core::pool::{Handle, Pool},
-    resource::model::Model,
 };
 
 // TODO replace with SendWrapper

@@ -8,9 +8,8 @@ use gen_common::{
 };
 use itertools::Itertools;
 use lite_model::{
-    ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method, Signature,
+    ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method,
 };
-use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 use std::fmt::Display;
 use to_vec::ToVec;
@@ -56,7 +55,7 @@ pub fn generate_engine(
         render_methods(s, methods.as_slice(), naming, class_page_links);
     }
 
-    let mut static_props = extract_properties(class, false);
+    let static_props = extract_properties(class, false);
     if !static_props.is_empty() {
         writelnu!(s, "\n## Static Properties");
         render_properties(s, static_props.as_slice(), naming, class_page_links);

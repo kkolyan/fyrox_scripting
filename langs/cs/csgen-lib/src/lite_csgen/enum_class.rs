@@ -1,7 +1,7 @@
 use gen_common::code_model::Module;
 use gen_common::context::GenerationContext;
 use gen_common::templating::render;
-use lite_model::{DataType, EnumClass, StructClass};
+use lite_model::{DataType, EnumClass};
 use crate::lite_csgen::api_types;
 use gen_common::doc::strExt;
 use crate::lite_csgen::gen_rs::RustEmitter;

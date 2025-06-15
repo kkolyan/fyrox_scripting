@@ -6,8 +6,8 @@ use fyrox_lite::{script_object::Lang, script_object_residence::uuid_of_script};
 use mlua::{Table, Value};
 use send_wrapper::SendWrapper;
 use crate::{
-    lua_lifecycle::lua_vm, script_object::NodeScriptObject, script_object_residence::ScriptResidence,
-    typed_userdata::TypedUserData, user_data_plus::Traitor,
+    lua_lifecycle::lua_vm, script_object::NodeScriptObject,
+    typed_userdata::TypedUserData,
 };
 use crate::script_object::ScriptObject;
 use crate::user_script_impl::UserScriptProxy;

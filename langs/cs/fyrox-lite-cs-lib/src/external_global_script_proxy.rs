@@ -8,7 +8,6 @@ use fyrox::script::ScriptTrait;
 use fyrox_lite::reflect_base;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
-use fyrox_lite::script_object_residence::ScriptResidence;
 use std::any::Any;
 use std::fmt::Debug;
 use fyrox_lite::global_script_object_residence::GlobalScriptResidence;

@@ -4,7 +4,7 @@ use pulldown_cmark::{Options, Parser};
 use std::borrow::Cow;
 use std::collections::HashMap;
 use to_vec::ToVec;
-use xml::name::{Name, OwnedName};
+use xml::name::Name;
 use xml::reader::XmlEvent;
 use xml::writer::XmlEvent as WriterEvent;
 use xml::{EmitterConfig, EventReader, EventWriter};

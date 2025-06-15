@@ -7,7 +7,7 @@ use gen_common::context::GenerationContext;
 use gen_common::doc::strExt;
 use gen_common::properties::{Getter, Setter};
 use gen_common::templating::{render, render_string};
-use lite_model::{Class, ConstantValue, DataType, EngineClass, Literal, Method, StructClass};
+use lite_model::{Class, ConstantValue, DataType, EngineClass, Literal, Method};
 use crate::lite_csgen::{api_types, wrappers};
 use crate::lite_csgen::api_types::CsType;
 use crate::lite_csgen::gen_rs::RustEmitter;
