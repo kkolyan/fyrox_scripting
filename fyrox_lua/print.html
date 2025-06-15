@@ -174,21 +174,26 @@
                     <main>
                         <h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>Use case</th><th>Rust SDK</th></tr></thead><tbody>
-<tr><td>Build Fyrox / C# SDK from sources</td><td>Required</td></tr>
+<tr><td>Build Fyrox C# SDK from sources</td><td>Required</td></tr>
 <tr><td>Develop scripts &amp; scenes</td><td>-</td></tr>
 <tr><td>Play</td><td>-</td></tr>
 </tbody></table>
 </div>
 <h1 id="how-to-install"><a class="header" href="#how-to-install">How to Install</a></h1>
-<p>Currently, you need to build from source. Examples use .exe for Windows; on other platforms, remove the suffix and use platform-specific paths—it will work the same.</p>
+<p>Currently, you need to build from source. Examples use .exe for Windows; on other platforms, remove the suffix and use
+platform-specific paths—it will work the same.</p>
 <ol>
 <li>Install <a href="https://rustup.rs/">Rust</a>. It's needed only to build SDK.</li>
-<li>(skip for non-Windows OS-es) Install <a href="https://git-scm.com/downloads">Git for Windows</a>. This is needed for the <code>Git Bash</code> terminal - required to build the SDK on Windows using shell scripts.</li>
-<li>Run <code>install_sdk_lua.sh /c/dev/fyrox_lua_sdk</code> in <code>Git Bash</code> terminal. Note: the path must not exist before installation (to prevent mistakes).</li>
+<li>(skip for non-Windows OS-es) Install <a href="https://git-scm.com/downloads">Git for Windows</a>. This is needed for the
+<code>Git Bash</code> terminal - required to build the SDK on Windows using shell scripts.</li>
+<li>Run <code>install_sdk_lua.sh /c/dev/fyrox_lua_sdk</code> in <code>Git Bash</code> terminal. Note: the path must not exist before
+installation (to prevent mistakes).</li>
 </ol>
 <h1 id="how-to-use"><a class="header" href="#how-to-use">How to use</a></h1>
-<p>Select a project directory where you'll keep scripts and other resources. Double-click on <code>C:/dev/fyrox_lua_sdk/fyroxed_lua.exe</code> and choose that directory.</p>
-<p>Game can be launched using Play button in editor. Also, game can be launched using <code>C:/dev/fyrox_lua_sdk/fyrox_lite_lua.exe c:/dev/my_lua_game</code> command.</p>
+<p>Select a project directory where you'll keep scripts and other resources. Double-click on
+<code>C:/dev/fyrox_lua_sdk/fyroxed_lua.exe</code> and choose that directory.</p>
+<p>Game can be launched using Play button in editor. Also, game can be launched using
+<code>C:/dev/fyrox_lua_sdk/fyrox_lite_lua.exe c:/dev/my_lua_game</code> command.</p>
 <h2 id="scripts"><a class="header" href="#scripts">Scripts</a></h2>
 <p>To emulate some OOP concepts, <a href="https://luals.github.io/wiki/annotations/">Lua Annotaions</a> are used.</p>
 <p>Following code defines a <code>MyScript</code> class, inherited from <code>Script</code></p>
@@ -202,11 +207,13 @@ MyScript = script_class()
 function MyScript:on_update(dt)
 end
 </code></pre>
-<p>Inherit classes from <code>Script</code> to create scripts that can be attached to scene nodes in editor via dropdown on Inspector panel at the right. for <code>@uuid</code> annotation value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
+<p>Inherit classes from <code>Script</code> to create scripts that can be attached to scene nodes in editor via dropdown on Inspector
+panel at the right. for <code>@uuid</code> annotation value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
 <p>Inherit from <code>GlobalScript</code> to create singleton scripts. Unlike C# scripts, Lua global scripts require UUID.</p>
 <p>For details about <code>Fyrox Lite API</code>, look into <a href="showcase/guards_lua">guards_lua</a> project as a reference.</p>
 <h2 id="scripts-reloading"><a class="header" href="#scripts-reloading">Scripts Reloading</a></h2>
-<p>Editor reloads scripts metadata automatically after their change and window re-focusing. In-game hot reload works the same way.</p>
+<p>Editor reloads scripts metadata automatically after their change and window re-focusing. In-game hot reload works the
+same way.</p>
 <h2 id="scenes--assets"><a class="header" href="#scenes--assets">Scenes &amp; Assets</a></h2>
 <ul>
 <li><a href="https://fyrox-book.github.io/beginning/editor_overview.html">Fyrox Book: Editor Overview</a></li>
