@@ -61,9 +61,7 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
                 println!("Failed to run `dotnet` command. Please install .NET 8.0 or later.");
                 return false;
             }
-            if !ask_user_for_confirmation(format!(
-                "Failed to run `dotnet` command. Please install .NET 8.0 or later. Try again?"
-            )) {
+            if !ask_user_for_confirmation("Failed to run `dotnet` command. Please install .NET 8.0 or later. Try again?".to_string()) {
                 return false;
             }
             continue;

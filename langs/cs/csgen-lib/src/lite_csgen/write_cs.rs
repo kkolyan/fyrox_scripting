@@ -17,7 +17,7 @@ pub fn write_cs(dir: &str, code: Module) {
 fn collect_uses(mods: &[&Module], parent_ns: &str, nss: &mut Vec<String>) {
     for m in mods {
         // let ns = format!("{}.{}", parent_ns, m.name.to_case(Case::Pascal));
-        let ns = format!("{}", parent_ns);
+        let ns = parent_ns.to_string();
         collect_uses(m.children.values().to_vec().as_slice(), ns.as_str(), nss);
         if !nss.contains(&ns) {
             nss.push(ns);
@@ -58,10 +58,10 @@ fn write_cs_mod(m: &Module, ns: &str, parent_dir: &str, nss: &Vec<String>) {
         for ns in nss.iter() {
             s += format!("using {};\n", ns).as_str();
         }
-        s += format!("using System.Drawing;\n").as_str();
-        s += format!("using System.Runtime.CompilerServices;\n").as_str();
-        s += format!("using System.Runtime.InteropServices;\n").as_str();
-        s += format!("using System.Collections;\n").as_str();
+        s += "using System.Drawing;\n".to_string().as_str();
+        s += "using System.Runtime.CompilerServices;\n".to_string().as_str();
+        s += "using System.Runtime.InteropServices;\n".to_string().as_str();
+        s += "using System.Collections;\n".to_string().as_str();
         s += format!("namespace {};\n", ns).as_str();
         s += code.as_str();
         fs::write(&file, s).unwrap();

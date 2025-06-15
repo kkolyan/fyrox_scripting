@@ -59,7 +59,7 @@ impl Lang for CCompatibleLang {
     fn unpack_global_script(
         script: &ScriptObject<Self>,
     ) -> Result<Self::UnpackedGlobalScriptObject, String> {
-        unpack_script(&script, None, |md, uuid| {
+        unpack_script(script, None, |md, uuid| {
             md.global_scripts.get(&uuid).unwrap().id
         })
     }

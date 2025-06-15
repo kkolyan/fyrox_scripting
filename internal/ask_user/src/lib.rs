@@ -36,6 +36,5 @@ pub fn ask_user_for_directory(title: &str) -> Option<String> {
         s = Some(path.to_str().unwrap().to_owned());
         break;
     }
-    let s = s;
     s
 }

@@ -74,7 +74,7 @@ impl Lang for LuaLang {
     }
 
     fn id_of_global(script: &Self::UnpackedGlobalScriptObject) -> Uuid {
-        uuid_of_script(&script.0.borrow().unwrap().as_global().unwrap())
+        uuid_of_script(script.0.borrow().unwrap().as_global().unwrap())
     }
 
     fn unpack_node_script(

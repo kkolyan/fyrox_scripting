@@ -78,7 +78,7 @@ pub(crate) fn generate_engine_class(
         }
 
         for param in method.signature.params.iter() {
-            output_args.push(format!("{}", param.name));
+            output_args.push(param.name.to_string());
 
             render(
                 s,

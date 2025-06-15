@@ -69,7 +69,7 @@ impl UserScriptProxy {
 type ClassIdImpl = String;
 type UserScriptMessageImpl = LuaUserScriptMessageEnvelope;
 
-impl<'a> UserScript for TypedUserData<'a, UserScriptProxy> {
+impl UserScript for TypedUserData<'_, UserScriptProxy> {
     type Plugin = LuaPlugin;
 
     type ProxyScript = ExternalScriptProxy;
@@ -192,7 +192,7 @@ struct ClassMappings {
 
 impl LiteDataType for UserScriptMessageImpl {}
 
-impl<'a> LiteDataType for TypedUserData<'a, UserScriptProxy> {}
+impl LiteDataType for TypedUserData<'_, UserScriptProxy> {}
 
 #[derive(Debug, Clone)]
 pub struct LuaUserScriptMessageEnvelope {

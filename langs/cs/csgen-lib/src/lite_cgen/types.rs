@@ -9,23 +9,23 @@ pub(crate) fn generate_ffi_type(
 ) -> String {
     match ty {
         DataType::UnresolvedClass(it) => panic!("unresolved class: {}", it),
-        DataType::Unit => format!("void"),
-        DataType::Bool => format!("bool"),
-        DataType::Byte => format!("u8"),
-        DataType::I32 => format!("i32"),
-        DataType::I64 => format!("i64"),
-        DataType::F32 => format!("f32"),
-        DataType::F64 => format!("f64"),
-        DataType::String => format!("NativeString"),
-        DataType::ClassName => format!("NativeString"),
+        DataType::Unit => "void".to_string(),
+        DataType::Bool => "bool".to_string(),
+        DataType::Byte => "u8".to_string(),
+        DataType::I32 => "i32".to_string(),
+        DataType::I64 => "i64".to_string(),
+        DataType::F32 => "f32".to_string(),
+        DataType::F64 => "f64".to_string(),
+        DataType::String => "NativeString".to_string(),
+        DataType::ClassName => "NativeString".to_string(),
         DataType::Vec(it) => format!("{}_array", generate_ffi_type(it, client_replicated_types)),
-        DataType::UserScript => format!("NativeHandle"),
-        DataType::UserScriptMessage => format!("NativeInstanceId"),
+        DataType::UserScript => "NativeHandle".to_string(),
+        DataType::UserScriptMessage => "NativeInstanceId".to_string(),
         DataType::UserScriptGenericStub => {
             panic!("UserScriptGenericStub should not be exposed in bindings")
         }
         DataType::Object(it) => match client_replicated_types.contains(it) {
-            false => format!("NativeHandle"),
+            false => "NativeHandle".to_string(),
             true => format!("Native{}", it),
         },
         DataType::Option(it) => {
@@ -45,12 +45,12 @@ pub(crate) fn generate_to_native(
     match ty {
         DataType::UnresolvedClass(it) => panic!("unresolved class: {}", it),
         DataType::Unit => panic!("`void` should be handled before"),
-        DataType::Bool => format!("{}", var),
-        DataType::Byte => format!("{}", var),
-        DataType::I32 => format!("{}", var),
-        DataType::I64 => format!("{}", var),
-        DataType::F32 => format!("{}", var),
-        DataType::F64 => format!("{}", var),
+        DataType::Bool => var.to_string(),
+        DataType::Byte => var.to_string(),
+        DataType::I32 => var.to_string(),
+        DataType::I64 => var.to_string(),
+        DataType::F32 => var.to_string(),
+        DataType::F64 => var.to_string(),
         DataType::String => format!("<u8 as NativeType>::to_native_array({}.into_bytes())", var),
         DataType::ClassName => format!("<u8 as NativeType>::to_native_array({}.into_bytes())", var),
         DataType::Vec(it) => render_string(
@@ -62,7 +62,7 @@ pub(crate) fn generate_to_native(
             ],
         ),
         DataType::UserScript => format!("{}.into()", var),
-        DataType::UserScriptMessage => format!("{}", var),
+        DataType::UserScriptMessage => var.to_string(),
         DataType::UserScriptGenericStub => {
             panic!("UserScriptGenericStub should not be exposed in bindings")
         }
@@ -100,13 +100,13 @@ pub(crate) fn generate_from_native(
 ) -> String {
     match ty {
         DataType::UnresolvedClass(it) => panic!("unresolved class: {}", it),
-        DataType::Unit => format!("()"),
-        DataType::Bool => format!("{}", var),
-        DataType::Byte => format!("{}", var),
-        DataType::I32 => format!("{}", var),
-        DataType::I64 => format!("{}", var),
-        DataType::F32 => format!("{}", var),
-        DataType::F64 => format!("{}", var),
+        DataType::Unit => "()".to_string(),
+        DataType::Bool => var.to_string(),
+        DataType::Byte => var.to_string(),
+        DataType::I32 => var.to_string(),
+        DataType::I64 => var.to_string(),
+        DataType::F32 => var.to_string(),
+        DataType::F64 => var.to_string(),
         DataType::String => format!(
             "String::from_utf8(<u8 as NativeType>::from_native_array({})).unwrap()",
             var
@@ -123,9 +123,9 @@ pub(crate) fn generate_from_native(
                 ("expr", &generate_from_native(it.deref(), var, client_replicated_types))
             ],
         ),
-        DataType::UserScript => format!("{}", var),
-        DataType::UserScriptMessage => format!("{}", var),
-        DataType::UserScriptGenericStub => format!("()"),
+        DataType::UserScript => var.to_string(),
+        DataType::UserScriptMessage => var.to_string(),
+        DataType::UserScriptGenericStub => "()".to_string(),
         DataType::Object(it) => match client_replicated_types.contains(it) {
             true => format!("{}.into()", var),
             false => format!("Externalizable::from_external({}.as_u128())", var),

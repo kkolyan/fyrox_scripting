@@ -247,7 +247,7 @@ impl Reflect for GlobalScriptList {
 
 impl DynamicPlugin for CPlugin {
     fn display_name(&self) -> String {
-        format!("C# Plugin")
+        "C# Plugin".to_string()
     }
 
     fn is_reload_needed_now(&self) -> bool {

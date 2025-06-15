@@ -125,7 +125,7 @@ fn ensure_lua_profiles(_working_dir: &PathBuf) -> Settings {
 
     #[cfg(target_os = "windows")]
     let build = CommandDescriptor {
-        command: format!("cmd"),
+        command: "cmd".to_string(),
         args: vec!["/C".to_string(), "echo".to_string()],
         environment_variables: vec![],
     };

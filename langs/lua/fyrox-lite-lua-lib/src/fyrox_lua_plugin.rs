@@ -137,9 +137,7 @@ impl Plugin for LuaPlugin {
             ..
         } = event
         {
-            Log::info(format!(
-                "Window received focus. Checking for Lua script updates..."
-            ));
+            Log::info("Window received focus. Checking for Lua script updates...");
             self.check_for_script_changes();
         }
         Input::on_os_event(event);
@@ -229,7 +227,7 @@ impl DynamicPlugin for LuaPlugin {
 
     fn prepare_to_reload(&mut self) {
         self.need_reload = false;
-        Log::info(format!("reloading Lua scripts"));
+        Log::info("reloading Lua scripts");
 
         lua_vm()
             .load(

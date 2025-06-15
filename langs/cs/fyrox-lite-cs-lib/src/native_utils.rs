@@ -34,7 +34,7 @@ macro_rules! native_utils {
             fn to_native_array(v: Vec<$ty>) -> $array {
                 let len = v.len() as u32;
                 let capacity = v.capacity() as u32;
-                let items = crate::arena::Arena::allocate_vec(v);
+                let items = $crate::arena::Arena::allocate_vec(v);
                 $array {
                     len,
                     items,

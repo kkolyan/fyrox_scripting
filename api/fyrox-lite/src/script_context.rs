@@ -15,7 +15,7 @@ use fyrox::{
 pub type StaticSc = UnifiedContext<'static, 'static, 'static>;
 
 thread_local! {
-    static SCRIPT_CONTEXT: RefCell<Option<&'static mut StaticSc>> = RefCell::new(None);
+    static SCRIPT_CONTEXT: RefCell<Option<&'static mut StaticSc>> = const { RefCell::new(None) };
 }
 const SC_404: &str = "Fyrox ScriptContext is not available outside of main thread and ";
 

@@ -46,7 +46,7 @@ impl<'a> VerboseLuaValue<'a> {
     }
 }
 
-impl<'a> Debug for VerboseLuaValue<'a> {
+impl Debug for VerboseLuaValue<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         fmt_pretty(&self.0, f, true, 0, &mut HashSet::new())
         // match &self.0 {

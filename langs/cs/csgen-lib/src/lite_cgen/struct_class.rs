@@ -94,7 +94,7 @@ fn generate_to_native(
                 ("name", &name),
                 (
                     "expr",
-                    &types::generate_to_native(&ty, &name, client_replicated_types),
+                    &types::generate_to_native(ty, name, client_replicated_types),
                 ),
             ],
         );

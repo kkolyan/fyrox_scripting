@@ -117,7 +117,7 @@ pub(crate) fn generate_bindings(
             ConstantValue::Literal(it) => match it {
                 Literal::Bool(it) => format!("{}", it),
                 Literal::Byte(it) => format!("{}", it),
-                Literal::Number(it) => format!("{}", it),
+                Literal::Number(it) => it.to_string(),
                 Literal::String(it) => format!("{:?}", it),
             },
             ConstantValue::ComplexExpression(expr) => {
@@ -435,7 +435,7 @@ fn generate_property(
         "#,
             [
                 ("name", &prop_name),
-                ("deref", &if ctx.is_struct(&prop_type) { "&" } else { "" }),
+                ("deref", &if ctx.is_struct(prop_type) { "&" } else { "" }),
                 (
                     "rust_path_escaped",
                     &class.rust_struct_path.to_string().replace("::", "_"),
@@ -502,7 +502,7 @@ fn generate_method(s: &mut String, class: &EngineClass, method: &Method, ctx: &G
         .iter()
         .filter(|it| !matches!(&it.ty, DataType::UserScriptGenericStub))
         .map(|param| match &param.ty {
-            DataType::ClassName => format!("NativeClassId.By<T>.Resolve()"),
+            DataType::ClassName => "NativeClassId.By<T>.Resolve()".to_string(),
             ty => {
                 if ctx.is_struct(ty) {
                     format!("&_{}", param.name)

@@ -43,7 +43,7 @@ thread_local! {
 }
 
 thread_local! {
-    static LUA: RefCell<Option<&'static mlua::Lua>> = RefCell::new(None);
+    static LUA: RefCell<Option<&'static mlua::Lua>> = const { RefCell::new(None) };
 }
 
 pub(crate) fn lua_vm() -> &'static Lua {

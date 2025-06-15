@@ -62,7 +62,7 @@ impl UserScript for UnpackedObject {
         APP.with_borrow(|it| {
             Ok(ExternalScriptProxy {
                 name: class.lookup_class_name(),
-                class: class.clone(),
+                class: *class,
                 data: ScriptResidence::Unpacked(self),
             })
         })
@@ -94,7 +94,7 @@ impl UserScript for UnpackedObject {
 
     fn find_global_script(class: &Self::ClassId) -> Result<Self, Self::LangSpecificError> {
         with_script_context(|it| match &it.plugins {
-            None => Err(format!("global scripts not available in this context")),
+            None => Err("global scripts not available in this context".to_string()),
             Some(it) => {
                 let scripts = it.get::<CPlugin>().scripts.borrow();
                 let script = scripts.inner().iter().find(|it| &it.class == class);

@@ -309,7 +309,7 @@ fn generate_from_native(
                             ("variant", &variant.tag),
                             (
                                 "expr",
-                                &types::generate_from_native(ty, &var, client_replicated_types),
+                                &types::generate_from_native(ty, var, client_replicated_types),
                             ),
                         ],
                     );
@@ -466,7 +466,7 @@ fn generate_to_native(
                             ("var", &var),
                             (
                                 "expr",
-                                &types::generate_to_native(ty, &var, client_replicated_types),
+                                &types::generate_to_native(ty, var, client_replicated_types),
                             ),
                         ],
                     );

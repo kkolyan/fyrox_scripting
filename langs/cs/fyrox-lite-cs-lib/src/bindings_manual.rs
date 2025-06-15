@@ -9,7 +9,7 @@ use std::fmt::{Debug, Formatter};
 #[no_mangle]
 ///@owner_class FyroxCApi
 pub extern "C" fn init_fyrox_lite(app: NativeScriptAppFunctions, is_editor: NativeBool) {
-    APP.set(Some(ScriptedApp::new(app, is_editor.into())));
+    APP.set(Some(ScriptedApp::new(app, is_editor)));
 }
 
 /// identifier of some entity allocated on scripting side and managed by scripting engine.

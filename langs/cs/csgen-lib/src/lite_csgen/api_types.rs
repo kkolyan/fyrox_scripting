@@ -5,23 +5,23 @@ use std::ops::Deref;
 pub fn type_cs(ty: &DataType) -> CsType {
     match ty {
         DataType::UnresolvedClass(it) => panic!("Unresolved class: {}", it),
-        DataType::Unit => CsType::Blittable(format!("void")),
+        DataType::Unit => CsType::Blittable("void".to_string()),
         DataType::Bool => CsType::Mapped {
             facade: "bool".to_string(),
             facade_generic: "bool".to_string(),
             blittable: "NativeBool".to_string(),
         },
-        DataType::Byte => CsType::Blittable(format!("byte")),
-        DataType::I32 => CsType::Blittable(format!("int")),
-        DataType::I64 => CsType::Blittable(format!("long")),
-        DataType::F32 => CsType::Blittable(format!("float")),
-        DataType::F64 => CsType::Blittable(format!("double")),
+        DataType::Byte => CsType::Blittable("byte".to_string()),
+        DataType::I32 => CsType::Blittable("int".to_string()),
+        DataType::I64 => CsType::Blittable("long".to_string()),
+        DataType::F32 => CsType::Blittable("float".to_string()),
+        DataType::F64 => CsType::Blittable("double".to_string()),
         DataType::String => CsType::Mapped {
             facade: "string".to_string(),
             facade_generic: "string".to_string(),
             blittable: "NativeString".to_string(),
         },
-        DataType::ClassName => CsType::Blittable(format!("NativeClassId")),
+        DataType::ClassName => CsType::Blittable("NativeClassId".to_string()),
         DataType::Vec(it) => CsType::templated(
             // TODO there is two options to design it;
             // 1. return iterator, that also contains seem hash to check the rust-side arena-allocated collection is alive every iteration
@@ -68,16 +68,16 @@ pub fn is_implemented_externally(class_name: &ClassName) -> bool {
 pub fn type_rs(ty: &DataType, ctx: &GenerationContext) -> RsType {
     match ty {
         DataType::UnresolvedClass(it) => panic!("Unresolved class: {}", it),
-        DataType::Unit => RsType::Basic(format!("Unit")),
+        DataType::Unit => RsType::Basic("Unit".to_string()),
         DataType::Bool => RsType::Mapped {
             lite: "bool".to_string(),
             native: "NativeBool".to_string(),
         },
-        DataType::Byte => RsType::Basic(format!("u8")),
-        DataType::I32 => RsType::Basic(format!("i32")),
-        DataType::I64 => RsType::Basic(format!("i64")),
-        DataType::F32 => RsType::Basic(format!("f32")),
-        DataType::F64 => RsType::Basic(format!("f64")),
+        DataType::Byte => RsType::Basic("u8".to_string()),
+        DataType::I32 => RsType::Basic("i32".to_string()),
+        DataType::I64 => RsType::Basic("i64".to_string()),
+        DataType::F32 => RsType::Basic("f32".to_string()),
+        DataType::F64 => RsType::Basic("f64".to_string()),
         DataType::String => RsType::Mapped {
             native: "NativeString".to_string(),
             lite: "String".to_string(),

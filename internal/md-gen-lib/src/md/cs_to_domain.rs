@@ -371,7 +371,7 @@ fn render_methods(
         writelnu!(
             s,
             "| {} | `{}`{} ( {} ) | {} |",
-            type_cs_to_md(&return_ty, class_page_links),
+            type_cs_to_md(return_ty, class_page_links),
             &method.name,
             generics,
             params
@@ -539,7 +539,7 @@ fn type_cs_to_md(ty: &CsType, class_page_links: &HashMap<ClassName, String>) -> 
     let type_display = class_page_links
         .get(&ClassName(ty.name.clone()))
         .map(|it| format!("[{}]({})", &ty.name, it))
-        .unwrap_or_else(|| format!("{}", &ty.name));
+        .unwrap_or_else(|| ty.name.to_string());
     if ty.args.is_empty() {
         return type_display;
     }

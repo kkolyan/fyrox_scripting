@@ -57,7 +57,7 @@ impl LitePhysics {
 
 struct QueryResultsStorageWrapper<'a>(&'a mut Vec<LiteIntersection>);
 
-impl<'a> QueryResultsStorage for QueryResultsStorageWrapper<'a> {
+impl QueryResultsStorage for QueryResultsStorageWrapper<'_> {
     fn push(&mut self, intersection: Intersection) -> bool {
         self.0.push(LiteIntersection::from(&intersection));
         true

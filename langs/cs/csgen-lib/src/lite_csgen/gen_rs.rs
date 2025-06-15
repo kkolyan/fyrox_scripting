@@ -6,6 +6,6 @@ pub struct RustEmitter {
 impl RustEmitter {
     pub fn emit_statement(&mut self, s: String) {
         self.code.push_str(&s);
-        self.code.push_str("\n");
+        self.code.push('\n');
     }
 }

@@ -46,14 +46,11 @@ fn collect_custom_type_names(
             );
         }
         if let Item::Type(item) = item {
-            match item.ty.deref() {
-                Type::BareFn(_) => {
-                    custom_type_names.insert(
-                        item.ident.to_string(),
-                        CustomTypeProps { is_delegate: true },
-                    );
-                }
-                _ => {}
+            if let Type::BareFn(_) = item.ty.deref() {
+                custom_type_names.insert(
+                    item.ident.to_string(),
+                    CustomTypeProps { is_delegate: true },
+                );
             }
         }
     }
@@ -130,7 +127,7 @@ pub struct OopDecl {
 fn extract_owner_class(attrs: &[Attribute]) -> String {
     attrs
         .iter()
-        .map(|it| match &it.meta {
+        .filter_map(|it| match &it.meta {
             syn::Meta::Path(_) => None,
             syn::Meta::List(list) => {
                 if list.path.get_ident().unwrap() == "doc" {
@@ -141,9 +138,7 @@ fn extract_owner_class(attrs: &[Attribute]) -> String {
             }
             syn::Meta::NameValue(_) => None,
         })
-        .flatten()
-        .map(|it| it.strip_prefix("@owner_class ").map(|it| it.to_string()))
-        .flatten()
+        .filter_map(|it| it.strip_prefix("@owner_class ").map(|it| it.to_string()))
         .next()
         // .expect("owner class anotation required by the function: `///@owner_class MyClass`")
         .unwrap_or_default()
@@ -297,7 +292,7 @@ fn convert_struct(
         );
 
         for field in item.fields.iter() {
-            let ty = type_rs2cs(&field.ty, &custom_type_names);
+            let ty = type_rs2cs(&field.ty, custom_type_names);
             let delegate = if let Some(it) = custom_type_names.get(&ty) {
                 it.is_delegate
             } else {
@@ -374,7 +369,7 @@ fn convert_union(
                         "name",
                         &escape_keywords(field.ident.as_ref().unwrap().to_string().as_str()),
                     ),
-                    ("type", &type_rs2cs(&field.ty, &custom_type_names)),
+                    ("type", &type_rs2cs(&field.ty, custom_type_names)),
                 ],
             );
         }

@@ -87,13 +87,13 @@ impl<T: Lang> Clone for ScriptFieldValue<T> {
     fn clone(&self) -> Self {
         match self {
             ScriptFieldValue::String(it) => Self::String(it.clone()),
-            ScriptFieldValue::Node(it) => Self::Node(it.clone()),
-            ScriptFieldValue::UiNode(it) => Self::UiNode(it.clone()),
+            ScriptFieldValue::Node(it) => Self::Node(*it),
+            ScriptFieldValue::UiNode(it) => Self::UiNode(*it),
             ScriptFieldValue::Prefab(it) => Self::Prefab(it.clone()),
-            ScriptFieldValue::Vector3(it) => Self::Vector3(it.clone()),
-            ScriptFieldValue::Vector2(it) => Self::Vector2(it.clone()),
-            ScriptFieldValue::Vector2I(it) => Self::Vector2I(it.clone()),
-            ScriptFieldValue::Quaternion(it) => Self::Quaternion(it.clone()),
+            ScriptFieldValue::Vector3(it) => Self::Vector3(*it),
+            ScriptFieldValue::Vector2(it) => Self::Vector2(*it),
+            ScriptFieldValue::Vector2I(it) => Self::Vector2I(*it),
+            ScriptFieldValue::Quaternion(it) => Self::Quaternion(*it),
             ScriptFieldValue::RuntimePin(it) => {
                 let new = T::clone_runtime_pin(it);
                 ScriptFieldValue::RuntimePin(new)

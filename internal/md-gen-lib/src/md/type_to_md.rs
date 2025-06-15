@@ -22,7 +22,7 @@ pub fn type_rust_to_md(ty: &DataType, class_md_links: &HashMap<ClassName, String
         }
         DataType::Object(class_name) => class_md_links
             .get(class_name)
-            .map(|it| format!("[{}]({})", class_name.to_string(), it))
+            .map(|it| format!("[{}]({})", class_name, it))
             .unwrap_or(class_name.to_string()),
         DataType::Option(item_ty) => format!("{}?", type_rust_to_md(item_ty, class_md_links)),
         DataType::Result { ok } => type_rust_to_md(ok, class_md_links),
