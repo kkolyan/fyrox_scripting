@@ -18,5 +18,8 @@
             <Private>True</Private>
         </Reference>
     </ItemGroup>
+    <PropertyGroup>
+        <ApplicationIcon>fyrox_cs_001.ico</ApplicationIcon>
+    </PropertyGroup>
 
 </Project>

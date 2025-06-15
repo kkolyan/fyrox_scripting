@@ -16,3 +16,6 @@ comprexor = "0.1.520"
 [features]
 default = ["fyrox-lite-lua-lib", "fyroxed_base/default"]
 dylib = ["fyroxed_base/dylib_engine"]
+
+[build-dependencies]
+embed-resource = "3.0"
