@@ -16,7 +16,7 @@ internal static class ScriptsMetadataManager
             return null;
         }
 
-        return $"{EditorWorkingDir}/bin/Debug/net8.0/{Path.GetFileName(EditorWorkingDir)}.dll";
+        return $"{EditorWorkingDir}/bin/Debug/net9.0/{Path.GetFileName(EditorWorkingDir)}.dll";
     }
     
     internal static NativeScriptMetadata_slice GetScriptsMetadata()

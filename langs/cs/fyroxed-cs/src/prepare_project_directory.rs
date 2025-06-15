@@ -34,7 +34,7 @@ pub extern "C" fn prepare_project_directory(working_dir: *const c_char, is_cli: 
 fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
     let assembly_name = working_dir.file_name().unwrap().to_str().unwrap();
     let assembly_path = format!(
-        "{}/bin/Debug/net8.0/{assembly_name}.dll",
+        "{}/bin/Debug/net9.0/{assembly_name}.dll",
         working_dir.display()
     );
     println!("expected assembly location: {}", assembly_name);
@@ -58,13 +58,11 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
             .spawn()
         else {
             if is_cli {
-                println!("Failed to run `dotnet` command. Please install .NET 8.0 or later.");
+                println!("Failed to run `dotnet` command.");
                 return false;
             }
-            if !ask_user_for_confirmation(
-                "Failed to run `dotnet` command. Please install .NET 8.0 or later. Try again?"
-                    .to_string(),
-            ) {
+            if !ask_user_for_confirmation("Failed to run `dotnet` command. Try again?".to_string())
+            {
                 return false;
             }
             continue;
