@@ -1,9 +1,9 @@
+#![allow(non_camel_case_types)]
+
 use crate::auto_dispose::DisposableHandle;
 use crate::scripted_app::{ScriptedApp, APP};
 use crate::*;
 use fyrox_lite::spi::ClassId;
-use fyrox_lite::spi::UserScript;
-use std::fmt::Display;
 use std::fmt::{Debug, Formatter};
 
 #[no_mangle]
@@ -123,6 +123,7 @@ impl From<String> for NativeString {
     }
 }
 
+#[allow(non_snake_case)]
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union NativeValue {
@@ -152,21 +153,6 @@ impl Debug for NativePropertyValue {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{{ {:?}: {:?} }}", self.name, self.ty)
     }
-}
-
-pub trait NativeType: Sized {
-    type Slice;
-    type Option;
-    type Result;
-
-    fn to_native_array(v: Vec<Self>) -> Self::Slice;
-    fn from_native_array(v: Self::Slice) -> Vec<Self>;
-
-    fn to_native_option(v: Option<Self>) -> Self::Option;
-    fn from_native_option(v: Self::Option) -> Option<Self>;
-
-    fn to_native_result<E: Display>(v: Result<Self, E>) -> Self::Result;
-    fn from_native_result<U: UserScript>(v: Self::Result) -> Result<Self, U::LangSpecificError>;
 }
 
 #[repr(C)]
@@ -211,12 +197,6 @@ pub struct NativeScriptMetadata {
 pub enum NativeScriptKind {
     Node,
     Global,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-pub struct NativeScriptedApp {
-    pub functions: NativeScriptAppFunctions,
 }
 
 #[repr(C)]

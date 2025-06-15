@@ -115,7 +115,7 @@ fn extract_annotations() {
     }
 }
 
-fn ensure_lua_profiles(_working_dir: &PathBuf) -> Settings {
+fn ensure_lua_profiles(_working_dir: &Path) -> Settings {
     let (mut settings, loaded) = match Settings::load() {
         Ok(it) => (it, true),
         Err(_) => (Settings::default(), false),

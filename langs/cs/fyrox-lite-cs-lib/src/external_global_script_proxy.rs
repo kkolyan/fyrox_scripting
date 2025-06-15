@@ -54,7 +54,7 @@ impl ScriptTrait for ExternalGlobalScriptProxy {
         });
     }
 
-    fn on_os_event(&mut self, event: &fyrox::event::Event<()>, ctx: &mut ScriptContext) {}
+    fn on_os_event(&mut self, _event: &fyrox::event::Event<()>, _ctx: &mut ScriptContext) {}
 
     fn on_update(&mut self, ctx: &mut ScriptContext) {
         self.data

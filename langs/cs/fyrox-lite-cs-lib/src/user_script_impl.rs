@@ -59,12 +59,10 @@ impl UserScript for UnpackedObject {
         self,
         class: &Self::ClassId,
     ) -> Result<Self::ProxyScript, Self::LangSpecificError> {
-        APP.with_borrow(|it| {
-            Ok(ExternalScriptProxy {
-                name: class.lookup_class_name(),
-                class: *class,
-                data: ScriptResidence::Unpacked(self),
-            })
+        Ok(ExternalScriptProxy {
+            name: class.lookup_class_name(),
+            class: *class,
+            data: ScriptResidence::Unpacked(self),
         })
     }
 

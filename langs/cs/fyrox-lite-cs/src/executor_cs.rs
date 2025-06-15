@@ -38,23 +38,7 @@ pub extern "C" fn fyrox_lite_executor_run() {
         },
     );
 
-    // Dynamic linking with hot reloading.
-    #[cfg(feature = "dylib")]
-    {
-        #[cfg(target_os = "windows")]
-        let file_name = "fyrox-c_dylib.dll";
-        #[cfg(target_os = "linux")]
-        let file_name = "libfyrox-c_dylib.so";
-        #[cfg(target_os = "macos")]
-        let file_name = "libfyrox-c_dylib.dylib";
-        executor.add_dynamic_plugin(file_name, true, true).unwrap();
-    }
-
-    // Static linking.
-    #[cfg(not(feature = "dylib"))]
-    {
-        executor.add_dynamic_plugin_custom(CPlugin::new(None));
-    }
+    executor.add_dynamic_plugin_custom(CPlugin::new(None));
 
     executor.run()
 }

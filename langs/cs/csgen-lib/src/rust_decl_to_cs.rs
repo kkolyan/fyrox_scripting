@@ -6,7 +6,7 @@ use quote::ToTokens;
 use std::collections::{HashMap, HashSet};
 use std::ops::Deref;
 use std::str::FromStr;
-use syn::{parse2, Attribute, File, FnArg, Item, ReturnType, Type};
+use syn::{parse2, File, FnArg, Item, ReturnType, Type};
 use to_vec::ToVec;
 
 struct CustomTypeProps {
@@ -122,26 +122,6 @@ fn strip_indent(s: String, indent: &str) -> String {
 pub struct OopDecl {
     pub owner_name: String,
     pub code: String,
-}
-
-fn extract_owner_class(attrs: &[Attribute]) -> String {
-    attrs
-        .iter()
-        .filter_map(|it| match &it.meta {
-            syn::Meta::Path(_) => None,
-            syn::Meta::List(list) => {
-                if list.path.get_ident().unwrap() == "doc" {
-                    Some(list.tokens.to_string())
-                } else {
-                    None
-                }
-            }
-            syn::Meta::NameValue(_) => None,
-        })
-        .filter_map(|it| it.strip_prefix("@owner_class ").map(|it| it.to_string()))
-        .next()
-        // .expect("owner class anotation required by the function: `///@owner_class MyClass`")
-        .unwrap_or_default()
 }
 
 fn convert_function(

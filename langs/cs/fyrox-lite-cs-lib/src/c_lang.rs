@@ -186,7 +186,6 @@ fn convert_value(
                             ScriptFieldValue::i64(it) => { assert_eq!(ty, ScriptFieldValueType::i64); (NativeValueType::i64, NativeValue { i64: *it}) },
                             ScriptFieldValue::Node(it) => { assert_eq!(ty, ScriptFieldValueType::Node); (NativeValueType::Handle,NativeValue { Handle: (*it).into()}) },
                             ScriptFieldValue::UiNode(it) => { assert_eq!(ty, ScriptFieldValueType::UiNode); (NativeValueType::Handle, NativeValue { Handle: (*it).into()}) },
-                            ScriptFieldValue::String(_) => { todo!("handled in another block") },
                             ScriptFieldValue::Prefab(_) => { todo!("handled in another block") },
                             ScriptFieldValue::Vector3(_) => { todo!("handled in another block") },
                             ScriptFieldValue::Vector2(_) => { todo!("handled in another block") },

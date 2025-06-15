@@ -1,5 +1,6 @@
 use std::fmt::Write;
 
+#[allow(unused)]
 pub fn to_hex_dump<T>(v: &T) -> String {
     let mut s = String::new();
 

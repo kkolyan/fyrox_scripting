@@ -1505,6 +1505,8 @@ version = "0.1.0"
 dependencies = [
  "fyrox",
  "fyrox-lite-cs-lib",
+ "puffin",
+ "puffin_http",
 ]
 
 [[package]]

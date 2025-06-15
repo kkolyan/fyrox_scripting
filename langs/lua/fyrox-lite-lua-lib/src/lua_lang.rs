@@ -56,7 +56,7 @@ impl Lang for LuaLang {
         // take ScriptObject out of Lua VM and destroy it right now to prevent nested destructors
         // to be invoked at random moment in future by Lua GC, anth thus ruin Hit Reload
         if let Ok(it) = TypedUserData::take(script.0.deref_mut()) {
-            let _s: NodeScriptObject = it.to_node().unwrap();
+            let _s: NodeScriptObject = it.into_node().unwrap();
         }
     }
     fn drop_script_object_to_prevent_delayed_destructor_global(
@@ -65,7 +65,7 @@ impl Lang for LuaLang {
         // take ScriptObject out of Lua VM and destroy it right now to prevent nested destructors
         // to be invoked at random moment in future by Lua GC, anth thus ruin Hit Reload
         if let Ok(it) = TypedUserData::take(script.0.deref_mut()) {
-            let _s: ScriptObject = it.to_global().unwrap();
+            let _s: ScriptObject = it.into_global().unwrap();
         }
     }
 

@@ -2,14 +2,12 @@ use crate::Naming;
 use gen_common::by_package::extract_package;
 use gen_common::doc::strExt;
 use gen_common::writelnu;
-use lite_model::{ClassName, EnumClass, EnumValue};
-use std::collections::HashMap;
+use lite_model::{EnumClass, EnumValue};
 
 pub fn generate_enum(
     s: &mut String,
     class: &EnumClass,
     naming: Naming,
-    x1: &HashMap<ClassName, String>,
 ) {
     writelnu!(s, "# {}", class.class_name);
     let package = naming.package_name(extract_package(&class.rust_struct_path));

@@ -46,7 +46,7 @@ impl UserScriptProxy {
             UserScriptProxy::Node(_) => None,
         }
     }
-    pub fn to_global(self) -> Option<ScriptObject<LuaLang>> {
+    pub fn into_global(self) -> Option<ScriptObject<LuaLang>> {
         match self {
             UserScriptProxy::Global(it) => Some(it),
             UserScriptProxy::Node(_) => None,
@@ -54,13 +54,13 @@ impl UserScriptProxy {
     }
     pub fn as_node(&self) -> Option<&NodeScriptObject<LuaLang>> {
         match self {
-            UserScriptProxy::Global(it) => None,
+            UserScriptProxy::Global(_it) => None,
             UserScriptProxy::Node(it) => Some(it),
         }
     }
-    pub fn to_node(self) -> Option<NodeScriptObject<LuaLang>> {
+    pub fn into_node(self) -> Option<NodeScriptObject<LuaLang>> {
         match self {
-            UserScriptProxy::Global(it) => None,
+            UserScriptProxy::Global(_it) => None,
             UserScriptProxy::Node(it) => Some(it),
         }
     }

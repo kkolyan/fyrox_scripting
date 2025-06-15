@@ -8,7 +8,7 @@ use crate::{
     Naming,
 };
 use gen_common::by_package::extract_package;
-use gen_common::{by_package::classes_by_package, code_model::Module, writelnu};
+use gen_common::{by_package::classes_by_package, code_model::Module};
 
 pub fn generate_md(domain: &Domain, csharp_domain: &CSharpDomain, naming: Naming) -> Module {
     let mut class_page_links = HashMap::new();
@@ -85,7 +85,7 @@ fn generate_rust_md(
                     );
                 }
                 Class::Enum(class) => {
-                    generate_enum(&mut s, class, naming, class_page_links);
+                    generate_enum(&mut s, class, naming);
                     package_mod.classes.insert(
                         class.class_name.0.clone(),
                         Module::code(class.class_name.clone(), s),
@@ -97,92 +97,4 @@ fn generate_rust_md(
         root.add_child(package_mod);
     }
     root
-}
-
-fn generate_package(
-    package: &str,
-    classes_of_package: &Vec<ClassName>,
-    domain: &Domain,
-    naming: Naming,
-    class_page_links: &HashMap<ClassName, String>,
-) -> String {
-    let mut s = "".to_string();
-    writelnu!(s, "# {}", naming.package_name(package));
-    writelnu!(s, "package");
-
-    let description = &domain
-        .packages
-        .iter()
-        .find(|it| {
-            ["fyrox_lite::", "fyrox_lite_math::", "fyrox_lite_color::"]
-                .iter()
-                .filter_map(|prefix| it.name.strip_prefix(prefix))
-                .next()
-                .unwrap()
-                == package
-        })
-        .unwrap_or_else(|| {
-            panic!(
-                "expected to find package {} along packages {:?}",
-                package, domain.packages
-            )
-        })
-        .description;
-    if !description.is_empty() {
-        writelnu!(s, "## Description");
-        writelnu!(s, "{}", description);
-    }
-
-    let mut classes = vec![];
-    let mut structs = vec![];
-    let mut enums = vec![];
-
-    for class in classes_of_package {
-        let class = domain.get_class(class).unwrap();
-        match class {
-            Class::Engine(it) => classes.push(it),
-            Class::Struct(it) => structs.push(it),
-            Class::Enum(it) => enums.push(it),
-        }
-    }
-
-    if !classes.is_empty() {
-        writelnu!(s, "## Classes");
-        for x in classes.iter() {
-            writelnu!(
-                s,
-                "* [{}]({}/{})",
-                x.class_name,
-                package,
-                class_page_links.get(&x.class_name).unwrap()
-            );
-        }
-    }
-
-    if !structs.is_empty() {
-        writelnu!(s, "## Structs");
-        for x in structs.iter() {
-            writelnu!(
-                s,
-                "* [{}]({}/{})",
-                x.class_name,
-                package,
-                class_page_links.get(&x.class_name).unwrap()
-            );
-        }
-    }
-
-    if !enums.is_empty() {
-        writelnu!(s, "## Enums");
-        for x in enums.iter() {
-            writelnu!(
-                s,
-                "* [{}]({}/{})",
-                x.class_name,
-                package,
-                class_page_links.get(&x.class_name).unwrap()
-            );
-        }
-    }
-    s
 }

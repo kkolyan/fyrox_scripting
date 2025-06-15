@@ -9,11 +9,11 @@ use md_gen_lib::Naming;
 use std::fs;
 
 pub fn main() {
-    generate_script_reference(Naming::Cs, "www/fyrox_cs", generate_md_cs());
-    generate_script_reference(Naming::Lua, "www/fyrox_lua", generate_md_lua());
+    generate_script_reference("www/fyrox_cs", generate_md_cs());
+    generate_script_reference("www/fyrox_lua", generate_md_lua());
 }
 
-fn generate_script_reference(naming: Naming, book_dir: &str, code_base: Module) {
+fn generate_script_reference(book_dir: &str, code_base: Module) {
     let target_dir = format!("{book_dir}/src/scripting_api");
     let _ = fs::remove_dir_all(&target_dir);
     code_base.write_md(&target_dir);

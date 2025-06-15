@@ -57,7 +57,7 @@ pub(crate) fn generate_enum(
         [("class", &class.class_name)],
     );
 
-    generate_from_native(s, class, client_replicated_types, has_fields);
+    generate_from_native(s, class, client_replicated_types);
     generate_to_native(s, class, client_replicated_types, has_fields);
 
     generate_tag_constants_impl(s, class);
@@ -182,7 +182,7 @@ fn generate_struct_variant_fields(
     fields: &[Field],
     client_replicated_types: &HashSet<ClassName>,
 ) {
-    for (i, field) in fields.iter().enumerate() {
+    for field in fields.iter() {
         render(
             s,
             r#"
@@ -223,7 +223,6 @@ fn generate_from_native(
     s: &mut String,
     class: &EnumClass,
     client_replicated_types: &HashSet<ClassName>,
-    has_fields: bool,
 ) {
     render(
         s,

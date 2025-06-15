@@ -56,20 +56,6 @@ impl LiteNode {
     }
 }
 
-macro_rules! extract_node {
-    ($ctx:expr,$self:expr) => {{
-        let Some(scene) = &mut $ctx.scene else {
-            return Err(T::create_error("scene unavailable"));
-        };
-        let Some(node) = scene.graph.try_get($self.handle) else {
-            return Err(T::create_error(
-                format!("attempt to access detached node {}", $self.handle).as_str(),
-            ));
-        };
-        node
-    }};
-}
-
 #[lite_api(class=Node, eq)]
 impl LiteNode {
     pub fn as_rigid_body<T: UserScript>(
@@ -262,7 +248,6 @@ impl LiteNode {
     ) -> Result<Option<T>, T::LangSpecificError> {
         with_script_context(|ctx| {
             let node = &mut ctx.scene.as_mut().expect("scene unavailable").graph[self.handle];
-            for x in node.scripts() {}
             for script in node.try_get_scripts_mut::<T::ProxyScript>() {
                 let Some(plugin) = &mut ctx.plugins else {
                     return Err(T::create_error(

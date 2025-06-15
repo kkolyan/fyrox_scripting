@@ -42,9 +42,9 @@ impl<T: Lang> Reflect for ScriptObject<T> {
             .fields
             .iter()
             .enumerate()
-            .filter(|(i, it)| it.ty != ScriptFieldValueType::RuntimePin)
-            .filter(|(i, it)| !it.private)
-            .map(|(i, it)| {
+            .filter(|(_i, it)| it.ty != ScriptFieldValueType::RuntimePin)
+            .filter(|(_i, it)| !it.private)
+            .map(|(i, _field)| {
                 let value_metadata = metadata.get(i);
                 let value = self.values.get(i);
                 if value_metadata.is_none() || value.is_none() {
@@ -83,34 +83,11 @@ impl<T: Lang> Reflect for ScriptObject<T> {
             .iter()
             .map(|it| {
                 FieldMetadata {
-                    // owner_type_id: TypeId::of::<NodeScriptObject<T> >(),
                     name: it.name.as_str(),
                     display_name: it.title.as_str(),
                     description: it.name.as_str(),
                     tag: "",
-                    // type_name: match it.ty {
-                    //     ScriptFieldValueType::bool => std::any::type_name::<bool>(),
-                    //     ScriptFieldValueType::f32 => std::any::type_name::<f32>(),
-                    //     ScriptFieldValueType::f64 => std::any::type_name::<f64>(),
-                    //     ScriptFieldValueType::i16 => std::any::type_name::<i16>(),
-                    //     ScriptFieldValueType::i32 => std::any::type_name::<i32>(),
-                    //     ScriptFieldValueType::i64 => std::any::type_name::<i64>(),
-                    //     ScriptFieldValueType::String => std::any::type_name::<T::String<'_>>(),
-                    //     ScriptFieldValueType::Node => std::any::type_name::<Handle<Node>>(),
-                    //     ScriptFieldValueType::UiNode => std::any::type_name::<Handle<UiNode>>(),
-                    //     ScriptFieldValueType::Prefab => {
-                    //         std::any::type_name::<Option<Resource<Model>>>()
-                    //     }
-                    //     ScriptFieldValueType::Vector3 => std::any::type_name::<Vector3<f32>>(),
-                    //     ScriptFieldValueType::Vector2 => std::any::type_name::<Vector2<f32>>(),
-                    //     ScriptFieldValueType::Vector2I => std::any::type_name::<Vector2<i32>>(),
-                    //     ScriptFieldValueType::Quaternion => {
-                    //         std::any::type_name::<UnitQuaternion<f32>>()
-                    //     }
-                    //     ScriptFieldValueType::RuntimePin => panic!("WTF, it's excluded above"),
-                    // },
                     doc: it.description.unwrap_or(""),
-                    // reflect_value: self.values.get(i).unwrap().as_reflect(),
                     read_only: false,
                     immutable_collection: false,
                     min_value: None,
@@ -122,13 +99,13 @@ impl<T: Lang> Reflect for ScriptObject<T> {
             .collect();
 
         let mut fields = vec![];
-        for (i, field) in def
+        for (i, _field) in def
             .metadata
             .fields
             .iter()
             .enumerate()
-            .filter(|(i, it)| it.ty != ScriptFieldValueType::RuntimePin)
-            .filter(|(i, it)| !it.private)
+            .filter(|(_i, it)| it.ty != ScriptFieldValueType::RuntimePin)
+            .filter(|(_i, it)| !it.private)
         {
             // it's sound, because we never apply it twice for the same index
             let value_raw = unsafe { &mut *self.values.as_mut_ptr().add(i) };

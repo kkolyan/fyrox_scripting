@@ -44,7 +44,7 @@ pub(crate) fn generate_bindings(
 
     if !is_implemented_externally {
         for field in class.fields.iter() {
-            generate_property(&mut s, class, field, ctx);
+            generate_property(&mut s, field);
         }
         s += "
             #region Native Fields
@@ -70,7 +70,7 @@ pub(crate) fn generate_bindings(
     );
 
     for field in class.fields.iter() {
-        generate_field(&mut s, &mut rs, class, field, ctx);
+        generate_field(&mut s, &mut rs, field, ctx);
     }
 
     render(
@@ -127,7 +127,7 @@ pub(crate) fn generate_bindings(
     Module::code(&class_name, s)
 }
 
-fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &GenerationContext) {
+fn generate_property(s: &mut String, field: &Field) {
     let ty = api_types::type_cs(&field.ty);
     let facade_name = field.name.to_case(Case::Pascal);
     let private_name = format!("_{}", field.name);
@@ -181,7 +181,6 @@ fn generate_property(s: &mut String, class: &StructClass, field: &Field, ctx: &G
 fn generate_field(
     s: &mut String,
     rs: &mut String,
-    class: &StructClass,
     field: &Field,
     ctx: &GenerationContext,
 ) {

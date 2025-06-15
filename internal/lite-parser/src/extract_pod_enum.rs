@@ -37,13 +37,13 @@ pub fn extract_pod_enum(
                                 continue 'variants;
                             }
                         },
-                        description: todo!(),
+                        description: extract_doc(&field.attrs),
                     });
                 }
                 variants.push(EnumVariant {
                     tag: variant_name.to_string(),
                     value: EnumValue::Struct { fields },
-                    description: todo!(),
+                    description: extract_doc(&variant.attrs),
                 });
             }
             syn::Fields::Unnamed(syn_fields) => {
@@ -65,7 +65,7 @@ pub fn extract_pod_enum(
                 variants.push(EnumVariant {
                     tag: variant_name.to_string(),
                     value: EnumValue::Tuple { fields },
-                    description: todo!(),
+                    description: extract_doc(&variant.attrs),
                 });
             }
             syn::Fields::Unit => {

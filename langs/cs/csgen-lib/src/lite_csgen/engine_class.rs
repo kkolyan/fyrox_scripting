@@ -7,7 +7,6 @@ use gen_common::context::GenerationContext;
 use gen_common::doc::strExt;
 use gen_common::properties::{Getter, Setter};
 use gen_common::templating::{render, render_string};
-use itertools::Itertools;
 use lite_model::{Class, ConstantValue, DataType, EngineClass, Literal, Method};
 use std::collections::{HashMap, HashSet};
 use to_vec::ToVec;
@@ -762,108 +761,6 @@ fn generate_rust_entry_point(
             pub extern "C" fn ${rust_path_escaped}_${name}(
                 ${this}${input_params}
             ) -> ${return_ty} {
-                ${conversions}
-                let ret = ${receiver}${name}${generics}(${output_params});
-                ret.into()
-            }
-            "#,
-        [
-            (
-                "generics",
-                &if method.is_generic() {
-                    "::<crate::UserScriptImpl>"
-                } else {
-                    ""
-                },
-            ),
-            (
-                "return_ty",
-                &method
-                    .signature
-                    .return_ty
-                    .as_ref()
-                    .map(|it| api_types::type_rs(it, ctx).to_native())
-                    .unwrap_or("()".to_string()),
-            ),
-            (
-                "rust_path_escaped",
-                &class.rust_struct_path.to_string().replace("::", "_"),
-            ),
-            ("name", &method.method_name),
-            ("output_params", &output_params),
-            ("input_params", &input_params),
-            ("conversions", &conversions),
-            (
-                "this",
-                &if method.instance {
-                    this
-                } else {
-                    "".to_string()
-                },
-            ),
-            (
-                "receiver",
-                &if method.instance {
-                    format!("{}::from(this).", rs_type.to_lite())
-                } else {
-                    format!("{}::", rs_type.to_lite())
-                },
-            ),
-        ],
-    );
-
-    rust.emit_statement(rs);
-}
-
-fn generate_rust_entry_point_buffer(
-    rust: &mut RustEmitter,
-    class: &EngineClass,
-    method: &Method,
-    ctx: &GenerationContext,
-) {
-    let rs_type = api_types::type_rs(&DataType::Object(class.class_name.clone()), ctx);
-
-    let mut output_params = String::new();
-    let mut input_params = String::new();
-    let mut conversions = String::new();
-
-    let this = format!(
-        "this: {},
-                ",
-        rs_type.to_native(),
-    );
-
-    for param in method.signature.params.iter() {
-        if matches!(param.ty, DataType::UserScriptGenericStub) {
-            output_params += "(),";
-            continue;
-        }
-        render(
-            &mut conversions,
-            r#"
-                let ${name} = ${name}.into();
-        "#,
-            [("name", &param.name)],
-        );
-        output_params += param.name.as_str();
-        output_params += ",";
-        input_params += format!(
-            "{}: {},",
-            param.name,
-            api_types::type_rs(&param.ty, ctx).to_native()
-        )
-        .as_str();
-    }
-
-    let mut rs = String::new();
-    render(
-        &mut rs,
-        r#"
-            #[no_mangle]
-            pub extern "C" fn ${rust_path_escaped}_${name}(
-                ${this}${input_params}
-            ) -> i32 {
-                let ${buffer_name} = Vec::new();
                 ${conversions}
                 let ret = ${receiver}${name}${generics}(${output_params});
                 ret.into()

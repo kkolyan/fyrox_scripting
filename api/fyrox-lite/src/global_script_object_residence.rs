@@ -62,7 +62,7 @@ impl<T: Lang> GlobalScriptResidence<T> {
     pub fn with_script_object<R>(&self, f: impl FnOnce(&ScriptObject<T>) -> R) -> R {
         match self {
             GlobalScriptResidence::Packed(it) => f(it),
-            GlobalScriptResidence::Unpacked(it) => todo!(),
+            GlobalScriptResidence::Unpacked(_) => todo!(),
             // ScriptResidence::Unpacked(it) => f(&it.borrow().unwrap()),
         }
     }
@@ -70,7 +70,7 @@ impl<T: Lang> GlobalScriptResidence<T> {
     pub fn with_script_object_mut<R>(&mut self, f: impl FnOnce(&mut ScriptObject<T>) -> R) -> R {
         match self {
             GlobalScriptResidence::Packed(it) => f(it),
-            GlobalScriptResidence::Unpacked(it) => todo!(),
+            GlobalScriptResidence::Unpacked(_) => todo!(),
             // ScriptResidence::Unpacked(it) => f(&mut it.borrow_mut().unwrap()),
         }
     }

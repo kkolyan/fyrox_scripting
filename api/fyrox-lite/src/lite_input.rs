@@ -794,7 +794,7 @@ impl Input {
                         input.mouse_move.y += *y as f32;
                     }
                     DeviceEvent::MouseWheel { delta, .. } => match delta {
-                        MouseScrollDelta::LineDelta(lite_macro, _) => {}
+                        MouseScrollDelta::LineDelta(_lite_macro, _) => {}
                         MouseScrollDelta::PixelDelta(_) => {}
                     },
                     DeviceEvent::Motion { .. } => {}

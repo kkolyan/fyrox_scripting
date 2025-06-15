@@ -84,7 +84,7 @@ impl CSharpDomain {
                     CSharpType::Enum(ty) => {
                         package_mod.enums.insert(
                             ty.name.clone(),
-                            enum_to_md(ty, package.name.as_str(), class_page_links),
+                            enum_to_md(ty, package.name.as_str()),
                         );
                     }
                 };
@@ -93,75 +93,6 @@ impl CSharpDomain {
         }
         root
     }
-}
-
-fn generate_package(
-    package: &CSharpPackage,
-    class_page_links: &HashMap<ClassName, String>,
-) -> String {
-    let mut s = "".to_string();
-    writelnu!(s, "# {}", &package.name);
-    writelnu!(s, "package");
-
-    let mut classes = vec![];
-    let mut structs = vec![];
-    let mut enums = vec![];
-
-    for class in package.collect_type_names() {
-        let class = package.items.get(&class).unwrap();
-
-        match class {
-            CSharpType::Class(class) => {
-                if class.is_struct {
-                    structs.push(class.name.clone());
-                } else {
-                    classes.push(class.name.clone());
-                }
-            }
-            CSharpType::Enum(class) => {
-                enums.push(class.name.clone());
-            }
-        }
-    }
-
-    if !classes.is_empty() {
-        writelnu!(s, "\n## Classes");
-        for x in classes.iter() {
-            writelnu!(
-                s,
-                "* [{}]({}/{})",
-                x,
-                package.name.as_str(),
-                class_page_links.get(&ClassName(x.clone())).unwrap()
-            );
-        }
-    }
-
-    if !structs.is_empty() {
-        writelnu!(s, "\n## Structs");
-        for x in structs.iter() {
-            writelnu!(
-                s,
-                "* [{}]({}/{})",
-                x,
-                package.name.as_str(),
-                class_page_links.get(&ClassName(x.clone())).unwrap()
-            );
-        }
-    }
-
-    if !enums.is_empty() {
-        writelnu!(s, "\n## Enums");
-        for x in enums.iter() {
-            writelnu!(
-                s,
-                "* [{}]({})",
-                x,
-                class_page_links.get(&ClassName(x.clone())).unwrap()
-            );
-        }
-    }
-    s
 }
 
 impl CSharpPackage {
@@ -555,8 +486,7 @@ fn type_cs_to_md(ty: &CsType, class_page_links: &HashMap<ClassName, String>) -> 
 
 fn enum_to_md(
     class: &CsEnum,
-    package: &str,
-    class_page_links: &HashMap<ClassName, String>,
+    package: &str
 ) -> Module {
     let mut s = "".to_string();
     writelnu!(s, "# {}", &class.name);

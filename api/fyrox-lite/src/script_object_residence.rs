@@ -67,7 +67,7 @@ impl<T: Lang> ScriptResidence<T> {
     pub fn with_script_object<R>(&self, f: impl FnOnce(&NodeScriptObject<T>) -> R) -> R {
         match self {
             ScriptResidence::Packed(it) => f(it),
-            ScriptResidence::Unpacked(it) => todo!(),
+            ScriptResidence::Unpacked(_it) => todo!(),
             // ScriptResidence::Unpacked(it) => f(&it.borrow().unwrap()),
         }
     }
@@ -78,7 +78,7 @@ impl<T: Lang> ScriptResidence<T> {
     ) -> R {
         match self {
             ScriptResidence::Packed(it) => f(it),
-            ScriptResidence::Unpacked(it) => todo!(),
+            ScriptResidence::Unpacked(_it) => todo!(),
             // ScriptResidence::Unpacked(it) => f(&mut it.borrow_mut().unwrap()),
         }
     }
