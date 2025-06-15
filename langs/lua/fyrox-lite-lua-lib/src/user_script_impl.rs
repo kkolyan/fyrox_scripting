@@ -16,8 +16,8 @@ use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::spi::ClassId;
 use fyrox_lite::{script_context::with_script_context, spi::UserScript, LiteDataType};
-use mlua::{UserDataRef, Value};
 use mlua::prelude::LuaResult;
+use mlua::{UserDataRef, Value};
 use send_wrapper::SendWrapper;
 
 #[derive(Clone, Debug)]
@@ -99,7 +99,13 @@ impl<'a> UserScript for TypedUserData<'a, UserScriptProxy> {
     }
 
     fn into_proxy_script(self, _class: &Self::ClassId) -> mlua::Result<Self::ProxyScript> {
-        let name = self.borrow()?.as_script_object().def.metadata.class.to_string();
+        let name = self
+            .borrow()?
+            .as_script_object()
+            .def
+            .metadata
+            .class
+            .to_string();
         // it's sound, because Lua outlives a process
         let ud: TypedUserData<'static, UserScriptProxy> = unsafe { mem::transmute(self) };
         let data = crate::script_object_residence::ScriptResidence::Unpacked(
@@ -163,16 +169,14 @@ impl<'a> UserScript for TypedUserData<'a, UserScriptProxy> {
                 let new_type_id = (x.packed.len() + 1) as DynamicTypeId;
                 x.packed.insert(class_id.clone(), new_type_id);
                 x.unpacked.insert(new_type_id, class_id.clone());
-                return new_type_id
+                return new_type_id;
             };
             *v
         })
     }
 
     fn unpack_class_id(class_id: DynamicTypeId) -> Self::ClassId {
-        CLASS_MAPPINGS.with_borrow(|x| {
-            x.unpacked.get(&class_id).unwrap().clone()
-        })
+        CLASS_MAPPINGS.with_borrow(|x| x.unpacked.get(&class_id).unwrap().clone())
     }
 }
 
@@ -200,9 +204,13 @@ impl LuaUserScriptMessageEnvelope {
     pub fn new(ty: Value, value: Value) -> LuaResult<Self> {
         // Traitor::new(send_wrapper::SendWrapper::new(unsafe {{ std::mem::transmute::<mlua::Value<'_>, mlua::Value<'static>>({}) }} ))
         Ok(Self {
-            class: ty.to_string().map_err(|err| lua_error!("Failed to get class name from argument. error: {}", err))?,
+            class: ty.to_string().map_err(|err| {
+                lua_error!("Failed to get class name from argument. error: {}", err)
+            })?,
             // we use Lua interpreter as long as we use the process, so its lifetime is effectively static.
-            message: Traitor::new(SendWrapper::new(unsafe { mem::transmute::<Value<'_>, Value<'static>>(value) } )),
+            message: Traitor::new(SendWrapper::new(unsafe {
+                mem::transmute::<Value<'_>, Value<'static>>(value)
+            })),
         })
     }
 }

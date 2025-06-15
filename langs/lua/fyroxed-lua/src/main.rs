@@ -1,15 +1,15 @@
 //! Editor with your game connected to it as a plugin.
 
-use std::{env, fs};
-use std::path::{Path, PathBuf};
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyrox_build_tools::{BuildProfile, CommandDescriptor};
 use fyroxed_base::fyrox::event_loop::EventLoop;
 use fyroxed_base::plugin::EditorPlugin;
-use fyroxed_base::Editor;
 use fyroxed_base::settings::Settings;
+use fyroxed_base::Editor;
 use fyroxed_base::StartupData;
+use std::path::{Path, PathBuf};
+use std::{env, fs};
 
 fn main() {
     let args = env::args().collect::<Vec<_>>();
@@ -19,7 +19,7 @@ fn main() {
     } else {
         // There are usability issues on Macos, and on Linux probably too.
         // Let's support UI selector for Windows only
-        
+
         #[cfg(target_os = "windows")]
         {
             let s = ask_user::ask_user_for_directory("Fyrox Lua SDK: choose project directory");
@@ -27,7 +27,7 @@ fn main() {
                 None => {
                     return;
                 }
-                Some(s) => s.into()
+                Some(s) => s.into(),
             }
         }
         #[cfg(not(target_os = "windows"))]
@@ -53,7 +53,7 @@ fn main() {
             working_directory: project_dir.clone(),
             scenes: vec!["data/scene.rgs".into()],
         }),
-        settings
+        settings,
     );
 
     // Dynamic linking with hot reloading.
@@ -72,10 +72,9 @@ fn main() {
     #[cfg(not(feature = "dylib"))]
     {
         let scripts_dir = Path::join(&project_dir, "scripts");
-        if let Err(err) = editor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new(
-            scripts_dir,
-            true
-        )) {
+        if let Err(err) =
+            editor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new(scripts_dir, true))
+        {
             Log::err(err);
         }
 
@@ -87,21 +86,29 @@ fn main() {
 
 fn create_gitignore() {
     if fs::exists(".gitignore").unwrap() {
-        let _ = fs::write(".gitignore", "/.annotations\n/settings.ron\n*.log\n/.idea\n");
+        let _ = fs::write(
+            ".gitignore",
+            "/.annotations\n/settings.ron\n*.log\n/.idea\n",
+        );
     }
 }
 
 fn extract_annotations() {
-
     const ANNOTATIONS_SUB_DIR: &str = ".annotations";
-    
+
     if !fs::exists(ANNOTATIONS_SUB_DIR).unwrap() {
         fs::create_dir_all(ANNOTATIONS_SUB_DIR).unwrap();
-        let src = env::current_exe().unwrap().parent().unwrap().join("fyrox_lite_lua_annotations.tar.gz");
+        let src = env::current_exe()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .join("fyrox_lite_lua_annotations.tar.gz");
 
         if src.exists() {
             println!("extracting annotations");
-            comprexor::Extractor::new(src.to_str().unwrap(), ANNOTATIONS_SUB_DIR).extract().unwrap();
+            comprexor::Extractor::new(src.to_str().unwrap(), ANNOTATIONS_SUB_DIR)
+                .extract()
+                .unwrap();
         } else {
             println!("WARNING: annotations not found at {}", src.display());
         }
@@ -134,7 +141,6 @@ fn ensure_lua_profiles(_working_dir: &PathBuf) -> Settings {
         name: "Lua Project".to_string(),
         build_commands: vec![build],
         run_command: CommandDescriptor {
-
             #[cfg(target_os = "windows")]
             command: format!("{}/fyrox_lite_lua.exe", sdk_dir.display()),
 
@@ -156,7 +162,6 @@ struct LuaPluginRefreshOnFocus;
 
 #[cfg(not(feature = "dylib"))]
 impl EditorPlugin for LuaPluginRefreshOnFocus {
-
     fn on_resumed(&mut self, #[allow(unused_variables)] editor: &mut Editor) {
         for it in editor.engine.plugins_mut() {
             if let Some(it) = it.cast_mut::<fyrox_lite_lua_lib::LuaPlugin>() {

@@ -6,13 +6,12 @@ pub struct MethodResult {
 }
 
 pub fn analyze_method_result(method: &Method) -> MethodResult {
-
     let (success_type, may_fail) = match &method.signature.return_ty {
         None => (DataType::Unit, false),
         Some(it) => match it {
             DataType::Result { ok } => (DataType::clone(ok), true),
             it => (it.clone(), false),
-        }
+        },
     };
 
     MethodResult {

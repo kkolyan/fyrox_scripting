@@ -5,6 +5,7 @@ use crate::fyrox_lua_plugin::HotReload;
 use crate::fyrox_lua_plugin::LuaPlugin;
 use crate::fyrox_lua_plugin::PluginScriptList;
 use crate::generated::registry::register_classes;
+use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
 use crate::lua_lang::LuaLang;
 use crate::lua_script_metadata::parse_file;
 use crate::lua_utils::log_error;
@@ -14,29 +15,28 @@ use crate::script_metadata::ScriptKind;
 use crate::script_object::NodeScriptObject;
 use crate::script_object_residence::ScriptResidence;
 use crate::typed_userdata::TypedUserData;
+use crate::user_script_impl::UserScriptProxy;
 use fyrox::core::log::Log;
 use fyrox::core::watcher::FileSystemWatcher;
 use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::constructor::ScriptConstructor;
 use fyrox::script::Script;
 use fyrox::walkdir::DirEntry;
+use fyrox_lite::global_script_object::ScriptObject;
+use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
-use mlua::{Function, MultiValue, Table};
 use mlua::IntoLuaMulti;
 use mlua::Lua;
 use mlua::UserDataRef;
 use mlua::UserDataRefMut;
 use mlua::Value;
+use mlua::{Function, MultiValue, Table};
 use std::cell::RefCell;
 use std::path::PathBuf;
 use std::process::exit;
 use std::sync::Arc;
 use std::time::Duration;
-use fyrox_lite::global_script_object::ScriptObject;
-use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
-use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
-use crate::user_script_impl::UserScriptProxy;
 
 thread_local! {
     static LOADING_CLASS_NAME: RefCell<Option<String>> = Default::default();
@@ -186,8 +186,7 @@ pub(crate) fn create_plugin(scripts_dir: PathBuf, hot_reload_enabled: bool) -> L
     println!("Lua: {}", &setting_package_path);
     log_error(
         "set 'package.path'",
-        vm.load(setting_package_path)
-        .eval::<()>(),
+        vm.load(setting_package_path).eval::<()>(),
     );
 
     {
@@ -240,13 +239,15 @@ pub(crate) fn create_plugin(scripts_dir: PathBuf, hot_reload_enabled: bool) -> L
 fn expose_os_exit(vm: &mut Lua) {
     let lua_os = vm.globals().get::<_, Table>("os").unwrap();
     lua_os
-        .set("exit", vm.create_function::<_, (), _>(|_lua, args: MultiValue| {
-            Log::info("os.exit() called by script");
-            let code = args.get(0)
-                .map(|it| it.as_i32().unwrap())
-                .unwrap_or(0);
-            exit(code);
-        }).unwrap())
+        .set(
+            "exit",
+            vm.create_function::<_, (), _>(|_lua, args: MultiValue| {
+                Log::info("os.exit() called by script");
+                let code = args.get(0).map(|it| it.as_i32().unwrap()).unwrap_or(0);
+                exit(code);
+            })
+            .unwrap(),
+        )
         .unwrap();
 }
 
@@ -287,8 +288,14 @@ pub(crate) fn invoke_callback_internal<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(
     args: impl FnOnce() -> mlua::Result<A>,
 ) {
     without_script_context(ctx, || {
-
-        let class_name = script_object_ud.borrow().unwrap().as_script_object().def.metadata.class.clone();
+        let class_name = script_object_ud
+            .borrow()
+            .unwrap()
+            .as_script_object()
+            .def
+            .metadata
+            .class
+            .clone();
         // TODO optimize me
         let class = LUA
             .with_borrow(|it| it.unwrap())

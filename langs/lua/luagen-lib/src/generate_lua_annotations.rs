@@ -1,12 +1,10 @@
 use lite_model::{Class, Domain};
 
-use crate::{
-    annotations::{
-        engine_class::generate_engine, enum_class::generate_enum, struct_class::generate_struct,
-    },
+use crate::annotations::{
+    engine_class::generate_engine, enum_class::generate_enum, struct_class::generate_struct,
 };
 use gen_common::{
-    by_package::classes_by_package, code_model::Module, templating::strExt, writelnu
+    by_package::classes_by_package, code_model::Module, templating::strExt, writelnu,
 };
 
 const HEADER: &str = "
@@ -31,14 +29,22 @@ pub fn generate_lua_annotations(domain: &Domain) -> Module {
 fn generate_lua_annotations_manual() -> Module {
     let mut root = Module::root();
     let mut script = Module::no_code("Script");
-    script.add_child(Module::code("NodeScript", format!("{}
+    script.add_child(Module::code(
+        "NodeScript",
+        format!(
+            "{}
 
 			---@class NodeScript
 			---@field node Node
 			NodeScript = {{}}
 
 			function script_class() end
-		", HEADER.trim()).as_str().deindent()));
+		",
+            HEADER.trim()
+        )
+        .as_str()
+        .deindent(),
+    ));
     root.add_child(script);
     root
 }
@@ -48,7 +54,6 @@ fn generate_lua_annotations_from_domain(domain: &Domain) -> Module {
 
     let by_package = classes_by_package(domain);
     for (package, classes) in by_package {
-
         let mut package_mods = Module::no_code(package.strip_prefix("lite_").unwrap());
 
         for class in classes {

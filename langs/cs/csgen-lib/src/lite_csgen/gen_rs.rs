@@ -1,4 +1,3 @@
-
 #[derive(Debug, Default)]
 pub struct RustEmitter {
     pub code: String,

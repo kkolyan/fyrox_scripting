@@ -10,9 +10,12 @@ pub enum Naming {
 }
 
 impl Naming {
-
     pub fn package_name(&self, name: &str) -> String {
-        let n = name.to_case(Case::Pascal).strip_prefix("Lite").unwrap().to_string();
+        let n = name
+            .to_case(Case::Pascal)
+            .strip_prefix("Lite")
+            .unwrap()
+            .to_string();
         if n == "Ui" {
             return "UI".to_string();
         }

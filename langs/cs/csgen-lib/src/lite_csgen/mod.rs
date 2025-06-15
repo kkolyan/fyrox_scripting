@@ -4,20 +4,20 @@ use gen_common::code_model::Module;
 use gen_common::context::GenerationContext;
 use lite_model::{Class, ClassName, DataType, Domain};
 
-pub mod engine_class;
-pub mod struct_class;
-pub mod enum_class;
 pub mod api_types;
-pub mod write_cs;
-pub mod wrappers;
+pub mod engine_class;
+pub mod enum_class;
 pub mod gen_rs;
+pub mod struct_class;
+pub mod wrappers;
+pub mod write_cs;
 
 pub fn generate_cs_facade(domain: &Domain) -> (Module, RustEmitter) {
     let ctx = GenerationContext {
         internal_to_external: Default::default(),
         domain,
     };
-    
+
     let mut rust = RustEmitter::default();
 
     let mut bindings = Module::root();
@@ -54,7 +54,7 @@ pub fn generate_base() -> (Module, RustEmitter) {
 
     let mut rust_owned = RustEmitter::default();
     let rust = &mut rust_owned;
-    
+
     let mut s = String::new();
     let basic_types = [
         DataType::Bool,
@@ -71,12 +71,42 @@ pub fn generate_base() -> (Module, RustEmitter) {
         wrappers::generate_optional(&mut s, rust, &basic_type, ctx);
         wrappers::generate_slice(&mut s, rust, &basic_type, ctx);
     }
-    wrappers::generate_slice(&mut s, rust, &DataType::Object(ClassName("NativeScriptMetadata".to_string())), ctx);
-    wrappers::generate_slice(&mut s, rust, &DataType::Object(ClassName("NativeScriptProperty".to_string())), ctx);
-    wrappers::generate_slice(&mut s, rust, &DataType::Object(ClassName("NativeValue".to_string())), ctx);
-    wrappers::generate_optional(&mut s, rust, &DataType::Object(ClassName("NativeHandle".to_string())), ctx);
-    wrappers::generate_slice(&mut s, rust, &DataType::Object(ClassName("NativePropertyValue".to_string())), ctx);
-    wrappers::generate_result(&mut s, rust, &DataType::Option(Box::new(DataType::UserScript)), ctx);
+    wrappers::generate_slice(
+        &mut s,
+        rust,
+        &DataType::Object(ClassName("NativeScriptMetadata".to_string())),
+        ctx,
+    );
+    wrappers::generate_slice(
+        &mut s,
+        rust,
+        &DataType::Object(ClassName("NativeScriptProperty".to_string())),
+        ctx,
+    );
+    wrappers::generate_slice(
+        &mut s,
+        rust,
+        &DataType::Object(ClassName("NativeValue".to_string())),
+        ctx,
+    );
+    wrappers::generate_optional(
+        &mut s,
+        rust,
+        &DataType::Object(ClassName("NativeHandle".to_string())),
+        ctx,
+    );
+    wrappers::generate_slice(
+        &mut s,
+        rust,
+        &DataType::Object(ClassName("NativePropertyValue".to_string())),
+        ctx,
+    );
+    wrappers::generate_result(
+        &mut s,
+        rust,
+        &DataType::Option(Box::new(DataType::UserScript)),
+        ctx,
+    );
     let mut root = Module::root();
     root.add_child(Module::code("LiteBase", s));
     (root, rust_owned)

@@ -1,21 +1,25 @@
-use fyrox::core::{
-        pool::Handle,
-        visitor::Visit,
-        Uuid,
-    };
-use fyrox::scene::node::Node;
-use error::abort_with_backtrace;
-use fyrox_lite::{
-    externalizable::Externalizable, lite_prefab::LitePrefab, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, NodeScriptObject}, script_object_residence::uuid_of_script
-};
-use fyrox_lite::global_script_object::ScriptObject;
-use crate::{bindings_manual::{
-    NativeHandle, NativeValue,
-}, scripted_app::APP, UserScriptImpl};
-use crate::bindings_lite_2::{NativeQuaternion, NativeVector2, NativeVector2I, NativeVector3};
-use crate::bindings_manual::{NativeClassId, NativeInstanceId, NativePropertyValue, NativeString, NativeValueType};
 use crate::auto_dispose::AutoDispose;
+use crate::bindings_lite_2::{NativeQuaternion, NativeVector2, NativeVector2I, NativeVector3};
+use crate::bindings_manual::{
+    NativeClassId, NativeInstanceId, NativePropertyValue, NativeString, NativeValueType,
+};
 use crate::scripted_app::ScriptsMetadata;
+use crate::{
+    bindings_manual::{NativeHandle, NativeValue},
+    scripted_app::APP,
+    UserScriptImpl,
+};
+use error::abort_with_backtrace;
+use fyrox::core::{pool::Handle, visitor::Visit, Uuid};
+use fyrox::scene::node::Node;
+use fyrox_lite::global_script_object::ScriptObject;
+use fyrox_lite::{
+    externalizable::Externalizable,
+    lite_prefab::LitePrefab,
+    script_metadata::ScriptFieldValueType,
+    script_object::{Lang, NodeScriptObject, ScriptFieldValue},
+    script_object_residence::uuid_of_script,
+};
 
 #[derive(Debug, Clone)]
 pub struct CCompatibleLang;
@@ -44,22 +48,34 @@ impl Lang for CCompatibleLang {
         script.uuid
     }
 
-    fn unpack_node_script(script: &NodeScriptObject<Self>) -> Result<Self::UnpackedScriptObject, String> {
-        unpack_script(&script.obj, Some(script.node), |md, uuid| md.node_scripts.get(&uuid).unwrap().id)
+    fn unpack_node_script(
+        script: &NodeScriptObject<Self>,
+    ) -> Result<Self::UnpackedScriptObject, String> {
+        unpack_script(&script.obj, Some(script.node), |md, uuid| {
+            md.node_scripts.get(&uuid).unwrap().id
+        })
     }
 
-    fn unpack_global_script(script: &ScriptObject<Self>) -> Result<Self::UnpackedGlobalScriptObject, String> {
-        unpack_script(&script, None, |md, uuid| md.global_scripts.get(&uuid).unwrap().id)
+    fn unpack_global_script(
+        script: &ScriptObject<Self>,
+    ) -> Result<Self::UnpackedGlobalScriptObject, String> {
+        unpack_script(&script, None, |md, uuid| {
+            md.global_scripts.get(&uuid).unwrap().id
+        })
     }
 }
 
-fn unpack_script(script: &ScriptObject<CCompatibleLang>, node: Option<Handle<Node>>, get_metadata: impl FnOnce(&ScriptsMetadata, Uuid) -> NativeClassId) -> Result<UserScriptImpl, String> {
+fn unpack_script(
+    script: &ScriptObject<CCompatibleLang>,
+    node: Option<Handle<Node>>,
+    get_metadata: impl FnOnce(&ScriptsMetadata, Uuid) -> NativeClassId,
+) -> Result<UserScriptImpl, String> {
     let uuid = uuid_of_script(script);
     APP.with_borrow(|app| {
         let app = app.as_ref().unwrap();
         let native_class_id = get_metadata(app.scripts_metadata.as_ref().unwrap(), uuid);
         let mut state = Vec::new();
-        
+
         for (i, prop) in script.def.metadata.fields.iter().enumerate() {
             let value = &script.values[i];
             let name = prop.name.clone().into();
@@ -70,10 +86,9 @@ fn unpack_script(script: &ScriptObject<CCompatibleLang>, node: Option<Handle<Nod
         let instance = (app.functions.create_script_instance)(
             native_class_id,
             state.into(),
-            node
-                .map(|it| it.into())
-                .into()
-        ).into_result_shallow()?;
+            node.map(|it| it.into()).into(),
+        )
+        .into_result_shallow()?;
         Ok(UnpackedObject {
             uuid,
             class: native_class_id,
@@ -82,7 +97,11 @@ fn unpack_script(script: &ScriptObject<CCompatibleLang>, node: Option<Handle<Nod
     })
 }
 
-fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, ty: ScriptFieldValueType) -> NativePropertyValue {
+fn convert_value(
+    name: NativeString,
+    value: &ScriptFieldValue<CCompatibleLang>,
+    ty: ScriptFieldValueType,
+) -> NativePropertyValue {
     match value {
         ScriptFieldValue::Prefab(resource) => {
             assert_eq!(ty, ScriptFieldValueType::Prefab);
@@ -96,15 +115,13 @@ fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, 
                             Handle: NativeHandle::from_u128(prefab.to_external()),
                         },
                     }
-                },
-                None => {
-                    NativePropertyValue {
-                        name,
-                        ty: NativeValueType::Prefab,
-                        value: NativeValue {
-                            Handle: Handle::<()>::NONE.into(),
-                        },
-                    }
+                }
+                None => NativePropertyValue {
+                    name,
+                    ty: NativeValueType::Prefab,
+                    value: NativeValue {
+                        Handle: Handle::<()>::NONE.into(),
+                    },
                 },
             }
         }
@@ -115,7 +132,9 @@ fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, 
                 ty: NativeValueType::Vector3,
                 value: NativeValue {
                     Vector3: NativeVector3 {
-                        x: it.x, y: it.y, z: it.z
+                        x: it.x,
+                        y: it.y,
+                        z: it.z,
                     },
                 },
             }
@@ -126,9 +145,7 @@ fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, 
                 name,
                 ty: NativeValueType::Vector2,
                 value: NativeValue {
-                    Vector2: NativeVector2 {
-                        x: it.x, y: it.y
-                    },
+                    Vector2: NativeVector2 { x: it.x, y: it.y },
                 },
             }
         }
@@ -138,9 +155,7 @@ fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, 
                 name,
                 ty: NativeValueType::Vector2,
                 value: NativeValue {
-                    Vector2I: NativeVector2I {
-                        x: it.x, y: it.y
-                    },
+                    Vector2I: NativeVector2I { x: it.x, y: it.y },
                 },
             }
         }
@@ -151,7 +166,10 @@ fn convert_value(name: NativeString, value: &ScriptFieldValue<CCompatibleLang>, 
                 ty: NativeValueType::Quaternion,
                 value: NativeValue {
                     Quaternion: NativeQuaternion {
-                        i: it.i,j: it.j,k: it.k, w:it.w
+                        i: it.i,
+                        j: it.j,
+                        k: it.k,
+                        w: it.w,
                     },
                 },
             }
@@ -221,7 +239,6 @@ pub struct UnpackedObject {
     pub class: NativeClassId,
     pub instance: AutoDispose<NativeInstanceId>,
 }
-
 
 impl From<UnpackedObject> for NativeInstanceId {
     fn from(value: UnpackedObject) -> Self {

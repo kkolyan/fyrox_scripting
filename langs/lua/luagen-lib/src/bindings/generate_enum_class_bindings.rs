@@ -1,14 +1,13 @@
-
 use convert_case::{Case, Casing};
-use lite_model::{
-    DataType, EnumClass, EnumValue, Field,
-};
+use lite_model::{DataType, EnumClass, EnumValue, Field};
 use to_vec::ToVec;
 
-use gen_common::{
-    code_model::{Module}, context::GenerationContext, templating::render
+use super::{
+    eq::generate_eq,
+    expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua},
+    supress_lint::SUPRESSIONS,
 };
-use super::{eq::generate_eq, expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, supress_lint::SUPRESSIONS};
+use gen_common::{code_model::Module, context::GenerationContext, templating::render};
 
 pub fn generate_enum_class_bindings(class: &EnumClass, ctx: &GenerationContext) -> Module {
     let mut s: String = Default::default();
@@ -210,10 +209,7 @@ fn tuple_to_value(
                         ${expression}
                     })?;
         "#,
-            [
-                ("var", &var),
-                ("expression", &expression),
-            ],
+            [("var", &var), ("expression", &expression)],
         );
     }
 

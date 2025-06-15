@@ -1,6 +1,6 @@
 //!
 //! This module is created, because there is no centralized pool of resources in Fyrox.
-//! 
+//!
 
 use std::{cell::RefCell, collections::HashMap};
 

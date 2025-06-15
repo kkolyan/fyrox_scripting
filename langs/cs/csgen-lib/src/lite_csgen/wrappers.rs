@@ -1,13 +1,20 @@
-use gen_common::context::GenerationContext;
-use gen_common::templating::{render, render_string};
-use lite_model::{DataType};
 use crate::lite_csgen::api_types;
 use crate::lite_csgen::gen_rs::RustEmitter;
+use gen_common::context::GenerationContext;
+use gen_common::templating::{render, render_string};
+use lite_model::DataType;
 
-pub(crate) fn generate_result(s: &mut String, rust: &mut RustEmitter, wrapped_type: &DataType, ctx: &GenerationContext) {
+pub(crate) fn generate_result(
+    s: &mut String,
+    rust: &mut RustEmitter,
+    wrapped_type: &DataType,
+    ctx: &GenerationContext,
+) {
     let marshalling = api_types::type_cs(wrapped_type);
 
-    render(s, r#"
+    render(
+        s,
+        r#"
 
             [StructLayout(LayoutKind.Sequential)]
             internal struct ${blittable}_result
@@ -48,13 +55,29 @@ pub(crate) fn generate_result(s: &mut String, rust: &mut RustEmitter, wrapped_ty
                 [FieldOffset(0)]
                 internal NativeString err;
             }
-    "#, [
-        ("blittable", &marshalling.to_blittable()),
-        ("bool_type", &"int"),
-        ("facade", &marshalling.to_facade()),
-        ("item_to_facade", &if marshalling.is_mapped() {format!("{}.ToFacade(__item)", marshalling.to_blittable())} else {"__item".to_string()}),
-        ("item_from_facade", &if marshalling.is_mapped() {format!("{}.FromFacade(__item)", marshalling.to_blittable())} else {"__item".to_string()}),
-    ]);
+    "#,
+        [
+            ("blittable", &marshalling.to_blittable()),
+            ("bool_type", &"int"),
+            ("facade", &marshalling.to_facade()),
+            (
+                "item_to_facade",
+                &if marshalling.is_mapped() {
+                    format!("{}.ToFacade(__item)", marshalling.to_blittable())
+                } else {
+                    "__item".to_string()
+                },
+            ),
+            (
+                "item_from_facade",
+                &if marshalling.is_mapped() {
+                    format!("{}.FromFacade(__item)", marshalling.to_blittable())
+                } else {
+                    "__item".to_string()
+                },
+            ),
+        ],
+    );
     rust.emit_statement(render_string(r#"
             #[repr(C)]
             #[derive(Clone, Copy)]
@@ -111,9 +134,16 @@ pub(crate) fn generate_result(s: &mut String, rust: &mut RustEmitter, wrapped_ty
     ]));
 }
 
-pub(crate) fn generate_optional(s: &mut String, rust: &mut RustEmitter, wrapped_type: &DataType, ctx: &GenerationContext) {
+pub(crate) fn generate_optional(
+    s: &mut String,
+    rust: &mut RustEmitter,
+    wrapped_type: &DataType,
+    ctx: &GenerationContext,
+) {
     let marshalling = api_types::type_cs(wrapped_type);
-    render(s, r#"
+    render(
+        s,
+        r#"
 
             [StructLayout(LayoutKind.Sequential)]
             internal struct ${blittable}_optional
@@ -145,14 +175,38 @@ pub(crate) fn generate_optional(s: &mut String, rust: &mut RustEmitter, wrapped_
                     return new ${blittable}_optional { value = __item_from_facade, has_value = 1 };
                 }
             }
-    "#, [
-        ("blittable", &marshalling.to_blittable()),
-        ("facade", &marshalling.to_facade()),
-        ("item_to_facade", &if marshalling.is_mapped() {format!("{}.ToFacade(__item)", marshalling.to_blittable())} else {"__item".to_string()}),
-        ("item_from_facade", &if marshalling.is_mapped() {format!("{}.FromFacade(__item)", marshalling.to_blittable())} else {"__item".to_string()}),
-        ("unwrap", &if marshalling.to_facade() == "object" || marshalling.to_facade() == "string" {""} else {".Value"}),
-    ]);
-    rust.emit_statement(render_string(r#"
+    "#,
+        [
+            ("blittable", &marshalling.to_blittable()),
+            ("facade", &marshalling.to_facade()),
+            (
+                "item_to_facade",
+                &if marshalling.is_mapped() {
+                    format!("{}.ToFacade(__item)", marshalling.to_blittable())
+                } else {
+                    "__item".to_string()
+                },
+            ),
+            (
+                "item_from_facade",
+                &if marshalling.is_mapped() {
+                    format!("{}.FromFacade(__item)", marshalling.to_blittable())
+                } else {
+                    "__item".to_string()
+                },
+            ),
+            (
+                "unwrap",
+                &if marshalling.to_facade() == "object" || marshalling.to_facade() == "string" {
+                    ""
+                } else {
+                    ".Value"
+                },
+            ),
+        ],
+    );
+    rust.emit_statement(render_string(
+        r#"
             #[repr(C)]
             #[derive(Clone, Copy)]
             pub struct ${class_native}_optional {
@@ -178,16 +232,33 @@ pub(crate) fn generate_optional(s: &mut String, rust: &mut RustEmitter, wrapped_
                     }
                 }
             }
-    "#, [
-        ("class_native", &api_types::type_rs(wrapped_type, ctx).to_native()),
-        ("class_lite", &api_types::type_rs(wrapped_type, ctx).to_lite()),
-    ]));
+    "#,
+        [
+            (
+                "class_native",
+                &api_types::type_rs(wrapped_type, ctx).to_native(),
+            ),
+            (
+                "class_lite",
+                &api_types::type_rs(wrapped_type, ctx).to_lite(),
+            ),
+        ],
+    ));
 }
 
-pub fn generate_slice(mut s: &mut String, rust: &mut RustEmitter, wrapped_type: &DataType, ctx: &GenerationContext) {
+pub fn generate_slice(
+    mut s: &mut String,
+    rust: &mut RustEmitter,
+    wrapped_type: &DataType,
+    ctx: &GenerationContext,
+) {
     let marshalling = api_types::type_cs(wrapped_type);
-    let class_lite_escaped = api_types::type_rs(wrapped_type, ctx).to_lite().replace("::", "_");
-    render(&mut s, r#"
+    let class_lite_escaped = api_types::type_rs(wrapped_type, ctx)
+        .to_lite()
+        .replace("::", "_");
+    render(
+        &mut s,
+        r#"
 
             [StructLayout(LayoutKind.Sequential)]
             internal partial struct ${blittable}_slice
@@ -245,13 +316,29 @@ pub fn generate_slice(mut s: &mut String, rust: &mut RustEmitter, wrapped_type: 
                 [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
                 internal static unsafe partial ${blittable}_slice fyrox_lite_upload_${class_lite_escaped}_slice(${blittable}_slice managed);
             }
-    "#, [
-        ("blittable", &marshalling.to_blittable()),
-        ("facade", &marshalling.to_facade()),
-        ("class_lite_escaped", &class_lite_escaped),
-        ("item_to_facade", &if marshalling.is_mapped() {format!("{}.ToFacade(__item)", marshalling.to_blittable())} else {"__item".to_string()}),
-        ("item_from_facade", &if marshalling.is_mapped() {format!("{}.FromFacade(__item)", marshalling.to_blittable())} else {"__item".to_string()}),
-    ]);
+    "#,
+        [
+            ("blittable", &marshalling.to_blittable()),
+            ("facade", &marshalling.to_facade()),
+            ("class_lite_escaped", &class_lite_escaped),
+            (
+                "item_to_facade",
+                &if marshalling.is_mapped() {
+                    format!("{}.ToFacade(__item)", marshalling.to_blittable())
+                } else {
+                    "__item".to_string()
+                },
+            ),
+            (
+                "item_from_facade",
+                &if marshalling.is_mapped() {
+                    format!("{}.FromFacade(__item)", marshalling.to_blittable())
+                } else {
+                    "__item".to_string()
+                },
+            ),
+        ],
+    );
     rust.emit_statement(render_string(r#"
             #[repr(C)]
             #[derive(Clone, Copy)]

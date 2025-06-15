@@ -1,5 +1,5 @@
-use lite_model::{DataType, Method};
 use crate::methods::{analyze_method_result, MethodResult};
+use lite_model::{DataType, Method};
 
 pub struct Getter {
     pub instance: bool,
@@ -29,8 +29,20 @@ pub fn is_regular(method: &Method) -> bool {
 
 impl Setter {
     pub fn try_from(method: &Method) -> Option<Setter> {
-        let MethodResult { may_fail, success_type: returns_value } = analyze_method_result(method);
-        if matches!(returns_value, DataType::Unit) && method.signature.params.iter().filter(|it| !matches!(&it.ty, DataType::UserScriptGenericStub)).count() == 1 && method.method_name.starts_with("set_") {
+        let MethodResult {
+            may_fail,
+            success_type: returns_value,
+        } = analyze_method_result(method);
+        if matches!(returns_value, DataType::Unit)
+            && method
+                .signature
+                .params
+                .iter()
+                .filter(|it| !matches!(&it.ty, DataType::UserScriptGenericStub))
+                .count()
+                == 1
+            && method.method_name.starts_with("set_")
+        {
             let prop_name = method.method_name.strip_prefix("set_").unwrap().to_string();
             let prop_type = method.signature.params.first().as_ref().unwrap().ty.clone();
             return Some(Setter {
@@ -46,9 +58,15 @@ impl Setter {
 }
 
 impl Getter {
-
     pub fn try_from(method: &Method) -> Option<Getter> {
-        if method.signature.return_ty.is_some() && !method.signature.params.iter().any(|it| !matches!(&it.ty, DataType::UserScriptGenericStub)) && method.method_name.starts_with("get_") {
+        if method.signature.return_ty.is_some()
+            && !method
+                .signature
+                .params
+                .iter()
+                .any(|it| !matches!(&it.ty, DataType::UserScriptGenericStub))
+            && method.method_name.starts_with("get_")
+        {
             let prop_name = method.method_name.strip_prefix("get_").unwrap().to_string();
             let prop_type = method.signature.return_ty.as_ref().unwrap().clone();
             return Some(Getter {

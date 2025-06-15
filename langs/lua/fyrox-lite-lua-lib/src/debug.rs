@@ -19,22 +19,22 @@ pub fn var_dump(_lua: &Lua, args: MultiValue) -> mlua::Result<()> {
 // for some reason, print calls are heavily buffered.
 pub fn override_print(vm: &Lua) {
     vm.globals()
-    .set(
-        "print",
-        vm.create_function(|_lua, args: MultiValue| {
-            for i in 0..args.len() {
-                if i > 0 {
-                    print!("\t");
+        .set(
+            "print",
+            vm.create_function(|_lua, args: MultiValue| {
+                for i in 0..args.len() {
+                    if i > 0 {
+                        print!("\t");
+                    }
+                    let arg = args.get(i).expect("WTF, `i` is from the loop");
+                    print!("{}", arg.to_string()?);
                 }
-                let arg = args.get(i).expect("WTF, `i` is from the loop");
-                print!("{}", arg.to_string()?);
-            }
-            println!();
-            Ok(())
-        })
-        .unwrap(),
-    )
-    .unwrap();
+                println!();
+                Ok(())
+            })
+            .unwrap(),
+        )
+        .unwrap();
 }
 
 #[derive(Clone)]

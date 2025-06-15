@@ -9,15 +9,19 @@ use fyroxed_base::plugin::EditorPlugin;
 use fyroxed_base::settings::Settings;
 use fyroxed_base::Editor;
 use fyroxed_base::StartupData;
+use std::env;
 use std::ffi::{c_char, CStr};
 use std::path::PathBuf;
-use std::env;
-
 
 #[no_mangle]
-pub unsafe extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assembly_path: *const c_char) {
+pub unsafe extern "C" fn fyrox_lite_editor_run(
+    working_dir: *const c_char,
+    assembly_path: *const c_char,
+) {
     Log::set_verbosity(MessageKind::Warning);
-    let working_dir = CStr::from_ptr(working_dir).to_str().expect("failed to parse working directory argument");
+    let working_dir = CStr::from_ptr(working_dir)
+        .to_str()
+        .expect("failed to parse working directory argument");
     let working_dir = dunce::canonicalize(working_dir).unwrap();
     let event_loop = EventLoop::new().unwrap();
     println!("Using working dir: {}", working_dir.display());
@@ -69,13 +73,11 @@ fn ensure_cs_profiles(_working_dir: &PathBuf) -> Settings {
     settings.build.profiles.clear();
     settings.build.profiles.push(BuildProfile {
         name: "C# Project".to_string(),
-        build_commands: vec![
-            CommandDescriptor {
-                command: "dotnet".to_string(),
-                args: vec!["build".to_string()],
-                environment_variables: vec![],
-            }
-        ],
+        build_commands: vec![CommandDescriptor {
+            command: "dotnet".to_string(),
+            args: vec!["build".to_string()],
+            environment_variables: vec![],
+        }],
         run_command: CommandDescriptor {
             command: "dotnet".to_string(),
             args: vec!["run".to_string()],

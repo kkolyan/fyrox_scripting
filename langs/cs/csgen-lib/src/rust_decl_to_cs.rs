@@ -1,42 +1,57 @@
+use gen_common::code_model::Module;
+use gen_common::templating::{render, render_string};
+use itertools::Itertools;
+use proc_macro2::TokenStream;
+use quote::ToTokens;
 use std::collections::{HashMap, HashSet};
 use std::ops::Deref;
 use std::str::FromStr;
-use itertools::Itertools;
-use proc_macro2::TokenStream;
-use gen_common::templating::{render, render_string};
-use quote::ToTokens;
 use syn::{parse2, Attribute, File, FnArg, Item, ReturnType, Type};
 use to_vec::ToVec;
-use gen_common::code_model::{Module};
 
 struct CustomTypeProps {
-    is_delegate: bool
+    is_delegate: bool,
 }
 
 pub fn rust_decl_to_c(file: &File, known_structs: &HashSet<String>) -> Module {
     let mut custom_type_names: HashMap<String, CustomTypeProps> = Default::default();
     collect_custom_type_names(file, &mut custom_type_names);
     for known_struct in known_structs.iter() {
-        custom_type_names.insert(known_struct.clone(),CustomTypeProps { is_delegate: false });
+        custom_type_names.insert(known_struct.clone(), CustomTypeProps { is_delegate: false });
     }
     convert_file(file, &custom_type_names)
 }
 
-fn collect_custom_type_names(file: &File, custom_type_names: &mut HashMap<String, CustomTypeProps> ) {
+fn collect_custom_type_names(
+    file: &File,
+    custom_type_names: &mut HashMap<String, CustomTypeProps>,
+) {
     for item in file.items.iter() {
         if let Item::Struct(item) = item {
-            custom_type_names.insert(item.ident.to_string(), CustomTypeProps { is_delegate: false });
+            custom_type_names.insert(
+                item.ident.to_string(),
+                CustomTypeProps { is_delegate: false },
+            );
         }
         if let Item::Union(item) = item {
-            custom_type_names.insert(item.ident.to_string(), CustomTypeProps { is_delegate: false });
+            custom_type_names.insert(
+                item.ident.to_string(),
+                CustomTypeProps { is_delegate: false },
+            );
         }
         if let Item::Enum(item) = item {
-            custom_type_names.insert(item.ident.to_string(), CustomTypeProps { is_delegate: false });
+            custom_type_names.insert(
+                item.ident.to_string(),
+                CustomTypeProps { is_delegate: false },
+            );
         }
         if let Item::Type(item) = item {
             match item.ty.deref() {
                 Type::BareFn(_) => {
-                    custom_type_names.insert(item.ident.to_string(), CustomTypeProps { is_delegate: true });
+                    custom_type_names.insert(
+                        item.ident.to_string(),
+                        CustomTypeProps { is_delegate: true },
+                    );
                 }
                 _ => {}
             }
@@ -51,17 +66,26 @@ fn convert_file(file: &File, custom_type_names: &HashMap<String, CustomTypeProps
         if let Item::Struct(item) = item {
             let mut s = String::new();
             convert_struct(&mut s, item, custom_type_names);
-            mods.add_child(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
+            mods.add_child(Module::code(
+                item.ident.to_string(),
+                strip_indent(s, "    "),
+            ));
         }
         if let Item::Union(item) = item {
             let mut s = String::new();
             convert_union(&mut s, item, custom_type_names);
-            mods.add_child(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
+            mods.add_child(Module::code(
+                item.ident.to_string(),
+                strip_indent(s, "    "),
+            ));
         }
         if let Item::Enum(item) = item {
             let mut s = String::new();
             convert_enum(&mut s, item, custom_type_names);
-            mods.add_child(Module::code(item.ident.to_string(), strip_indent(s, "    ")));
+            mods.add_child(Module::code(
+                item.ident.to_string(),
+                strip_indent(s, "    "),
+            ));
         }
         if let Item::Type(item) = item {
             convert_functor_def(&mut globals, item, custom_type_names);
@@ -80,17 +104,21 @@ fn convert_file(file: &File, custom_type_names: &HashMap<String, CustomTypeProps
                     ${code}
                 }
     "#,
-        [
-            ("class", &globals_host_class),
-            ("code", &globals),
-        ],
+        [("class", &globals_host_class), ("code", &globals)],
     );
-    mods.add_child(Module::code(globals_host_class, strip_indent(globals, "    ")));
+    mods.add_child(Module::code(
+        globals_host_class,
+        strip_indent(globals, "    "),
+    ));
     mods
 }
 
 fn strip_indent(s: String, indent: &str) -> String {
-    s.lines().map(|it| it.strip_prefix(indent).unwrap_or(it)).to_vec().iter().join("\n")
+    s.lines()
+        .map(|it| it.strip_prefix(indent).unwrap_or(it))
+        .to_vec()
+        .iter()
+        .join("\n")
     // s
 }
 
@@ -121,7 +149,11 @@ fn extract_owner_class(attrs: &[Attribute]) -> String {
         .unwrap_or_default()
 }
 
-fn convert_function(s: &mut String, item: &syn::ItemFn, custom_type_names: &HashMap<String, CustomTypeProps> ) {
+fn convert_function(
+    s: &mut String,
+    item: &syn::ItemFn,
+    custom_type_names: &HashMap<String, CustomTypeProps>,
+) {
     let ret = match &item.sig.output {
         ReturnType::Default => "void".to_string(),
         ReturnType::Type(_, ty) => type_rs2cs(ty.as_ref(), custom_type_names),
@@ -158,7 +190,11 @@ fn convert_function(s: &mut String, item: &syn::ItemFn, custom_type_names: &Hash
     );
 }
 
-fn convert_functor_def(s: &mut String, item: &syn::ItemType, custom_type_names: &HashMap<String, CustomTypeProps> ) {
+fn convert_functor_def(
+    s: &mut String,
+    item: &syn::ItemType,
+    custom_type_names: &HashMap<String, CustomTypeProps>,
+) {
     if let Type::BareFn(f) = item.ty.as_ref() {
         let ret = match &f.output {
             ReturnType::Default => "void".to_string(),
@@ -191,7 +227,11 @@ fn convert_functor_def(s: &mut String, item: &syn::ItemType, custom_type_names: 
     }
 }
 
-fn convert_enum(s: &mut String, item: &syn::ItemEnum, _custom_type_names: &HashMap<String, CustomTypeProps> ) {
+fn convert_enum(
+    s: &mut String,
+    item: &syn::ItemEnum,
+    _custom_type_names: &HashMap<String, CustomTypeProps>,
+) {
     if item
         .attrs
         .iter()
@@ -235,7 +275,11 @@ fn escape_keywords(s: &str) -> &str {
     s
 }
 
-fn convert_struct(s: &mut String, item: &syn::ItemStruct, custom_type_names: &HashMap<String, CustomTypeProps> ) {
+fn convert_struct(
+    s: &mut String,
+    item: &syn::ItemStruct,
+    custom_type_names: &HashMap<String, CustomTypeProps>,
+) {
     if item
         .attrs
         .iter()
@@ -281,10 +325,7 @@ fn convert_struct(s: &mut String, item: &syn::ItemStruct, custom_type_names: &Ha
                     "
                     internal ${type} ${name};
                 ",
-                    [
-                        ("name", field.ident.as_ref().unwrap()),
-                        ("type", &ty),
-                    ],
+                    [("name", field.ident.as_ref().unwrap()), ("type", &ty)],
                 );
             }
         }
@@ -299,7 +340,11 @@ fn convert_struct(s: &mut String, item: &syn::ItemStruct, custom_type_names: &Ha
     }
 }
 
-fn convert_union(s: &mut String, item: &syn::ItemUnion, custom_type_names: &HashMap<String, CustomTypeProps> ) {
+fn convert_union(
+    s: &mut String,
+    item: &syn::ItemUnion,
+    custom_type_names: &HashMap<String, CustomTypeProps>,
+) {
     if item
         .attrs
         .iter()
@@ -325,7 +370,10 @@ fn convert_union(s: &mut String, item: &syn::ItemUnion, custom_type_names: &Hash
                     internal ${type} ${name};
                     ",
                 [
-                    ("name", &escape_keywords(field.ident.as_ref().unwrap().to_string().as_str())),
+                    (
+                        "name",
+                        &escape_keywords(field.ident.as_ref().unwrap().to_string().as_str()),
+                    ),
                     ("type", &type_rs2cs(&field.ty, &custom_type_names)),
                 ],
             );

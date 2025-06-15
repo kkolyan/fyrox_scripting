@@ -1,13 +1,17 @@
-use std::process::exit;
-use fyrox::core::reflect::*;
-use crate::{reflect_base, script_metadata::ScriptFieldValueType, script_object::{Lang, ScriptFieldValue, NodeScriptObject}};
 use crate::global_script_object::ScriptObject;
+use crate::{
+    reflect_base,
+    script_metadata::ScriptFieldValueType,
+    script_object::{Lang, NodeScriptObject, ScriptFieldValue},
+};
+use fyrox::core::reflect::*;
+use std::process::exit;
 
-impl <T: Lang> Reflect for NodeScriptObject<T> {
+impl<T: Lang> Reflect for NodeScriptObject<T> {
     crate::wrapper_reflect!(obj);
 }
 
-impl <T: Lang> Reflect for ScriptObject<T> {
+impl<T: Lang> Reflect for ScriptObject<T> {
     reflect_base!();
 
     crate::reflect_base_lite!();
@@ -18,21 +22,18 @@ impl <T: Lang> Reflect for ScriptObject<T> {
             .metadata
             .fields
             .iter()
-            .map(|it| {
-
-                FieldMetadata {
-                    name: it.name.as_str(),
-                    display_name: it.title.as_str(),
-                    description: it.name.as_str(),
-                    tag: "",
-                    doc: it.description.unwrap_or(""),
-                    read_only: false,
-                    immutable_collection: false,
-                    min_value: None,
-                    max_value: None,
-                    step: None,
-                    precision: None,
-                }
+            .map(|it| FieldMetadata {
+                name: it.name.as_str(),
+                display_name: it.title.as_str(),
+                description: it.name.as_str(),
+                tag: "",
+                doc: it.description.unwrap_or(""),
+                read_only: false,
+                immutable_collection: false,
+                min_value: None,
+                max_value: None,
+                step: None,
+                precision: None,
             })
             .collect();
 
@@ -74,8 +75,7 @@ impl <T: Lang> Reflect for ScriptObject<T> {
         func(&fields)
     }
 
-    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut[FieldMut])) {
-
+    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
         let def = self.def.clone();
         let metadata: Vec<FieldMetadata> = def
             .metadata
@@ -131,9 +131,7 @@ impl <T: Lang> Reflect for ScriptObject<T> {
             .filter(|(i, it)| !it.private)
         {
             // it's sound, because we never apply it twice for the same index
-            let value_raw = unsafe {
-                &mut *self.values.as_mut_ptr().add(i)
-            };
+            let value_raw = unsafe { &mut *self.values.as_mut_ptr().add(i) };
             fields.push(FieldMut {
                 metadata: metadata.get(i).as_ref().unwrap(),
                 value: match value_raw {

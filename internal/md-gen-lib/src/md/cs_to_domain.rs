@@ -3,18 +3,18 @@ use crate::md::csharp_metamodel::{
 };
 use crate::md::sections::{Section, Sections};
 use crate::Naming;
-use gen_common::code_model::{Module};
+use gen_common::code_model::Module;
 use gen_common::writelnu;
 use itertools::Itertools;
 use lite_model::ClassName;
+use once_cell::unsync::Lazy;
+use regex::Regex;
 use std::collections::HashMap;
 use std::fs;
 use std::ops::Deref;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
-use regex::Regex;
 use to_vec::ToVec;
-use once_cell::unsync::Lazy;
 
 pub struct CSharpDomain {
     pub packages: Vec<CSharpPackage>,
@@ -283,15 +283,9 @@ fn class_to_md(
 
     writelnu!(s, "# {}", &class.name);
     if class.is_struct {
-        writelnu!(
-            s,
-            "struct in [{package}](../{package}.md)",
-        );
+        writelnu!(s, "struct in [{package}](../{package}.md)",);
     } else {
-        writelnu!(
-            s,
-            "class in [{package}](../{package}.md)",
-        );
+        writelnu!(s, "class in [{package}](../{package}.md)",);
     }
     if !class.description.is_empty() {
         writelnu!(s, "\n## Description");
@@ -325,13 +319,21 @@ fn class_to_md(
         render_methods(&mut s, methods.as_slice(), class_page_links);
     }
 
-    let static_props = class.properties.iter().filter(|it| it.is_static && it.set).to_vec();
+    let static_props = class
+        .properties
+        .iter()
+        .filter(|it| it.is_static && it.set)
+        .to_vec();
     if !static_props.is_empty() {
         writelnu!(s, "\n## Static Properties");
         render_static_properties(&mut s, static_props.as_slice(), class_page_links);
     }
 
-    let const_props = class.properties.iter().filter(|it| it.is_static && it.get && !it.set).to_vec();
+    let const_props = class
+        .properties
+        .iter()
+        .filter(|it| it.is_static && it.get && !it.set)
+        .to_vec();
     if !const_props.is_empty() {
         writelnu!(s, "\n## Constants");
         render_const_properties(&mut s, const_props.as_slice(), class_page_links);
@@ -475,7 +477,6 @@ fn render_const_properties(
     writelnu!(s, "| Name | Type | Description | Initializer |");
     writelnu!(s, "|---|---|---|---|");
     for prop in props {
-
         thread_local! {
             static COLOR_RE: Lazy<Regex> = Lazy::new(|| {
                 Regex::new(r"new Color\(0x([0-9A-Fa-f]{6})[0-9A-Fa-f]{2}\)").unwrap()
@@ -559,10 +560,7 @@ fn enum_to_md(
 ) -> Module {
     let mut s = "".to_string();
     writelnu!(s, "# {}", &class.name);
-    writelnu!(
-        s,
-        "enum in [{package}](../{package}.md)"
-    );
+    writelnu!(s, "enum in [{package}](../{package}.md)");
     if !class.description.is_empty() {
         writelnu!(s, "\n## Description");
         writelnu!(s, "{}", cs_docs_to_string(&class.description, "\n"));
@@ -600,7 +598,11 @@ fn cs_doc_to_string(doc: &CsXmlNode, line_separator: &str) -> String {
     if let Some(tag) = &doc.element {
         if tag.name == "span" {
             let content = cs_docs_to_string(&tag.children, line_separator);
-            let attrs = tag.attrs.iter().map(|(k,v)| format!("{}={:?}", k, v)).join(" ");
+            let attrs = tag
+                .attrs
+                .iter()
+                .map(|(k, v)| format!("{}={:?}", k, v))
+                .join(" ");
             return format!("<span {attrs}>{content}</span>");
         }
         if tag.name == "summary" {

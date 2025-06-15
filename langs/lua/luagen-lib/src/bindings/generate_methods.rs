@@ -3,12 +3,9 @@ use std::borrow::Cow;
 use lite_model::{DataType, EngineClass};
 use to_vec::ToVec;
 
-use gen_common::{
-    context::GenerationContext,
-    templating::render,
-};
-use gen_common::properties::{is_regular};
 use super::expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua};
+use gen_common::properties::is_regular;
+use gen_common::{context::GenerationContext, templating::render};
 
 pub const USER_SCRIPT_IMPL: &str = "TypedUserData<UserScriptProxy>";
 
@@ -36,9 +33,12 @@ pub fn generate_methods(
             false => "".to_owned(),
         };
 
-        let input_names = params.iter()
+        let input_names = params
+            .iter()
             .flat_map(|it| match it.ty {
-                DataType::UserScriptMessage => vec![format!("{}_type", it.name.as_str()), it.name.to_string()],
+                DataType::UserScriptMessage => {
+                    vec![format!("{}_type", it.name.as_str()), it.name.to_string()]
+                }
                 _ => vec![it.name.to_string()],
             })
             .to_vec()
@@ -55,7 +55,9 @@ pub fn generate_methods(
         let param_types = params
             .iter()
             .flat_map(|it| match it.ty {
-                DataType::UserScriptMessage => vec!["mlua::Value".to_string(), "mlua::Value".to_string()],
+                DataType::UserScriptMessage => {
+                    vec!["mlua::Value".to_string(), "mlua::Value".to_string()]
+                }
                 _ => vec![type_to_mlua(&it.ty, ctx)],
             })
             .to_vec()
@@ -120,4 +122,3 @@ pub fn generate_methods(
         );
     }
 }
-

@@ -1,8 +1,5 @@
 use std::collections::BTreeMap;
-use std::{
-    fmt::Display,
-    fs,
-};
+use std::{fmt::Display, fs};
 use to_vec::ToVec;
 
 #[derive(Default)]
@@ -28,7 +25,6 @@ pub struct Module {
 }
 
 impl Module {
-
     pub fn merge(&mut self, m: Module) {
         if m.code.is_some() {
             self.code = m.code;
@@ -69,7 +65,7 @@ impl Module {
             children: Default::default(),
         }
     }
-    
+
     pub fn set_code(&mut self, code: impl Display) {
         self.code = Some(code.to_string());
     }

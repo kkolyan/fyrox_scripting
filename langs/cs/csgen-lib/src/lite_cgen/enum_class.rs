@@ -1,9 +1,7 @@
 use std::collections::HashSet;
 
 use gen_common::templating::render;
-use lite_model::{
-    ClassName, DataType, EnumClass, EnumValue, Field,
-};
+use lite_model::{ClassName, DataType, EnumClass, EnumValue, Field};
 use to_vec::ToVec;
 
 use super::types::{self, generate_ffi_type};
@@ -201,7 +199,11 @@ fn generate_struct_variant_fields(
     }
 }
 
-fn generate_variant_container_fields(s: &mut String, class: &EnumClass, generated_structs: &mut HashSet<String>,) {
+fn generate_variant_container_fields(
+    s: &mut String,
+    class: &EnumClass,
+    generated_structs: &mut HashSet<String>,
+) {
     for variant in class.variants.iter() {
         if matches!(variant.value, EnumValue::Unit) {
             continue;
@@ -390,7 +392,11 @@ fn generate_to_native(
                 }
             }
             EnumValue::Tuple { fields } => {
-                let field_names = fields.iter().enumerate().map(|(i, _)| format!("_{}", i)).to_vec();
+                let field_names = fields
+                    .iter()
+                    .enumerate()
+                    .map(|(i, _)| format!("_{}", i))
+                    .to_vec();
                 render(
                     s,
                     r#"

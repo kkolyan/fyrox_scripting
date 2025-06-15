@@ -1,6 +1,6 @@
+use lite_parser::extract_engine_class::extract_fn;
 use quote::quote;
 use syn::parse2;
-use lite_parser::extract_engine_class::extract_fn;
 
 fn main() {
     let q = quote! {

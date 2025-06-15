@@ -10,7 +10,7 @@ pub struct TypedUserData<'lua, T: UserData> {
     ud: AnyUserData<'lua>,
 }
 
-impl <T: UserData> Debug for TypedUserData<'_, T> {
+impl<T: UserData> Debug for TypedUserData<'_, T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}<{}>", self.ud, type_name::<T>())
     }
@@ -43,11 +43,15 @@ impl<'lua, T: UserData> IntoLua<'lua> for TypedUserData<'lua, T> {
     }
 }
 
-impl <'lua, T: UserData + 'static> FromLua<'lua> for TypedUserData<'lua, T> {
+impl<'lua, T: UserData + 'static> FromLua<'lua> for TypedUserData<'lua, T> {
     fn from_lua(value: mlua::Value<'lua>, _lua: &'lua mlua::Lua) -> mlua::Result<Self> {
         match value {
             mlua::Value::UserData(ud) => Ok(TypedUserData::new(ud)),
-            value => Err(lua_error!("cannot cast {:?} to {}", value, type_name::<T>())),
+            value => Err(lua_error!(
+                "cannot cast {:?} to {}",
+                value,
+                type_name::<T>()
+            )),
         }
     }
 }

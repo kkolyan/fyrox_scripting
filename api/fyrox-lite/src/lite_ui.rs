@@ -4,10 +4,10 @@ use fyrox::{
 };
 use lite_macro::lite_api;
 
+use crate::lite_color::LiteColor;
 use crate::{
     externalizable::Externalizable, lite_math::PodVector2, script_context::with_script_context,
 };
-use crate::lite_color::LiteColor;
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct LiteUiNode {
@@ -99,7 +99,7 @@ impl From<Brush> for brush::Brush {
                 from: from.into(),
                 to: to.into(),
                 stops: stops.into_iter().map(|it| it.into()).collect(),
-            }
+            };
         }
         if let Some(RadialGradient { center, stops }) = value.radial_gradient {
             return brush::Brush::RadialGradient {
@@ -128,14 +128,14 @@ pub struct Brush {
     /// A brush, that fills a surface with a linear gradient, which is defined by two points in local coordinates
     /// and a set of stop points. See [`GradientPoint`] for more info.
     pub linear_gradient: Option<LinearGradient>,
-    
+
     /// A brush, that fills a surface with a radial gradient, which is defined by a center point in local coordinates
     /// and a set of stop points. See [`GradientPoint`] for more info.
     pub radial_gradient: Option<RadialGradient>,
 }
 #[derive(Debug, Clone, PartialEq)]
 #[lite_api]
-pub struct LinearGradient  {
+pub struct LinearGradient {
     /// Beginning of the gradient in local coordinates.
     pub from: PodVector2,
     /// End of the gradient in local coordinates.

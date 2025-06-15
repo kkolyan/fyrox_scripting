@@ -9,7 +9,6 @@ pub struct LiteApiAttr {
 }
 
 impl Parse for LiteApiAttr {
-
     fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
         let mut result: LiteApiAttr = Default::default();
         loop {
@@ -137,7 +136,9 @@ mod tests {
 
     #[test]
     fn unknown_option_is_bad() {
-        let a = LiteApiAttr::from_attr_args(quote! {eq,clasz=Cat,}).err().unwrap();
+        let a = LiteApiAttr::from_attr_args(quote! {eq,clasz=Cat,})
+            .err()
+            .unwrap();
         assert!(a.to_string().contains("unsupported option"));
     }
 }

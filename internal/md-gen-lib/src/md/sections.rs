@@ -1,8 +1,8 @@
-use std::collections::HashMap;
-use itertools::Itertools;
 use gen_common::code_model::Module;
 use gen_common::writelnu;
+use itertools::Itertools;
 use lite_model::ClassName;
+use std::collections::HashMap;
 
 #[derive(Default)]
 pub struct Sections {
@@ -10,7 +10,6 @@ pub struct Sections {
 }
 
 impl Sections {
-
     pub fn merge(&mut self, m: Sections) {
         for (key, child) in m.sections {
             let prev_child = self.sections.remove(&key);
@@ -65,7 +64,11 @@ impl Section {
 
         if !self.classes.is_empty() {
             writelnu!(s, "## Classes");
-            for x in self.classes.into_values().sorted_by_key(|it| it.name.to_string()) {
+            for x in self
+                .classes
+                .into_values()
+                .sorted_by_key(|it| it.name.to_string())
+            {
                 writelnu!(
                     s,
                     "* [{}]({}/{})",
@@ -79,7 +82,11 @@ impl Section {
 
         if !self.structs.is_empty() {
             writelnu!(s, "## Structs");
-            for x in self.structs.into_values().sorted_by_key(|it| it.name.to_string()) {
+            for x in self
+                .structs
+                .into_values()
+                .sorted_by_key(|it| it.name.to_string())
+            {
                 writelnu!(
                     s,
                     "* [{}]({}/{})",
@@ -93,7 +100,11 @@ impl Section {
 
         if !self.enums.is_empty() {
             writelnu!(s, "## Enums");
-            for x in self.enums.into_values().sorted_by_key(|it| it.name.to_string()) {
+            for x in self
+                .enums
+                .into_values()
+                .sorted_by_key(|it| it.name.to_string())
+            {
                 writelnu!(
                     s,
                     "* [{}]({}/{})",

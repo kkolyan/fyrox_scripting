@@ -3,8 +3,8 @@ use proc_macro2::Span;
 use quote::ToTokens;
 use syn::Ident;
 
-use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 use crate::doc_attr::extract_doc;
+use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 
 pub fn extract_pod_struct(
     rust_path: &str,
@@ -31,8 +31,11 @@ pub fn extract_pod_struct(
     for feature in attr.features {
         match feature {
             Feature::Eq => {
-                errors.push(syn::Error::new( attr_span, "`eq` option not allowed for struct classes"));
-            },
+                errors.push(syn::Error::new(
+                    attr_span,
+                    "`eq` option not allowed for struct classes",
+                ));
+            }
         }
     }
     Some((

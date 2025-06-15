@@ -1,15 +1,19 @@
-
 use convert_case::{Case, Casing};
 use lite_model::{DataType, EngineClass};
 use std::borrow::Cow;
 use to_vec::ToVec;
 
-use gen_common::{
-    code_model::{Module}, context::GenerationContext, properties::is_getter, templating::render
+use super::{
+    eq::generate_eq,
+    expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua},
+    generate_methods::generate_methods,
+    supress_lint::SUPRESSIONS,
 };
-use gen_common::properties::Setter;
 use crate::bindings::generate_methods::USER_SCRIPT_IMPL;
-use super::{eq::generate_eq, expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, generate_methods::{generate_methods}, supress_lint::SUPRESSIONS};
+use gen_common::properties::Setter;
+use gen_common::{
+    code_model::Module, context::GenerationContext, properties::is_getter, templating::render,
+};
 
 pub fn generate_engine_class_bindings(class: &EngineClass, ctx: &GenerationContext) -> Module {
     let mut s: String = Default::default();
@@ -138,8 +142,27 @@ fn generate_setters(s: &mut String, class: &EngineClass, ctx: &GenerationContext
                 });
         "#,
             [
-                ("generics", &if setter.is_generic() {format!("::<{}>", USER_SCRIPT_IMPL)} else {"".to_owned()}),
-                ("stub", &if setter.signature.params.iter().any(|it| matches!(it.ty, DataType::UserScriptGenericStub)) {"()"} else {""}),
+                (
+                    "generics",
+                    &if setter.is_generic() {
+                        format!("::<{}>", USER_SCRIPT_IMPL)
+                    } else {
+                        "".to_owned()
+                    },
+                ),
+                (
+                    "stub",
+                    &if setter
+                        .signature
+                        .params
+                        .iter()
+                        .any(|it| matches!(it.ty, DataType::UserScriptGenericStub))
+                    {
+                        "()"
+                    } else {
+                        ""
+                    },
+                ),
                 ("field_name", &prop.prop_name),
                 (
                     "input_type",
@@ -180,8 +203,27 @@ fn generate_instance_getters(s: &mut String, class: &EngineClass, ctx: &Generati
                 });
         "#,
             [
-                ("generics", &if getter.is_generic() {format!("::<{}>", USER_SCRIPT_IMPL)} else {"".to_owned()}),
-                ("stub", &if getter.signature.params.iter().any(|it| matches!(it.ty, DataType::UserScriptGenericStub)) {"()"} else {""}),
+                (
+                    "generics",
+                    &if getter.is_generic() {
+                        format!("::<{}>", USER_SCRIPT_IMPL)
+                    } else {
+                        "".to_owned()
+                    },
+                ),
+                (
+                    "stub",
+                    &if getter
+                        .signature
+                        .params
+                        .iter()
+                        .any(|it| matches!(it.ty, DataType::UserScriptGenericStub))
+                    {
+                        "()"
+                    } else {
+                        ""
+                    },
+                ),
                 ("field_name", &prop),
                 (
                     "expression",
@@ -245,8 +287,27 @@ fn generate_class_getters(s: &mut String, class: &EngineClass, ctx: &GenerationC
                 });
         "#,
             [
-                ("generics", &if getter.is_generic() {format!("::<{}>", USER_SCRIPT_IMPL)} else {"".to_owned()}),
-                ("stub", &if getter.signature.params.iter().any(|it| matches!(it.ty, DataType::UserScriptGenericStub)) {"()"} else {""}),
+                (
+                    "generics",
+                    &if getter.is_generic() {
+                        format!("::<{}>", USER_SCRIPT_IMPL)
+                    } else {
+                        "".to_owned()
+                    },
+                ),
+                (
+                    "stub",
+                    &if getter
+                        .signature
+                        .params
+                        .iter()
+                        .any(|it| matches!(it.ty, DataType::UserScriptGenericStub))
+                    {
+                        "()"
+                    } else {
+                        ""
+                    },
+                ),
                 ("rust_struct_path", &class.rust_struct_path.0),
                 ("field_name", &prop),
                 (

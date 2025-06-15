@@ -5,7 +5,10 @@ use fyrox::core::Uuid;
 use fyrox_lite::script_metadata::{ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata};
 use to_vec::ToVec;
 
-use crate::bindings_manual::{NativeBool, NativeClassId, NativeScriptAppFunctions, NativeScriptKind, NativeScriptMetadata, NativeValueType};
+use crate::bindings_manual::{
+    NativeBool, NativeClassId, NativeScriptAppFunctions, NativeScriptKind, NativeScriptMetadata,
+    NativeValueType,
+};
 
 // TODO replace with SendWrapper
 thread_local! {
@@ -40,7 +43,6 @@ pub struct ScriptsMetadata {
     pub global_scripts: HashMap<Uuid, CGlobalScriptMetadata>,
     pub uuid_by_class: HashMap<NativeClassId, Uuid>,
 }
-
 
 impl ScriptedApp {
     pub fn new(init_params: NativeScriptAppFunctions, is_editor: NativeBool) -> Self {
@@ -88,11 +90,16 @@ impl ScriptedApp {
                 }
             }
         }
-        let uuid_by_class = node_scripts.iter()
+        let uuid_by_class = node_scripts
+            .iter()
             .map(|(uuid, md)| (md.id, *uuid))
             .collect();
 
-        self.scripts_metadata = Some(ScriptsMetadata { node_scripts, uuid_by_class, global_scripts });
+        self.scripts_metadata = Some(ScriptsMetadata {
+            node_scripts,
+            uuid_by_class,
+            global_scripts,
+        });
     }
 }
 
@@ -100,7 +107,10 @@ pub fn extract_for_def(md: &NativeScriptMetadata) -> ScriptMetadata {
     let properties: Vec<_> = md.properties.into();
     let class: String = md.name.into();
     let uuid: String = md.uuid.into();
-    println!("Register class. name: {}, id: {}, uuid: {}", class, md.id.value, uuid);
+    println!(
+        "Register class. name: {}, id: {}, uuid: {}",
+        class, md.id.value, uuid
+    );
     let fields = properties
         .into_iter()
         .map(|property| {

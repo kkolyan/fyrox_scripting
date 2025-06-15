@@ -2,8 +2,8 @@ use lite_model::{ClassName, EnumClass, EnumValue, EnumVariant, Field, RustQualif
 use proc_macro2::Span;
 use syn::Ident;
 
-use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 use crate::doc_attr::extract_doc;
+use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 
 pub fn extract_pod_enum(
     rust_path: &str,
@@ -17,7 +17,10 @@ pub fn extract_pod_enum(
         let variant_name = &variant.ident;
         match &variant.fields {
             syn::Fields::Named(syn_fields) => {
-                errors.push(syn::Error::new_spanned(&variant.ident, "struct-like enums are not allowed"));
+                errors.push(syn::Error::new_spanned(
+                    &variant.ident,
+                    "struct-like enums are not allowed",
+                ));
                 let mut fields = Vec::new();
                 for field in syn_fields.named.iter() {
                     types.push(field.ty.clone());
@@ -44,7 +47,10 @@ pub fn extract_pod_enum(
                 });
             }
             syn::Fields::Unnamed(syn_fields) => {
-                errors.push(syn::Error::new_spanned(&variant.ident, "tuple-like enums are not allowed"));
+                errors.push(syn::Error::new_spanned(
+                    &variant.ident,
+                    "tuple-like enums are not allowed",
+                ));
                 let mut fields = Vec::new();
                 for field in syn_fields.unnamed.iter() {
                     types.push(field.ty.clone());

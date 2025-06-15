@@ -13,7 +13,10 @@ use fyrox::{
 };
 use lite_macro::lite_api;
 
-use crate::{externalizable::Externalizable, lite_math::PodVector3, lite_node::LiteNode, script_context::with_script_context};
+use crate::{
+    externalizable::Externalizable, lite_math::PodVector3, lite_node::LiteNode,
+    script_context::with_script_context,
+};
 
 #[derive(Debug, Clone)]
 pub struct LitePhysics;
@@ -101,10 +104,22 @@ impl From<&Intersection> for LiteIntersection {
             )),
             toi: value.toi,
             feature: match value.feature {
-                FeatureId::Vertex(it) => LiteFeatureId { kind: LiteFeatureKind::Vertex, id: it as i32 },
-                FeatureId::Edge(it) => LiteFeatureId { kind: LiteFeatureKind::Edge, id: it as i32 },
-                FeatureId::Face(it) => LiteFeatureId { kind: LiteFeatureKind::Face, id: it as i32 },
-                FeatureId::Unknown => LiteFeatureId {kind: LiteFeatureKind::Unknown, id: 0 },
+                FeatureId::Vertex(it) => LiteFeatureId {
+                    kind: LiteFeatureKind::Vertex,
+                    id: it as i32,
+                },
+                FeatureId::Edge(it) => LiteFeatureId {
+                    kind: LiteFeatureKind::Edge,
+                    id: it as i32,
+                },
+                FeatureId::Face(it) => LiteFeatureId {
+                    kind: LiteFeatureKind::Face,
+                    id: it as i32,
+                },
+                FeatureId::Unknown => LiteFeatureId {
+                    kind: LiteFeatureKind::Unknown,
+                    id: 0,
+                },
             },
         }
     }
@@ -252,6 +267,8 @@ impl Externalizable for LiteRigidBody {
     }
 
     fn from_external(handle: u128) -> Self {
-        Self { handle: Handle::decode_from_u128(handle) }
+        Self {
+            handle: Handle::decode_from_u128(handle),
+        }
     }
 }

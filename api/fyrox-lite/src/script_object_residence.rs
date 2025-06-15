@@ -1,18 +1,18 @@
+use crate::global_script_object::ScriptObject;
+use crate::script_object::Lang;
+use crate::script_object::NodeScriptObject;
+use crate::script_object::ScriptFieldValue;
 use convert_case::Case;
 use convert_case::Casing;
 use fyrox::core::log::Log;
+use fyrox::core::pool::Handle;
 use fyrox::core::visitor::Visit;
 use fyrox::core::visitor::VisitResult;
 use fyrox::core::visitor::Visitor;
 use fyrox::core::Uuid;
+use fyrox::scene::node::Node;
 use std::fmt::Debug;
 use std::fmt::Formatter;
-use fyrox::core::pool::Handle;
-use fyrox::scene::node::Node;
-use crate::global_script_object::ScriptObject;
-use crate::script_object::Lang;
-use crate::script_object::ScriptFieldValue;
-use crate::script_object::NodeScriptObject;
 
 /// Initially, when script is loaded from file (scene or save game), it's in "packed" mode.
 /// First time this script receives `on_update` callback, it's converted to "unpacked", by
@@ -72,14 +72,17 @@ impl<T: Lang> ScriptResidence<T> {
         }
     }
 
-    pub fn with_script_object_mut<R>(&mut self, f: impl FnOnce(&mut NodeScriptObject<T>) -> R) -> R {
+    pub fn with_script_object_mut<R>(
+        &mut self,
+        f: impl FnOnce(&mut NodeScriptObject<T>) -> R,
+    ) -> R {
         match self {
             ScriptResidence::Packed(it) => f(it),
             ScriptResidence::Unpacked(it) => todo!(),
             // ScriptResidence::Unpacked(it) => f(&mut it.borrow_mut().unwrap()),
         }
     }
-    
+
     pub fn id(&self) -> Uuid {
         match self {
             ScriptResidence::Packed(it) => uuid_of_script(&it.obj),
@@ -107,7 +110,9 @@ impl<T: Lang> Clone for ScriptResidence<T> {
             ScriptResidence::Packed(it) => ScriptResidence::Packed(it.clone()),
 
             // will implement when know when cloning is really needed during game cycle
-            ScriptResidence::Unpacked(_) => panic!("cloning for Lua-backed ScriptData is not supported"),
+            ScriptResidence::Unpacked(_) => {
+                panic!("cloning for Lua-backed ScriptData is not supported")
+            }
         }
     }
 }
@@ -117,24 +122,22 @@ impl<T: Lang> Drop for ScriptResidence<T> {
         match self {
             ScriptResidence::Packed(_it) => {
                 // ScriptObject is dropped automatically without delay
-            },
+            }
             ScriptResidence::Unpacked(it) => {
                 T::drop_script_object_to_prevent_delayed_destructor(it);
-            },
+            }
         }
     }
 }
 
 impl<T: Lang> Visit for ScriptResidence<T> {
     fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {
-
         match self {
             ScriptResidence::Packed(it) => it.visit(name, visitor),
             ScriptResidence::Unpacked(it) => it.visit(name, visitor),
         }
     }
 }
-
 
 impl<T: Lang> Visit for NodeScriptObject<T> {
     fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {
@@ -150,16 +153,14 @@ impl<T: Lang> Visit for ScriptObject<T> {
 
         // let's store all numbers as str, to allow user easily change type.
         macro_rules! visit_as_str {
-            ($var:expr, $field_name:expr, $guard:expr, $ty:ty) => {
-                {
-                    let mut s = $var.to_string();
-                    let result = s.visit($field_name, &mut $guard);
-                    if reading {
-                       *$var = s.parse::<$ty>()?;
-                    }
-                    result
+            ($var:expr, $field_name:expr, $guard:expr, $ty:ty) => {{
+                let mut s = $var.to_string();
+                let result = s.visit($field_name, &mut $guard);
+                if reading {
+                    *$var = s.parse::<$ty>()?;
                 }
-            };
+                result
+            }};
         }
 
         let it = self;
@@ -184,7 +185,13 @@ impl<T: Lang> Visit for ScriptObject<T> {
                 ScriptFieldValue::i64(it) => visit_as_str!(it, field_name, guard, i64),
             };
             if let Err(err) = &result {
-                Log::warn(format!("skipping deserialization of field `{}::{}` ({:?}) due to error: {}", it.def.metadata.class, field_name, it.values[i], err).as_str());
+                Log::warn(
+                    format!(
+                        "skipping deserialization of field `{}::{}` ({:?}) due to error: {}",
+                        it.def.metadata.class, field_name, it.values[i], err
+                    )
+                    .as_str(),
+                );
             }
         }
         Ok(())

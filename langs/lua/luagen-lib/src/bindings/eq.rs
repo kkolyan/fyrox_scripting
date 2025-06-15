@@ -9,7 +9,7 @@ pub(crate) fn generate_eq(s: &mut String, features: &[Feature]) {
                     Ok(<Self as PartialEq>::eq(this.inner(), args.borrow()?.inner()))
                 });
                 "#;
-            },
+            }
         }
     }
 }

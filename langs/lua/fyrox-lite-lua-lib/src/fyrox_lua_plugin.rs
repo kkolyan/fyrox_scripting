@@ -1,6 +1,7 @@
-use crate::lua_lifecycle::{create_plugin, invoke_callback_global};
+use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
 use crate::lua_lifecycle::load_script;
 use crate::lua_lifecycle::lua_vm;
+use crate::lua_lifecycle::{create_plugin, invoke_callback_global};
 use fyrox::core::log::Log;
 use fyrox::core::notify::EventKind;
 use fyrox::core::reflect::prelude::*;
@@ -16,16 +17,14 @@ use fyrox::plugin::PluginContext;
 use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::PluginsRefMut;
 use fyrox::walkdir::WalkDir;
+use fyrox_lite::lite_input::Input;
 use mlua::Value;
 use std::cell::RefCell;
 use std::fmt::Debug;
 use std::path::PathBuf;
-use fyrox_lite::lite_input::Input;
-use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
 
 #[derive(Visit, Reflect)]
 pub struct LuaPlugin {
-
     #[visit(skip)]
     #[reflect(hidden)]
     pub failed: bool,
@@ -61,7 +60,6 @@ impl Debug for LuaPlugin {
 }
 
 impl LuaPlugin {
-
     pub fn new(scripts_dir: PathBuf, hot_reload_enabled: bool) -> Self {
         create_plugin(scripts_dir, hot_reload_enabled)
     }

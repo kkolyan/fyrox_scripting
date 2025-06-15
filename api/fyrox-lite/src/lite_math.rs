@@ -42,10 +42,7 @@ impl From<PodVector3> for Vector3<f32> {
 
 impl From<Vector2<f32>> for PodVector2 {
     fn from(v: Vector2<f32>) -> Self {
-        Self {
-            x: v.x,
-            y: v.y,
-        }
+        Self { x: v.x, y: v.y }
     }
 }
 
@@ -57,10 +54,7 @@ impl From<PodVector2> for Vector2<f32> {
 
 impl From<Vector2<i32>> for PodVector2I {
     fn from(v: Vector2<i32>) -> Self {
-        Self {
-            x: v.x,
-            y: v.y,
-        }
+        Self { x: v.x, y: v.y }
     }
 }
 

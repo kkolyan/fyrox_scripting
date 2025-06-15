@@ -1,4 +1,3 @@
-
 use std::fmt::{Debug, Display};
 
 use fyrox::core::{
@@ -8,8 +7,8 @@ use fyrox::core::{
 use fyrox_lite::lite_math::{PodQuaternion, PodVector2, PodVector2I, PodVector3};
 use lite_macro::lite_api;
 
-use std::ops::Mul;
 use fyrox::core::algebra::Vector2;
+use std::ops::Mul;
 
 #[derive(Clone, Copy)]
 pub struct LiteQuaternion(UnitQuaternion<f32>);
@@ -54,7 +53,6 @@ impl From<UnitQuaternion<f32>> for LiteQuaternion {
         LiteQuaternion(value)
     }
 }
-
 
 impl From<LiteQuaternion> for PodQuaternion {
     fn from(v: LiteQuaternion) -> Self {
@@ -152,8 +150,6 @@ impl From<PodVector3> for LiteVector3 {
     }
 }
 
-
-
 #[derive(Clone, Copy)]
 pub struct LiteVector2(pub Vector2<f32>);
 
@@ -231,7 +227,6 @@ impl From<PodVector2> for LiteVector2 {
         Vector2::<f32>::from(v).into()
     }
 }
-
 
 #[derive(Clone, Copy)]
 pub struct LiteVector2I(pub Vector2<i32>);

@@ -1,6 +1,6 @@
+use crate::user_script_impl::UserScriptProxy;
 use fyrox::core::reflect::{FieldMut, FieldRef, Reflect};
 use fyrox_lite::reflect_base;
-use crate::user_script_impl::UserScriptProxy;
 
 impl Reflect for UserScriptProxy {
     reflect_base!();

@@ -6,6 +6,7 @@ use fyrox::{
 };
 use lite_macro::lite_api;
 
+use crate::spi::UserScript;
 use crate::{
     externalizable::Externalizable,
     lite_math::{PodQuaternion, PodVector3},
@@ -13,7 +14,6 @@ use crate::{
     resource_registry,
     script_context::with_script_context,
 };
-use crate::spi::UserScript;
 
 #[derive(Clone, Default)]
 pub struct LitePrefab {
@@ -23,7 +23,7 @@ pub struct LitePrefab {
 impl Debug for LitePrefab {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let Some(resource) = &self.resource else {
-            return write!(f, "None")
+            return write!(f, "None");
         };
         write!(f, "Prefab({:?})", resource.header().kind)
     }
@@ -31,7 +31,9 @@ impl Debug for LitePrefab {
 
 impl LitePrefab {
     pub fn new(resource: Resource<Model>) -> Self {
-        Self { resource: Some(resource) }
+        Self {
+            resource: Some(resource),
+        }
     }
 
     pub fn inner(&self) -> Option<Resource<Model>> {
@@ -41,18 +43,22 @@ impl LitePrefab {
 
 #[lite_api(class=Prefab)]
 impl LitePrefab {
-    pub fn instantiate_at<T: UserScript>(&self, position: PodVector3, orientation: PodQuaternion, _stub: T::UserScriptGenericStub) -> Result<LiteNode, T::LangSpecificError> {
+    pub fn instantiate_at<T: UserScript>(
+        &self,
+        position: PodVector3,
+        orientation: PodQuaternion,
+        _stub: T::UserScriptGenericStub,
+    ) -> Result<LiteNode, T::LangSpecificError> {
         with_script_context(|ctx| {
-            let handle = self.resource
+            let handle = self
+                .resource
                 .as_ref()
                 .ok_or_else(|| T::create_error("this prefab is null reference"))?
                 .begin_instantiation(ctx.scene.as_mut().expect("scene unavailable"))
                 .with_rotation(orientation.into())
                 .with_position(position.into())
                 .finish();
-            Ok(LiteNode::new(
-                handle,
-            ))
+            Ok(LiteNode::new(handle))
         })
     }
 }

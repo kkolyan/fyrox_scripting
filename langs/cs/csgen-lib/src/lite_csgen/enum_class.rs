@@ -1,61 +1,87 @@
+use crate::lite_csgen::api_types;
+use crate::lite_csgen::gen_rs::RustEmitter;
 use gen_common::code_model::Module;
 use gen_common::context::GenerationContext;
+use gen_common::doc::strExt;
 use gen_common::templating::render;
 use lite_model::{DataType, EnumClass};
-use crate::lite_csgen::api_types;
-use gen_common::doc::strExt;
-use crate::lite_csgen::gen_rs::RustEmitter;
 
-pub(crate) fn generate_bindings(class: &EnumClass, ctx: &GenerationContext, rust: &mut RustEmitter) -> Module {
+pub(crate) fn generate_bindings(
+    class: &EnumClass,
+    ctx: &GenerationContext,
+    rust: &mut RustEmitter,
+) -> Module {
     let mut s = String::new();
 
     let doc = class.description.to_xmldoc("            ");
 
-    render(&mut s, r#"
+    render(
+        &mut s,
+        r#"
             // ${rust_path}
             ${doc}
             public enum ${class}
             {
-            "#, [
-                ("doc", &doc),
-                ("class", &class.class_name),
-        ("rust_path", &class.rust_struct_path)
-    ]);
+            "#,
+        [
+            ("doc", &doc),
+            ("class", &class.class_name),
+            ("rust_path", &class.rust_struct_path),
+        ],
+    );
 
     for variant in class.variants.iter() {
-
         let doc = variant.description.to_xmldoc("                ");
-        render(&mut s, r#"
+        render(
+            &mut s,
+            r#"
                 ${doc}
                 ${name},
-        "#, [
-            ("doc", &doc),
-            ("name", &variant.tag)
-        ]);
+        "#,
+            [("doc", &doc), ("name", &variant.tag)],
+        );
     }
 
-    render(&mut s, r#"
+    render(
+        &mut s,
+        r#"
             }
-            "#, []);
-
+            "#,
+        [],
+    );
 
     let mut rs = String::new();
 
-    render(&mut rs, r#"
+    render(
+        &mut rs,
+        r#"
             #[repr(C)]
             #[derive(Clone, Copy, PartialEq, Eq)]
             pub enum ${class} {
-    "#, [("class", &api_types::type_rs(&DataType::Object(class.class_name.clone()), ctx).to_native())]);
+    "#,
+        [(
+            "class",
+            &api_types::type_rs(&DataType::Object(class.class_name.clone()), ctx).to_native(),
+        )],
+    );
 
     for variant in class.variants.iter() {
-        render(&mut rs, r#"
+        render(
+            &mut rs,
+            r#"
                 ${name},
-        "#, [("name", &variant.tag)]);
+        "#,
+            [("name", &variant.tag)],
+        );
     }
 
-    render(&mut rs, r#"
+    render(
+        &mut rs,
+        r#"
             }
-            "#, []);
+            "#,
+        [],
+    );
 
     generate_rust_conversions(&mut rs, class, ctx);
 
@@ -73,15 +99,35 @@ fn generate_rust_conversions(rs: &mut String, class: &EnumClass, ctx: &Generatio
     let class_lite = api_types::type_rs(&ty, ctx).to_lite();
 
     for variant in class.variants.iter() {
-        render(&mut clauses_from_lite, r#"
+        render(
+            &mut clauses_from_lite,
+            r#"
                         ${class_lite}::${name} => ${class_native}::${name},
-        "#, [("name", &variant.tag), ("class_lite", &class_lite), ("class_native", &class_native), ("class_lite", &class_lite)]);
-        render(&mut clauses_from_native, r#"
+        "#,
+            [
+                ("name", &variant.tag),
+                ("class_lite", &class_lite),
+                ("class_native", &class_native),
+                ("class_lite", &class_lite),
+            ],
+        );
+        render(
+            &mut clauses_from_native,
+            r#"
                         ${class_native}::${name} => ${class_lite}::${name},
-        "#, [("name", &variant.tag), ("class_lite", &class_lite), ("class_native", &class_native), ("class_lite", &class_lite)]);
+        "#,
+            [
+                ("name", &variant.tag),
+                ("class_lite", &class_lite),
+                ("class_native", &class_native),
+                ("class_lite", &class_lite),
+            ],
+        );
     }
 
-    render(rs, r#"
+    render(
+        rs,
+        r#"
 
             impl From<${class_lite}> for ${class_native} {
                 fn from(value: ${class_lite}) -> Self {
@@ -98,10 +144,12 @@ fn generate_rust_conversions(rs: &mut String, class: &EnumClass, ctx: &Generatio
                     }
                 }
             }
-    "#, [
-        ("class_native", &class_native),
-        ("class_lite", &class_lite),
-        ("clauses_from_lite", &clauses_from_lite),
-        ("clauses_from_native", &clauses_from_native),
-    ]);
+    "#,
+        [
+            ("class_native", &class_native),
+            ("class_lite", &class_lite),
+            ("clauses_from_lite", &clauses_from_lite),
+            ("clauses_from_native", &clauses_from_native),
+        ],
+    );
 }

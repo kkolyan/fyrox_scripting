@@ -1,9 +1,10 @@
-
-use luagen_lib::{generate_lua_annotations::generate_lua_annotations, generate_lua_bindings::generate_lua_bindings};
 use crate::{get_combined_domain, write_annotations, write_bindings};
+use luagen_lib::{
+    generate_lua_annotations::generate_lua_annotations,
+    generate_lua_bindings::generate_lua_bindings,
+};
 
 pub fn main() {
-
     println!("parsing domain");
     let domain = get_combined_domain();
 

@@ -1,6 +1,7 @@
 use super::script_object_residence::ScriptResidence;
 use crate::fyrox_lua_plugin::PluginsRefMut_Ext;
 use crate::lua_lifecycle::{invoke_callback_node, lua_vm};
+use crate::user_script_impl::LuaUserScriptMessageEnvelope;
 use fyrox::core::reflect::prelude::*;
 use fyrox::core::type_traits::prelude::*;
 use fyrox::core::visitor::prelude::*;
@@ -11,7 +12,6 @@ use fyrox_lite::reflect_base;
 use mlua::{IntoLua, Value};
 use std::any::Any;
 use std::fmt::Debug;
-use crate::user_script_impl::LuaUserScriptMessageEnvelope;
 
 #[derive(Debug, Clone, ComponentProvider)]
 pub struct ExternalScriptProxy {
@@ -21,43 +21,26 @@ pub struct ExternalScriptProxy {
 
 impl ScriptTrait for ExternalScriptProxy {
     fn on_init(&mut self, ctx: &mut ScriptContext) {
-        self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
-        invoke_callback_node(
-            &mut self.data,
-            ctx,
-            "on_init",
-            || Ok(()),
-        );
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
+        invoke_callback_node(&mut self.data, ctx, "on_init", || Ok(()));
     }
 
     fn on_start(&mut self, ctx: &mut ScriptContext) {
-        self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
-        invoke_callback_node(
-            &mut self.data,
-            ctx,
-            "on_start",
-            || Ok(()),
-        );
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
+        invoke_callback_node(&mut self.data, ctx, "on_start", || Ok(()));
     }
 
     fn on_deinit(&mut self, ctx: &mut fyrox::script::ScriptDeinitContext) {
-        invoke_callback_node(
-            &mut self.data,
-            ctx,
-            "on_deinit",
-            || Ok(()),
-        );
+        invoke_callback_node(&mut self.data, ctx, "on_deinit", || Ok(()));
     }
 
     fn on_update(&mut self, ctx: &mut ScriptContext) {
-        self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
         let dt = ctx.dt;
-        invoke_callback_node(
-            &mut self.data,
-            ctx,
-            "on_update",
-            || Ok(dt),
-        );
+        invoke_callback_node(&mut self.data, ctx, "on_update", || Ok(dt));
     }
 
     fn on_message(
@@ -66,22 +49,19 @@ impl ScriptTrait for ExternalScriptProxy {
         ctx: &mut fyrox::script::ScriptMessageContext,
     ) {
         if let Some(lua_message) = message.downcast_ref::<LuaUserScriptMessageEnvelope>() {
-            self.data.ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
-            invoke_callback_node(
-                &mut self.data,
-                ctx,
-                "on_message",
-                || Ok((
+            self.data
+                .ensure_unpacked(&mut ctx.plugins.lua_mut().failed, ctx.handle);
+            invoke_callback_node(&mut self.data, ctx, "on_message", || {
+                Ok((
                     lua_message.class.clone().into_lua(lua_vm()).unwrap(),
-                    Value::clone(&lua_message.message)
-                )),
-            );
+                    Value::clone(&lua_message.message),
+                ))
+            });
         } else {
             panic!("non-lua messages not supported by lua scripts")
         }
     }
 }
-
 
 impl BaseScript for ExternalScriptProxy {
     fn clone_box(&self) -> Box<dyn ScriptTrait> {

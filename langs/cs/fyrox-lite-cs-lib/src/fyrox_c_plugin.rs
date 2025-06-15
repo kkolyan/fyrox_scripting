@@ -50,9 +50,7 @@ pub struct CPlugin {
 
 pub enum HotReload {
     Disabled,
-    Enabled {
-        watcher: FileSystemWatcher,
-    },
+    Enabled { watcher: FileSystemWatcher },
 }
 
 impl Debug for CPlugin {
@@ -72,9 +70,12 @@ impl CPlugin {
             scripts: RefCell::new(Default::default()),
             hot_reload: reloadable_assembly_path
                 .map(|path| {
-                    println!("trying to initialize watcher for file: {}", path.to_str().unwrap());
+                    println!(
+                        "trying to initialize watcher for file: {}",
+                        path.to_str().unwrap()
+                    );
                     HotReload::Enabled {
-                        watcher: FileSystemWatcher::new(&path, Duration::from_millis(500)).unwrap()
+                        watcher: FileSystemWatcher::new(&path, Duration::from_millis(500)).unwrap(),
                     }
                 })
                 .unwrap_or(HotReload::Disabled),
@@ -153,7 +154,13 @@ impl Plugin for CPlugin {
                     )
                     .unwrap();
             }
-            for md in app.scripts_metadata.as_ref().unwrap().global_scripts.values() {
+            for md in app
+                .scripts_metadata
+                .as_ref()
+                .unwrap()
+                .global_scripts
+                .values()
+            {
                 let mut plugin_scripts = self.scripts.borrow_mut();
                 let def = Arc::new(ScriptDefinition {
                     metadata: md.md.clone(),
@@ -187,7 +194,11 @@ impl Plugin for CPlugin {
         for script in self.scripts.borrow_mut().0.iter_mut() {
             script.data.ensure_unpacked(&mut self.failed);
             invoke_callback(context, |app| {
-                (app.functions.on_game_update)(script.data.inner_unpacked().unwrap().instance.inner()).into_result().handle_scripting_error();
+                (app.functions.on_game_update)(
+                    script.data.inner_unpacked().unwrap().instance.inner(),
+                )
+                .into_result()
+                .handle_scripting_error();
             });
         }
     }

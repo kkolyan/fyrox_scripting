@@ -6,7 +6,7 @@
 // use fyrox::core::{pool::{Handle, Pool}, visitor::{Visitor, VisitorNode}};
 
 fn main() {
-// 	scene_to_text();
+    // 	scene_to_text();
 }
 
 // fn scene_to_text() {
@@ -44,7 +44,6 @@ fn main() {
 //     }
 //     Ok(())
 // }
-
 
 // fn display_kind(kind: &FieldKind, w: &mut dyn Write) -> fmt::Result {
 // 	match kind {

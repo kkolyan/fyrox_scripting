@@ -1,14 +1,18 @@
 use std::collections::HashMap;
 
 use lite_model::{
-    ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method, Param, RustQualifiedName, Signature
+    ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method, Param,
+    RustQualifiedName, Signature,
 };
 use proc_macro2::Span;
 use quote::ToTokens;
-use syn::{parse_quote_spanned, spanned::Spanned, Expr, Ident, ImplItemFn, TraitBoundModifier, TypeParamBound};
+use syn::{
+    parse_quote_spanned, spanned::Spanned, Expr, Ident, ImplItemFn, TraitBoundModifier,
+    TypeParamBound,
+};
 
-use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 use crate::doc_attr::extract_doc;
+use crate::{extract_ty::extract_ty, lite_api_attr::LiteApiAttr};
 
 pub fn extract_engine_class_and_inject_assertions(
     rust_path: &str,
@@ -85,37 +89,28 @@ pub fn extract_engine_class_and_inject_assertions(
     })
 }
 
-pub fn extract_fn(
-    func: &mut ImplItemFn,
-    errors: &mut Vec<syn::Error>,
-) -> Option<Method> {
-
+pub fn extract_fn(func: &mut ImplItemFn, errors: &mut Vec<syn::Error>) -> Option<Method> {
     let mut types: Vec<syn::Type> = Default::default();
     let mut generic_params: HashMap<&Ident, DataType> = Default::default();
     for gp in func.sig.generics.params.iter() {
         match gp {
             syn::GenericParam::Type(param) => {
                 if param.bounds.len() == 1 {
-                    let bound =
-                        param.bounds.iter().next().expect("WTF, just checked size");
+                    let bound = param.bounds.iter().next().expect("WTF, just checked size");
                     if let TypeParamBound::Trait(it) = bound {
                         if it.lifetimes.is_none() {
                             if let TraitBoundModifier::None = it.modifier {
                                 if it.path.to_token_stream().to_string() == "UserScript"
                                     && !generic_params.contains_key(&param.ident)
                                 {
-                                    generic_params
-                                        .insert(&param.ident, DataType::UserScript);
+                                    generic_params.insert(&param.ident, DataType::UserScript);
                                     continue;
                                 }
-                                if it.path.to_token_stream().to_string()
-                                    == "UserScriptMessage"
+                                if it.path.to_token_stream().to_string() == "UserScriptMessage"
                                     && !generic_params.contains_key(&param.ident)
                                 {
-                                    generic_params.insert(
-                                        &param.ident,
-                                        DataType::UserScriptMessage,
-                                    );
+                                    generic_params
+                                        .insert(&param.ident, DataType::UserScriptMessage);
                                     continue;
                                 }
                             }
@@ -203,12 +198,12 @@ pub fn extract_fn(
         .map::<syn::Stmt, _>(|ty| {
             let span = ty.span();
             parse_quote_spanned! {span =>
-                            {
-                                #[allow(unused_imports)]
-                                use crate::LiteDataType;
-                                <#ty>::compiles_if_type_is_allowed();
-                            }
-                        }
+                {
+                    #[allow(unused_imports)]
+                    use crate::LiteDataType;
+                    <#ty>::compiles_if_type_is_allowed();
+                }
+            }
         })
         .collect::<Vec<_>>();
     func.block.stmts.splice(0..0, static_assertions);
@@ -244,7 +239,7 @@ fn parse_constant_value(it: &Expr) -> ConstantValue {
             syn::Lit::Float(it) => Literal::Number(it.base10_digits().to_string()),
             syn::Lit::Bool(it) => Literal::Bool(it.value),
             it => return ConstantValue::ComplexExpression(it.to_token_stream().to_string()),
-        }
+        },
         it => return ConstantValue::ComplexExpression(it.to_token_stream().to_string()),
     })
 }

@@ -23,7 +23,10 @@ pub fn mlua_to_rust_expr(param: &str, ty: &DataType, ctx: &GenerationContext) ->
         ),
         DataType::UserScript => param.to_string(),
         DataType::UserScriptMessage => {
-            format!("LuaUserScriptMessageEnvelope::new({}_type, {})?", param, param)
+            format!(
+                "LuaUserScriptMessageEnvelope::new({}_type, {})?",
+                param, param
+            )
         }
         DataType::UserScriptGenericStub => "Default::default()".to_string(),
         DataType::Object(class_name) => {

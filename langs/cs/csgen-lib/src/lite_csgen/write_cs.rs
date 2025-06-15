@@ -1,7 +1,7 @@
-use std::fs;
 use convert_case::{Case, Casing};
-use to_vec::ToVec;
 use gen_common::code_model::Module;
+use std::fs;
+use to_vec::ToVec;
 
 pub fn write_cs(dir: &str, code: Module) {
     fs::create_dir_all(dir).unwrap();
@@ -25,7 +25,7 @@ fn collect_uses(mods: &[&Module], parent_ns: &str, nss: &mut Vec<String>) {
     }
 }
 
-fn write_cs_mods(dir: &str, ns: &str, children: &[&Module], nss: &Vec<String>)  {
+fn write_cs_mods(dir: &str, ns: &str, children: &[&Module], nss: &Vec<String>) {
     if children.is_empty() {
         return;
     }
@@ -35,7 +35,7 @@ fn write_cs_mods(dir: &str, ns: &str, children: &[&Module], nss: &Vec<String>)  
         write_cs_mod(m, ns, dir, nss);
     }
 }
-fn write_cs_mod(m: &Module, ns: &str, parent_dir: &str, nss: &Vec<String>)  {
+fn write_cs_mod(m: &Module, ns: &str, parent_dir: &str, nss: &Vec<String>) {
     let mod_name = m.name.to_case(Case::Pascal);
     let dir = format!("{}/{}", parent_dir, mod_name);
 
@@ -44,7 +44,8 @@ fn write_cs_mod(m: &Module, ns: &str, parent_dir: &str, nss: &Vec<String>)  {
     let file = format!("{}/{}.cs", parent_dir, m.name.to_case(Case::Pascal));
 
     if let Some(code) = &m.code {
-        let code = code.lines()
+        let code = code
+            .lines()
             .map(|it| it.strip_prefix("            ").unwrap_or(it))
             .to_vec()
             .join("\n");

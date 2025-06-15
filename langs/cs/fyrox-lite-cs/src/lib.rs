@@ -1,7 +1,7 @@
-use std::ffi::{c_char, CStr};
-use std::path::PathBuf;
 use fyrox::plugin::DynamicPlugin;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
+use std::ffi::{c_char, CStr};
+use std::path::PathBuf;
 
 pub mod executor_cs;
 

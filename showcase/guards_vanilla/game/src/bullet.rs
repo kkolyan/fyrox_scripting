@@ -12,7 +12,7 @@ use fyrox::{
         visitor::prelude::*, TypeUuidProvider,
     },
     scene::{node::Node, Scene},
-    script::{ScriptContext, ScriptTrait, ScriptMessagePayload},
+    script::{ScriptContext, ScriptMessagePayload, ScriptTrait},
 };
 use std::ops::Add;
 

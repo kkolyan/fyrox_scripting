@@ -1,11 +1,11 @@
 pub mod by_package;
-pub mod context;
-pub mod templating;
 pub mod code_model;
-pub mod fmt;
-pub mod properties;
-pub mod methods;
+pub mod context;
 pub mod doc;
+pub mod fmt;
+pub mod methods;
+pub mod properties;
+pub mod templating;
 
 #[macro_export]
 macro_rules! writelnu {

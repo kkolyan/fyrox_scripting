@@ -32,15 +32,9 @@ pub fn resolve_classes(domain: &mut Domain, aliases: &mut HashMap<String, RustSy
 
     for item in domain.classes.iter_mut() {
         match item {
-            lite_model::Class::Engine(class) => {
-                resolve_classes_engine_class(class, &classes)
-            }
-            lite_model::Class::Struct(class) => {
-                resolve_classes_struct_class(class, &classes)
-            }
-            lite_model::Class::Enum(class) => {
-                resolve_classes_enum_class(class, &classes)
-            }
+            lite_model::Class::Engine(class) => resolve_classes_engine_class(class, &classes),
+            lite_model::Class::Struct(class) => resolve_classes_struct_class(class, &classes),
+            lite_model::Class::Enum(class) => resolve_classes_enum_class(class, &classes),
         }
     }
 }

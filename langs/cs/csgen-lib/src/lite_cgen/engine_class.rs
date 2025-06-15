@@ -22,7 +22,7 @@ pub(crate) fn generate_engine_class(
             .iter()
             .filter(|it| !matches!(it.ty, DataType::UserScriptGenericStub))
             .to_vec();
-        
+
         let generics = match method.is_generic() {
             true => "::<NativeHandle>",
             false => "",
@@ -68,11 +68,11 @@ pub(crate) fn generate_engine_class(
                 let mut __this: ${type} = ${expr};
             ",
                 [
-                    ("expr", &types::generate_from_native(&ty, "__this", client_replicated_types)),
                     (
-                        "type",
-                        &class.rust_struct_path,
+                        "expr",
+                        &types::generate_from_native(&ty, "__this", client_replicated_types),
                     ),
+                    ("type", &class.rust_struct_path),
                 ],
             );
         }
@@ -86,7 +86,14 @@ pub(crate) fn generate_engine_class(
                 let mut ${var} = ${expr};
             ",
                 [
-                    ("expr", &types::generate_from_native(&param.ty, &param.name, client_replicated_types)),
+                    (
+                        "expr",
+                        &types::generate_from_native(
+                            &param.ty,
+                            &param.name,
+                            client_replicated_types,
+                        ),
+                    ),
                     ("var", &param.name),
                 ],
             );

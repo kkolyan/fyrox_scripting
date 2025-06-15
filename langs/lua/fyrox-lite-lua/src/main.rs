@@ -50,7 +50,8 @@ fn main() {
     // Static linking.
     #[cfg(not(feature = "dylib"))]
     {
-        executor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new("scripts".into(),true));
+        executor
+            .add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new("scripts".into(), true));
     }
 
     executor.run()

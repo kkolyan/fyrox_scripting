@@ -12,24 +12,17 @@ use xml::{EmitterConfig, EventReader, EventWriter};
 #[extend::ext]
 pub impl str {
     fn to_luadoc(&self, indent: &str) -> String {
-        self
-            .md2html()
+        self.md2html()
             .lines()
             .map(|it| format!("{}--- {}\n", indent, it))
             .join("")
             .to_string()
     }
     fn to_luadoc_inline(&self) -> String {
-        self
-            .md2html()
-            .lines()
-            .join(" ")
-            .trim()
-            .to_string()
+        self.md2html().lines().join(" ").trim().to_string()
     }
     fn to_xmldoc(&self, indent: &str) -> String {
-        self
-            .md2html()
+        self.md2html()
             .html2xmldoc()
             .lines()
             .map(|it| format!("\n{}/// {}", indent, it))
@@ -37,8 +30,7 @@ pub impl str {
     }
 
     fn to_xmldoc_commented(&self, indent: &str) -> String {
-        self
-            .md2html()
+        self.md2html()
             .html2xmldoc()
             .lines()
             .map(|it| format!("\n{}// {}", indent, it))
@@ -47,7 +39,8 @@ pub impl str {
 
     fn to_book(&self) -> String {
         self.md2html()
-            .replace("<kbd>\\</kbd>", "<kbd>\\\\</kbd>").to_string()
+            .replace("<kbd>\\</kbd>", "<kbd>\\\\</kbd>")
+            .to_string()
     }
 
     fn md2html(&self) -> String {
@@ -83,7 +76,7 @@ pub impl str {
         for event in reader {
             match event {
                 Ok(event) => match event {
-                    XmlEvent::StartDocument {.. } => {}
+                    XmlEvent::StartDocument { .. } => {}
                     XmlEvent::EndDocument => break,
                     XmlEvent::ProcessingInstruction { name, data } => {
                         w.write(WriterEvent::ProcessingInstruction {
@@ -96,34 +89,30 @@ pub impl str {
                         name,
                         attributes,
                         namespace,
-                    } =>{
+                    } => {
                         let x = &vec![name.local_name.as_str()];
-                        let elements = mapping.get(name.local_name.as_str())
-                            .unwrap_or(x);
+                        let elements = mapping.get(name.local_name.as_str()).unwrap_or(x);
                         for element in elements {
-                            w
-                                .write(WriterEvent::StartElement {
-                                    name: Name::local(element),
-                                    attributes: Cow::Owned(
-                                        attributes.iter().map(|it| it.borrow()).to_vec(),
-                                    ),
-                                    namespace: Cow::Borrowed(&namespace),
-                                })
-                                .unwrap()
+                            w.write(WriterEvent::StartElement {
+                                name: Name::local(element),
+                                attributes: Cow::Owned(
+                                    attributes.iter().map(|it| it.borrow()).to_vec(),
+                                ),
+                                namespace: Cow::Borrowed(&namespace),
+                            })
+                            .unwrap()
                         }
-                    },
+                    }
                     XmlEvent::EndElement { name } => {
                         let vec1 = vec![name.local_name.as_str()];
-                        let elements = mapping.get(name.local_name.as_str())
-                            .unwrap_or(&vec1);
+                        let elements = mapping.get(name.local_name.as_str()).unwrap_or(&vec1);
                         for element in elements.iter().rev() {
-                            w
-                                .write(WriterEvent::EndElement {
-                                    name: Some(Name::local(element)),
-                                })
-                                .unwrap()
+                            w.write(WriterEvent::EndElement {
+                                name: Some(Name::local(element)),
+                            })
+                            .unwrap()
                         }
-                    },
+                    }
                     XmlEvent::CData(it) => w.write(WriterEvent::CData(it.as_str())).unwrap(),
                     XmlEvent::Comment(it) => w.write(it.as_str()).unwrap(),
                     XmlEvent::Characters(it) => w.write(it.as_str()).unwrap(),
@@ -132,6 +121,8 @@ pub impl str {
                 Err(err) => panic!("{:?}. source:\n{}", err, self),
             }
         }
-        String::from_utf8(out).unwrap().replace("<c>\\\\</c>", "<c>\\</c>")
+        String::from_utf8(out)
+            .unwrap()
+            .replace("<c>\\\\</c>", "<c>\\</c>")
     }
 }

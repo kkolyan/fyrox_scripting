@@ -5,5 +5,4 @@ use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 pub struct ExternalGlobalScriptProxy {
     pub name: String,
     pub data: GlobalScriptResidence<LuaLang>,
-
 }

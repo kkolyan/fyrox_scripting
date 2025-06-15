@@ -1,9 +1,12 @@
 use lite_model::{Class, Domain};
 
-use gen_common::{by_package::classes_by_package, code_model::{Module}, context::GenerationContext };
-use crate::bindings::{generate_engine_class_bindings::generate_engine_class_bindings, generate_enum_class_bindings::generate_enum_class_bindings, generate_registry::generate_registry, generate_struct_class_bindings::generate_struct_class_bindings};
-
-
+use crate::bindings::{
+    generate_engine_class_bindings::generate_engine_class_bindings,
+    generate_enum_class_bindings::generate_enum_class_bindings,
+    generate_registry::generate_registry,
+    generate_struct_class_bindings::generate_struct_class_bindings,
+};
+use gen_common::{by_package::classes_by_package, code_model::Module, context::GenerationContext};
 
 pub fn generate_lua_bindings(domain: &Domain) -> Module {
     let ctx = GenerationContext {

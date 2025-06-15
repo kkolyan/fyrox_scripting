@@ -1,7 +1,7 @@
-use std::fmt::Debug;
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
 use fyrox::script::{DynamicTypeId, ScriptMessagePayload, ScriptTrait};
+use std::fmt::Debug;
 
 pub trait ClassId: LiteDataType + Clone {
     fn lookup_class_name(&self) -> String;
@@ -16,7 +16,7 @@ pub trait UserScript: Sized + LiteDataType {
     type LangSpecificError: Clone + Debug;
     type UserScriptMessage: ScriptMessagePayload + LiteDataType;
     type UserScriptGenericStub: LiteDataType + Copy;
-    
+
     fn pack_class_id(class_id: &Self::ClassId) -> DynamicTypeId;
     fn unpack_class_id(class_id: DynamicTypeId) -> Self::ClassId;
 
@@ -27,9 +27,15 @@ pub trait UserScript: Sized + LiteDataType {
         ctx: &mut Self::Plugin,
     ) -> Option<Self>;
 
-    fn into_proxy_script(self, class_id: &Self::ClassId) -> Result<Self::ProxyScript, Self::LangSpecificError>;
+    fn into_proxy_script(
+        self,
+        class_id: &Self::ClassId,
+    ) -> Result<Self::ProxyScript, Self::LangSpecificError>;
 
-    fn new_instance(node: Handle<Node>, class_id: &Self::ClassId) -> Result<Self, Self::LangSpecificError>;
+    fn new_instance(
+        node: Handle<Node>,
+        class_id: &Self::ClassId,
+    ) -> Result<Self, Self::LangSpecificError>;
 
     fn find_global_script(class_name: &Self::ClassId) -> Result<Self, Self::LangSpecificError>;
 

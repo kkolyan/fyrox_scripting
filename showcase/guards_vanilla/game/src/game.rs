@@ -42,10 +42,11 @@ impl Plugin for Game {
             .async_scene_loader
             .request(scene_path.unwrap_or("data/scene.rgs"));
 
-        self.hud =
-            TextBuilder::new(WidgetBuilder::new().with_foreground(Brush::Solid(Color::BLACK).into()))
-                .with_font_size(40.0.into())
-                .build(&mut context.user_interfaces.first_mut().build_ctx());
+        self.hud = TextBuilder::new(
+            WidgetBuilder::new().with_foreground(Brush::Solid(Color::BLACK).into()),
+        )
+        .with_font_size(40.0.into())
+        .build(&mut context.user_interfaces.first_mut().build_ctx());
     }
 
     fn update(&mut self, #[allow(unused_variables)] context: &mut PluginContext) {

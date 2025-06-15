@@ -4,9 +4,9 @@ pub mod mdgen;
 
 use std::fs;
 
+use gen_common::code_model::Module;
 use lite_model::Domain;
 use lite_parser::parse_domain_metadata::parse_domain_metadata;
-use gen_common::code_model::{Module};
 
 pub fn write_annotations(annotations: Module) {
     let target_path = "langs/lua/annotations";
@@ -37,8 +37,7 @@ pub fn get_combined_domain() -> Domain {
     fyrox.classes.retain_mut(|fyrox_class| {
         let override_class = None
             .or_else(|| math.get_class(fyrox_class.class_name()))
-            .or_else(|| color.get_class(fyrox_class.class_name()))
-            ;
+            .or_else(|| color.get_class(fyrox_class.class_name()));
         if let Some(override_class) = override_class {
             println!(
                 "overriding {} by {}",

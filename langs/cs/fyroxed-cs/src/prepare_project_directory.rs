@@ -1,8 +1,8 @@
 use native_dialog::{DialogBuilder, MessageLevel};
 use std::ffi::{c_char, CStr};
 use std::path::{Path, PathBuf};
-use std::{env, fs};
 use std::process::{Command, Stdio};
+use std::{env, fs};
 use uuid::Uuid;
 
 #[no_mangle]
@@ -33,21 +33,37 @@ pub extern "C" fn prepare_project_directory(working_dir: *const c_char, is_cli: 
 
 fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
     let assembly_name = working_dir.file_name().unwrap().to_str().unwrap();
-    let assembly_path = format!("{}/bin/Debug/net8.0/{assembly_name}.dll", working_dir.display());
+    let assembly_path = format!(
+        "{}/bin/Debug/net8.0/{assembly_name}.dll",
+        working_dir.display()
+    );
     println!("expected assembly location: {}", assembly_name);
     while !fs::exists(&assembly_path).unwrap() {
-        println!("compiling C# assembly at {}", env::current_dir().unwrap().display());
+        println!(
+            "compiling C# assembly at {}",
+            env::current_dir().unwrap().display()
+        );
         let Ok(spawn) = Command::new("dotnet")
-            .stdout(if is_cli { Stdio::inherit() } else { Stdio::piped() })
-            .stderr(if is_cli { Stdio::inherit() } else { Stdio::piped() })
+            .stdout(if is_cli {
+                Stdio::inherit()
+            } else {
+                Stdio::piped()
+            })
+            .stderr(if is_cli {
+                Stdio::inherit()
+            } else {
+                Stdio::piped()
+            })
             .args(["build"])
-            .spawn() else
-        {
+            .spawn()
+        else {
             if is_cli {
                 println!("Failed to run `dotnet` command. Please install .NET 8.0 or later.");
                 return false;
             }
-            if !ask_user_for_confirmation(format!("Failed to run `dotnet` command. Please install .NET 8.0 or later. Try again?")) {
+            if !ask_user_for_confirmation(format!(
+                "Failed to run `dotnet` command. Please install .NET 8.0 or later. Try again?"
+            )) {
                 return false;
             }
             continue;
@@ -66,18 +82,26 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
                 combined.extend_from_slice(&result.stderr);
                 combined.extend_from_slice("\n".as_bytes());
                 if success && !assembly_exists {
-                    combined.extend_from_slice("WTF: dotnet command succeed, but assembly still doesn't exist".as_bytes());
+                    combined.extend_from_slice(
+                        "WTF: dotnet command succeed, but assembly still doesn't exist".as_bytes(),
+                    );
                     combined.extend_from_slice("\n".as_bytes());
                 }
                 // let _ = io::stdout().write_all(&combined);
                 if let Err(err) = fs::write(log_file, &combined) {
-                    println!("failed to write log: {}\n{}", err, String::from_utf8_lossy(&combined));
+                    println!(
+                        "failed to write log: {}\n{}",
+                        err,
+                        String::from_utf8_lossy(&combined)
+                    );
                 }
                 if is_cli {
                     println!("failed to compile C# project.");
                     return false;
                 }
-                if !ask_user_for_confirmation(format!("failed to compile C# project: See `{log_file}` for details. Try again?")) {
+                if !ask_user_for_confirmation(format!(
+                    "failed to compile C# project: See `{log_file}` for details. Try again?"
+                )) {
                     return false;
                 }
                 continue;
@@ -87,7 +111,9 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
                     println!("failed to compile C# project due to {}", err);
                     return false;
                 }
-                if !ask_user_for_confirmation(format!("failed to compile C# project: {err}. Try again?")) {
+                if !ask_user_for_confirmation(format!(
+                    "failed to compile C# project: {err}. Try again?"
+                )) {
                     return false;
                 }
                 continue;

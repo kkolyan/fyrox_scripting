@@ -1,12 +1,12 @@
-
 use convert_case::{Case, Casing};
 use lite_model::StructClass;
 use to_vec::ToVec;
 
-use gen_common::{
-    code_model::{Module}, context::GenerationContext, templating::render
+use super::{
+    expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua},
+    supress_lint::SUPRESSIONS,
 };
-use super::{expressions::{mlua_to_rust_expr, rust_expr_to_mlua, type_to_mlua}, supress_lint::SUPRESSIONS};
+use gen_common::{code_model::Module, context::GenerationContext, templating::render};
 
 pub fn generate_struct_class_bindings(class: &StructClass, ctx: &GenerationContext) -> Module {
     let mut s: String = Default::default();
@@ -97,7 +97,10 @@ fn generate_from_lua(s: &mut String, class: &StructClass, ctx: &GenerationContex
             [
                 ("field_name", &field.name),
                 ("field_type", &type_to_mlua(&field.ty, ctx)),
-                ("expression", &mlua_to_rust_expr(&field.name, &field.ty, ctx)),
+                (
+                    "expression",
+                    &mlua_to_rust_expr(&field.name, &field.ty, ctx),
+                ),
             ],
         );
     }
@@ -123,4 +126,3 @@ fn generate_from_lua(s: &mut String, class: &StructClass, ctx: &GenerationContex
         ],
     );
 }
-

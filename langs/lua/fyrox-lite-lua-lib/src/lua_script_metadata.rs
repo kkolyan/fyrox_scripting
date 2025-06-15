@@ -87,10 +87,8 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
                                 name
                             };
                             match parts.next() {
-                                None => errors.push(format!(
-                                    "failed to parse field type: {}",
-                                    &annotation
-                                )),
+                                None => errors
+                                    .push(format!("failed to parse field type: {}", &annotation)),
                                 Some(it) => {
                                     let ty = match it {
                                         "number" => Some(ScriptFieldValueType::f64),
@@ -139,7 +137,9 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
 
     let parent_class = parent_class.as_deref();
 
-    if parent_class.is_none() || !(parent_class.unwrap() == "NodeScript" || parent_class.unwrap() == "GlobalScript") {
+    if parent_class.is_none()
+        || !(parent_class.unwrap() == "NodeScript" || parent_class.unwrap() == "GlobalScript")
+    {
         errors.push("parent class is required to be either NodeScript or GlobalScript".to_string());
     };
     if parent_class.is_some() && parent_class.unwrap() == "NodeScript" && uuid.is_none() {
@@ -153,7 +153,7 @@ pub(crate) fn parse_source(script_source: Vec<u8>) -> Result<ScriptMetadata, Vec
         .enumerate()
         .map(|(i, v)| (v.name.clone(), i))
         .collect();
-    let kind =  match parent_class.unwrap() {
+    let kind = match parent_class.unwrap() {
         "NodeScript" => ScriptKind::Node,
         "GlobalScript" => ScriptKind::Global,
         unknown => panic!("unknown ScriptKind constant: {:?}", unknown),

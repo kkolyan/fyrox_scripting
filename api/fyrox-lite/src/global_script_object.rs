@@ -1,10 +1,7 @@
-use std::{
-    fmt::Debug,
-    sync::Arc,
-};
+use std::{fmt::Debug, sync::Arc};
 
-use crate::script_object::{Lang, ScriptFieldValue};
 use super::script_metadata::{ScriptDefinition, ScriptFieldValueType};
+use crate::script_object::{Lang, ScriptFieldValue};
 
 /// Useful for persisting script data, but for some languages could be used as a runtime type
 #[derive(Clone)]
@@ -52,11 +49,15 @@ impl<T: Lang> ScriptObject<T> {
                     ScriptFieldValueType::UiNode => ScriptFieldValue::Node(Default::default()),
                     ScriptFieldValueType::Vector3 => ScriptFieldValue::Vector3(Default::default()),
                     ScriptFieldValueType::Vector2 => ScriptFieldValue::Vector2(Default::default()),
-                    ScriptFieldValueType::Vector2I => ScriptFieldValue::Vector2I(Default::default()),
+                    ScriptFieldValueType::Vector2I => {
+                        ScriptFieldValue::Vector2I(Default::default())
+                    }
                     ScriptFieldValueType::Quaternion => {
                         ScriptFieldValue::Quaternion(Default::default())
                     }
-                    ScriptFieldValueType::RuntimePin => ScriptFieldValue::RuntimePin(T::RuntimePin::default()),
+                    ScriptFieldValueType::RuntimePin => {
+                        ScriptFieldValue::RuntimePin(T::RuntimePin::default())
+                    }
                     ScriptFieldValueType::bool => ScriptFieldValue::bool(Default::default()),
                     ScriptFieldValueType::f32 => ScriptFieldValue::f32(Default::default()),
                     ScriptFieldValueType::f64 => ScriptFieldValue::f64(Default::default()),

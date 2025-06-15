@@ -24,13 +24,13 @@ macro_rules! native_utils {
             pub err: NativeString,
             pub value: $ty,
         }
-        
+
         #[allow(non_camel_case_types)]
         impl NativeType for $ty {
             type Array = $array;
             type Option = $option;
             type Result = $result;
-        
+
             fn to_native_array(v: Vec<$ty>) -> $array {
                 let len = v.len() as u32;
                 let capacity = v.capacity() as u32;
@@ -41,7 +41,7 @@ macro_rules! native_utils {
                     capacity,
                 }
             }
-        
+
             fn from_native_array(v: $array) -> Vec<$ty> {
                 let $array {
                     len,
@@ -50,7 +50,7 @@ macro_rules! native_utils {
                 } = v;
                 unsafe { Vec::from_raw_parts(items, len as usize, capacity as usize) }
             }
-        
+
             fn to_native_option(v: Option<Self>) -> Self::Option {
                 match v {
                     Some(it) => Self::Option {
@@ -63,7 +63,7 @@ macro_rules! native_utils {
                     },
                 }
             }
-        
+
             fn from_native_option(v: Self::Option) -> Option<Self> {
                 if v.present {
                     Some(v.value)
@@ -71,7 +71,7 @@ macro_rules! native_utils {
                     None
                 }
             }
-        
+
             fn to_native_result<E: Display>(v: Result<Self, E>) -> Self::Result {
                 match v {
                     Ok(it) => Self::Result {
@@ -86,8 +86,10 @@ macro_rules! native_utils {
                     },
                 }
             }
-        
-            fn from_native_result<U: UserScript>(v: Self::Result) -> Result<Self, U::LangSpecificError> {
+
+            fn from_native_result<U: UserScript>(
+                v: Self::Result,
+            ) -> Result<Self, U::LangSpecificError> {
                 if v.ok {
                     Ok(v.value)
                 } else {

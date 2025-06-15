@@ -1,12 +1,14 @@
 use std::{collections::HashMap, fs, path::Path, str::FromStr};
 
+use crate::doc_attr::extract_doc;
 use crate::{
-    extract_engine_class::extract_engine_class_and_inject_assertions, extract_pod_enum::extract_pod_enum, extract_pod_struct::extract_pod_struct, lite_api_attr::LiteApiAttr, RustSymbol
+    extract_engine_class::extract_engine_class_and_inject_assertions,
+    extract_pod_enum::extract_pod_enum, extract_pod_struct::extract_pod_struct,
+    lite_api_attr::LiteApiAttr, RustSymbol,
 };
 use lite_model::{Class, Domain, Package};
 use proc_macro2::{Span, TokenStream};
 use syn::{parse2, spanned::Spanned};
-use crate::doc_attr::extract_doc;
 
 pub fn load_path(
     crate_name: &str,
@@ -30,7 +32,7 @@ pub fn load_path(
         format!("{}::{}", root_mod_name, mod_name)
     };
     println!("mod name: {}", mod_name);
-    
+
     let mut definitions_found = 0;
 
     for item in file.items {
@@ -102,13 +104,14 @@ fn extract_attr(attrs: &[syn::Attribute], attr_name: &str) -> Option<(LiteApiAtt
     Some((
         match &attr.meta {
             syn::Meta::Path(_it) => Default::default(),
-            syn::Meta::List(it) => {
-                LiteApiAttr::from_attr_args(it.tokens.clone()).unwrap()
-            }
+            syn::Meta::List(it) => LiteApiAttr::from_attr_args(it.tokens.clone()).unwrap(),
             syn::Meta::NameValue(_it) => {
-                panic!("usage: #[lite_api] or #[lite_api({})]", LiteApiAttr::OPTIONS_HINT);
+                panic!(
+                    "usage: #[lite_api] or #[lite_api({})]",
+                    LiteApiAttr::OPTIONS_HINT
+                );
             }
         },
-        attr.span()
+        attr.span(),
     ))
 }

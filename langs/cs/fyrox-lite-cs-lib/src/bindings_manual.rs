@@ -1,12 +1,10 @@
-use std::{
-    fmt::Display,
-};
-use std::fmt::{Debug, Formatter};
-use fyrox_lite::{spi::UserScript};
-use fyrox_lite::spi::ClassId;
-use crate::*;
-use crate::scripted_app::{ScriptedApp, APP};
 use crate::auto_dispose::DisposableHandle;
+use crate::scripted_app::{ScriptedApp, APP};
+use crate::*;
+use fyrox_lite::spi::ClassId;
+use fyrox_lite::spi::UserScript;
+use std::fmt::Display;
+use std::fmt::{Debug, Formatter};
 
 #[no_mangle]
 ///@owner_class FyroxCApi
@@ -103,7 +101,7 @@ pub enum NativeValueType {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct NativeString {
-    pub data: u8_slice
+    pub data: u8_slice,
 }
 
 impl Debug for NativeString {
@@ -256,12 +254,20 @@ pub type NodeOnUpdate = extern "C" fn(thiz: NativeInstanceId, dt: f32) -> Unit_r
 pub type NodeOnInit = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;
 pub type NodeOnDeinit = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;
 pub type NodeOnStart = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;
-pub type NodeOnMessage = extern "C" fn(thiz: NativeInstanceId, message: UserScriptMessage) -> Unit_result;
+pub type NodeOnMessage =
+    extern "C" fn(thiz: NativeInstanceId, message: UserScriptMessage) -> Unit_result;
 
-pub type GameOnInit = extern "C" fn(thiz: NativeInstanceId, initial_scene_override: NativeString_optional) -> Unit_result;
+pub type GameOnInit = extern "C" fn(
+    thiz: NativeInstanceId,
+    initial_scene_override: NativeString_optional,
+) -> Unit_result;
 pub type GameOnUpdate = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;
 
-pub type CreateScriptInstance = extern "C" fn(thiz: NativeClassId, state: NativePropertyValue_slice, node: NativeHandle_optional) -> NativeInstanceId_result;
+pub type CreateScriptInstance = extern "C" fn(
+    thiz: NativeClassId,
+    state: NativePropertyValue_slice,
+    node: NativeHandle_optional,
+) -> NativeInstanceId_result;
 pub type DisposeMessage = extern "C" fn(message: UserScriptMessage);
 pub type DisposeScript = extern "C" fn(script: NativeInstanceId);
 
@@ -280,7 +286,9 @@ pub struct NativeBool {
 
 impl From<bool> for NativeBool {
     fn from(value: bool) -> Self {
-        NativeBool { value: if value { 1 } else { 0 } }
+        NativeBool {
+            value: if value { 1 } else { 0 },
+        }
     }
 }
 

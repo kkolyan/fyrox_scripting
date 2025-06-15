@@ -2,7 +2,7 @@ use gen_common::doc::strExt;
 use gen_common::writelnu;
 use lite_model::StructClass;
 
-use crate::{annotations::type_to_lua::type_rust_to_lua};
+use crate::annotations::type_to_lua::type_rust_to_lua;
 
 pub fn generate_struct(s: &mut String, class: &StructClass) {
     writelnu!(s, "");

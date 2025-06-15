@@ -1,6 +1,6 @@
-use std::ops::Deref;
 use gen_common::context::GenerationContext;
 use lite_model::{ClassName, DataType};
+use std::ops::Deref;
 
 pub fn type_cs(ty: &DataType) -> CsType {
     match ty {
@@ -42,29 +42,23 @@ pub fn type_cs(ty: &DataType) -> CsType {
             facade_generic: "T".to_string(),
             blittable: "UserScriptMessage".to_string(),
         },
-        DataType::UserScriptGenericStub => panic!("WTF, UserScriptGenericStub should be filtered out"),
+        DataType::UserScriptGenericStub => {
+            panic!("WTF, UserScriptGenericStub should be filtered out")
+        }
         DataType::Object(it) => {
             if is_implemented_externally(it) {
-                return CsType::templated("{}", "Native{}", &CsType::Blittable(it.to_string()))
+                return CsType::templated("{}", "Native{}", &CsType::Blittable(it.to_string()));
             }
             CsType::Blittable(it.to_string())
-        },
-        DataType::Option(it) => CsType::templated(
-            "{}?",
-            "{}_optional",
-            &type_cs(it.deref()),
-        ),
+        }
+        DataType::Option(it) => CsType::templated("{}?", "{}_optional", &type_cs(it.deref())),
         // err will throw exception
-        DataType::Result { ok, .. } => CsType::templated(
-            "{}",
-            "{}_result",
-            &type_cs(ok.deref()),
-        ),
+        DataType::Result { ok, .. } => CsType::templated("{}", "{}_result", &type_cs(ok.deref())),
     }
 }
 
 pub fn is_implemented_externally(class_name: &ClassName) -> bool {
-    class_name.0 == "Vector3" 
+    class_name.0 == "Vector3"
         || class_name.0 == "Vector2"
         || class_name.0 == "Vector2I"
         || class_name.0 == "Quaternion"
@@ -75,13 +69,19 @@ pub fn type_rs(ty: &DataType, ctx: &GenerationContext) -> RsType {
     match ty {
         DataType::UnresolvedClass(it) => panic!("Unresolved class: {}", it),
         DataType::Unit => RsType::Basic(format!("Unit")),
-        DataType::Bool => RsType::Mapped { lite: "bool".to_string(), native: "NativeBool".to_string() },
+        DataType::Bool => RsType::Mapped {
+            lite: "bool".to_string(),
+            native: "NativeBool".to_string(),
+        },
         DataType::Byte => RsType::Basic(format!("u8")),
         DataType::I32 => RsType::Basic(format!("i32")),
         DataType::I64 => RsType::Basic(format!("i64")),
         DataType::F32 => RsType::Basic(format!("f32")),
         DataType::F64 => RsType::Basic(format!("f64")),
-        DataType::String => RsType::Mapped {native: "NativeString".to_string(), lite: "String".to_string()},
+        DataType::String => RsType::Mapped {
+            native: "NativeString".to_string(),
+            lite: "String".to_string(),
+        },
         DataType::ClassName => RsType::Basic("NativeClassId".to_string()),
         DataType::Vec(it) => RsType::templated(
             // TODO there is two options to design it;
@@ -101,29 +101,27 @@ pub fn type_rs(ty: &DataType, ctx: &GenerationContext) -> RsType {
             lite: "AutoDisposableMessage".to_string(),
             native: "UserScriptMessage".to_string(),
         },
-        DataType::UserScriptGenericStub => panic!("WTF, UserScriptGenericStub should be filtered out"),
+        DataType::UserScriptGenericStub => {
+            panic!("WTF, UserScriptGenericStub should be filtered out")
+        }
         DataType::Object(it) => {
             let class = ctx.domain.get_class(it);
             if let Some(class) = class {
                 RsType::Mapped {
                     lite: class.rust_name().to_string(),
                     native: format!("Native{}", it),
-                }   
+                }
             } else {
                 RsType::Basic(it.to_string())
             }
-        },
-        DataType::Option(it) => RsType::templated(
-            "Option<{}>",
-            "{}_optional",
-            &type_rs(it.deref(), ctx),
-        ),
+        }
+        DataType::Option(it) => {
+            RsType::templated("Option<{}>", "{}_optional", &type_rs(it.deref(), ctx))
+        }
         // err will throw exception
-        DataType::Result { ok, .. } => RsType::templated(
-            "Result<{}, String>",
-            "{}_result",
-            &type_rs(ok.deref(), ctx),
-        ),
+        DataType::Result { ok, .. } => {
+            RsType::templated("Result<{}, String>", "{}_result", &type_rs(ok.deref(), ctx))
+        }
     }
 }
 
@@ -137,10 +135,7 @@ pub enum CsType {
 }
 pub enum RsType {
     Basic(String),
-    Mapped {
-        lite: String,
-        native: String,
-    },
+    Mapped { lite: String, native: String },
 }
 
 impl RsType {

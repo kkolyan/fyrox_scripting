@@ -1,11 +1,11 @@
 //! User input utilities
 
-use std::cell::RefCell;
-use std::collections::{HashSet};
+use crate::lite_math::PodVector2;
 use fyrox::event::{DeviceEvent, ElementState, Event, MouseButton, MouseScrollDelta, WindowEvent};
 use fyrox::keyboard::{KeyCode, PhysicalKey};
 use lite_macro::lite_api;
-use crate::lite_math::PodVector2;
+use std::cell::RefCell;
+use std::collections::HashSet;
 
 #[derive(Debug, Clone, Default)]
 pub struct Input {
@@ -24,9 +24,7 @@ thread_local! {
 }
 
 fn with_input<R: Sized>(f: &mut dyn FnMut(&mut Input) -> R) -> R {
-    INSTANCE.with_borrow_mut(|it| {
-        f(it.as_mut().expect("Input system wasn't initialized"))
-    })
+    INSTANCE.with_borrow_mut(|it| f(it.as_mut().expect("Input system wasn't initialized")))
 }
 /// Utility class to poll player input events
 #[allow(non_upper_case_globals)]
@@ -724,7 +722,6 @@ impl TryFrom<KeyCode> for LiteKeyCode {
 }
 
 impl Input {
-
     /// should be called after fixed frame update
     pub fn post_fixed_update() {
         with_input(&mut |it| {
@@ -748,25 +745,23 @@ impl Input {
                 Event::NewEvents(_) => {}
                 Event::WindowEvent { event, .. } => {
                     match event {
-                        WindowEvent::KeyboardInput { event, .. } => {
-                            match event.physical_key {
-                                PhysicalKey::Code(key_code) => {
-                                    if let Ok(key_code) = key_code.try_into() {
-                                        match event.state {
-                                            ElementState::Pressed => {
-                                                input.keys_down.insert(key_code);
-                                                input.keys.insert(key_code);
-                                            }
-                                            ElementState::Released => {
-                                                input.keys_up.insert(key_code);
-                                                input.keys.remove(&key_code);
-                                            }
+                        WindowEvent::KeyboardInput { event, .. } => match event.physical_key {
+                            PhysicalKey::Code(key_code) => {
+                                if let Ok(key_code) = key_code.try_into() {
+                                    match event.state {
+                                        ElementState::Pressed => {
+                                            input.keys_down.insert(key_code);
+                                            input.keys.insert(key_code);
+                                        }
+                                        ElementState::Released => {
+                                            input.keys_up.insert(key_code);
+                                            input.keys.remove(&key_code);
                                         }
                                     }
                                 }
-                                PhysicalKey::Unidentified(_) => {}
                             }
-                        }
+                            PhysicalKey::Unidentified(_) => {}
+                        },
                         WindowEvent::MouseInput { state, button, .. } => {
                             let button = match button {
                                 MouseButton::Left => Input::MouseLeft,
@@ -791,25 +786,21 @@ impl Input {
                         _ => {}
                     }
                 }
-                Event::DeviceEvent { event,.. } => {
-                    match event {
-                        DeviceEvent::Added => {}
-                        DeviceEvent::Removed => {}
-                        DeviceEvent::MouseMotion { delta: (x, y),.. } => {
-                            input.mouse_move.x += *x as f32;
-                            input.mouse_move.y += *y as f32;
-                        }
-                        DeviceEvent::MouseWheel { delta,.. } => {
-                            match delta {
-                                MouseScrollDelta::LineDelta(lite_macro, _) => {}
-                                MouseScrollDelta::PixelDelta(_) => {}
-                            }
-                        }
-                        DeviceEvent::Motion { .. } => {}
-                        DeviceEvent::Button { .. } => {}
-                        DeviceEvent::Key(_) => {}
+                Event::DeviceEvent { event, .. } => match event {
+                    DeviceEvent::Added => {}
+                    DeviceEvent::Removed => {}
+                    DeviceEvent::MouseMotion { delta: (x, y), .. } => {
+                        input.mouse_move.x += *x as f32;
+                        input.mouse_move.y += *y as f32;
                     }
-                }
+                    DeviceEvent::MouseWheel { delta, .. } => match delta {
+                        MouseScrollDelta::LineDelta(lite_macro, _) => {}
+                        MouseScrollDelta::PixelDelta(_) => {}
+                    },
+                    DeviceEvent::Motion { .. } => {}
+                    DeviceEvent::Button { .. } => {}
+                    DeviceEvent::Key(_) => {}
+                },
                 Event::UserEvent(_) => {}
                 Event::Suspended => {}
                 Event::Resumed => {}

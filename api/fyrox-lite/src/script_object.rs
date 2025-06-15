@@ -1,20 +1,21 @@
-use std::{
-    fmt::Debug,
-    sync::Arc,
-};
+use std::{fmt::Debug, sync::Arc};
 
+use super::script_metadata::ScriptDefinition;
+use crate::global_script_object::ScriptObject;
+use fyrox::core::algebra::Vector2;
 use fyrox::{
     asset::Resource,
     core::{
-        algebra::{UnitQuaternion, Vector3}, pool::Handle, reflect::Reflect, visitor::Visit, Uuid
+        algebra::{UnitQuaternion, Vector3},
+        pool::Handle,
+        reflect::Reflect,
+        visitor::Visit,
+        Uuid,
     },
     gui::UiNode,
     resource::model::Model,
     scene::node::Node,
 };
-use fyrox::core::algebra::Vector2;
-use crate::global_script_object::ScriptObject;
-use super::script_metadata::ScriptDefinition;
 
 /// Useful for persisting script data, but for some languages could be used as a runtime type
 #[derive(Clone)]
@@ -32,11 +33,18 @@ pub trait Lang: Debug + Clone + 'static {
     fn drop_runtime_pin(runtime_pin: &mut Self::RuntimePin);
     fn clone_runtime_pin(runtime_pin: &Self::RuntimePin) -> Self::RuntimePin;
     fn drop_script_object_to_prevent_delayed_destructor(_script: &mut Self::UnpackedScriptObject) {}
-    fn drop_script_object_to_prevent_delayed_destructor_global(_script: &mut Self::UnpackedGlobalScriptObject) {}
+    fn drop_script_object_to_prevent_delayed_destructor_global(
+        _script: &mut Self::UnpackedGlobalScriptObject,
+    ) {
+    }
     fn id_of(script: &Self::UnpackedScriptObject) -> Uuid;
     fn id_of_global(script: &Self::UnpackedGlobalScriptObject) -> Uuid;
-    fn unpack_node_script(script: &NodeScriptObject<Self>) -> Result<Self::UnpackedScriptObject, String>;
-    fn unpack_global_script(script: &ScriptObject<Self>) -> Result<Self::UnpackedGlobalScriptObject, String>;
+    fn unpack_node_script(
+        script: &NodeScriptObject<Self>,
+    ) -> Result<Self::UnpackedScriptObject, String>;
+    fn unpack_global_script(
+        script: &ScriptObject<Self>,
+    ) -> Result<Self::UnpackedGlobalScriptObject, String>;
 }
 
 #[allow(non_camel_case_types)]
@@ -70,7 +78,7 @@ impl<T: Lang> NodeScriptObject<T> {
     pub fn new(def: &Arc<ScriptDefinition>) -> Self {
         NodeScriptObject {
             node: Default::default(),
-            obj: ScriptObject::new(def)
+            obj: ScriptObject::new(def),
         }
     }
 }
@@ -89,7 +97,7 @@ impl<T: Lang> Clone for ScriptFieldValue<T> {
             ScriptFieldValue::RuntimePin(it) => {
                 let new = T::clone_runtime_pin(it);
                 ScriptFieldValue::RuntimePin(new)
-            },
+            }
             ScriptFieldValue::bool(it) => ScriptFieldValue::bool(*it),
             ScriptFieldValue::f32(it) => ScriptFieldValue::f32(*it),
             ScriptFieldValue::f64(it) => ScriptFieldValue::f64(*it),

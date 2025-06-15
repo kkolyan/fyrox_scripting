@@ -3,8 +3,15 @@ use fyrox_lite::{lite_node::LiteNode, lite_prefab::LitePrefab, lite_ui::LiteUiNo
 use fyrox_lite_math::lite_math::{LiteQuaternion, LiteVector2, LiteVector2I, LiteVector3};
 use mlua::{MetaMethod, String as LuaString, Table, UserData, UserDataRef, Value};
 
-use crate::{debug::VerboseLuaValue, lua_error, lua_utils::{OptionX, ValueX}, script_class::ScriptClass, script_object::ScriptFieldValue, user_data_plus::{FyroxUserData, Traitor}};
 use crate::user_script_impl::UserScriptProxy;
+use crate::{
+    debug::VerboseLuaValue,
+    lua_error,
+    lua_utils::{OptionX, ValueX},
+    script_class::ScriptClass,
+    script_object::ScriptFieldValue,
+    user_data_plus::{FyroxUserData, Traitor},
+};
 
 impl UserData for ScriptClass {
     fn add_methods<'lua, M: mlua::UserDataMethods<'lua, Self>>(methods: &mut M) {
@@ -15,7 +22,11 @@ impl UserData for ScriptClass {
                     // we use Lua the whole life of the program, so that seems sound
                     std::mem::transmute(v)
                 };
-                Log::info(format!("register user-defined method: {}.{}", this.name, k.to_string_lossy()));
+                Log::info(format!(
+                    "register user-defined method: {}.{}",
+                    this.name,
+                    k.to_string_lossy()
+                ));
                 this.table.insert(k.to_string_lossy().to_string(), static_v);
                 Ok(())
             },
@@ -23,25 +34,21 @@ impl UserData for ScriptClass {
         methods.add_meta_method(
             MetaMethod::Index.name(),
             |_lua, this, (k, _v): (mlua::String, mlua::Value)| {
-				let value = this.table.get(&k.to_string_lossy().to_string()).unwrap_or_else(|| &mlua::Value::Nil);
-				Ok(value.clone())
+                let value = this
+                    .table
+                    .get(&k.to_string_lossy().to_string())
+                    .unwrap_or_else(|| &mlua::Value::Nil);
+                Ok(value.clone())
             },
         );
     }
 }
 
-
 impl UserData for UserScriptProxy {
     fn add_fields<'lua, F: mlua::UserDataFields<'lua, Self>>(fields: &mut F) {
-        fields.add_field_method_get("node", |_lua, this| {
-            match this {
-                UserScriptProxy::Global(_) => {
-                    Err(lua_error!("field not found: \"node\""))
-                }
-                UserScriptProxy::Node(this) => {
-                    Ok(Traitor::new(LiteNode::new(this.node)))
-                }
-            }
+        fields.add_field_method_get("node", |_lua, this| match this {
+            UserScriptProxy::Global(_) => Err(lua_error!("field not found: \"node\"")),
+            UserScriptProxy::Node(this) => Ok(Traitor::new(LiteNode::new(this.node))),
         });
     }
     fn add_methods<'lua, M: mlua::UserDataMethods<'lua, Self>>(methods: &mut M) {
@@ -111,9 +118,9 @@ impl UserData for UserScriptProxy {
                             return Ok(result);
                         }
 
-                        let class = lua
-                            .globals()
-                            .get::<_, Option<UserDataRef<ScriptClass>>>(this.as_script_object().def.metadata.class.as_str())?;
+                        let class = lua.globals().get::<_, Option<UserDataRef<ScriptClass>>>(
+                            this.as_script_object().def.metadata.class.as_str(),
+                        )?;
                         if let Some(class) = class {
                             let value = class.table.get(field_name.as_ref());
                             if let Some(value) = value {
@@ -257,7 +264,8 @@ impl UserData for UserScriptProxy {
                                         value,
                                         &class,
                                         &field_name,
-                                    )?.inner(),
+                                    )?
+                                    .inner(),
                                 }
                             }
                             ScriptFieldValue::Vector3(it) => {

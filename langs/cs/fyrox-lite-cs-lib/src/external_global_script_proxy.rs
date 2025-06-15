@@ -1,23 +1,22 @@
-
+use crate::auto_dispose::AutoDispose;
+use crate::bindings_manual::{NativeClassId, UserScriptMessage};
+use crate::c_lang::CCompatibleLang;
+use crate::errors::ResultTcrateLangSpecificErrorExt;
+use crate::fyrox_c_plugin::CPlugin;
+use crate::scripted_app::ScriptedApp;
+use crate::scripted_app::APP;
 use fyrox::core::reflect::prelude::*;
 use fyrox::core::type_traits::prelude::*;
 use fyrox::core::visitor::prelude::*;
 use fyrox::script::BaseScript;
 use fyrox::script::ScriptContext;
 use fyrox::script::ScriptTrait;
+use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 use fyrox_lite::reflect_base;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
 use std::any::Any;
 use std::fmt::Debug;
-use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
-use crate::bindings_manual::{NativeClassId, UserScriptMessage};
-use crate::c_lang::CCompatibleLang;
-use crate::errors::ResultTcrateLangSpecificErrorExt;
-use crate::fyrox_c_plugin::CPlugin;
-use crate::auto_dispose::AutoDispose;
-use crate::scripted_app::ScriptedApp;
-use crate::scripted_app::APP;
 
 #[derive(Debug, Clone, ComponentProvider)]
 pub struct ExternalGlobalScriptProxy {
@@ -28,33 +27,43 @@ pub struct ExternalGlobalScriptProxy {
 
 impl ScriptTrait for ExternalGlobalScriptProxy {
     fn on_init(&mut self, ctx: &mut ScriptContext) {
-        self.data.ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
         invoke_callback(ctx, |app| {
-            (app.functions.on_init)(self.data.inner_unpacked().unwrap().instance.inner()).into_result().handle_scripting_error();
+            (app.functions.on_init)(self.data.inner_unpacked().unwrap().instance.inner())
+                .into_result()
+                .handle_scripting_error();
         });
     }
 
     fn on_start(&mut self, ctx: &mut ScriptContext) {
-        self.data.ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
         invoke_callback(ctx, |app| {
-            (app.functions.on_start)(self.data.inner_unpacked().unwrap().instance.inner()).into_result().handle_scripting_error();
+            (app.functions.on_start)(self.data.inner_unpacked().unwrap().instance.inner())
+                .into_result()
+                .handle_scripting_error();
         });
     }
 
     fn on_deinit(&mut self, ctx: &mut fyrox::script::ScriptDeinitContext) {
         invoke_callback(ctx, |app| {
-            (app.functions.on_deinit)(self.data.inner_unpacked().unwrap().instance.inner()).into_result().handle_scripting_error();
+            (app.functions.on_deinit)(self.data.inner_unpacked().unwrap().instance.inner())
+                .into_result()
+                .handle_scripting_error();
         });
     }
 
-    fn on_os_event(&mut self, event: &fyrox::event::Event<()>, ctx: &mut ScriptContext) {
-    }
+    fn on_os_event(&mut self, event: &fyrox::event::Event<()>, ctx: &mut ScriptContext) {}
 
     fn on_update(&mut self, ctx: &mut ScriptContext) {
-        self.data.ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
         let dt = ctx.dt;
         invoke_callback(ctx, |app| {
-            (app.functions.on_update)(self.data.inner_unpacked().unwrap().instance.inner(), dt).into_result().handle_scripting_error();
+            (app.functions.on_update)(self.data.inner_unpacked().unwrap().instance.inner(), dt)
+                .into_result()
+                .handle_scripting_error();
         });
     }
 
@@ -66,21 +75,29 @@ impl ScriptTrait for ExternalGlobalScriptProxy {
         let Some(message) = message.downcast_ref::<AutoDispose<UserScriptMessage>>() else {
             return;
         };
-        self.data.ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
+        self.data
+            .ensure_unpacked(&mut ctx.plugins.get_mut::<CPlugin>().failed);
         invoke_callback(ctx, |app| {
-            (app.functions.on_message)(self.data.inner_unpacked().unwrap().instance.inner(), message.inner()).into_result().handle_scripting_error();
+            (app.functions.on_message)(
+                self.data.inner_unpacked().unwrap().instance.inner(),
+                message.inner(),
+            )
+            .into_result()
+            .handle_scripting_error();
         });
     }
 }
 
-pub(crate) fn invoke_callback(sc: &mut dyn UnsafeAsUnifiedContext<'_, '_, '_>, callback: impl FnOnce(&ScriptedApp)) {
+pub(crate) fn invoke_callback(
+    sc: &mut dyn UnsafeAsUnifiedContext<'_, '_, '_>,
+    callback: impl FnOnce(&ScriptedApp),
+) {
     APP.with_borrow(|app| {
         without_script_context(sc, || {
             callback(app.as_ref().unwrap());
         });
     });
 }
-
 
 impl BaseScript for ExternalGlobalScriptProxy {
     fn clone_box(&self) -> Box<dyn ScriptTrait> {

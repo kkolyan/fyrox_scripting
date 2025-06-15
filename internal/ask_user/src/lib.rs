@@ -11,7 +11,7 @@ pub fn ask_user_for_directory(title: &str) -> Option<String> {
         let path = result.unwrap();
         let Some(dialog_path) = path else {
             s = None;
-            break
+            break;
         };
         let mut path = dialog_path.clone();
 
@@ -21,10 +21,17 @@ pub fn ask_user_for_directory(title: &str) -> Option<String> {
             if !path.is_dir() {
                 continue;
             }
-            println!("DialogBuilder returned non-existing path {:?}. On Windows there are scenarios when that means that user want to select a project.", dialog_path.to_string_lossy());
+            println!(
+                "DialogBuilder returned non-existing path {:?}. \
+                On Windows there are scenarios when that means that user want to select a project.",
+                dialog_path.to_string_lossy()
+            );
         }
 
-        println!("Notice: string allocated here is known to be leaked, because it's not critical in expected amounts.");
+        println!(
+            "Notice: string allocated here is known to be leaked, \
+            because it's not critical in expected amounts."
+        );
 
         s = Some(path.to_str().unwrap().to_owned());
         break;

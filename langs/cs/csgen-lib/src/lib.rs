@@ -4,9 +4,9 @@ use std::collections::HashSet;
 use std::{fs, str::FromStr};
 use syn::{parse2, File};
 
-pub mod rust_decl_to_cs;
 pub mod lite_cgen;
 pub mod lite_csgen;
+pub mod rust_decl_to_cs;
 
 pub fn generate_manual_bindings_cs() -> Module {
     let s = fs::read_to_string("langs/cs/fyrox-lite-cs-lib/src/bindings_manual.rs").unwrap();

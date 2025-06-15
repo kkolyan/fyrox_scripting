@@ -73,7 +73,10 @@ fn generate_to_native(
             impl From<${from}> for ${to} {
                 fn from(__value: ${from}) -> Self {
     "#,
-        [("from", &class.rust_struct_path), ("to", &format!("Native{}", &class.class_name))],
+        [
+            ("from", &class.rust_struct_path),
+            ("to", &format!("Native{}", &class.class_name)),
+        ],
     );
 
     for field in class.fields.iter() {
@@ -81,13 +84,20 @@ fn generate_to_native(
         let ty = &field.ty;
         field_names.push(name.to_string());
 
-        render(s, "
+        render(
+            s,
+            "
                     let ${name} = __value.${name};
                     let ${name} = ${expr};
-        ", [
-            ("name", &name),
-            ("expr", &types::generate_to_native(&ty, &name, client_replicated_types)),
-        ]);
+        ",
+            [
+                ("name", &name),
+                (
+                    "expr",
+                    &types::generate_to_native(&ty, &name, client_replicated_types),
+                ),
+            ],
+        );
     }
 
     render(
@@ -114,19 +124,29 @@ fn generate_from_native(
             impl From<${from}> for ${to} {
                 fn from(__value: ${from}) -> Self {
     "#,
-        [("from", &format!("Native{}", &class.class_name)), ("to", &class.rust_struct_path)],
+        [
+            ("from", &format!("Native{}", &class.class_name)),
+            ("to", &class.rust_struct_path),
+        ],
     );
 
     for field in class.fields.iter() {
         field_names.push(field.name.to_string());
 
-        render(s, "
+        render(
+            s,
+            "
                     let ${name} = __value.${name};
                     let ${name} = ${expr};
-        ", [
-            ("name", &field.name),
-            ("expr", &types::generate_from_native(&field.ty, &field.name, client_replicated_types)),
-        ]);
+        ",
+            [
+                ("name", &field.name),
+                (
+                    "expr",
+                    &types::generate_from_native(&field.ty, &field.name, client_replicated_types),
+                ),
+            ],
+        );
     }
 
     render(

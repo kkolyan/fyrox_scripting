@@ -1,11 +1,11 @@
-use std::{fmt::Debug, marker::PhantomData, ops::{Deref, DerefMut}};
+use std::{
+    fmt::Debug,
+    marker::PhantomData,
+    ops::{Deref, DerefMut},
+};
 
 use fyrox::core::log::Log;
 use mlua::{Lua, MetaMethod, UserData, UserDataFields, UserDataMethods};
-
-
-
-
 
 #[derive(Clone, Copy, Debug)]
 pub struct Traitor<T>(T);
@@ -56,7 +56,7 @@ pub trait FyroxUserData: Sized + 'static {
 
     #[allow(unused_variables)]
     fn add_class_methods<'lua, M: UserDataMethods<'lua, UserDataClass<Self>>>(methods: &mut M) {}
-    
+
     fn register_class(lua: &Lua) {
         let value = UserDataClass::<Self> {
             pd: Default::default(),
@@ -70,9 +70,8 @@ pub trait FyroxUserData: Sized + 'static {
 impl<T> UserData for Traitor<T>
 where
     T: FyroxUserData,
-    T: Debug
+    T: Debug,
 {
-
     fn add_fields<'lua, F: UserDataFields<'lua, Self>>(fields: &mut F) {
         fields.add_meta_field(MetaMethod::Type.name(), T::CLASS_NAME);
         T::add_instance_fields(fields);

@@ -1,5 +1,6 @@
 use crate::{md::type_to_md::type_rust_to_md, Naming};
 use gen_common::by_package::extract_package;
+use gen_common::doc::strExt;
 use gen_common::properties::is_regular;
 use gen_common::{
     methods::analyze_method_result,
@@ -7,13 +8,10 @@ use gen_common::{
     writelnu,
 };
 use itertools::Itertools;
-use lite_model::{
-    ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method,
-};
+use lite_model::{ClassName, Constant, ConstantValue, DataType, EngineClass, Literal, Method};
 use std::collections::{HashMap, HashSet};
 use std::fmt::Display;
 use to_vec::ToVec;
-use gen_common::doc::strExt;
 
 struct Property<'a> {
     name: &'a str,
@@ -221,8 +219,14 @@ fn extract_properties(class: &EngineClass, instance: bool) -> Vec<Property> {
                 name: prop,
                 description: format!(
                     "{}{}",
-                    get.map(|it| it.description.as_str()).unwrap_or("").to_book().replace("\n", " "),
-                    set.map(|it| it.description.as_str()).unwrap_or("").to_book().replace("\n", " "),
+                    get.map(|it| it.description.as_str())
+                        .unwrap_or("")
+                        .to_book()
+                        .replace("\n", " "),
+                    set.map(|it| it.description.as_str())
+                        .unwrap_or("")
+                        .to_book()
+                        .replace("\n", " "),
                 ),
                 ty,
                 read: get_ty.is_some(),

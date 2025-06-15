@@ -26,7 +26,6 @@ impl Display for DataType {
     }
 }
 
-
 impl Domain {
     pub fn get_class(&self, name: &ClassName) -> Option<&Class> {
         self.classes.iter().find(|it| it.class_name() == name)
@@ -34,14 +33,14 @@ impl Domain {
 }
 
 impl Domain {
-    pub fn merge_all(domains: impl IntoIterator<Item=Domain>) -> Self {
+    pub fn merge_all(domains: impl IntoIterator<Item = Domain>) -> Self {
         let mut classes = Vec::new();
         let mut packages = Vec::new();
         for domain in domains {
             classes.extend(domain.classes);
             packages.extend(domain.packages);
         }
-        Self { packages, classes}
+        Self { packages, classes }
     }
 }
 
@@ -90,23 +89,18 @@ impl Display for ClassName {
 
 impl Method {
     pub fn is_generic(&self) -> bool {
-        self
-            .signature
-            .params
-            .iter()
-            .any(|it| {
-                matches!(
-                    it.ty,
-                    DataType::UserScript
-                        | DataType::UserScriptMessage
-                        | DataType::UserScriptGenericStub
-                )
-            })
+        self.signature.params.iter().any(|it| {
+            matches!(
+                it.ty,
+                DataType::UserScript
+                    | DataType::UserScriptMessage
+                    | DataType::UserScriptGenericStub
+            )
+        })
     }
 }
 
 impl DataType {
-    
     pub fn contains_type(&self, class_name: &ClassName) -> bool {
         match self {
             DataType::Vec(it) => it.contains_type(class_name),

@@ -1,3 +1,5 @@
+use crate::global_script_object::ScriptObject;
+use crate::script_object::Lang;
 use fyrox::core::log::Log;
 use fyrox::core::visitor::Visit;
 use fyrox::core::visitor::VisitResult;
@@ -5,8 +7,6 @@ use fyrox::core::visitor::Visitor;
 use fyrox::core::Uuid;
 use std::fmt::Debug;
 use std::fmt::Formatter;
-use crate::global_script_object::ScriptObject;
-use crate::script_object::Lang;
 
 /// Initially, when script is loaded from file (scene or save game), it's in "packed" mode.
 /// First time this script receives `on_update` callback, it's converted to "unpacked", by
@@ -25,7 +25,9 @@ impl<T: Lang> GlobalScriptResidence<T> {
         }
     }
 
-    pub fn inner_unpacked(self: &GlobalScriptResidence<T>) -> Option<&T::UnpackedGlobalScriptObject> {
+    pub fn inner_unpacked(
+        self: &GlobalScriptResidence<T>,
+    ) -> Option<&T::UnpackedGlobalScriptObject> {
         match self {
             GlobalScriptResidence::Packed(_it) => None,
             GlobalScriptResidence::Unpacked(it) => Some(it),
@@ -72,7 +74,7 @@ impl<T: Lang> GlobalScriptResidence<T> {
             // ScriptResidence::Unpacked(it) => f(&mut it.borrow_mut().unwrap()),
         }
     }
-    
+
     pub fn id(&self) -> Uuid {
         match self {
             GlobalScriptResidence::Packed(it) => uuid_of_script(it),
@@ -100,7 +102,9 @@ impl<T: Lang> Clone for GlobalScriptResidence<T> {
             GlobalScriptResidence::Packed(it) => GlobalScriptResidence::Packed(it.clone()),
 
             // will implement when know when cloning is really needed during game cycle
-            GlobalScriptResidence::Unpacked(_) => panic!("cloning for Lua-backed ScriptData is not supported"),
+            GlobalScriptResidence::Unpacked(_) => {
+                panic!("cloning for Lua-backed ScriptData is not supported")
+            }
         }
     }
 }
@@ -110,17 +114,16 @@ impl<T: Lang> Drop for GlobalScriptResidence<T> {
         match self {
             GlobalScriptResidence::Packed(_it) => {
                 // ScriptObject is dropped automatically without delay
-            },
+            }
             GlobalScriptResidence::Unpacked(it) => {
                 T::drop_script_object_to_prevent_delayed_destructor_global(it);
-            },
+            }
         }
     }
 }
 
 impl<T: Lang> Visit for GlobalScriptResidence<T> {
     fn visit(&mut self, name: &str, visitor: &mut Visitor) -> VisitResult {
-
         match self {
             GlobalScriptResidence::Packed(it) => it.visit(name, visitor),
             GlobalScriptResidence::Unpacked(it) => it.visit(name, visitor),

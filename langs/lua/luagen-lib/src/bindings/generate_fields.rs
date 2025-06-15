@@ -2,7 +2,6 @@
 
 // use crate::context::GenerationContext;
 
-
 // pub fn generate_fields(
 //     s: &mut String,
 //     class: &StructClass,

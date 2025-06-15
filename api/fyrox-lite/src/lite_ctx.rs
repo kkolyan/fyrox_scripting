@@ -1,5 +1,9 @@
 use fyrox::{
-    core::pool::Handle, event::Event, plugin::Plugin, scene::node::Node, script::{ScriptContext, ScriptMessageContext, ScriptMessagePayload}
+    core::pool::Handle,
+    event::Event,
+    plugin::Plugin,
+    scene::node::Node,
+    script::{ScriptContext, ScriptMessageContext, ScriptMessagePayload},
 };
 
 use crate::{
@@ -78,15 +82,20 @@ pub struct LiteContext {
 }
 
 impl LiteContext {
-
     pub fn new(handle: Handle<Node>, dt: f32) -> Self {
-        Self { 
+        Self {
             node: LiteNode::new(handle),
-            dt
+            dt,
         }
     }
     // TODO contribute "take" method to "ctx.plugins"
     pub fn with_plugin<T: Plugin, R>(&mut self, f: impl FnOnce(&mut T) -> R) -> R {
-        with_script_context(|ctx| f(ctx.plugins.as_mut().expect("plugins not available").get_mut::<T>()))
+        with_script_context(|ctx| {
+            f(ctx
+                .plugins
+                .as_mut()
+                .expect("plugins not available")
+                .get_mut::<T>())
+        })
     }
 }

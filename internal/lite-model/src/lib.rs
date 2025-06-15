@@ -1,7 +1,7 @@
 pub mod impls;
 
-use serde::{Deserialize, Serialize};
 use impls::is_false;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default, PartialEq)]
 pub struct Domain {
@@ -49,10 +49,9 @@ pub struct EngineClass {
     pub description: String,
 }
 
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Feature {
-    Eq
+    Eq,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

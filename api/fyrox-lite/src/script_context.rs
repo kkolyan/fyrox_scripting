@@ -139,7 +139,7 @@ pub struct UnifiedContext<'a, 'b, 'c> {
     pub user_interfaces: Option<&'a mut UiContainer>,
 }
 
-impl <'a> UnifiedContext<'a, '_, '_> {
+impl<'a> UnifiedContext<'a, '_, '_> {
     pub fn ui(&mut self) -> &mut &'a mut UiContainer {
         self.user_interfaces.as_mut().unwrap()
     }

@@ -16,7 +16,7 @@ pub struct CBindingsLite {
 }
 pub fn generate_c_bindings_lite(domain: &Domain) -> CBindingsLite {
     let mut generated_structs = Default::default();
-    
+
     let mut client_replicated_types: HashSet<lite_model::ClassName> = Default::default();
     for class in domain.classes.iter() {
         if let Class::Struct(class) = class {
@@ -43,14 +43,32 @@ pub fn generate_c_bindings_lite(domain: &Domain) -> CBindingsLite {
             use crate::native_utils;
     ";
     for class in domain.classes.iter() {
-        s += &format!("
+        s += &format!(
+            "
         
             // {}
-        ", class.rust_name());
+        ",
+            class.rust_name()
+        );
         match class {
-            Class::Engine(class) => generate_engine_class(&mut s, class, &client_replicated_types, &mut generated_structs),
-            Class::Struct(class) => generate_struct(&mut s, class, &client_replicated_types, &mut generated_structs),
-            Class::Enum(class) => generate_enum(&mut s, class, &client_replicated_types, &mut generated_structs),
+            Class::Engine(class) => generate_engine_class(
+                &mut s,
+                class,
+                &client_replicated_types,
+                &mut generated_structs,
+            ),
+            Class::Struct(class) => generate_struct(
+                &mut s,
+                class,
+                &client_replicated_types,
+                &mut generated_structs,
+            ),
+            Class::Enum(class) => generate_enum(
+                &mut s,
+                class,
+                &client_replicated_types,
+                &mut generated_structs,
+            ),
         }
     }
     CBindingsLite {

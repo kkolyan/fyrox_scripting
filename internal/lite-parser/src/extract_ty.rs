@@ -31,7 +31,7 @@ pub fn extract_ty_path(
             }
             UserScriptBasedType::Itself => {
                 return Ok(DataType::UserScript);
-            },
+            }
         }
     }
     if path.segments.len() > 1 {

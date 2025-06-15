@@ -1,16 +1,15 @@
 use std::fmt::{Debug, Formatter};
 use std::ops::DerefMut;
 
+use crate::script_object::ScriptObject;
+use crate::user_script_impl::UserScriptProxy;
+use crate::{
+    lua_lifecycle::lua_vm, script_object::NodeScriptObject, typed_userdata::TypedUserData,
+};
 use fyrox::core::{visitor::Visit, Uuid};
 use fyrox_lite::{script_object::Lang, script_object_residence::uuid_of_script};
 use mlua::{Table, Value};
 use send_wrapper::SendWrapper;
-use crate::{
-    lua_lifecycle::lua_vm, script_object::NodeScriptObject,
-    typed_userdata::TypedUserData,
-};
-use crate::script_object::ScriptObject;
-use crate::user_script_impl::UserScriptProxy;
 
 #[derive(Debug, Clone)]
 pub struct LuaLang;
@@ -60,13 +59,14 @@ impl Lang for LuaLang {
             let _s: NodeScriptObject = it.to_node().unwrap();
         }
     }
-    fn drop_script_object_to_prevent_delayed_destructor_global(script: &mut Self::UnpackedGlobalScriptObject) {
+    fn drop_script_object_to_prevent_delayed_destructor_global(
+        script: &mut Self::UnpackedGlobalScriptObject,
+    ) {
         // take ScriptObject out of Lua VM and destroy it right now to prevent nested destructors
         // to be invoked at random moment in future by Lua GC, anth thus ruin Hit Reload
         if let Ok(it) = TypedUserData::take(script.0.deref_mut()) {
             let _s: ScriptObject = it.to_global().unwrap();
         }
-
     }
 
     fn id_of(script: &Self::UnpackedScriptObject) -> Uuid {
@@ -88,7 +88,9 @@ impl Lang for LuaLang {
         so.map_err(|it| it.to_string())
     }
 
-    fn unpack_global_script(script: &fyrox_lite::global_script_object::ScriptObject<Self>) -> Result<Self::UnpackedGlobalScriptObject, String> {
+    fn unpack_global_script(
+        script: &fyrox_lite::global_script_object::ScriptObject<Self>,
+    ) -> Result<Self::UnpackedGlobalScriptObject, String> {
         let so = lua_vm()
             .create_userdata(UserScriptProxy::Global(script.clone()))
             .map(TypedUserData::<UserScriptProxy>::new)
@@ -98,9 +100,7 @@ impl Lang for LuaLang {
     }
 }
 
-pub struct UnpackedScriptObjectVisit(
-    pub SendWrapper<TypedUserData<'static, UserScriptProxy>>,
-);
+pub struct UnpackedScriptObjectVisit(pub SendWrapper<TypedUserData<'static, UserScriptProxy>>);
 
 impl Debug for UnpackedScriptObjectVisit {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -119,6 +119,5 @@ impl Visit for UnpackedScriptObjectVisit {
             UserScriptProxy::Global(it) => it.visit(name, visitor),
             UserScriptProxy::Node(it) => it.visit(name, visitor),
         }
-        
     }
 }

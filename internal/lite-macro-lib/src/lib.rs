@@ -2,10 +2,7 @@ pub mod fyrox_lite;
 
 use proc_macro2::TokenStream;
 use quote::quote_spanned;
-use syn::{
-    spanned::Spanned,
-    Ident,
-};
+use syn::{spanned::Spanned, Ident};
 use uuid::Uuid;
 
 fn generate_static_assertions<'a>(items: impl Iterator<Item = &'a syn::Type>) -> TokenStream {

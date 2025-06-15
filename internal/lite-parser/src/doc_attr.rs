@@ -1,8 +1,9 @@
 use itertools::Itertools;
-use syn::{Attribute, Meta, Lit, Expr};
+use syn::{Attribute, Expr, Lit, Meta};
 
 pub fn extract_doc(attrs: &[Attribute]) -> String {
-    attrs.iter()
+    attrs
+        .iter()
         .filter_map(|attr| {
             if attr.path().is_ident("doc") {
                 if let Meta::NameValue(meta) = &attr.meta {
