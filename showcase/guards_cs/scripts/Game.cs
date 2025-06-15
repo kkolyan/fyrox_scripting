@@ -16,7 +16,7 @@ public class Game : GlobalScript
             FontSize = 40,
             Foreground = new Brush
             {
-                SolidColor = Color.Black
+                SolidColor = Colors.Black
             }
         });
 
