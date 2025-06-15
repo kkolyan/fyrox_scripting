@@ -326,10 +326,16 @@ fn class_to_md(
         render_methods(&mut s, methods.as_slice(), class_page_links);
     }
 
-    let mut static_props = class.properties.iter().filter(|it| it.is_static).to_vec();
+    let static_props = class.properties.iter().filter(|it| it.is_static && it.set).to_vec();
     if !static_props.is_empty() {
         writelnu!(s, "\n## Static Properties");
         render_static_properties(&mut s, static_props.as_slice(), class_page_links);
+    }
+
+    let const_props = class.properties.iter().filter(|it| it.is_static && it.get && !it.set).to_vec();
+    if !const_props.is_empty() {
+        writelnu!(s, "\n## Constants");
+        render_const_properties(&mut s, const_props.as_slice(), class_page_links);
     }
 
     let static_methods = class.methods.iter().filter(|it| it.is_static).to_vec();
@@ -435,7 +441,7 @@ fn render_static_properties(
     props: &[&CsProperty],
     class_page_links: &HashMap<ClassName, String>,
 ) {
-    writelnu!(s, "| Name | Type | Access | Description | Initializer |");
+    writelnu!(s, "| Name | Type | Access | Description |");
     writelnu!(s, "|---|---|---|---|---|");
     for prop in props {
         let access = match (prop.get, prop.set) {
@@ -444,6 +450,32 @@ fn render_static_properties(
             (true, true) => "get / set",
             _ => unreachable!(),
         };
+
+        thread_local! {
+            static COLOR_RE: Lazy<Regex> = Lazy::new(|| {
+                Regex::new(r"new Color\(0x([0-9A-Fa-f]{6})[0-9A-Fa-f]{2}\)").unwrap()
+            });
+        }
+
+        writelnu!(
+            s,
+            "| `{}` | {} | {} | {} |",
+            prop.name,
+            type_cs_to_md(&prop.ty, class_page_links),
+            access,
+            cs_docs_to_string(&prop.description, " "),
+        );
+    }
+}
+
+fn render_const_properties(
+    s: &mut String,
+    props: &[&CsProperty],
+    class_page_links: &HashMap<ClassName, String>,
+) {
+    writelnu!(s, "| Name | Type | Description | Initializer |");
+    writelnu!(s, "|---|---|---|---|");
+    for prop in props {
 
         thread_local! {
             static COLOR_RE: Lazy<Regex> = Lazy::new(|| {
@@ -460,10 +492,9 @@ fn render_static_properties(
 
         writelnu!(
             s,
-            "| `{}` | {} | {} | {} | {} |",
+            "| `{}` | {} | {} | {} |",
             prop.name,
             type_cs_to_md(&prop.ty, class_page_links),
-            access,
             cs_docs_to_string(&prop.description, " "),
             result,
         );

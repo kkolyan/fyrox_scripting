@@ -715,51 +715,48 @@ namespace FyroxLite
         }
 
         // Constants
-        private static readonly Vector2 _zero = new Vector2(0, 0);
-        private static readonly Vector2 _one = new Vector2(1, 1);
-        private static readonly Vector2 _inf = new Vector2(Mathf.Inf, Mathf.Inf);
-
-        private static readonly Vector2 _up = new Vector2(0, -1);
-        private static readonly Vector2 _down = new Vector2(0, 1);
-        private static readonly Vector2 _right = new Vector2(1, 0);
-        private static readonly Vector2 _left = new Vector2(-1, 0);
 
         /// <summary>
         /// Zero vector, a vector with all components set to <c>0</c>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(0, 0)</c>.</value>
-        public static Vector2 Zero { get { return _zero; } }
+        public static Vector2 Zero => new(0, 0);
+
         /// <summary>
         /// One vector, a vector with all components set to <c>1</c>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(1, 1)</c>.</value>
-        public static Vector2 One { get { return _one; } }
+        public static Vector2 One => new(1, 1);
+
         /// <summary>
         /// Infinity vector, a vector with all components set to <see cref="Mathf.Inf"/>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(Mathf.Inf, Mathf.Inf)</c>.</value>
-        public static Vector2 Inf { get { return _inf; } }
+        public static Vector2 Inf => new(Mathf.Inf, Mathf.Inf);
 
         /// <summary>
         /// Up unit vector. Y is down in 2D, so this vector points -Y.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(0, -1)</c>.</value>
-        public static Vector2 Up { get { return _up; } }
+        public static Vector2 Up => new(0, -1);
+
         /// <summary>
         /// Down unit vector. Y is down in 2D, so this vector points +Y.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(0, 1)</c>.</value>
-        public static Vector2 Down { get { return _down; } }
+        public static Vector2 Down => new(0, 1);
+
         /// <summary>
         /// Right unit vector. Represents the direction of right.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(1, 0)</c>.</value>
-        public static Vector2 Right { get { return _right; } }
+        public static Vector2 Right => new(1, 0);
+
         /// <summary>
         /// Left unit vector. Represents the direction of left.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2(-1, 0)</c>.</value>
-        public static Vector2 Left { get { return _left; } }
+        public static Vector2 Left => new(-1, 0);
 
         /// <summary>
         /// Constructs a new <see cref="Vector2"/> with the given components.

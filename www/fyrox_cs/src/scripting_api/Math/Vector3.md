@@ -68,24 +68,24 @@ struct in [Math](../Math.md)
 | string | `ToString` (  ) |  Converts this `Vector3` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Vector3` to a string with the given `name` .    |
 
-## Static Properties
-| Name | Type | Access | Description | Initializer |
-|---|---|---|---|---|
-| `Zero` | [Vector3](../Math/Vector3.md) | get |  Zero vector, a vector with all components set to `0` .  Equivalent to `new Vector3(0, 0, 0)` .  |  |
-| `One` | [Vector3](../Math/Vector3.md) | get |  One vector, a vector with all components set to `1` .  Equivalent to `new Vector3(1, 1, 1)` .  |  |
-| `Inf` | [Vector3](../Math/Vector3.md) | get |  Infinity vector, a vector with all components set to `Mathf.Inf` .  Equivalent to `new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf)` .  |  |
-| `Up` | [Vector3](../Math/Vector3.md) | get |  Up unit vector.  Equivalent to `new Vector3(0, 1, 0)` .  |  |
-| `Down` | [Vector3](../Math/Vector3.md) | get |  Down unit vector.  Equivalent to `new Vector3(0, -1, 0)` .  |  |
-| `Right` | [Vector3](../Math/Vector3.md) | get |  Right unit vector. Represents the local direction of right,  and the global direction of east.  Equivalent to `new Vector3(1, 0, 0)` .  |  |
-| `Left` | [Vector3](../Math/Vector3.md) | get |  Left unit vector. Represents the local direction of left,  and the global direction of west.  Equivalent to `new Vector3(-1, 0, 0)` .  |  |
-| `Forward` | [Vector3](../Math/Vector3.md) | get |  Forward unit vector. Represents the local direction of forward,  and the global direction of north.  Equivalent to `new Vector3(0, 0, -1)` .  |  |
-| `Back` | [Vector3](../Math/Vector3.md) | get |  Back unit vector. Represents the local direction of back,  and the global direction of south.  Equivalent to `new Vector3(0, 0, 1)` .  |  |
-| `ModelLeft` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the left side of imported 3D assets.  |  |
-| `ModelRight` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the right side of imported 3D assets.  |  |
-| `ModelTop` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the top side (up) of imported 3D assets.  |  |
-| `ModelBottom` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the bottom side (down) of imported 3D assets.  |  |
-| `ModelFront` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the front side (facing forward) of imported 3D assets.  |  |
-| `ModelRear` | [Vector3](../Math/Vector3.md) | get |  Unit vector pointing towards the rear side (back) of imported 3D assets.  |  |
+## Constants
+| Name | Type | Description | Initializer |
+|---|---|---|---|
+| `Zero` | [Vector3](../Math/Vector3.md) |  Zero vector, a vector with all components set to `0` .  Equivalent to `new Vector3(0, 0, 0)` .  | new(0, 0, 0) |
+| `One` | [Vector3](../Math/Vector3.md) |  One vector, a vector with all components set to `1` .  Equivalent to `new Vector3(1, 1, 1)` .  | new(1, 1, 1) |
+| `Inf` | [Vector3](../Math/Vector3.md) |  Infinity vector, a vector with all components set to `Mathf.Inf` .  Equivalent to `new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf)` .  | new(Mathf.Inf, Mathf.Inf, Mathf.Inf) |
+| `Up` | [Vector3](../Math/Vector3.md) |  Up unit vector.  Equivalent to `new Vector3(0, 1, 0)` .  | new(0, 1, 0) |
+| `Down` | [Vector3](../Math/Vector3.md) |  Down unit vector.  Equivalent to `new Vector3(0, -1, 0)` .  | new(0, -1, 0) |
+| `Right` | [Vector3](../Math/Vector3.md) |  Right unit vector. Represents the local direction of right,  and the global direction of east.  Equivalent to `new Vector3(1, 0, 0)` .  | new(-1, 0, 0) |
+| `Left` | [Vector3](../Math/Vector3.md) |  Left unit vector. Represents the local direction of left,  and the global direction of west.  Equivalent to `new Vector3(-1, 0, 0)` .  | new(1, 0, 0) |
+| `Forward` | [Vector3](../Math/Vector3.md) |  Forward unit vector. Represents the local direction of forward,  and the global direction of north.  Equivalent to `new Vector3(0, 0, -1)` .  | new(0, 0, 1) |
+| `Back` | [Vector3](../Math/Vector3.md) |  Back unit vector. Represents the local direction of back,  and the global direction of south.  Equivalent to `new Vector3(0, 0, 1)` .  | new(0, 0, -1) |
+| `ModelLeft` | [Vector3](../Math/Vector3.md) |  Unit vector pointing towards the left side of imported 3D assets.  | new(1, 0, 0) |
+| `ModelRight` | [Vector3](../Math/Vector3.md) |  Unit vector pointing towards the right side of imported 3D assets.  | new(-1, 0, 0) |
+| `ModelTop` | [Vector3](../Math/Vector3.md) |  Unit vector pointing towards the top side (up) of imported 3D assets.  | new(0, 1, 0) |
+| `ModelBottom` | [Vector3](../Math/Vector3.md) |  Unit vector pointing towards the bottom side (down) of imported 3D assets.  | new(0, -1, 0) |
+| `ModelFront` | [Vector3](../Math/Vector3.md) |  Unit vector pointing towards the front side (facing forward) of imported 3D assets.  | new(0, 0, 1) |
+| `ModelRear` | [Vector3](../Math/Vector3.md) |  Unit vector pointing towards the rear side (back) of imported 3D assets.  | new(0, 0, -1) |
 
 ## Operators
 | Return Type | Signature | Description |

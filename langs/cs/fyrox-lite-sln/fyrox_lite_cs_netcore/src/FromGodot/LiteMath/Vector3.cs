@@ -754,99 +754,94 @@ namespace FyroxLite
         }
 
         // Constants
-        private static readonly Vector3 _zero = new Vector3(0, 0, 0);
-        private static readonly Vector3 _one = new Vector3(1, 1, 1);
-        private static readonly Vector3 _inf = new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf);
-
-        private static readonly Vector3 _up = new Vector3(0, 1, 0);
-        private static readonly Vector3 _down = new Vector3(0, -1, 0);
-        private static readonly Vector3 _right = new Vector3(-1, 0, 0);
-        private static readonly Vector3 _left = new Vector3(1, 0, 0);
-        private static readonly Vector3 _forward = new Vector3(0, 0, 1);
-        private static readonly Vector3 _back = new Vector3(0, 0, -1);
-
-        private static readonly Vector3 _modelLeft = new Vector3(1, 0, 0);
-        private static readonly Vector3 _modelRight = new Vector3(-1, 0, 0);
-        private static readonly Vector3 _modelTop = new Vector3(0, 1, 0);
-        private static readonly Vector3 _modelBottom = new Vector3(0, -1, 0);
-        private static readonly Vector3 _modelFront = new Vector3(0, 0, 1);
-        private static readonly Vector3 _modelRear = new Vector3(0, 0, -1);
 
         /// <summary>
         /// Zero vector, a vector with all components set to <c>0</c>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(0, 0, 0)</c>.</value>
-        public static Vector3 Zero { get { return _zero; } }
+        public static Vector3 Zero => new(0, 0, 0);
+
         /// <summary>
         /// One vector, a vector with all components set to <c>1</c>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(1, 1, 1)</c>.</value>
-        public static Vector3 One { get { return _one; } }
+        public static Vector3 One => new(1, 1, 1);
+
         /// <summary>
         /// Infinity vector, a vector with all components set to <see cref="Mathf.Inf"/>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(Mathf.Inf, Mathf.Inf, Mathf.Inf)</c>.</value>
-        public static Vector3 Inf { get { return _inf; } }
+        public static Vector3 Inf => new(Mathf.Inf, Mathf.Inf, Mathf.Inf);
 
         /// <summary>
         /// Up unit vector.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(0, 1, 0)</c>.</value>
-        public static Vector3 Up { get { return _up; } }
+        public static Vector3 Up => new(0, 1, 0);
+
         /// <summary>
         /// Down unit vector.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(0, -1, 0)</c>.</value>
-        public static Vector3 Down { get { return _down; } }
+        public static Vector3 Down => new(0, -1, 0);
+
         /// <summary>
         /// Right unit vector. Represents the local direction of right,
         /// and the global direction of east.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(1, 0, 0)</c>.</value>
-        public static Vector3 Right { get { return _right; } }
+        public static Vector3 Right => new(-1, 0, 0);
+
         /// <summary>
         /// Left unit vector. Represents the local direction of left,
         /// and the global direction of west.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(-1, 0, 0)</c>.</value>
-        public static Vector3 Left { get { return _left; } }
+        public static Vector3 Left => new(1, 0, 0);
+
         /// <summary>
         /// Forward unit vector. Represents the local direction of forward,
         /// and the global direction of north.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(0, 0, -1)</c>.</value>
-        public static Vector3 Forward { get { return _forward; } }
+        public static Vector3 Forward => new(0, 0, 1);
+
         /// <summary>
         /// Back unit vector. Represents the local direction of back,
         /// and the global direction of south.
         /// </summary>
         /// <value>Equivalent to <c>new Vector3(0, 0, 1)</c>.</value>
-        public static Vector3 Back { get { return _back; } }
+        public static Vector3 Back => new(0, 0, -1);
 
         /// <summary>
         /// Unit vector pointing towards the left side of imported 3D assets.
         /// </summary>
-        public static Vector3 ModelLeft { get { return _modelLeft; } }
+        public static Vector3 ModelLeft => new(1, 0, 0);
+
         /// <summary>
         /// Unit vector pointing towards the right side of imported 3D assets.
         /// </summary>
-        public static Vector3 ModelRight { get { return _modelRight; } }
+        public static Vector3 ModelRight => new(-1, 0, 0);
+
         /// <summary>
         /// Unit vector pointing towards the top side (up) of imported 3D assets.
         /// </summary>
-        public static Vector3 ModelTop { get { return _modelTop; } }
+        public static Vector3 ModelTop => new(0, 1, 0);
+
         /// <summary>
         /// Unit vector pointing towards the bottom side (down) of imported 3D assets.
         /// </summary>
-        public static Vector3 ModelBottom { get { return _modelBottom; } }
+        public static Vector3 ModelBottom => new(0, -1, 0);
+
         /// <summary>
         /// Unit vector pointing towards the front side (facing forward) of imported 3D assets.
         /// </summary>
-        public static Vector3 ModelFront { get { return _modelFront; } }
+        public static Vector3 ModelFront => new(0, 0, 1);
+
         /// <summary>
         /// Unit vector pointing towards the rear side (back) of imported 3D assets.
         /// </summary>
-        public static Vector3 ModelRear { get { return _modelRear; } }
+        public static Vector3 ModelRear => new(0, 0, -1);
 
         /// <summary>
         /// Constructs a new <see cref="Vector3"/> with the given components.

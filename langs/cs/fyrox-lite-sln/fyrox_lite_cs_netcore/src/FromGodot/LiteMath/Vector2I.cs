@@ -320,59 +320,54 @@ namespace FyroxLite
         }
 
         // Constants
-        private static readonly Vector2I _minValue = new Vector2I(int.MinValue, int.MinValue);
-        private static readonly Vector2I _maxValue = new Vector2I(int.MaxValue, int.MaxValue);
-
-        private static readonly Vector2I _zero = new Vector2I(0, 0);
-        private static readonly Vector2I _one = new Vector2I(1, 1);
-
-        private static readonly Vector2I _up = new Vector2I(0, -1);
-        private static readonly Vector2I _down = new Vector2I(0, 1);
-        private static readonly Vector2I _right = new Vector2I(1, 0);
-        private static readonly Vector2I _left = new Vector2I(-1, 0);
 
         /// <summary>
         /// Min vector, a vector with all components equal to <see cref="int.MinValue"/>. Can be used as a negative integer equivalent of <see cref="Vector2.Inf"/>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(int.MinValue, int.MinValue)</c>.</value>
-        public static Vector2I MinValue { get { return _minValue; } }
+        public static Vector2I MinValue => new(int.MinValue, int.MinValue);
+
         /// <summary>
         /// Max vector, a vector with all components equal to <see cref="int.MaxValue"/>. Can be used as an integer equivalent of <see cref="Vector2.Inf"/>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(int.MaxValue, int.MaxValue)</c>.</value>
-        public static Vector2I MaxValue { get { return _maxValue; } }
+        public static Vector2I MaxValue => new(int.MaxValue, int.MaxValue);
 
         /// <summary>
         /// Zero vector, a vector with all components set to <c>0</c>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(0, 0)</c>.</value>
-        public static Vector2I Zero { get { return _zero; } }
+        public static Vector2I Zero => new(0, 0);
+
         /// <summary>
         /// One vector, a vector with all components set to <c>1</c>.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(1, 1)</c>.</value>
-        public static Vector2I One { get { return _one; } }
+        public static Vector2I One => new(1, 1);
 
         /// <summary>
         /// Up unit vector. Y is down in 2D, so this vector points -Y.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(0, -1)</c>.</value>
-        public static Vector2I Up { get { return _up; } }
+        public static Vector2I Up => new(0, -1);
+
         /// <summary>
         /// Down unit vector. Y is down in 2D, so this vector points +Y.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(0, 1)</c>.</value>
-        public static Vector2I Down { get { return _down; } }
+        public static Vector2I Down => new(0, 1);
+
         /// <summary>
         /// Right unit vector. Represents the direction of right.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(1, 0)</c>.</value>
-        public static Vector2I Right { get { return _right; } }
+        public static Vector2I Right => new(1, 0);
+
         /// <summary>
         /// Left unit vector. Represents the direction of left.
         /// </summary>
         /// <value>Equivalent to <c>new Vector2I(-1, 0)</c>.</value>
-        public static Vector2I Left { get { return _left; } }
+        public static Vector2I Left => new(-1, 0);
 
         /// <summary>
         /// Constructs a new <see cref="Vector2I"/> with the given components.

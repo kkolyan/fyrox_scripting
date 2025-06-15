@@ -55,10 +55,10 @@ struct in [Math](../Math.md)
 | string | `ToString` (  ) |  Converts this `Quaternion` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Quaternion` to a string with the given `name` .    |
 
-## Static Properties
-| Name | Type | Access | Description | Initializer |
-|---|---|---|---|---|
-| `Identity` | [Quaternion](../Math/Quaternion.md) | get |  The identity quaternion, representing no rotation.  Equivalent to an identity `Basis` matrix. If a vector is transformed by  an identity quaternion, it will not change.  Equivalent to `new Quaternion(0, 0, 0, 1)` .  |  |
+## Constants
+| Name | Type | Description | Initializer |
+|---|---|---|---|
+| `Identity` | [Quaternion](../Math/Quaternion.md) |  The identity quaternion, representing no rotation.  Equivalent to an identity `Basis` matrix. If a vector is transformed by  an identity quaternion, it will not change.  Equivalent to `new Quaternion(0, 0, 0, 1)` .  | new(0, 0, 0, 1) |
 
 ## Static Methods
 | Return Type | Signature | Description |

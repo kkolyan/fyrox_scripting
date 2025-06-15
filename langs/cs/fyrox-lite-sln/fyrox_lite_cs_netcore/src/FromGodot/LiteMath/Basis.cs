@@ -816,33 +816,31 @@ namespace FyroxLite
             new Basis(0f, -1f, 0f, 0f, 0f, -1f, 1f, 0f, 0f)
         };
 
-        private static readonly Basis _identity = new Basis(1, 0, 0, 0, 1, 0, 0, 0, 1);
-        private static readonly Basis _flipX = new Basis(-1, 0, 0, 0, 1, 0, 0, 0, 1);
-        private static readonly Basis _flipY = new Basis(1, 0, 0, 0, -1, 0, 0, 0, 1);
-        private static readonly Basis _flipZ = new Basis(1, 0, 0, 0, 1, 0, 0, 0, -1);
-
         /// <summary>
         /// The identity basis, with no rotation or scaling applied.
         /// This is used as a replacement for <c>Basis()</c> in GDScript.
         /// Do not use <c>new Basis()</c> with no arguments in C#, because it sets all values to zero.
         /// </summary>
         /// <value>Equivalent to <c>new Basis(Vector3.Right, Vector3.Up, Vector3.Back)</c>.</value>
-        public static Basis Identity { get { return _identity; } }
+        public static Basis Identity => new(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
         /// <summary>
         /// The basis that will flip something along the X axis when used in a transformation.
         /// </summary>
         /// <value>Equivalent to <c>new Basis(Vector3.Left, Vector3.Up, Vector3.Back)</c>.</value>
-        public static Basis FlipX { get { return _flipX; } }
+        public static Basis FlipX => new(-1, 0, 0, 0, 1, 0, 0, 0, 1);
+
         /// <summary>
         /// The basis that will flip something along the Y axis when used in a transformation.
         /// </summary>
         /// <value>Equivalent to <c>new Basis(Vector3.Right, Vector3.Down, Vector3.Back)</c>.</value>
-        public static Basis FlipY { get { return _flipY; } }
+        public static Basis FlipY => new(1, 0, 0, 0, -1, 0, 0, 0, 1);
+
         /// <summary>
         /// The basis that will flip something along the Z axis when used in a transformation.
         /// </summary>
         /// <value>Equivalent to <c>new Basis(Vector3.Right, Vector3.Up, Vector3.Forward)</c>.</value>
-        public static Basis FlipZ { get { return _flipZ; } }
+        public static Basis FlipZ => new(1, 0, 0, 0, 1, 0, 0, 0, -1);
 
         /// <summary>
         /// Constructs a pure rotation basis matrix from the given quaternion.

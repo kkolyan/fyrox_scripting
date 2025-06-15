@@ -61,13 +61,13 @@ struct in [Math](../Math.md)
 | string | `ToString` (  ) |  Converts this `Basis` to a string.    |
 | string | `ToString` ( string? <ins>format</ins> ) |  Converts this `Basis` to a string with the given `name` .    |
 
-## Static Properties
-| Name | Type | Access | Description | Initializer |
-|---|---|---|---|---|
-| `Identity` | [Basis](../Math/Basis.md) | get |  The identity basis, with no rotation or scaling applied.  This is used as a replacement for `Basis()` in GDScript.  Do not use `new Basis()` with no arguments in C#, because it sets all values to zero.  Equivalent to `new Basis(Vector3.Right, Vector3.Up, Vector3.Back)` .  |  |
-| `FlipX` | [Basis](../Math/Basis.md) | get |  The basis that will flip something along the X axis when used in a transformation.  Equivalent to `new Basis(Vector3.Left, Vector3.Up, Vector3.Back)` .  |  |
-| `FlipY` | [Basis](../Math/Basis.md) | get |  The basis that will flip something along the Y axis when used in a transformation.  Equivalent to `new Basis(Vector3.Right, Vector3.Down, Vector3.Back)` .  |  |
-| `FlipZ` | [Basis](../Math/Basis.md) | get |  The basis that will flip something along the Z axis when used in a transformation.  Equivalent to `new Basis(Vector3.Right, Vector3.Up, Vector3.Forward)` .  |  |
+## Constants
+| Name | Type | Description | Initializer |
+|---|---|---|---|
+| `Identity` | [Basis](../Math/Basis.md) |  The identity basis, with no rotation or scaling applied.  This is used as a replacement for `Basis()` in GDScript.  Do not use `new Basis()` with no arguments in C#, because it sets all values to zero.  Equivalent to `new Basis(Vector3.Right, Vector3.Up, Vector3.Back)` .  | new(1, 0, 0, 0, 1, 0, 0, 0, 1) |
+| `FlipX` | [Basis](../Math/Basis.md) |  The basis that will flip something along the X axis when used in a transformation.  Equivalent to `new Basis(Vector3.Left, Vector3.Up, Vector3.Back)` .  | new(-1, 0, 0, 0, 1, 0, 0, 0, 1) |
+| `FlipY` | [Basis](../Math/Basis.md) |  The basis that will flip something along the Y axis when used in a transformation.  Equivalent to `new Basis(Vector3.Right, Vector3.Down, Vector3.Back)` .  | new(1, 0, 0, 0, -1, 0, 0, 0, 1) |
+| `FlipZ` | [Basis](../Math/Basis.md) |  The basis that will flip something along the Z axis when used in a transformation.  Equivalent to `new Basis(Vector3.Right, Vector3.Up, Vector3.Forward)` .  | new(1, 0, 0, 0, 1, 0, 0, 0, -1) |
 
 ## Static Methods
 | Return Type | Signature | Description |
