@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Prefab - Fyrox Lite / C#</title>
+        <title>Color - Fyrox Lite / C#</title>
 
 
         <!-- Custom HTML head -->
@@ -171,22 +171,48 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="prefab"><a class="header" href="#prefab">Prefab</a></h1>
-<p>class in <a href="../Prefab.html">Prefab</a></p>
+                        <h1 id="color"><a class="header" href="#color">Color</a></h1>
+<p>struct in <a href="../Color.html">Color</a></p>
+<h2 id="constructors"><a class="header" href="#constructors">Constructors</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td>( byte <ins>r</ins>, byte <ins>g</ins>, byte <ins>b</ins>, byte <ins>a</ins> )</td><td></td></tr>
+</tbody></table>
+</div>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="../Node/Node.html">Node</a></td><td><code>InstantiateAt</code> ( <a href="../Math/Vector3.html">Vector3</a> <ins>position</ins>, <a href="../Math/Quaternion.html">Quaternion</a> <ins>orientation</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>SrgbToLinear</code> (  )</td><td></td></tr>
+<tr><td>(float, float, float, float)</td><td><code>SrgbToLinearF32</code> (  )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>LinearToSrgb</code> (  )</td><td></td></tr>
+<tr><td>(float, float, float, float)</td><td><code>AsFloatRgba</code> (  )</td><td></td></tr>
+<tr><td>(float, float, float)</td><td><code>AsFloatRgb</code> (  )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>ToOpaque</code> (  )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Lerp</code> ( <a href="../Color/Color.html">Color</a> <ins>other</ins>, float <ins>t</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>WithNewAlpha</code> ( byte <ins>a</ins> )</td><td></td></tr>
+</tbody></table>
+</div>
+<h2 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Opaque</code> ( byte <ins>r</ins>, byte <ins>g</ins>, byte <ins>b</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>Repeat</code> ( byte <ins>c</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>RepeatOpaque</code> ( byte <ins>c</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>FromRgba</code> ( byte <ins>r</ins>, byte <ins>g</ins>, byte <ins>b</ins>, byte <ins>a</ins> )</td><td></td></tr>
+</tbody></table>
+</div>
+<h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Return Type</th><th>Signature</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>+</code> ( <a href="../Color/Color.html">Color</a> <ins>a</ins>, <a href="../Color/Color.html">Color</a> <ins>b</ins> )</td><td></td></tr>
+<tr><td><a href="../Color/Color.html">Color</a></td><td><code>-</code> ( <a href="../Color/Color.html">Color</a> <ins>a</ins>, <a href="../Color/Color.html">Color</a> <ins>b</ins> )</td><td></td></tr>
 </tbody></table>
 </div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../scripting_api/Prefab.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../scripting_api/Color.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../scripting_api/Scene.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../scripting_api/Input.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -196,11 +222,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../scripting_api/Prefab.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../scripting_api/Color.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../scripting_api/Scene.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../scripting_api/Input.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
