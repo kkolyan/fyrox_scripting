@@ -3,7 +3,7 @@ Create games with Rust-based [Fyrox Game Engine](https://fyrox.rs) without codin
 
 ###  [Fyrox / C# ⤴](https://kkolyan.github.io/fyrox_lite/fyrox_cs/index.html)
 Prebuilt [Fyrox editor](https://fyrox-book.github.io/beginning/editor_overview.html) imbued with [C#](https://learnxinyminutes.com/csharp/) scripting support.
-* Requires [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer).
+* Requires [.Net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer) for development.
 * Run and compile game from either Fyrox Editor, any IDE (with debug support) or command line.
 * Optional [JB Rider plugin](https://plugins.jetbrains.com/plugin/27613-fyroxlite?noRedirect=true).
 

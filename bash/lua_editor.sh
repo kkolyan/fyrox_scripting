@@ -4,16 +4,16 @@ set -e
 
 cd ..
 
-rm -rf target/sdk_lua
-./bash/lua_install_sdk.sh target/sdk_lua
+rm -rf target/fyrox_lua_sdk
+./bash/lua_install_sdk.sh target/fyrox_lua_sdk
 
 os=$(./bash/utils/os.sh)
 if [[ "$os" == "Windows" ]]; then
-    ./target/sdk_lua/fyroxed_lua.exe $*
+    ./target/fyrox_lua_sdk/fyroxed_lua.exe $*
 elif [[ "$os" == "Macos" ]]; then
-    ./target/sdk_lua/fyroxed_lua $*
+    ./target/fyrox_lua_sdk/fyroxed_lua $*
 elif [[ "$os" == "Linux" ]]; then
-    ./target/sdk_lua/fyroxed_lua $*
+    ./target/fyrox_lua_sdk/fyroxed_lua $*
 else
     echo "Unknown OS: $os"
     exit -1
