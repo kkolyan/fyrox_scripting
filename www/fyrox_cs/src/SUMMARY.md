@@ -4,6 +4,7 @@
 - [Scripting API (C#)](./scripting_api.md)
   - [Color](scripting_api/Color.md)
     - [Color](scripting_api/Color/Color.md)
+    - [Colors](scripting_api/Color/Colors.md)
   - [Input](scripting_api/Input.md)
     - [Input](scripting_api/Input/Input.md)
     - [KeyCode](scripting_api/Input/KeyCode.md)

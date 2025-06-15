@@ -200,23 +200,23 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
         }
     }
     let mut script_package = Default::default();
-    let mut color_package = Default::default();
+    // let mut color_package = Default::default();
     process_file(
         &mut script_package,
         "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Scripting/NodeScript.cs".into(),
     );
-    process_file(
-        &mut color_package,
-        "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Manual/Color.cs".into(),
-    );
+    // process_file(
+    //     &mut color_package,
+    //     "langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/Manual/Color.cs".into(),
+    // );
     packages.push(CSharpPackage {
         name: "Script".to_string(),
         items: script_package,
     });
-    packages.push(CSharpPackage {
-        name: "Color".to_string(),
-        items: color_package,
-    });
+    // packages.push(CSharpPackage {
+    //     name: "Color".to_string(),
+    //     items: color_package,
+    // });
 
     CSharpDomain { packages }
 }
@@ -550,6 +550,10 @@ fn cs_doc_to_string(doc: &CsXmlNode, line_separator: &str) -> String {
             // TODO implement me
             return "".to_string();
         }
+        if tag.name == "exception" {
+            // TODO implement me
+            return "".to_string();
+        }
         if tag.name == "seealso" {
             // TODO implement me
             return "".to_string();
@@ -570,6 +574,7 @@ fn cs_doc_to_string(doc: &CsXmlNode, line_separator: &str) -> String {
             // TODO improve me
             return cs_docs_to_string(&tag.children, line_separator);
         }
+        todo!("tag name: {}", tag.name);
     }
-    todo!()
+    todo!();
 }

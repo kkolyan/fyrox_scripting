@@ -29,7 +29,7 @@ There is a simple game that written in different scripting languages to demonstr
 
 ## Credits
 * Special thanks to [Dmitry Stepanov](https://github.com/mrDIMAS), author of Fyrox and other [Fyrox](https://github.com/FyroxEngine/Fyrox/) Contributors for such a powerful and inspiring foundation.
-* Grateful acknowledgment to the [Godot Engine](https://github.com/godotengine/godot) contributors for Godot's modular design and liberal license, allowed to reuse their Math classes in this project.
+* Gratefully acknowledge the Godot Engine contributors for its modular design and permissive license, which made it possible to [incorporate portions of its C# code into this project](https://github.com/kkolyan/fyrox_lite/tree/main/langs/cs/fyrox-lite-sln/fyrox_lite_cs_netcore/src/FromGodot).
 * Sincere thanks to the open-source community for sharing tools, ideas and knowledge.
 
 ## Contributing
