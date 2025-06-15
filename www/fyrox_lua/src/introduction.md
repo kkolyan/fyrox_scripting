@@ -43,12 +43,15 @@ function MyScript:on_update(dt)
 end
 ```
 
-Inherit classes from `Script` to create scripts that can be attached to scene nodes in editor via dropdown on Inspector
+Defined fields are accessible in editor UI and saved into scene files.
+
+Inherit classes from `NodeScript` to create scripts that can be attached to scene nodes in editor via dropdown on
+Inspector
 panel at the right. for `@uuid` annotation value [can be generated here](https://www.uuidgenerator.net/).
 
 Inherit from `GlobalScript` to create singleton scripts. Unlike C# scripts, Lua global scripts require UUID.
 
-For details about `Fyrox Lite API`, look into [guards_lua](showcase/guards_lua) project as a reference.
+Look into [guards_cs](https://github.com/kkolyan/fyrox_lite/tree/main/showcase/guards_lua) project as an example.
 
 ## Scripts Reloading
 

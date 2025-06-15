@@ -21,9 +21,9 @@ use OS-specific paths, and it will work.
 
 # How to use
 
-Install [.NET 9.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet) (later versions probably will work fine too,
-but
-not tested).
+Get Fyrox C# SDK.
+
+Install [.NET 9.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet) if it's not installed yet.
 
 Select a project directory where you'll keep scripts and other resources. Double-click on
 `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` and choose that directory.
@@ -37,18 +37,28 @@ directory).
 ## Scripts
 
 Inherit classes from `NodeScript` to create scripts that can be attached to scene nodes in editor via dropdown on
-Inspector panel at the right. Annotate them with using `[Uuid(...)]` attribute,
-value [can be generated here](https://www.uuidgenerator.net/).
+Inspector panel at the right.
 
 Inherit from `GlobalScript` to create singleton scripts (no need for `[Uuid(...)]` attribute).
 
-For details about `Fyrox Lite API`, look into [guards_cs](showcase/guards_cs) project as a reference.
+NodeScript classes should be annotatee using `[Uuid(...)]`
+attribute.
+Consider [JB Rider plugin for Fyrox C#](https://plugins.jetbrains.com/plugin/27613-fyroxlite?noRedirect=true) - it
+generates UUID, but also puts attribute if script created via context menu, also it highlight fields. If you use
+different
+IDE,
+UUID
+value [using any online service like this](https://www.uuidgenerator.net/).
+
+Look into [guards_cs](https://github.com/kkolyan/fyrox_lite/tree/main/showcase/guards_cs) project as an example.
 
 ## Scripts Reloading
 
 Editor reloads scripts metadata automatically after their compilation. In-game hot reload is not supported.
 
 ## Scenes & Assets
+
+Original Fyrox engine is 100% relevant in all non-code things, so Fyrox Book is advised for non-code information.
 
 * [Fyrox Book: Editor Overview](https://fyrox-book.github.io/beginning/editor_overview.html)
 * [Fyrox Book: Assets](https://fyrox-book.github.io/beginning/assets.html)
