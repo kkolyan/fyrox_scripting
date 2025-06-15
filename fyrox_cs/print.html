@@ -181,20 +181,30 @@
 </tbody></table>
 </div>
 <h1 id="how-to-install"><a class="header" href="#how-to-install">How to Install</a></h1>
-<p>Currently, it needs to be built from sources. Examples are for Windows, for other platforms just skip ".exe" suffix and use OS-specific paths, and it will work.</p>
+<p>Currently, it needs to be built from sources. Examples are for Windows, for other platforms just skip ".exe" suffix and
+use OS-specific paths, and it will work.</p>
 <ol>
 <li>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.Net SDK 8.0</a></li>
 <li>Install <a href="https://rustup.rs/">Rust</a>. It's needed only to build SDK.</li>
-<li>(skip for non-Windows OS-es) Install <a href="https://git-scm.com/downloads">Git for Windows</a>. This is needed for the <code>Git Bash</code> terminal - required to build the SDK on Windows using shell scripts.</li>
-<li>Run <code>install_sdk_cs.sh /c/dev/fyrox_cs_sdk</code> in <code>Git Bash</code> terminal. Note: the path must not exist before installation (to prevent mistakes).</li>
+<li>(skip for non-Windows OS-es) Install <a href="https://git-scm.com/downloads">Git for Windows</a>. This is needed for the
+<code>Git Bash</code> terminal - required to build the SDK on Windows using shell scripts.</li>
+<li>Run <code>install_sdk_cs.sh /c/dev/fyrox_cs_sdk</code> in <code>Git Bash</code> terminal. Note: the path must not exist before
+installation (to prevent mistakes).</li>
 </ol>
 <h1 id="how-to-use"><a class="header" href="#how-to-use">How to use</a></h1>
-<p>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.410-windows-x64-installer">.Net 8.0</a> (later versions probably will work fine too, but not tested).</p>
-<p>Select a project directory where you'll keep scripts and other resources. Double-click on <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> and choose that directory.</p>
+<p>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet">.NET 9.0 SDK</a> (later versions probably will work fine too,
+but
+not tested).</p>
+<p>Select a project directory where you'll keep scripts and other resources. Double-click on
+<code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> and choose that directory.</p>
 <p>Minimal C# project files will be created automatically and C# project will be automatically compiled.</p>
-<p>Game can be launched using Play button in editor. Also, game can be launched using IDE with debug support (run profile for JB Rider generated, for other IDE note that working directory should be the project directory, not the build directory).</p>
+<p>Game can be launched using Play button in editor. Also, game can be launched using IDE with debug support (run profile
+for JB Rider generated, for other IDE note that working directory should be the project directory, not the build
+directory).</p>
 <h2 id="scripts"><a class="header" href="#scripts">Scripts</a></h2>
-<p>Inherit classes from <code>NodeScript</code> to create scripts that can be attached to scene nodes in editor via dropdown on Inspector panel at the right. Annotate them with using <code>[Uuid(...)]</code> attribute, value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
+<p>Inherit classes from <code>NodeScript</code> to create scripts that can be attached to scene nodes in editor via dropdown on
+Inspector panel at the right. Annotate them with using <code>[Uuid(...)]</code> attribute,
+value <a href="https://www.uuidgenerator.net/">can be generated here</a>.</p>
 <p>Inherit from <code>GlobalScript</code> to create singleton scripts (no need for <code>[Uuid(...)]</code> attribute).</p>
 <p>For details about <code>Fyrox Lite API</code>, look into <a href="showcase/guards_cs">guards_cs</a> project as a reference.</p>
 <h2 id="scripts-reloading"><a class="header" href="#scripts-reloading">Scripts Reloading</a></h2>
