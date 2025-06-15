@@ -6,8 +6,7 @@ pub fn generate_registry(ctx: &GenerationContext) -> Module {
     let mut s = String::new();
     render(
         &mut s,
-        r#"
-        pub fn register_classes(lua: &mlua::Lua) {
+        r#"        pub fn register_classes(lua: &mlua::Lua) {
             use crate::user_data_plus::FyroxUserData;
     "#,
         [],

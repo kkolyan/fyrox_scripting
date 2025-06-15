@@ -32,8 +32,7 @@ pub fn main() {
 
 fn write_rs_to_file(path: &str, rust: RustEmitter) {
     let s = format!(
-        "
-            #![allow(non_camel_case_types)]
+"            #![allow(non_camel_case_types)]
             #![allow(non_upper_case_globals)]
             #![allow(non_snake_case)]
             #![allow(clippy::redundant_locals)]

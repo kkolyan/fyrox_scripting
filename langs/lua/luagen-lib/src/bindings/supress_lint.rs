@@ -1,5 +1,5 @@
-pub const SUPRESSIONS: &str = "
-	#![allow(unused_variables)]
+pub const SUPRESSIONS: &str =
+"    #![allow(unused_variables)]
 	#![allow(unused_imports)]
 	#![allow(unused_parens)]
 	#![allow(clippy::redundant_locals)]
