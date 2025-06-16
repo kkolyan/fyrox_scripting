@@ -14,10 +14,7 @@ use std::ffi::{c_char, CStr};
 use std::path::Path;
 
 #[no_mangle]
-extern "C" fn fyrox_lite_editor_run(
-    working_dir: *const c_char,
-    assembly_path: *const c_char,
-) {
+extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assembly_path: *const c_char) {
     Log::set_verbosity(MessageKind::Warning);
     let working_dir = unsafe { CStr::from_ptr(working_dir) }
         .to_str()
@@ -43,6 +40,10 @@ extern "C" fn fyrox_lite_editor_run(
     if let Err(err) = editor.add_dynamic_plugin_custom(plugin) {
         Log::err(err);
     }
+
+    editor.user_project_icon = Some(include_bytes!("../../../../target/fyrox_cs_001.ico").to_vec());
+    editor.user_project_name = "/C#".to_string();
+    editor.user_project_version = "/0.1".to_string();
 
     editor.add_editor_plugin(CSharpPluginRefreshOnUpdate);
 

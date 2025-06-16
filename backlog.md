@@ -61,7 +61,7 @@ Polish C#
       of WSL
 * [x] fix Color class for C# (probably pick it from Godot too)
 * [x] add icons to an executables
-* [ ] change editor icon?
+* [x] change editor icon?
 * [x] fix warnings
 * [x] update to .Net 9.0
 * [ ] refine the case when user misconfigured C# scripts

@@ -1,35 +1,35 @@
-
 [workspace]
 members = [
-	"api/fyrox-lite",
-	"api/fyrox-lite-math",
-	"api/fyrox-lite-color",
-	"internal/lite-macro",
-	"internal/lite-macro-lib",
-	"internal/lite-model",
-	"internal/lite-parser",
-	"internal/md-gen-lib",
-	"internal/gen-common",
-	"internal/error",
-	"internal/ask_user",
-	"langs/cs/csgen-lib",
-	"langs/cs/fyrox-lite-cs",
-	"langs/cs/fyrox-lite-cs-lib",
-	"langs/cs/fyroxed-cs",
-	"langs/lua/fyrox-lite-lua",
-	"langs/lua/fyrox-lite-lua-lib",
-	"langs/lua/fyroxed-lua",
-	"langs/lua/luagen-lib",
-	"showcase/guards_vanilla/editor",
-	"showcase/guards_vanilla/executor",
-	"showcase/guards_vanilla/game",
-	"showcase/guards_vanilla/game-dylib",
-	"tools",
+    "api/fyrox-lite",
+    "api/fyrox-lite-math",
+    "api/fyrox-lite-color",
+    "internal/lite-macro",
+    "internal/lite-macro-lib",
+    "internal/lite-model",
+    "internal/lite-parser",
+    "internal/md-gen-lib",
+    "internal/gen-common",
+    "internal/error",
+    "internal/ask_user",
+    "langs/cs/csgen-lib",
+    "langs/cs/fyrox-lite-cs",
+    "langs/cs/fyrox-lite-cs-lib",
+    "langs/cs/fyroxed-cs",
+    "langs/lua/fyrox-lite-lua",
+    "langs/lua/fyrox-lite-lua-lib",
+    "langs/lua/fyroxed-lua",
+    "langs/lua/luagen-lib",
+    "showcase/guards_vanilla/editor",
+    "showcase/guards_vanilla/executor",
+    "showcase/guards_vanilla/game",
+    "showcase/guards_vanilla/game-dylib",
+    "tools",
+    "internal/to_ico",
 ]
 resolver = "2"
 exclude = [
-	# to workaround "rust-lld: error: too many exported symbols (got 95799, max 65535)"
-	"engine",
+    # to workaround "rust-lld: error: too many exported symbols (got 95799, max 65535)"
+    "engine",
 ]
 
 [workspace.dependencies]
@@ -38,9 +38,9 @@ fyrox-lite-lua-lib = { path = "langs/lua/fyrox-lite-lua-lib" }
 fyrox-lite-cs = { path = "langs/cs/fyrox-lite-cs" }
 fyrox-lite-cs-lib = { path = "langs/cs/fyrox-lite-cs-lib" }
 csgen-lib = { path = "langs/cs/csgen-lib" }
-fyrox-lite = {path = "api/fyrox-lite", default-features = false}
-fyrox-lite-math = {path = "api/fyrox-lite-math", default-features = false}
-fyrox-lite-color = {path = "api/fyrox-lite-color", default-features = false}
+fyrox-lite = { path = "api/fyrox-lite", default-features = false }
+fyrox-lite-math = { path = "api/fyrox-lite-math", default-features = false }
+fyrox-lite-color = { path = "api/fyrox-lite-color", default-features = false }
 lite-model = { path = "internal/lite-model" }
 lite-parser = { path = "internal/lite-parser" }
 md-gen-lib = { path = "internal/md-gen-lib" }
@@ -48,13 +48,14 @@ lite-macro = { path = "internal/lite-macro" }
 gen-common = { path = "internal/gen-common" }
 error = { path = "internal/error" }
 ask_user = { path = "internal/ask_user" }
+to_ico = { path = "internal/to_ico" }
 
 #fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyrox-build-tools = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
-fyrox = {path = "engine/fyrox", default-features = false}
-fyroxed_base = {path = "engine/editor", default-features = false}
-fyrox-build-tools = {path = "engine/fyrox-build-tools", default-features = false}
+fyrox = { path = "engine/fyrox", default-features = false }
+fyroxed_base = { path = "engine/editor", default-features = false }
+fyrox-build-tools = { path = "engine/fyrox-build-tools", default-features = false }
 #fyrox = {version = "0.36.2", default-features = false}
 #fyroxed_base = {version = "0.36.2", default-features = false}
 #fyrox-build-tools = {version = "0.36.2", default-features = false}

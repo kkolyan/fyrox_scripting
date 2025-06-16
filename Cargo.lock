@@ -1680,6 +1680,7 @@ dependencies = [
  "fyroxed_base",
  "native-dialog",
  "open",
+ "to_ico",
  "uuid",
 ]
 
@@ -1718,6 +1719,7 @@ dependencies = [
  "fyrox-build-tools",
  "fyrox-lite-lua-lib",
  "fyroxed_base",
+ "to_ico",
 ]
 
 [[package]]
@@ -2036,6 +2038,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6cb51c9a029ddc91b07a787f1d86b53ccfa49b0e86688c946ebe8d3555685dd7"
 dependencies = [
  "libm",
+]
+
+[[package]]
+name = "ico"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc50b891e4acf8fe0e71ef88ec43ad82ee07b3810ad09de10f1d01f072ed4b98"
+dependencies = [
+ "byteorder",
+ "png",
 ]
 
 [[package]]
@@ -4699,6 +4711,13 @@ checksum = "5d4f6d1145dcb577acf783d4e601bc1d76a13337bb54e6233add580b07344c8b"
 dependencies = [
  "displaydoc",
  "zerovec",
+]
+
+[[package]]
+name = "to_ico"
+version = "0.1.0"
+dependencies = [
+ "ico",
 ]
 
 [[package]]

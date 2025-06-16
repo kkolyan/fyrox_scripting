@@ -56,6 +56,11 @@ fn main() {
         settings,
     );
 
+    editor.user_project_icon =
+        Some(include_bytes!("../../../../target/fyrox_lua_003.ico").to_vec());
+    editor.user_project_name = "/Lua".to_string();
+    editor.user_project_version = "/0.1".to_string();
+
     // Dynamic linking with hot reloading.
     #[cfg(feature = "dylib")]
     {
