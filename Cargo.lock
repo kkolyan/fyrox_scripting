@@ -1519,6 +1519,7 @@ dependencies = [
  "extend",
  "fyrox",
  "fyrox-lite",
+ "itertools 0.13.0",
  "send_wrapper",
  "to_vec",
 ]

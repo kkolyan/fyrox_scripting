@@ -13,7 +13,7 @@ public partial class Launcher
 
     [LibraryImport(FyroxDll.Name, EntryPoint = "fyrox_lite_editor_run",
         SetLastError = true)]
-    private static partial void RunEditorInternal(IntPtr workingDirectory, IntPtr assemblyPath);
+    private static partial void RunEditorInternal(IntPtr workingDirectory, IntPtr assemblyPath, int isCli);
 
     public static void RunGame()
     {
@@ -41,10 +41,10 @@ public partial class Launcher
 
     private static void RunGameInternal()
     {
-        Run(editor: false, editorWorkingDir: null, playerAssembly: Assembly.GetEntryAssembly());
+        Run(editor: false, editorWorkingDir: null, playerAssembly: Assembly.GetEntryAssembly(), true);
     }
 
-    internal static void Run(bool editor, string? editorWorkingDir, Assembly? playerAssembly)
+    internal static void Run(bool editor, string? editorWorkingDir, Assembly? playerAssembly, bool isCli)
     {
         ObjectRegistry.InitThread();
         NativeClassId.InitThread();
@@ -63,6 +63,7 @@ public partial class Launcher
         FyroxNativeGlobal.init_fyrox_lite(
             new NativeScriptAppFunctions
             {
+                init_scripts_metadata = ScriptsMetadataManager.InitScriptsMetadata,
                 get_scripts_metadata = ScriptsMetadataManager.GetScriptsMetadata,
                 on_init = FyroxImpls.on_init,
                 on_start = FyroxImpls.on_start,
@@ -85,7 +86,7 @@ public partial class Launcher
             Console.WriteLine($"Working directory: {fullPath}");
             var workingDirCString = Marshal.StringToHGlobalAnsi(fullPath);
             var assemblyPath = Marshal.StringToHGlobalAnsi(ScriptsMetadataManager.GetScriptsAssemblyPathInternal());
-            RunEditorInternal(workingDirCString, assemblyPath: assemblyPath);
+            RunEditorInternal(workingDirCString, assemblyPath: assemblyPath, isCli: isCli ? 1 : 0);
             Marshal.FreeHGlobal(workingDirCString);
         }
         else

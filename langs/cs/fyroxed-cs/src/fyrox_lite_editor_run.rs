@@ -9,12 +9,17 @@ use fyroxed_base::plugin::EditorPlugin;
 use fyroxed_base::settings::Settings;
 use fyroxed_base::Editor;
 use fyroxed_base::StartupData;
+use native_dialog::{DialogBuilder, MessageLevel};
 use std::env;
-use std::ffi::{c_char, CStr};
+use std::ffi::{c_char, c_int, CStr};
 use std::path::Path;
 
 #[no_mangle]
-extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assembly_path: *const c_char) {
+extern "C" fn fyrox_lite_editor_run(
+    working_dir: *const c_char,
+    assembly_path: *const c_char,
+    is_cli: c_int,
+) {
     Log::set_verbosity(MessageKind::Warning);
     let working_dir = unsafe { CStr::from_ptr(working_dir) }
         .to_str()
@@ -36,7 +41,22 @@ extern "C" fn fyrox_lite_editor_run(working_dir: *const c_char, assembly_path: *
     );
 
     let assembly_path = unsafe { CStr::from_ptr(assembly_path) }.to_str().unwrap();
-    let plugin = CPlugin::new(Some(assembly_path.into()));
+    let initial_load_failure_reporter = match is_cli {
+        1 => |err| {
+            println!("ERROR: {}", err);
+        },
+        0 => |err| {
+            println!("ERROR: {}", &err);
+            DialogBuilder::message()
+                .set_text(err)
+                .set_level(MessageLevel::Error)
+                .alert()
+                .show()
+                .unwrap();
+        },
+        _ => panic!("cannot convert is_cli to bool: {is_cli}"),
+    };
+    let plugin = CPlugin::new(Some(assembly_path.into()), initial_load_failure_reporter);
     if let Err(err) = editor.add_dynamic_plugin_custom(plugin) {
         Log::err(err);
     }

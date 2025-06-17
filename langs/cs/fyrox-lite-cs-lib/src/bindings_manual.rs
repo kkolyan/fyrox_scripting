@@ -202,6 +202,7 @@ pub enum NativeScriptKind {
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
 pub struct NativeScriptAppFunctions {
+    pub init_scripts_metadata: InitScriptsMetadata,
     pub get_scripts_metadata: GetScriptsMetadata,
     pub on_init: NodeOnInit,
     pub on_start: NodeOnStart,
@@ -229,6 +230,7 @@ impl DisposableHandle for UserScriptMessage {
     }
 }
 
+pub type InitScriptsMetadata = extern "C" fn() -> Unit_result;
 pub type GetScriptsMetadata = extern "C" fn() -> NativeScriptMetadata_slice;
 pub type NodeOnUpdate = extern "C" fn(thiz: NativeInstanceId, dt: f32) -> Unit_result;
 pub type NodeOnInit = extern "C" fn(thiz: NativeInstanceId) -> Unit_result;

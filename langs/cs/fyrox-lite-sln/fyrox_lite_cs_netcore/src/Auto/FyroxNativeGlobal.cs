@@ -20,6 +20,8 @@ internal partial class FyroxNativeGlobal {
     internal static partial void init_fyrox_lite(NativeScriptAppFunctions app, NativeBool is_editor);
     #endregion
 
+    internal delegate void_result InitScriptsMetadata();
+
     internal delegate NativeScriptMetadata_slice GetScriptsMetadata();
 
     internal delegate void_result NodeOnUpdate(NativeInstanceId thiz, float dt);

@@ -4,6 +4,7 @@ use crate::external_global_script_proxy::ExternalGlobalScriptProxy;
 use crate::external_script_proxy::invoke_callback;
 use crate::external_script_proxy::ExternalScriptProxy;
 use crate::scripted_app::{GlobalHasCallback, APP};
+use crate::LangSpecificError;
 use fyrox::core::log::Log;
 use fyrox::core::notify::EventKind;
 use fyrox::core::reflect::prelude::*;
@@ -25,9 +26,11 @@ use fyrox_lite::script_metadata::ScriptDefinition;
 use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::script_object_residence::ScriptResidence;
 use fyrox_lite::wrapper_reflect;
-use std::cell::RefCell;
+use itertools::Itertools;
+use std::cell::{Cell, RefCell};
 use std::fmt::Debug;
 use std::path::PathBuf;
+use std::process::exit;
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -40,6 +43,14 @@ pub struct CPlugin {
     #[visit(skip)]
     #[reflect(hidden)]
     pub need_reload: bool,
+
+    #[visit(skip)]
+    #[reflect(hidden)]
+    pub initially_loaded: Cell<bool>,
+
+    #[visit(skip)]
+    #[reflect(hidden)]
+    pub initial_load_failure_reporter: fn(LangSpecificError),
 
     pub scripts: RefCell<GlobalScriptList>,
 
@@ -63,10 +74,15 @@ impl Debug for CPlugin {
 }
 
 impl CPlugin {
-    pub fn new(reloadable_assembly_path: Option<PathBuf>) -> Self {
+    pub fn new(
+        reloadable_assembly_path: Option<PathBuf>,
+        initial_load_failure_reporter: fn(LangSpecificError),
+    ) -> Self {
         Self {
             failed: false,
             need_reload: Default::default(),
+            initially_loaded: false.into(),
+            initial_load_failure_reporter,
             scripts: RefCell::new(Default::default()),
             hot_reload: reloadable_assembly_path
                 .map(|path| {
@@ -101,7 +117,7 @@ impl CPlugin {
     }
 
     pub fn check_for_script_changes(&mut self) {
-        self.need_reload = self.is_candidate_for_reload();
+        self.need_reload = self.need_reload || self.is_candidate_for_reload();
     }
 }
 
@@ -121,6 +137,23 @@ impl Plugin for CPlugin {
     fn register(&self, context: PluginRegistrationContext) {
         APP.with_borrow_mut(|app| {
             let app = app.as_mut().unwrap();
+            let initialization = (app.functions.init_scripts_metadata)().into_result();
+            if let Err(e) = initialization {
+                if self.initially_loaded.get() {
+                    Log::err("Failed to reload C# script metadata");
+                    for line in e.lines() {
+                        Log::err(format!("{}", line));
+                    }
+                } else {
+                    (self.initial_load_failure_reporter)(format!(
+                        "Failed to load C# script metadata:\n{}",
+                        e.lines().map(|it| format!("- {}", it)).join("\n")
+                    ));
+                    exit(1);
+                }
+            } else {
+                Log::info("C# script metadata loaded successfully");
+            }
             app.load_scripts_metadata();
         });
         APP.with_borrow(|app| {
@@ -177,6 +210,8 @@ impl Plugin for CPlugin {
                 });
             }
         });
+
+        self.initially_loaded.set(true);
     }
 
     fn init(&mut self, scene_path: Option<&str>, mut context: PluginContext) {
@@ -275,7 +310,7 @@ impl DynamicPlugin for CPlugin {
     }
 
     fn prepare_to_reload(&mut self) {
-        Log::info("prepare_to_reload");
+        println!("prepare_to_reload");
         self.need_reload = false;
     }
 
@@ -283,7 +318,7 @@ impl DynamicPlugin for CPlugin {
         &mut self,
         fill_and_register: &mut dyn FnMut(&mut dyn Plugin) -> Result<(), String>,
     ) -> Result<(), String> {
-        Log::info("Reloading C# scripts");
+        println!("Reloading C# scripts");
         self.scripts.borrow_mut().inner_mut().clear();
         fill_and_register(self)
     }

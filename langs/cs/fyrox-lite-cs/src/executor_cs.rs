@@ -8,6 +8,7 @@ use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
 use fyrox::window::WindowAttributes;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
+use std::process::exit;
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_executor_run() {
@@ -38,7 +39,12 @@ pub extern "C" fn fyrox_lite_executor_run() {
         },
     );
 
-    executor.add_dynamic_plugin_custom(CPlugin::new(None));
+    let initial_load_failure_reporter = |err| {
+        println!("ERROR: Failed to load script metadata: {}", &err);
+        exit(1);
+    };
+
+    executor.add_dynamic_plugin_custom(CPlugin::new(None, initial_load_failure_reporter));
 
     executor.run()
 }

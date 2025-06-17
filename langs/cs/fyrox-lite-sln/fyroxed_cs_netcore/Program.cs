@@ -51,10 +51,10 @@ public partial class Program
             }
         }
 
-        RunEditor(workingDir);
+        RunEditor(workingDir, isCli);
     }
 
-    private static void RunEditor(string? workingDir)
+    private static void RunEditor(string? workingDir, bool isCli)
     {
         var executableDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var assemblyPath = $"{executableDir}/fyrox_lite_cs_netcore_4editor.dll";
@@ -66,6 +66,6 @@ public partial class Program
         var entryMethodName = "RunEditor";
         var entryMethod = entryPointClass.GetMethod(entryMethodName)
                           ?? throw new Exception($"method {entryMethodName} not found in class {entryClassName}");
-        entryMethod.Invoke(null, [workingDir]);
+        entryMethod.Invoke(null, [workingDir, isCli]);
     }
 }

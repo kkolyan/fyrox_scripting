@@ -160,6 +160,7 @@ impl ScriptedApp {
 pub fn extract_for_def(md: &NativeScriptMetadata) -> ScriptMetadata {
     let properties: Vec<_> = md.properties.into();
     let class: String = md.name.into();
+    println!("C# class: {}", &class);
     let uuid: String = md.uuid.into();
     println!(
         "Register class. name: {}, id: {}, uuid: {}",
@@ -169,6 +170,7 @@ pub fn extract_for_def(md: &NativeScriptMetadata) -> ScriptMetadata {
         .into_iter()
         .map(|property| {
             let name: String = property.name.into();
+            println!("    C# field: {}", &name);
             let title = name.to_case(convert_case::Case::Title);
             ScriptField {
                 name,
