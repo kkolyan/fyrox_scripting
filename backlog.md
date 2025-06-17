@@ -69,6 +69,7 @@ Polish C#
     * [ ] missing default constructor
     * [ ] readonly fields
 * [ ] Crosshair!
+* [ ] implement "Open in IDE" button
 * [ ] self-contained game export for
 * [ ] downloadable via GitHub releases
 * [ ] describe plans about custom rust code

@@ -1,4 +1,21 @@
-## About a project
+<p align="center">
+  <a href="https://fyrox.rs/">
+    <img src="https://github.com/FyroxEngine/Fyrox/blob/master/pics/logo.png?raw=true" width="64" height="64" alt="Fyrox"/>&#8203;
+  </a>
+  <a href="https://www.lua.org/about.html">
+    <img src="http://www.rozek.de/Lua/Lua-Logo_128x128.png" width="64" height="64" alt="Lua" />&#8203;
+  </a>
+  <a href="https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/overview">
+    <img src="https://github.com/dotnet/vscode-csharp/blob/main/images/csharpIcon.png?raw=true" width="64" height="64" alt="C#" />&#8203;
+  </a>
+</p>
+
+[![License (MIT)](https://img.shields.io/badge/license-MIT-blue)](https://github.com/kkolyan/fyrox_lite/blob/master/LICENSE)
+[![docs.rs](https://img.shields.io/badge/docs%3A%20C%23-website-blue)](https://kkolyan.github.io/fyrox_lite/fyrox_cs/index.html)
+[![docs.rs](https://img.shields.io/badge/docs%3A%20Lua-website-blue)](https://kkolyan.github.io/fyrox_lite/fyrox_lua/index.html)
+[![docs.rs](https://img.shields.io/badge/JetBrains%20Marketplace-website-blue)](https://plugins.jetbrains.com/plugin/27613-fyroxlite?noRedirect=true)
+
+## Fyrox Lite
 
 Create games with Rust-based [Fyrox Game Engine](https://fyrox.rs) without coding in Rust.
 
@@ -70,5 +87,7 @@ See the [contributions guidelines](https://github.com/kkolyan/fyrox_lite/blob/ma
 ## Feedback
 
 Any feedback is extremely appreciated.
-Feel free to contact me in Discord `kkolyan_true` ([kkolyan_true](https://discord.com/users/333644000302989314))
-or [create issue](https://github.com/kkolyan/fyrox_lite/issues/new).
+Feel free to contact me directly in Discord
+`kkolyan_true` ([kkolyan_true](https://discord.com/users/333644000302989314)), or
+tag me in [Fyrox Discord](https://discord.gg/xENF5Uh).
+Or [create issue](https://github.com/kkolyan/fyrox_lite/issues/new).
