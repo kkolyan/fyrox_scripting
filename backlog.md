@@ -69,8 +69,9 @@ Polish C#
     * [x] missing default constructor
     * [x] readonly fields
 * [x] refine Lua script error handling
+* [x] make C# project compiled on editor start regardless of assembly presence
+* [ ] allow user"retry when opening project failed with script loading error
 * [ ] fix C# compilation warnings
-* [ ] make C# project compiled on editor start regardless of assembly presence
 * [ ] Crosshair!
 * [ ] implement "Open in IDE" button
 * [ ] self-contained game export for

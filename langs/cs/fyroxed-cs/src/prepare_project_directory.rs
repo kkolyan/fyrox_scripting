@@ -38,12 +38,12 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
         working_dir.display()
     );
     println!("expected assembly location: {}", assembly_name);
-    while !fs::exists(&assembly_path).unwrap() {
+    loop {
         println!(
             "compiling C# assembly at {}",
             env::current_dir().unwrap().display()
         );
-        let Ok(spawn) = Command::new("dotnet")
+        if let Ok(spawn) = Command::new("dotnet")
             .stdout(if is_cli {
                 Stdio::inherit()
             } else {
@@ -56,7 +56,58 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
             })
             .args(["build"])
             .spawn()
-        else {
+        {
+            match spawn.wait_with_output() {
+                Ok(result) => {
+                    let assembly_exists = fs::exists(&assembly_path).unwrap();
+                    let success = result.status.success();
+                    if success && assembly_exists {
+                        return true;
+                    }
+                    let log_file = "error.log";
+                    let mut combined = vec![];
+                    combined.extend_from_slice(&result.stdout);
+                    combined.extend_from_slice("\n".as_bytes());
+                    combined.extend_from_slice(&result.stderr);
+                    combined.extend_from_slice("\n".as_bytes());
+                    if success && !assembly_exists {
+                        combined.extend_from_slice(
+                            "WTF: dotnet command succeed, but assembly still doesn't exist"
+                                .as_bytes(),
+                        );
+                        combined.extend_from_slice("\n".as_bytes());
+                    }
+                    // let _ = io::stdout().write_all(&combined);
+                    if let Err(err) = fs::write(log_file, &combined) {
+                        println!(
+                            "failed to write log: {}\n{}",
+                            err,
+                            String::from_utf8_lossy(&combined)
+                        );
+                    }
+                    if is_cli {
+                        println!("failed to compile C# project.");
+                        return false;
+                    }
+                    if !ask_user_for_confirmation(format!(
+                        "failed to compile C# project: See `{log_file}` for details. Try again?"
+                    )) {
+                        return false;
+                    }
+                }
+                Err(err) => {
+                    if is_cli {
+                        println!("failed to compile C# project due to {}", err);
+                        return false;
+                    }
+                    if !ask_user_for_confirmation(format!(
+                        "failed to compile C# project: {err}. Try again?"
+                    )) {
+                        return false;
+                    }
+                }
+            }
+        } else {
             if is_cli {
                 println!("Failed to run `dotnet` command.");
                 return false;
@@ -65,58 +116,9 @@ fn ensure_assembly(working_dir: &Path, is_cli: bool) -> bool {
             {
                 return false;
             }
-            continue;
         };
-        match spawn.wait_with_output() {
-            Ok(result) => {
-                let assembly_exists = fs::exists(&assembly_path).unwrap();
-                let success = result.status.success();
-                if success && assembly_exists {
-                    return true;
-                }
-                let log_file = "error.log";
-                let mut combined = vec![];
-                combined.extend_from_slice(&result.stdout);
-                combined.extend_from_slice("\n".as_bytes());
-                combined.extend_from_slice(&result.stderr);
-                combined.extend_from_slice("\n".as_bytes());
-                if success && !assembly_exists {
-                    combined.extend_from_slice(
-                        "WTF: dotnet command succeed, but assembly still doesn't exist".as_bytes(),
-                    );
-                    combined.extend_from_slice("\n".as_bytes());
-                }
-                // let _ = io::stdout().write_all(&combined);
-                if let Err(err) = fs::write(log_file, &combined) {
-                    println!(
-                        "failed to write log: {}\n{}",
-                        err,
-                        String::from_utf8_lossy(&combined)
-                    );
-                }
-                if is_cli {
-                    println!("failed to compile C# project.");
-                    return false;
-                }
-                if !ask_user_for_confirmation(format!(
-                    "failed to compile C# project: See `{log_file}` for details. Try again?"
-                )) {
-                    return false;
-                }
-                continue;
-            }
-            Err(err) => {
-                if is_cli {
-                    println!("failed to compile C# project due to {}", err);
-                    return false;
-                }
-                if !ask_user_for_confirmation(format!(
-                    "failed to compile C# project: {err}. Try again?"
-                )) {
-                    return false;
-                }
-                continue;
-            }
+        if fs::exists(&assembly_path).unwrap() {
+            break;
         }
     }
     true
