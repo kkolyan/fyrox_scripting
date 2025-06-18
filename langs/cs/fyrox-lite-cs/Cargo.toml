@@ -9,6 +9,7 @@ crate-type = ["cdylib"]
 [dependencies]
 fyrox = { workspace = true, default-features = true }
 fyrox-lite-cs-lib = { workspace = true, default-features = true }
+fyrox-lite = { workspace = true, default-features = true }
 puffin = { version = "0.19.0", optional = true }
 puffin_http = { version = "0.16.0", optional = true }
 

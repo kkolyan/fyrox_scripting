@@ -16,6 +16,7 @@ pub mod lite_window;
 pub mod reflect_base_macro;
 pub(crate) mod resource_registry;
 pub mod script_context;
+pub mod script_failure;
 pub mod script_metadata;
 pub mod script_object;
 pub mod script_object_fyrox_traits;

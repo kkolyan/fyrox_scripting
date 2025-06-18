@@ -1,7 +1,7 @@
 use crate::global_external_script_proxy::ExternalGlobalScriptProxy;
-use crate::lua_lifecycle::load_script;
 use crate::lua_lifecycle::lua_vm;
 use crate::lua_lifecycle::{create_plugin, invoke_callback_global};
+use crate::lua_lifecycle::{load_script, ScriptInitializer};
 use fyrox::core::log::Log;
 use fyrox::core::notify::EventKind;
 use fyrox::core::reflect::prelude::*;
@@ -18,6 +18,7 @@ use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::PluginsRefMut;
 use fyrox::walkdir::WalkDir;
 use fyrox_lite::lite_input::Input;
+use fyrox_lite::script_failure::ScriptFailureHandler;
 use mlua::Value;
 use std::cell::RefCell;
 use std::fmt::Debug;
@@ -42,6 +43,14 @@ pub struct LuaPlugin {
 
     #[visit(skip)]
     #[reflect(hidden)]
+    pub script_failure_handler: ScriptFailureHandler,
+
+    #[visit(skip)]
+    #[reflect(hidden)]
+    pub script_initializers: RefCell<Vec<ScriptInitializer>>,
+
+    #[visit(skip)]
+    #[reflect(hidden)]
     pub hot_reload: HotReload,
 }
 
@@ -60,8 +69,12 @@ impl Debug for LuaPlugin {
 }
 
 impl LuaPlugin {
-    pub fn new(scripts_dir: PathBuf, hot_reload_enabled: bool) -> Self {
-        create_plugin(scripts_dir, hot_reload_enabled)
+    pub fn new(
+        scripts_dir: PathBuf,
+        hot_reload_enabled: bool,
+        script_failure_handler: ScriptFailureHandler,
+    ) -> Self {
+        create_plugin(scripts_dir, hot_reload_enabled, script_failure_handler)
     }
 
     pub fn check_for_script_changes(&mut self) {
@@ -99,13 +112,33 @@ impl Clone for LuaPlugin {
 
 impl Plugin for LuaPlugin {
     fn register(&self, context: PluginRegistrationContext) {
-        for entry in WalkDir::new(&self.scripts_dir).into_iter().flatten() {
-            load_script(
-                &context,
-                &entry,
-                &mut self.scripts.borrow_mut(),
-                self.assembly_name(),
-            );
+        let mut errors = vec![];
+        let mut initializers = vec![];
+        for entry in WalkDir::new(&self.scripts_dir).into_iter() {
+            let entry = match entry {
+                Ok(entry) => entry,
+                Err(err) => {
+                    errors.push(err.to_string());
+                    continue;
+                }
+            };
+            let populator = load_script(&entry, self.assembly_name(), &mut errors);
+
+            if let Some(populator) = populator {
+                initializers.push(populator);
+            }
+        }
+
+        if errors.is_empty() {
+            Log::info("C# script metadata loaded successfully");
+            *self.script_initializers.borrow_mut() = initializers;
+            self.script_failure_handler.initially_loaded.set(true);
+        } else {
+            self.script_failure_handler
+                .handle_script_loading_failure(&errors.join("\n"));
+        }
+        for populator in self.script_initializers.borrow().iter() {
+            populator.register(&context, &mut self.scripts.borrow_mut())
         }
     }
 

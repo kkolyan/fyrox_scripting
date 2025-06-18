@@ -66,6 +66,7 @@ quote = "1.0.37"
 proc-macro2 = "1.0.86"
 syn = { version = "2.0.79", features = ["full", "extra-traits"] }
 uuid = { version = "1.10.0", features = ["v4"] }
+native-dialog = "0.9.0"
 
 extend = "1.2.0"
 convert_case = "0.6.0"

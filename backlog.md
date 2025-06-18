@@ -68,8 +68,9 @@ Polish C#
     * [x] missing UUID attribute
     * [x] missing default constructor
     * [x] readonly fields
+* [x] refine Lua script error handling
 * [ ] fix C# compilation warnings
-* [ ] refine Lua script error handling
+* [ ] make C# project compiled on editor start regardless of assembly presence
 * [ ] Crosshair!
 * [ ] implement "Open in IDE" button
 * [ ] self-contained game export for

@@ -6,6 +6,7 @@ use fyrox::engine::executor::Executor;
 use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
 use fyrox::window::WindowAttributes;
+use fyrox_lite::script_failure::ScriptFailureHandler;
 
 fn main() {
     #[cfg(feature = "profiling")]
@@ -35,24 +36,11 @@ fn main() {
         },
     );
 
-    // Dynamic linking with hot reloading.
-    #[cfg(feature = "dylib")]
-    {
-        #[cfg(target_os = "windows")]
-        let file_name = "fyrox-lua_dylib.dll";
-        #[cfg(target_os = "linux")]
-        let file_name = "libfyrox-lua_dylib.so";
-        #[cfg(target_os = "macos")]
-        let file_name = "libfyrox-lua_dylib.dylib";
-        executor.add_dynamic_plugin(file_name, true, true).unwrap();
-    }
-
-    // Static linking.
-    #[cfg(not(feature = "dylib"))]
-    {
-        executor
-            .add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new("scripts".into(), true));
-    }
+    executor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new(
+        "scripts".into(),
+        true,
+        ScriptFailureHandler::new_for_game(),
+    ));
 
     executor.run()
 }

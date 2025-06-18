@@ -1484,10 +1484,11 @@ name = "fyrox-lite"
 version = "0.1.0"
 dependencies = [
  "convert_case",
- "error",
  "extend",
  "fyrox",
+ "itertools 0.13.0",
  "lite-macro",
+ "native-dialog",
 ]
 
 [[package]]
@@ -1504,6 +1505,7 @@ name = "fyrox-lite-cs"
 version = "0.1.0"
 dependencies = [
  "fyrox",
+ "fyrox-lite",
  "fyrox-lite-cs-lib",
  "puffin",
  "puffin_http",
@@ -1664,6 +1666,7 @@ name = "fyrox_lite_lua"
 version = "0.1.0"
 dependencies = [
  "fyrox",
+ "fyrox-lite",
  "fyrox-lite-lua-lib",
  "puffin",
  "puffin_http",
@@ -1677,10 +1680,10 @@ dependencies = [
  "dunce",
  "fyrox",
  "fyrox-build-tools",
+ "fyrox-lite",
  "fyrox-lite-cs-lib",
  "fyroxed_base",
  "native-dialog",
- "open",
  "to_ico",
  "uuid",
 ]
@@ -1718,6 +1721,7 @@ dependencies = [
  "embed-resource",
  "fyrox",
  "fyrox-build-tools",
+ "fyrox-lite",
  "fyrox-lite-lua-lib",
  "fyroxed_base",
  "to_ico",

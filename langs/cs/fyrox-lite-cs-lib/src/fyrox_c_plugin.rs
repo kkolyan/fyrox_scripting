@@ -22,6 +22,7 @@ use fyrox::script::Script;
 use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 use fyrox_lite::lite_input::Input;
+use fyrox_lite::script_failure::ScriptFailureHandler;
 use fyrox_lite::script_metadata::ScriptDefinition;
 use fyrox_lite::script_object::NodeScriptObject;
 use fyrox_lite::script_object_residence::ScriptResidence;
@@ -46,11 +47,7 @@ pub struct CPlugin {
 
     #[visit(skip)]
     #[reflect(hidden)]
-    pub initially_loaded: Cell<bool>,
-
-    #[visit(skip)]
-    #[reflect(hidden)]
-    pub initial_load_failure_reporter: fn(LangSpecificError),
+    pub script_failure_handler: ScriptFailureHandler,
 
     pub scripts: RefCell<GlobalScriptList>,
 
@@ -76,13 +73,12 @@ impl Debug for CPlugin {
 impl CPlugin {
     pub fn new(
         reloadable_assembly_path: Option<PathBuf>,
-        initial_load_failure_reporter: fn(LangSpecificError),
+        script_failure_handler: ScriptFailureHandler,
     ) -> Self {
         Self {
             failed: false,
             need_reload: Default::default(),
-            initially_loaded: false.into(),
-            initial_load_failure_reporter,
+            script_failure_handler,
             scripts: RefCell::new(Default::default()),
             hot_reload: reloadable_assembly_path
                 .map(|path| {
@@ -139,18 +135,8 @@ impl Plugin for CPlugin {
             let app = app.as_mut().unwrap();
             let initialization = (app.functions.init_scripts_metadata)().into_result();
             if let Err(e) = initialization {
-                if self.initially_loaded.get() {
-                    Log::err("Failed to reload C# script metadata");
-                    for line in e.lines() {
-                        Log::err(format!("{}", line));
-                    }
-                } else {
-                    (self.initial_load_failure_reporter)(format!(
-                        "Failed to load C# script metadata:\n{}",
-                        e.lines().map(|it| format!("- {}", it)).join("\n")
-                    ));
-                    exit(1);
-                }
+                self.script_failure_handler
+                    .handle_script_loading_failure(&e);
             } else {
                 Log::info("C# script metadata loaded successfully");
             }
@@ -212,7 +198,7 @@ impl Plugin for CPlugin {
             }
         });
 
-        self.initially_loaded.set(true);
+        self.script_failure_handler.initially_loaded.set(true);
     }
 
     fn init(&mut self, scene_path: Option<&str>, mut context: PluginContext) {

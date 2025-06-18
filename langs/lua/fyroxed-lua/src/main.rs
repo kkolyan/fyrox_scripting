@@ -3,6 +3,7 @@
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyrox_build_tools::{BuildProfile, CommandDescriptor};
+use fyrox_lite::script_failure::ScriptFailureHandler;
 use fyroxed_base::fyrox::event_loop::EventLoop;
 use fyroxed_base::plugin::EditorPlugin;
 use fyroxed_base::settings::Settings;
@@ -14,9 +15,12 @@ use std::{env, fs};
 fn main() {
     let args = env::args().collect::<Vec<_>>();
 
+    let is_cli;
     let project_dir: PathBuf = if args.len() > 1 {
+        is_cli = true;
         PathBuf::from(&args[1])
     } else {
+        is_cli = false;
         // There are usability issues on Macos, and on Linux probably too.
         // Let's support UI selector for Windows only
 
@@ -61,30 +65,16 @@ fn main() {
     editor.user_project_name = "/Lua".to_string();
     editor.user_project_version = "/0.1".to_string();
 
-    // Dynamic linking with hot reloading.
-    #[cfg(feature = "dylib")]
-    {
-        #[cfg(target_os = "windows")]
-        let file_name = "fyrox-lua_dylib.dll";
-        #[cfg(target_os = "linux")]
-        let file_name = "libfyrox-lua_dylib.so";
-        #[cfg(target_os = "macos")]
-        let file_name = "libfyrox-lua_dylib.dylib";
-        editor.add_dynamic_plugin(file_name, true, true).unwrap();
+    let scripts_dir = Path::join(&project_dir, "scripts");
+    if let Err(err) = editor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new(
+        scripts_dir,
+        true,
+        ScriptFailureHandler::new_for_editor(is_cli),
+    )) {
+        Log::err(err);
     }
 
-    // Static linking.
-    #[cfg(not(feature = "dylib"))]
-    {
-        let scripts_dir = Path::join(&project_dir, "scripts");
-        if let Err(err) =
-            editor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new(scripts_dir, true))
-        {
-            Log::err(err);
-        }
-
-        editor.add_editor_plugin(LuaPluginRefreshOnFocus);
-    }
+    editor.add_editor_plugin(LuaPluginRefreshOnFocus);
 
     editor.run(event_loop)
 }

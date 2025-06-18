@@ -21,11 +21,11 @@ use fyrox::core::watcher::FileSystemWatcher;
 use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::constructor::ScriptConstructor;
 use fyrox::script::Script;
-use fyrox::walkdir::DirEntry;
 use fyrox_lite::global_script_object::ScriptObject;
 use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
 use fyrox_lite::script_context::without_script_context;
 use fyrox_lite::script_context::UnsafeAsUnifiedContext;
+use fyrox_lite::script_failure::ScriptFailureHandler;
 use mlua::IntoLuaMulti;
 use mlua::Lua;
 use mlua::UserDataRef;
@@ -51,13 +51,12 @@ pub(crate) fn lua_vm() -> &'static Lua {
 }
 
 pub(crate) fn load_script(
-    context: &PluginRegistrationContext,
-    entry: &DirEntry,
-    plugin_scripts: &mut PluginScriptList,
+    entry: &fyrox::walkdir::DirEntry,
     assembly_name: &'static str,
-) {
+    errors: &mut Vec<String>,
+) -> Option<ScriptInitializer> {
     if !entry.file_type().is_file() {
-        return;
+        return None;
     }
 
     Log::info(format!("loading Lua script {:?}", entry.path()));
@@ -66,14 +65,8 @@ pub(crate) fn load_script(
     let metadata = match metadata {
         Ok(it) => it,
         Err(errs) => {
-            for err in errs {
-                Log::err(format!(
-                    "failed to load script from file {}: {}",
-                    &entry.path().to_string_lossy(),
-                    err
-                ));
-            }
-            return;
+            errors.extend(errs);
+            return None;
         }
     };
 
@@ -98,15 +91,12 @@ pub(crate) fn load_script(
     match class_loading {
         Ok(_) => {}
         Err(err) => {
-            Log::err(format!(
+            errors.push(format!(
                 "Failed to load Lua class {:?}: {}",
                 &metadata.class, err
             ));
-            return;
         }
     }
-
-    let name = metadata.class.clone();
 
     let definition = Arc::new(ScriptDefinition {
         metadata,
@@ -118,50 +108,73 @@ pub(crate) fn load_script(
         .get::<_, Option<UserDataRefMut<ScriptClass>>>(definition.metadata.class.as_str())
         .unwrap();
     let Some(mut class) = class else {
-        Log::err(format!("invalid class file: {:?}", entry.path()));
-        return;
+        errors.push(format!("invalid class file: {:?}", entry.path()));
+        return None;
     };
 
     class.def = Some(definition.clone());
 
-    match definition.metadata.kind {
-        ScriptKind::Node => {
-            let addition_result = context
-                .serialization_context
-                .script_constructors
-                .add_custom(
-                    definition.metadata.uuid,
-                    ScriptConstructor {
-                        constructor: Box::new(move || {
-                            Script::new(ExternalScriptProxy {
-                                data: ScriptResidence::Packed(NodeScriptObject::new(&definition)),
-                                name: definition.metadata.class.to_string(),
-                            })
-                        }),
-                        name: name.to_string(),
-                        source_path: entry.path().to_string_lossy().to_string().leak(),
-                        assembly_name,
-                    },
-                );
-            if let Err(err) = addition_result {
-                Log::err(err.to_string().as_str());
-            }
-        }
-        ScriptKind::Global => {
-            plugin_scripts.inner_mut().push(ExternalGlobalScriptProxy {
-                name: name.to_string(),
-                data: GlobalScriptResidence::Packed(ScriptObject::new(&definition)),
-            });
-        }
-    }
-
-    Log::info(format!(
-        "script registered: {}",
-        entry.path().to_string_lossy()
-    ));
+    let source_path: &'static str = entry.path().to_string_lossy().to_string().leak();
+    Some(ScriptInitializer {
+        definition,
+        source_path,
+    })
 }
 
-pub(crate) fn create_plugin(scripts_dir: PathBuf, hot_reload_enabled: bool) -> LuaPlugin {
+pub(crate) struct ScriptInitializer {
+    definition: Arc<ScriptDefinition>,
+    source_path: &'static str,
+}
+
+impl ScriptInitializer {
+    pub fn register(
+        &self,
+        context: &PluginRegistrationContext,
+        plugin_scripts: &mut PluginScriptList,
+    ) {
+        match self.definition.metadata.kind {
+            ScriptKind::Node => {
+                let definition = self.definition.clone();
+                let addition_result = context
+                    .serialization_context
+                    .script_constructors
+                    .add_custom(
+                        self.definition.metadata.uuid,
+                        ScriptConstructor {
+                            constructor: Box::new(move || {
+                                Script::new(ExternalScriptProxy {
+                                    data: ScriptResidence::Packed(NodeScriptObject::new(
+                                        &definition,
+                                    )),
+                                    name: definition.metadata.class.to_string(),
+                                })
+                            }),
+                            name: self.definition.metadata.class.to_string(),
+                            source_path: self.source_path,
+                            assembly_name: self.definition.assembly_name,
+                        },
+                    );
+                if let Err(err) = addition_result {
+                    Log::err(err.to_string().as_str());
+                }
+            }
+            ScriptKind::Global => {
+                plugin_scripts.inner_mut().push(ExternalGlobalScriptProxy {
+                    name: self.definition.metadata.class.to_string(),
+                    data: GlobalScriptResidence::Packed(ScriptObject::new(&self.definition)),
+                });
+            }
+        }
+
+        Log::info(format!("script registered: {}", self.source_path));
+    }
+}
+
+pub(crate) fn create_plugin(
+    scripts_dir: PathBuf,
+    hot_reload_enabled: bool,
+    script_failure_handler: ScriptFailureHandler,
+) -> LuaPlugin {
     // mlua has approach with lifetimes that makes very difficult storing Lua types
     // here and there in Rust. But we need a single Lua VM instance for the whole life
     // of game process, so that's ok to make it 'static.
@@ -232,6 +245,8 @@ pub(crate) fn create_plugin(scripts_dir: PathBuf, hot_reload_enabled: bool) -> L
         },
         need_reload: false,
         scripts: Default::default(),
+        script_failure_handler,
+        script_initializers: RefCell::new(vec![]),
     }
 }
 

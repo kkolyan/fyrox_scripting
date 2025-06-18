@@ -6,9 +6,10 @@ edition = "2021"
 [dependencies]
 fyrox = { workspace = true }
 extend = "1.2.0"
-lite-macro = { workspace = true}
-convert_case = {workspace = true}
-error = {workspace = true}
+lite-macro = { workspace = true }
+convert_case = { workspace = true }
+itertools = { workspace = true }
+native-dialog = { workspace = true }
 
 [features]
 default = ["fyrox/default"]
