@@ -105,7 +105,7 @@ namespace FyroxLite
         {
             try
             {
-                var instance = Activator.CreateInstance(thiz.GetCsClass());
+                var instance = CreateInstance(thiz.GetCsClass());
                 if (instance is NodeScript ns)
                 {
                     var handle = NativeHandle_optional.ToFacade(node) ?? throw new Exception("node handle required for Node scripts, but not supplied");
@@ -150,6 +150,11 @@ namespace FyroxLite
                 null => throw new Exception($"instance not found for id {instanceId.value}"),
                 _ => throw new Exception($"instance is not a GlobalScript {instanceId.value}: {o.GetType()}")
             };
+        }
+
+        internal static object CreateInstance(Type type)
+        {
+            return Activator.CreateInstance(type)!;
         }
     }
 }

@@ -49,6 +49,15 @@ public static class ScriptsMetadataExtractor
 
     private static void RegisterScript(Type type, List<NativeScriptMetadata> scripts, Guid? uuid, NativeScriptKind kind, List<string> errors)
     {
+        try
+        {
+            FyroxImpls.CreateInstance(type);
+        }
+        catch (MissingMethodException e)
+        {
+            errors.Add(e.Message);
+        }
+        
         var properties = new List<NativeScriptProperty>();
         var propertySetters = new Dictionary<string, (NativeValueType, PropertySetters.SetPropertyDelegate)>();
 
@@ -64,12 +73,13 @@ public static class ScriptsMetadataExtractor
                 continue;
             }
 
-            var (fieldType, fieldSetter, err) = ExtractFieldType(field);
-            if (err != null)
+            var ft = ExtractFieldType(field, errors);
+            if (ft == null)
             {
-                errors.Add(err);
                 continue;
             }
+
+            var (fieldType, fieldSetter) = ft.Value;
             properties.Add(new NativeScriptProperty
             {
                 id = properties.Count,
@@ -78,7 +88,7 @@ public static class ScriptsMetadataExtractor
                 hide_in_inspector = NativeBool.FromFacade(hideInInspector),
                 transient = NativeBool.FromFacade(transient),
             });
-            propertySetters.Add(field.Name, (fieldType, (o, value) => fieldSetter!(o, field, value)));
+            propertySetters.Add(field.Name, (fieldType, (o, value) => fieldSetter!(o, value)));
         }
 
         PropertySetters.Register(type, propertySetters);
@@ -117,9 +127,9 @@ public static class ScriptsMetadataExtractor
         scripts.Add(metadata);
     }
 
-    private delegate void SetField(object o, FieldInfo field, NativeValue value);
+    private delegate void SetField(object o, NativeValue value);
 
-    private static (NativeValueType, SetField?, string?) ExtractFieldType(FieldInfo field)
+    private static (NativeValueType, SetField)? ExtractFieldType(FieldInfo field, List<string> errors)
     {
         // @formatter:off
         
@@ -128,16 +138,22 @@ public static class ScriptsMetadataExtractor
         var ownerType = field.DeclaringType;
         var type = field.FieldType;
         
-        if (type == typeof(bool)) return (NativeValueType.@bool, (o, field, value) => field.SetValue(o, NativeBool.ToFacade(value.@bool)), null);
-        if (type == typeof(float)) return (NativeValueType.f32, (o, field, value) => field.SetValue(o, value.f32), null);
-        if (type == typeof(double)) return (NativeValueType.f64, (o, field, value) => field.SetValue(o, value.f64), null);
-        if (type == typeof(short)) return (NativeValueType.i16, (o, field, value) => field.SetValue(o, value.i16), null);
-        if (type == typeof(int)) return (NativeValueType.i32, (o, field, value) => field.SetValue(o, value.i32), null);
-        if (type == typeof(long)) return (NativeValueType.i64, (o, field, value) => field.SetValue(o, value.i64), null);
-        if (type == typeof(string)) return (NativeValueType.String, (o, field, value) => field.SetValue(o, NativeString.ToFacade(value.String)), null);
-        if (type == typeof(Vector3)) return (NativeValueType.Vector3, (o, field, value) => field.SetValue(o, NativeVector3.ToFacade(value.Vector3)), null);
-        if (type == typeof(Quaternion)) return (NativeValueType.Quaternion, (o, field, value) => field.SetValue(o, NativeQuaternion.ToFacade(value.Quaternion)), null);
-        if (type == typeof(Prefab)) return (NativeValueType.Prefab, (o, field, value) => field.SetValue(o, new Prefab(value.Handle)), null);
+        const string hint = "Mark it with [Transient] and [HideInInspector] if you still want to use it without persistence and inspecting support.";
+        
+        if (field.IsInitOnly) {
+            errors.Add($"Field `{ownerType!.FullName}::{field.Name}` is readonly. {hint}");
+        }
+        
+        if (type == typeof(bool)) return (NativeValueType.@bool, (o, value) => field.SetValue(o, NativeBool.ToFacade(value.@bool)));
+        if (type == typeof(float)) return (NativeValueType.f32, (o, value) => field.SetValue(o, value.f32));
+        if (type == typeof(double)) return (NativeValueType.f64, (o, value) => field.SetValue(o, value.f64));
+        if (type == typeof(short)) return (NativeValueType.i16, (o, value) => field.SetValue(o, value.i16));
+        if (type == typeof(int)) return (NativeValueType.i32, (o, value) => field.SetValue(o, value.i32));
+        if (type == typeof(long)) return (NativeValueType.i64, (o, value) => field.SetValue(o, value.i64));
+        if (type == typeof(string)) return (NativeValueType.String, (o, value) => field.SetValue(o, NativeString.ToFacade(value.String)));
+        if (type == typeof(Vector3)) return (NativeValueType.Vector3, (o, value) => field.SetValue(o, NativeVector3.ToFacade(value.Vector3)));
+        if (type == typeof(Quaternion)) return (NativeValueType.Quaternion, (o, value) => field.SetValue(o, NativeQuaternion.ToFacade(value.Quaternion)));
+        if (type == typeof(Prefab)) return (NativeValueType.Prefab, (o, value) => field.SetValue(o, new Prefab(value.Handle)));
         
         // @formatter:on
 
@@ -146,12 +162,17 @@ public static class ScriptsMetadataExtractor
             [typeof(NativeHandle)]);
         if (fromHandle != null)
         {
-            return (NativeValueType.Handle, (o, field, value) => field.SetValue(o, fromHandle.Invoke([value.Handle])),
-                null);
+            return (NativeValueType.Handle, (o, value) => field.SetValue(o, fromHandle.Invoke([value.Handle])));
+        }
+        
+        errors.Add($"Field `{ownerType!.FullName}::{field.Name}` ({type}) has unsupported field type. {hint}");
+
+        if (errors.Count > 0)
+        {
+            return null;
         }
 
-        return (default, null,
-            $"Field `{ownerType.FullName}::{field.Name}` ({type}) has unsupported field type. Mark it with [Transient] and [HideInInspector] if you still want to use it without persistence and inspecting support.");
+        return (default, null);
     }
 
     private static NativeBool HasDeclaredMethod(Type type, string name, Type[] paramTypes)

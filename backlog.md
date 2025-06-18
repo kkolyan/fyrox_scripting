@@ -64,10 +64,12 @@ Polish C#
 * [x] change editor icon?
 * [x] fix warnings
 * [x] update to .Net 9.0
-* [ ] refine the case when user misconfigured C# scripts
-    * [ ] missing UUID attribute
-    * [ ] missing default constructor
-    * [ ] readonly fields
+* [x] refine the case when user misconfigured C# scripts
+    * [x] missing UUID attribute
+    * [x] missing default constructor
+    * [x] readonly fields
+* [ ] fix C# compilation warnings
+* [ ] refine Lua script error handling
 * [ ] Crosshair!
 * [ ] implement "Open in IDE" button
 * [ ] self-contained game export for
