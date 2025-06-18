@@ -26,6 +26,28 @@ bitflags::bitflags! {
     }
 }
 
+impl HasCallback {
+    pub fn from(md: &NativeScriptMetadata) -> HasCallback {
+        let mut has_callback = HasCallback::empty();
+        if md.has_node_on_init.into() {
+            has_callback.insert(HasCallback::ON_INIT);
+        }
+        if md.has_node_on_start.into() {
+            has_callback.insert(HasCallback::ON_START);
+        }
+        if md.has_node_on_deinit.into() {
+            has_callback.insert(HasCallback::ON_DEINIT);
+        }
+        if md.has_node_on_update.into() {
+            has_callback.insert(HasCallback::ON_UPDATE);
+        }
+        if md.has_node_on_message.into() {
+            has_callback.insert(HasCallback::ON_MESSAGE);
+        }
+        has_callback
+    }
+}
+
 bitflags::bitflags! {
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     pub struct GlobalHasCallback: u8 {
@@ -34,56 +56,29 @@ bitflags::bitflags! {
     }
 }
 
-pub struct CScriptMetadata {
-    pub id: NativeClassId,
-    pub md: ScriptMetadata,
-    pub has_on_init: bool,
-    pub has_on_start: bool,
-    pub has_on_deinit: bool,
-    pub has_on_update: bool,
-    pub has_on_message: bool,
-}
-
-impl CScriptMetadata {
-    pub fn get_callback_set(&self) -> HasCallback {
-        let mut has_callback = HasCallback::empty();
-        if self.has_on_init {
-            has_callback.insert(HasCallback::ON_INIT);
+impl GlobalHasCallback {
+    pub fn from(md: &NativeScriptMetadata) -> GlobalHasCallback {
+        let mut has_callback = GlobalHasCallback::empty();
+        if md.has_global_on_init.into() {
+            has_callback.insert(GlobalHasCallback::ON_INIT);
         }
-        if self.has_on_start {
-            has_callback.insert(HasCallback::ON_START);
-        }
-        if self.has_on_deinit {
-            has_callback.insert(HasCallback::ON_DEINIT);
-        }
-        if self.has_on_update {
-            has_callback.insert(HasCallback::ON_UPDATE);
-        }
-        if self.has_on_message {
-            has_callback.insert(HasCallback::ON_MESSAGE);
+        if md.has_global_on_update.into() {
+            has_callback.insert(GlobalHasCallback::ON_UPDATE);
         }
         has_callback
     }
+}
+
+pub struct CScriptMetadata {
+    pub id: NativeClassId,
+    pub md: ScriptMetadata,
+    pub has_callback: HasCallback,
 }
 
 pub struct CGlobalScriptMetadata {
     pub id: NativeClassId,
     pub md: ScriptMetadata,
-    pub has_on_init: bool,
-    pub has_on_update: bool,
-}
-
-impl CGlobalScriptMetadata {
-    pub fn get_callback_set(&self) -> GlobalHasCallback {
-        let mut has_callback = GlobalHasCallback::empty();
-        if self.has_on_init {
-            has_callback.insert(GlobalHasCallback::ON_INIT);
-        }
-        if self.has_on_update {
-            has_callback.insert(GlobalHasCallback::ON_UPDATE);
-        }
-        has_callback
-    }
+    pub has_callback: GlobalHasCallback,
 }
 
 pub struct ScriptedApp {
@@ -118,18 +113,12 @@ impl ScriptedApp {
             let md = extract_for_def(&native_class);
             match native_class.kind {
                 NativeScriptKind::Node => {
-                    node_scripts.insert(
-                        uuid,
-                        CScriptMetadata {
-                            id: native_class.id,
-                            md,
-                            has_on_init: true,
-                            has_on_start: true,
-                            has_on_deinit: true,
-                            has_on_update: true,
-                            has_on_message: true,
-                        },
-                    );
+                    let metadata = CScriptMetadata {
+                        id: native_class.id,
+                        md,
+                        has_callback: HasCallback::from(&native_class),
+                    };
+                    node_scripts.insert(uuid, metadata);
                 }
                 NativeScriptKind::Global => {
                     global_scripts.insert(
@@ -137,8 +126,7 @@ impl ScriptedApp {
                         CGlobalScriptMetadata {
                             id: native_class.id,
                             md,
-                            has_on_init: true,
-                            has_on_update: true,
+                            has_callback: GlobalHasCallback::from(&native_class),
                         },
                     );
                 }

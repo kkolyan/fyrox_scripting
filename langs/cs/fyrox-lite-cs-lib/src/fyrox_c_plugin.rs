@@ -159,13 +159,14 @@ impl Plugin for CPlugin {
         APP.with_borrow(|app| {
             let app = app.as_ref().unwrap();
             for md in app.scripts_metadata.as_ref().unwrap().node_scripts.values() {
-                let callback_set = md.get_callback_set();
                 let def = Arc::new(ScriptDefinition {
                     metadata: md.md.clone(),
                     assembly_name: self.assembly_name(),
                 });
                 let name = def.metadata.class.clone();
                 let class = md.id;
+
+                let has_callback = md.has_callback;
 
                 println!("adding script constructor {}: {}", &name, md.md.uuid);
                 context
@@ -181,7 +182,7 @@ impl Plugin for CPlugin {
                                 Script::new(ExternalScriptProxy {
                                     class,
                                     data: ScriptResidence::Packed(NodeScriptObject::new(&def)),
-                                    has_callback: callback_set,
+                                    has_callback,
                                 })
                             }),
                         },
@@ -205,7 +206,7 @@ impl Plugin for CPlugin {
                 plugin_scripts.inner_mut().push(ExternalGlobalScriptProxy {
                     name: name.to_string(),
                     class,
-                    has_callback: md.get_callback_set(),
+                    has_callback: md.has_callback,
                     data: GlobalScriptResidence::Packed(ScriptObject::new(&def)),
                 });
             }

@@ -68,7 +68,7 @@ impl UserScript for UnpackedObject {
                 .node_scripts
                 .get(&self.uuid)
                 .unwrap()
-                .get_callback_set()
+                .has_callback
         });
         Ok(ExternalScriptProxy {
             class: *class,

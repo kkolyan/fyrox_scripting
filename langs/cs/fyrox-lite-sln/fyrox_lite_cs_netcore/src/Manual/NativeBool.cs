@@ -16,4 +16,9 @@ internal partial struct NativeBool
     {
         return new NativeBool(value ? 1 : 0);
     }
+
+    public override string ToString()
+    {
+        return value.ToString();
+    }
 }

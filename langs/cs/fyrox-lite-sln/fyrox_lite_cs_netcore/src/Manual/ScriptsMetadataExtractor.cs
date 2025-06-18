@@ -104,7 +104,7 @@ public static class ScriptsMetadataExtractor
             uuid = NativeString.FromFacade(uuid.ToString()),
             kind = kind,
             name = NativeString.FromFacade(type.Name),
-            has_global_on_init = HasDeclaredMethod(type, nameof(GlobalScript.OnGlobalInit), []),
+            has_global_on_init = HasDeclaredMethod(type, nameof(GlobalScript.OnGlobalInit), [typeof(string)]),
             has_global_on_update = HasDeclaredMethod(type, nameof(GlobalScript.OnGlobalUpdate), []),
             has_node_on_init = HasDeclaredMethod(type, nameof(NodeScript.OnInit), []),
             has_node_on_start = HasDeclaredMethod(type, nameof(NodeScript.OnStart), []),
@@ -156,8 +156,9 @@ public static class ScriptsMetadataExtractor
 
     private static NativeBool HasDeclaredMethod(Type type, string name, Type[] paramTypes)
     {
-        return NativeBool.FromFacade(type.GetMethod(name,
-            BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public,
-            paramTypes) != null);
+        var method = type.GetMethod(name,
+            BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic,
+            paramTypes);
+        return NativeBool.FromFacade(method != null);
     }
 }
