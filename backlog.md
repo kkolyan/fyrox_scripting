@@ -1,8 +1,4 @@
-# What to do next?
-
-Polish C#
-
-# What exactly you want saying "polish"?
+# Backlog
 
 * [x] editor can be launched with the project directory as argument
 * [x] project can be opened using UI dialog
@@ -70,7 +66,7 @@ Polish C#
     * [x] readonly fields
 * [x] refine Lua script error handling
 * [x] make C# project compiled on editor start regardless of assembly presence
-* [ ] allow user"retry when opening project failed with script loading error
+* [ ] allow user "retry" when opening project failed with script loading error
 * [ ] fix C# compilation warnings
 * [ ] Crosshair!
 * [ ] implement "Open in IDE" button
@@ -79,18 +75,3 @@ Polish C#
 * [ ] describe plans about custom rust code
     * [ ] Fyrox Lite as a crate for usual Fyrox project
     * [ ] Rust modules for usual Fyrox Lite project
-
-# What controversial ideas you have in mind now?
-
-* ~~editor to run C# via CLI, so the entry point is not C#~~
-    * Decision
-        * Rejected
-    * PROS
-        * it's possible to launch Fyrox Editor without NetCore
-        * it's possible to open NetCore download page for user by rust app
-    * CONS
-        * actually, without NetCore scene will be corrupted if saved (scripts removed), so probably to force use install
-          NetCore before is not bad
-
-[ERROR]: region does not exist: __ROOT__ > Scene > Graph > Pool > Records > Item120 > Payload > Data > NodeData >
-Resource > Data > State
