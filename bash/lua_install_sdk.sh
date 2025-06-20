@@ -10,7 +10,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ -e "$1" ]; then
-  echo "Error: specified path points to existing file or directory. Non-existing path required for Fyrox Lua SDK" >&2
+  echo "Error: lua_install_sdk.sh: specified path points to existing file or directory. Non-existing path required for Fyrox Lua SDK" >&2
   exit 1
 fi
 
