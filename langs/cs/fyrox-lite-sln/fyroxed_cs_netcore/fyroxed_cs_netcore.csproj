@@ -19,7 +19,7 @@
         </Reference>
     </ItemGroup>
     <Target Name="PreBuildCommand" BeforeTargets="CoreCompile">
-      <Exec Command="cargo run --bin to_ico -- ../../../../icons/fyrox_cs_001.png ../../../../target/fyrox_cs_001.ico" />
+      <Exec Command="cargo run --bin to_ico -- ../../../../internal/icons/fyrox_cs_001.png ../../../../target/fyrox_cs_001.ico" />
     </Target>
     <PropertyGroup>
         <ApplicationIcon>../../../../target/fyrox_cs_001.ico</ApplicationIcon>
