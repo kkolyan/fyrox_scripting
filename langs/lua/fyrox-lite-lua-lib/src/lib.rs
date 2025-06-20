@@ -10,7 +10,6 @@ pub(crate) mod lua_script_metadata;
 pub(crate) mod lua_utils;
 pub(crate) mod manual_lua_bindings;
 pub(crate) mod script_class;
-pub(crate) mod script_metadata;
 pub(crate) mod script_object_residence;
 pub(crate) mod typed_userdata;
 pub(crate) mod user_data_plus;
@@ -22,7 +21,7 @@ pub use fyrox_lua_plugin::LuaPlugin;
 pub(crate) mod script_object {
     use crate::lua_lang::LuaLang;
 
-    pub type NodeScriptObject = fyrox_lite::script_object::NodeScriptObject<LuaLang>;
-    pub type ScriptObject = fyrox_lite::global_script_object::ScriptObject<LuaLang>;
-    pub type ScriptFieldValue = fyrox_lite::script_object::ScriptFieldValue<LuaLang>;
+    pub type NodeScriptObject = lite_runtime::script_object::NodeScriptObject<LuaLang>;
+    pub type ScriptObject = lite_runtime::global_script_object::ScriptObject<LuaLang>;
+    pub type ScriptFieldValue = lite_runtime::script_object::ScriptFieldValue<LuaLang>;
 }

@@ -8,6 +8,7 @@ edition = "2021"
 fyrox-lite = { workspace = true }
 fyrox = { workspace = true }
 lite-macro = { workspace = true }
+lite-runtime = { workspace = true }
 
 [features]
 default = ["fyrox-lite/default", "fyrox/default"]

@@ -1,6 +1,6 @@
 use lite_macro::lite_api;
 
-use crate::spi::UserScript;
+use lite_runtime::spi::UserScript;
 
 #[derive(Debug, Clone)]
 pub struct LiteGlobalScript;

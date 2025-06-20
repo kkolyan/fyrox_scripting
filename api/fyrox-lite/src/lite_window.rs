@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use fyrox::{core::log::Log, window::CursorGrabMode};
 use lite_macro::lite_api;
 
-use crate::script_context::with_script_context;
+use lite_runtime::script_context::with_script_context;
 
 #[derive(Debug, Clone, Copy)]
 pub struct LiteWindow;

@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 fyrox = { workspace = true, default-features = true }
 fyrox-lite = { workspace = true, default-features = true }
+lite-runtime = { workspace = true }
 extend = { workspace = true }
 to_vec = { workspace = true }
 convert_case = { workspace = true }

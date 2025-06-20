@@ -2,7 +2,9 @@ use std::{cell::RefCell, collections::HashMap};
 
 use convert_case::Casing;
 use fyrox::core::Uuid;
-use fyrox_lite::script_metadata::{ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata};
+use lite_runtime::script_metadata::{
+    ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata,
+};
 use to_vec::ToVec;
 
 use crate::bindings_manual::{

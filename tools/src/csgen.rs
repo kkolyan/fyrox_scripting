@@ -41,7 +41,7 @@ fn write_rs_to_file(path: &str, rust: RustEmitter) {
             #![allow(clippy::let_unit_value)]
             #![allow(unused)]
             use crate::*;
-            use fyrox_lite::externalizable::Externalizable;
+            use lite_runtime::externalizable::Externalizable;
             {}
     ",
         rust.code

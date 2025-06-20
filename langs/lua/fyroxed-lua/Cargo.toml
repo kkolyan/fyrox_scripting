@@ -8,7 +8,7 @@ fyrox = { workspace = true }
 fyroxed_base = { workspace = true }
 fyrox-build-tools = { workspace = true }
 fyrox-lite-lua-lib = { workspace = true }
-fyrox-lite = { workspace = true }
+lite-runtime = { workspace = true }
 dunce = "1.0.5"
 ask_user = { workspace = true }
 comprexor = "0.1.520"

@@ -1,9 +1,6 @@
-use crate::externalizable::Externalizable;
-use crate::lite_math::{PodQuaternion, PodVector3};
-use crate::spi::{ClassId, UserScript};
-use std::fmt::Debug;
-
 extern crate lite_macro;
+use crate::lite_math::{PodQuaternion, PodVector3};
+use std::fmt::Debug;
 
 use fyrox::{
     core::{algebra::UnitQuaternion, pool::Handle, reflect::*, visitor::Visit},
@@ -12,8 +9,12 @@ use fyrox::{
 };
 use lite_macro::lite_api;
 
-use crate::{lite_physics::LiteRigidBody, script_context::with_script_context};
+use crate::lite_physics::LiteRigidBody;
 use fyrox::graph::BaseSceneGraph;
+use lite_runtime::externalizable::Externalizable;
+use lite_runtime::script_context::with_script_context;
+use lite_runtime::spi::{ClassId, UserScript};
+use lite_runtime::wrapper_reflect;
 
 #[derive(Clone, Copy, Eq, PartialEq, Default)]
 pub struct LiteNode {
@@ -324,144 +325,7 @@ impl Visit for LiteNode {
 }
 
 impl Reflect for LiteNode {
-    crate::wrapper_reflect!(handle);
-}
-
-#[macro_export]
-macro_rules! reflect_base_lite {
-    () => {
-        fn query_derived_types(&self) -> &'static [core::any::TypeId] {
-            Self::derived_types()
-        }
-
-        fn derived_types() -> &'static [core::any::TypeId] {
-            &[]
-        }
-
-        fn try_clone_box(&self) -> Option<Box<dyn Reflect>> {
-            Some(Box::new(self.clone()))
-        }
-    };
-}
-#[macro_export]
-macro_rules! wrapper_reflect {
-    ($ident:tt) => {
-        fn source_path() -> &'static str
-        where
-            Self: Sized,
-        {
-            file!()
-        }
-
-        fn assembly_name(&self) -> &'static str {
-            env!("CARGO_PKG_NAME")
-        }
-
-        fn type_assembly_name() -> &'static str
-        where
-            Self: Sized,
-        {
-            env!("CARGO_PKG_NAME")
-        }
-
-        fn type_name(&self) -> &'static str {
-            Reflect::type_name(&self.$ident)
-        }
-
-        fn doc(&self) -> &'static str {
-            self.$ident.doc()
-        }
-
-        fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
-            self.$ident.fields_ref(func)
-        }
-
-        fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
-            self.$ident.fields_mut(func)
-        }
-
-        fn into_any(self: Box<Self>) -> Box<dyn std::any::Any> {
-            self
-        }
-
-        fn as_any(&self, func: &mut dyn FnMut(&dyn std::any::Any)) {
-            fyrox::core::reflect::Reflect::as_any(&self.$ident, func)
-        }
-
-        fn as_any_mut(&mut self, func: &mut dyn FnMut(&mut dyn std::any::Any)) {
-            fyrox::core::reflect::Reflect::as_any_mut(&mut self.$ident, func)
-        }
-
-        fn as_reflect(&self, func: &mut dyn FnMut(&dyn Reflect)) {
-            self.$ident.as_reflect(func)
-        }
-
-        fn as_reflect_mut(&mut self, func: &mut dyn FnMut(&mut dyn Reflect)) {
-            self.$ident.as_reflect_mut(func)
-        }
-
-        fn set(&mut self, value: Box<dyn Reflect>) -> Result<Box<dyn Reflect>, Box<dyn Reflect>> {
-            self.$ident.set(value)
-        }
-
-        fn field(&self, name: &str, func: &mut dyn FnMut(Option<&dyn Reflect>)) {
-            self.$ident.field(name, func)
-        }
-
-        fn field_mut(&mut self, name: &str, func: &mut dyn FnMut(Option<&mut dyn Reflect>)) {
-            self.$ident.field_mut(name, func)
-        }
-
-        fn as_array(&self, func: &mut dyn FnMut(Option<&dyn ReflectArray>)) {
-            self.$ident.as_array(func)
-        }
-
-        fn as_array_mut(&mut self, func: &mut dyn FnMut(Option<&mut dyn ReflectArray>)) {
-            self.$ident.as_array_mut(func)
-        }
-
-        fn as_list(&self, func: &mut dyn FnMut(Option<&dyn ReflectList>)) {
-            self.$ident.as_list(func)
-        }
-
-        fn as_list_mut(&mut self, func: &mut dyn FnMut(Option<&mut dyn ReflectList>)) {
-            self.$ident.as_list_mut(func)
-        }
-
-        fn as_inheritable_variable(
-            &self,
-            func: &mut dyn FnMut(Option<&dyn ReflectInheritableVariable>),
-        ) {
-            self.$ident.as_inheritable_variable(func)
-        }
-
-        fn as_inheritable_variable_mut(
-            &mut self,
-            func: &mut dyn FnMut(Option<&mut dyn ReflectInheritableVariable>),
-        ) {
-            self.$ident.as_inheritable_variable_mut(func)
-        }
-
-        fn as_hash_map(&self, func: &mut dyn FnMut(Option<&dyn ReflectHashMap>)) {
-            self.$ident.as_hash_map(func)
-        }
-
-        fn as_hash_map_mut(&mut self, func: &mut dyn FnMut(Option<&mut dyn ReflectHashMap>)) {
-            self.$ident.as_hash_map_mut(func)
-        }
-
-        fn query_derived_types(&self) -> &'static [core::any::TypeId] {
-            self.$ident.query_derived_types()
-        }
-
-        fn derived_types() -> &'static [core::any::TypeId] {
-            &[]
-        }
-
-        fn try_clone_box(&self) -> Option<Box<dyn Reflect>> {
-            Some(Box::new(self.clone()))
-        }
-    };
+    wrapper_reflect!(handle);
 }
 impl Externalizable for LiteNode {
     fn to_external(&self) -> u128 {

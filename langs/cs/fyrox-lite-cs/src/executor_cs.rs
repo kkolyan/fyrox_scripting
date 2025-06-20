@@ -7,8 +7,8 @@ use fyrox::engine::executor::Executor;
 use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
 use fyrox::window::WindowAttributes;
-use fyrox_lite::script_failure::ScriptFailureHandler;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
+use lite_runtime::script_failure::ScriptFailureHandler;
 
 #[no_mangle]
 pub extern "C" fn fyrox_lite_executor_run() {

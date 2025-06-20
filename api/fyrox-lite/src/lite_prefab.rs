@@ -6,13 +6,13 @@ use fyrox::{
 };
 use lite_macro::lite_api;
 
-use crate::spi::UserScript;
 use crate::{
-    externalizable::Externalizable,
     lite_math::{PodQuaternion, PodVector3},
     lite_node::LiteNode,
-    resource_registry,
-    script_context::with_script_context,
+};
+use lite_runtime::spi::UserScript;
+use lite_runtime::{
+    externalizable::Externalizable, resource_registry, script_context::with_script_context,
 };
 
 #[derive(Clone, Default)]

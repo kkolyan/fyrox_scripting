@@ -1,11 +1,11 @@
 use crate::user_script_impl::UserScriptProxy;
 use fyrox::core::reflect::{FieldMut, FieldRef, Reflect};
-use fyrox_lite::reflect_base;
+use lite_runtime::{reflect_base, reflect_base_lite};
 
 impl Reflect for UserScriptProxy {
     reflect_base!();
 
-    fyrox_lite::reflect_base_lite!();
+    reflect_base_lite!();
 
     fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
         match self {

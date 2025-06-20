@@ -13,10 +13,9 @@ use fyrox::{
 };
 use lite_macro::lite_api;
 
-use crate::{
-    externalizable::Externalizable, lite_math::PodVector3, lite_node::LiteNode,
-    script_context::with_script_context,
-};
+use crate::lite_math::PodVector3;
+use crate::lite_node::LiteNode;
+use lite_runtime::{externalizable::Externalizable, script_context::with_script_context};
 
 #[derive(Debug, Clone)]
 pub struct LitePhysics;

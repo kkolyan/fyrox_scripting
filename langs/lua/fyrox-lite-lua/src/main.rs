@@ -6,7 +6,7 @@ use fyrox::engine::executor::Executor;
 use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
 use fyrox::window::WindowAttributes;
-use fyrox_lite::script_failure::ScriptFailureHandler;
+use lite_runtime::script_failure::ScriptFailureHandler;
 
 fn main() {
     #[cfg(feature = "profiling")]

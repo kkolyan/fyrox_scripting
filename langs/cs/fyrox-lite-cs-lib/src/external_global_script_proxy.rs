@@ -4,8 +4,8 @@ use crate::scripted_app::GlobalHasCallback;
 use fyrox::core::reflect::{FieldMut, FieldRef, Reflect};
 use fyrox::core::type_traits::prelude::*;
 use fyrox::core::visitor::{Visit, VisitResult, Visitor};
-use fyrox_lite::global_script_object_residence::GlobalScriptResidence;
-use fyrox_lite::reflect_base;
+use lite_runtime::global_script_object_residence::GlobalScriptResidence;
+use lite_runtime::{reflect_base, reflect_base_lite};
 use std::fmt::Debug;
 
 #[derive(Debug, Clone, ComponentProvider)]
@@ -25,7 +25,7 @@ impl Visit for ExternalGlobalScriptProxy {
 impl Reflect for ExternalGlobalScriptProxy {
     reflect_base!();
 
-    fyrox_lite::reflect_base_lite!();
+    reflect_base_lite!();
 
     fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
         self.data.with_script_object(|it| it.fields_ref(func))

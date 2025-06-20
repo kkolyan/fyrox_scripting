@@ -1,0 +1,8 @@
+[package]
+name = "zip_util"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+zip = "3.0"
+zip-extensions = "0.8.3"

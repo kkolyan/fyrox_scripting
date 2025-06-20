@@ -5,9 +5,8 @@ use fyrox::{
 use lite_macro::lite_api;
 
 use crate::lite_color::LiteColor;
-use crate::{
-    externalizable::Externalizable, lite_math::PodVector2, script_context::with_script_context,
-};
+use crate::lite_math::PodVector2;
+use lite_runtime::{externalizable::Externalizable, script_context::with_script_context};
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct LiteUiNode {

@@ -32,7 +32,7 @@ pub fn lite_api(attr: TokenStream, item: TokenStream) -> TokenStream {
                     .collect::<TokenStream>();
 
                 let impl_lite_data_type =
-                    ident.map(|ident| quote! {impl crate::LiteDataType for #ident {}});
+                    ident.map(|ident| quote! {impl lite_runtime::spi::LiteDataType for #ident {}});
 
                 quote! {
                     #errors
@@ -60,7 +60,7 @@ pub fn lite_api(attr: TokenStream, item: TokenStream) -> TokenStream {
                     // #[derive(Debug, Clone)]
                     #item
 
-                    impl crate::LiteDataType for #ident {}
+                    impl lite_runtime::spi::LiteDataType for #ident {}
                     #field_assertions
 
                 }
@@ -80,7 +80,7 @@ pub fn lite_api(attr: TokenStream, item: TokenStream) -> TokenStream {
                     .collect::<TokenStream>();
 
                 let impl_lite_data_type =
-                    ident.map(|ident| quote! {impl crate::LiteDataType for #ident {}});
+                    ident.map(|ident| quote! {impl lite_runtime::spi::LiteDataType for #ident {}});
 
                 quote! {
                     #errors

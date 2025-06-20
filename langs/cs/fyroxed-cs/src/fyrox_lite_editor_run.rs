@@ -3,13 +3,13 @@
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyrox_build_tools::{BuildProfile, CommandDescriptor};
-use fyrox_lite::script_failure::ScriptFailureHandler;
 use fyrox_lite_cs_lib::fyrox_c_plugin::CPlugin;
 use fyroxed_base::fyrox::event_loop::EventLoop;
 use fyroxed_base::plugin::EditorPlugin;
 use fyroxed_base::settings::Settings;
 use fyroxed_base::Editor;
 use fyroxed_base::StartupData;
+use lite_runtime::script_failure::ScriptFailureHandler;
 use std::env;
 use std::ffi::{c_char, c_int, CStr};
 use std::path::Path;

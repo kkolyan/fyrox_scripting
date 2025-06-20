@@ -1,10 +1,9 @@
 use crate::bindings_manual::NativeScriptAppFunctions;
 use crate::scripted_app::APP;
-use fyrox_lite::LiteDataType;
+use lite_runtime::spi::LiteDataType;
 use send_wrapper::SendWrapper;
 use std::fmt::{Debug, Formatter};
 use std::rc::Rc;
-
 //==================================================================================================
 
 pub trait DisposableHandle: Debug + Copy {

@@ -7,7 +7,7 @@ use crate::{
     lua_lifecycle::lua_vm, script_object::NodeScriptObject, typed_userdata::TypedUserData,
 };
 use fyrox::core::{visitor::Visit, Uuid};
-use fyrox_lite::{script_object::Lang, script_object_residence::uuid_of_script};
+use lite_runtime::{script_object::Lang, script_object_residence::uuid_of_script};
 use mlua::{Table, Value};
 use send_wrapper::SendWrapper;
 
@@ -78,7 +78,7 @@ impl Lang for LuaLang {
     }
 
     fn unpack_node_script(
-        script: &fyrox_lite::script_object::NodeScriptObject<Self>,
+        script: &lite_runtime::script_object::NodeScriptObject<Self>,
     ) -> Result<Self::UnpackedScriptObject, String> {
         let so = lua_vm()
             .create_userdata(UserScriptProxy::Node(script.clone()))
@@ -89,7 +89,7 @@ impl Lang for LuaLang {
     }
 
     fn unpack_global_script(
-        script: &fyrox_lite::global_script_object::ScriptObject<Self>,
+        script: &lite_runtime::global_script_object::ScriptObject<Self>,
     ) -> Result<Self::UnpackedGlobalScriptObject, String> {
         let so = lua_vm()
             .create_userdata(UserScriptProxy::Global(script.clone()))

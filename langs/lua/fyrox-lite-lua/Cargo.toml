@@ -7,6 +7,7 @@ edition = "2021"
 fyrox = { workspace = true }
 fyrox-lite-lua-lib = { workspace = true }
 fyrox-lite = { workspace = true }
+lite-runtime = { workspace = true }
 puffin = { version = "0.19.0", optional = true }
 puffin_http = { version = "0.16.0", optional = true }
 

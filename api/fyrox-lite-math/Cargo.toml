@@ -5,9 +5,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-fyrox-lite = {workspace = true, default-features = false}
-fyrox = {workspace = true, default-features = false}
-lite-macro = {workspace = true}
+fyrox-lite = { workspace = true, default-features = false }
+fyrox = { workspace = true, default-features = false }
+lite-macro = { workspace = true }
+lite-runtime = { workspace = true }
 
 [features]
 default = ["fyrox-lite/default", "fyrox/default"]

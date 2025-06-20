@@ -18,7 +18,7 @@ use fyrox::plugin::PluginRegistrationContext;
 use fyrox::script::PluginsRefMut;
 use fyrox::walkdir::WalkDir;
 use fyrox_lite::lite_input::Input;
-use fyrox_lite::script_failure::ScriptFailureHandler;
+use lite_runtime::script_failure::ScriptFailureHandler;
 use mlua::Value;
 use std::cell::RefCell;
 use std::fmt::Debug;

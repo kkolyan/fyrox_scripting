@@ -200,7 +200,7 @@ pub fn extract_fn(func: &mut ImplItemFn, errors: &mut Vec<syn::Error>) -> Option
             parse_quote_spanned! {span =>
                 {
                     #[allow(unused_imports)]
-                    use crate::LiteDataType;
+                    use lite_runtime::spi::LiteDataType;
                     <#ty>::compiles_if_type_is_allowed();
                 }
             }

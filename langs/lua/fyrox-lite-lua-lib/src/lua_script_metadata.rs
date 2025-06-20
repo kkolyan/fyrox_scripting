@@ -2,7 +2,9 @@ use std::{fs, io::BufRead, path::Path};
 
 use convert_case::Casing;
 use fyrox::core::Uuid;
-use fyrox_lite::script_metadata::{ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata};
+use lite_runtime::script_metadata::{
+    ScriptField, ScriptFieldValueType, ScriptKind, ScriptMetadata,
+};
 
 pub fn parse_file(path: impl AsRef<Path>) -> Result<ScriptMetadata, Vec<String>> {
     let script_source = fs::read(&path).unwrap();

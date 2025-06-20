@@ -37,7 +37,7 @@ pub fn generate_c_bindings_lite(domain: &Domain) -> CBindingsLite {
             #![allow(clippy::redundant_locals)]
             use std::fmt::Display;
             use fyrox_lite::spi::UserScript;
-            use fyrox_lite::externalizable::Externalizable;
+            use lite_runtime::externalizable::Externalizable;
             use crate::bindings_manual::*;
             use crate::native_utils;
     ";

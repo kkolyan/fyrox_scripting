@@ -12,10 +12,10 @@ use crate::{
 use error::abort_with_backtrace;
 use fyrox::core::{pool::Handle, visitor::Visit, Uuid};
 use fyrox::scene::node::Node;
-use fyrox_lite::global_script_object::ScriptObject;
-use fyrox_lite::{
+use fyrox_lite::lite_prefab::LitePrefab;
+use lite_runtime::global_script_object::ScriptObject;
+use lite_runtime::{
     externalizable::Externalizable,
-    lite_prefab::LitePrefab,
     script_metadata::ScriptFieldValueType,
     script_object::{Lang, NodeScriptObject, ScriptFieldValue},
     script_object_residence::uuid_of_script,

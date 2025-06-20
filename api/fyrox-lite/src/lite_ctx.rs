@@ -1,3 +1,4 @@
+use crate::lite_node::LiteNode;
 use fyrox::{
     core::pool::Handle,
     event::Event,
@@ -5,11 +6,7 @@ use fyrox::{
     scene::node::Node,
     script::{ScriptContext, ScriptMessageContext, ScriptMessagePayload},
 };
-
-use crate::{
-    lite_node::LiteNode,
-    script_context::{with_script_context, without_script_context},
-};
+use lite_runtime::script_context::{with_script_context, without_script_context};
 
 pub trait LiteScript {
     fn on_init(&mut self, #[allow(unused_variables)] ctx: &mut LiteContext) {}

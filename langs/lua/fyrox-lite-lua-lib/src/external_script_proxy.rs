@@ -8,7 +8,7 @@ use fyrox::core::visitor::prelude::*;
 use fyrox::script::BaseScript;
 use fyrox::script::ScriptContext;
 use fyrox::script::ScriptTrait;
-use fyrox_lite::reflect_base;
+use lite_runtime::{reflect_base, reflect_base_lite};
 use mlua::{IntoLua, Value};
 use std::any::Any;
 use std::fmt::Debug;
@@ -87,7 +87,7 @@ impl Visit for ExternalScriptProxy {
 impl Reflect for ExternalScriptProxy {
     reflect_base!();
 
-    fyrox_lite::reflect_base_lite!();
+    reflect_base_lite!();
 
     fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
         self.data.with_script_object(|it| it.fields_ref(func))

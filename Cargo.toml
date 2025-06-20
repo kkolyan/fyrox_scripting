@@ -24,7 +24,7 @@ members = [
     "showcase/guards_vanilla/game",
     "showcase/guards_vanilla/game-dylib",
     "tools",
-    "internal/to_ico",
+    "internal/to_ico", "internal/lite-runtime", "internal/zip_util",
 ]
 resolver = "2"
 exclude = [
@@ -49,6 +49,7 @@ gen-common = { path = "internal/gen-common" }
 error = { path = "internal/error" }
 ask_user = { path = "internal/ask_user" }
 to_ico = { path = "internal/to_ico" }
+lite-runtime = { path = "internal/lite-runtime" }
 
 #fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }

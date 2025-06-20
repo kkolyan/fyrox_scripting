@@ -20,7 +20,7 @@ struct ResourceRegistry {
     pub reverse_resources: HashMap<*mut ResourceHeader, Handle<UntypedResource>>,
 }
 
-pub(crate) fn retrieve_externalized(handle: u128) -> UntypedResource {
+pub fn retrieve_externalized(handle: u128) -> UntypedResource {
     RESOURCES.with_borrow(|it| {
         let handle = Handle::decode_from_u128(handle);
         it.as_ref()
@@ -32,7 +32,7 @@ pub(crate) fn retrieve_externalized(handle: u128) -> UntypedResource {
     })
 }
 
-pub(crate) fn externalize_resource(resource: UntypedResource) -> u128 {
+pub fn externalize_resource(resource: UntypedResource) -> u128 {
     RESOURCES.with_borrow_mut(|registry| {
         if registry.is_none() {
             *registry = Some(Default::default());

@@ -1,6 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
-use crate::script_metadata::ScriptDefinition;
+use lite_runtime::script_metadata::ScriptDefinition;
 
 /// In Fyrox Lite Lua classes and instances have different metatables to emulate conventional OOP more explicitly
 #[derive(Debug)]

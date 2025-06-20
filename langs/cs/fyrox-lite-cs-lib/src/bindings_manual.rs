@@ -3,7 +3,7 @@
 use crate::auto_dispose::DisposableHandle;
 use crate::scripted_app::{ScriptedApp, APP};
 use crate::*;
-use fyrox_lite::spi::ClassId;
+use lite_runtime::spi::ClassId;
 use std::fmt::{Debug, Formatter};
 
 #[no_mangle]

@@ -1,0 +1,11 @@
+[package]
+name = "lite-runtime"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+fyrox = { workspace = true }
+extend = "1.2.0"
+convert_case = { workspace = true }
+itertools = { workspace = true }
+native-dialog = { workspace = true }

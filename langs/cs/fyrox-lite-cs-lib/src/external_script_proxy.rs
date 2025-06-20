@@ -11,10 +11,10 @@ use fyrox::core::visitor::prelude::*;
 use fyrox::script::BaseScript;
 use fyrox::script::ScriptContext;
 use fyrox::script::ScriptTrait;
-use fyrox_lite::reflect_base;
-use fyrox_lite::script_context::without_script_context;
-use fyrox_lite::script_context::UnsafeAsUnifiedContext;
-use fyrox_lite::script_object_residence::ScriptResidence;
+use lite_runtime::script_context::without_script_context;
+use lite_runtime::script_context::UnsafeAsUnifiedContext;
+use lite_runtime::script_object_residence::ScriptResidence;
+use lite_runtime::{reflect_base, reflect_base_lite};
 use std::any::Any;
 use std::fmt::Debug;
 
@@ -138,7 +138,7 @@ impl Visit for ExternalScriptProxy {
 impl Reflect for ExternalScriptProxy {
     reflect_base!();
 
-    fyrox_lite::reflect_base_lite!();
+    reflect_base_lite!();
 
     fn fields_ref(&self, func: &mut dyn FnMut(&[FieldRef])) {
         self.data.with_script_object(|it| it.fields_ref(func))

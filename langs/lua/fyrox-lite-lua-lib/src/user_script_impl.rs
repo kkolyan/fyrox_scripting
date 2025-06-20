@@ -12,10 +12,10 @@ use crate::{
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
 use fyrox::script::{DynamicTypeId, ScriptMessagePayload};
-use fyrox_lite::global_script_object::ScriptObject;
-use fyrox_lite::script_object::NodeScriptObject;
-use fyrox_lite::spi::ClassId;
-use fyrox_lite::{script_context::with_script_context, spi::UserScript, LiteDataType};
+use lite_runtime::global_script_object::ScriptObject;
+use lite_runtime::script_object::NodeScriptObject;
+use lite_runtime::spi::{ClassId, LiteDataType};
+use lite_runtime::{script_context::with_script_context, spi::UserScript};
 use mlua::prelude::LuaResult;
 use mlua::{UserDataRef, Value};
 use send_wrapper::SendWrapper;
@@ -108,7 +108,7 @@ impl UserScript for TypedUserData<'_, UserScriptProxy> {
             .to_string();
         // it's sound, because Lua outlives a process
         let ud: TypedUserData<'static, UserScriptProxy> = unsafe { mem::transmute(self) };
-        let data = crate::script_object_residence::ScriptResidence::Unpacked(
+        let data = lite_runtime::script_object_residence::ScriptResidence::Unpacked(
             UnpackedScriptObjectVisit(SendWrapper::new(ud)),
         );
         Ok(ExternalScriptProxy { name, data })

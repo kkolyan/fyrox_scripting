@@ -15,7 +15,7 @@ fn generate_static_assertions<'a>(items: impl Iterator<Item = &'a syn::Type>) ->
             quote_spanned! {span =>
                 #[allow(dead_code)]
                 fn #static_assertions_fn() {
-                    use crate::LiteDataType;
+                    use lite_runtime::spi::LiteDataType;
                     <#ty>::compiles_if_type_is_allowed();
                 }
             }

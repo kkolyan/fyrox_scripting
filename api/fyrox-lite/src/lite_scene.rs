@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use lite_macro::lite_api;
 
-use crate::script_context::with_script_context;
+use lite_runtime::script_context::with_script_context;
 
 #[derive(Debug, Clone)]
 pub struct LiteScene;

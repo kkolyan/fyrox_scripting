@@ -10,10 +10,10 @@ use crate::{
 use fyrox::core::pool::Handle;
 use fyrox::scene::node::Node;
 use fyrox::script::{DynamicTypeId, ScriptMessagePayload};
-use fyrox_lite::script_context::with_script_context;
-use fyrox_lite::script_object_residence::ScriptResidence;
-use fyrox_lite::spi::ClassId;
-use fyrox_lite::{spi::UserScript, LiteDataType};
+use lite_runtime::script_context::with_script_context;
+use lite_runtime::script_object_residence::ScriptResidence;
+use lite_runtime::spi::UserScript;
+use lite_runtime::spi::{ClassId, LiteDataType};
 use std::any::Any;
 
 impl LiteDataType for UnpackedObject {}
