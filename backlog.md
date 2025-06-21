@@ -69,6 +69,8 @@
 
 # 0.1.0
 
+* [ ] fix release packages compression
+* [ ] test each package
 * [ ] create build for Fyrox 0.36?
 
 # Backlog
