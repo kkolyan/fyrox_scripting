@@ -9,7 +9,9 @@ supported soon.
 
 * [Windows](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-win.zip)
 * [macOS](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-macos.zip)
+    * Binaries are not signed, so it requires to allow it running on your Mac in macOS settings.
 * [Linux](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-linux.zip)
+* [Install from sources](#install-from-sources)
 
 # How to use
 
@@ -17,10 +19,13 @@ Install [.NET 9.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet) if it
 
 Select a project directory where you'll keep scripts and other resources.
 
-* (All OS) Specify that directory via command line argument `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe <path>`
-* (Windows only) Double-click on `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` icon and choose that directory in opened
+Run editor:
+
+* (All OS) Specify project directory via command line argument `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe <path>`
+* (Windows only) Double-click on `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` icon and choose project directory in
+  opened
   dialog window.
-* (Windows only) Drop that directory on the `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` icon in file explorer.
+* (Windows only) Drop project directory on the `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` icon in file explorer.
 
 Minimal C# project files will be created automatically and C# project will be automatically compiled.
 
@@ -60,3 +65,20 @@ Original Fyrox engine is 100% relevant in all non-code things, so Fyrox Book is 
 ## CLI
 
 The `fyroxed_cs_netcore.exe` can also be invoked via terminal with project path argument.
+
+# Install from sources
+
+That's optional, because prebuilt binaries [are available](#download).
+
+1. Install [.NET 9.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet) if it's not installed yet.
+2. Install latest [Rust](https://rustup.rs/) toolchain.
+3. (Windows only) Install [Git Bash](https://git-scm.com/downloads/win). Other MSYS2 distribution haven't tested.
+4. Checkout sources and install using shell command (use Git Bash on windows)
+    ```shell 
+    git clone https://github.com/kkolyan/fyrox_lite.git \
+      && cd fyrox_lite \
+      && chmod +x **/*.sh \
+      && ./bash/cs_install_sdk.sh <installation path>
+   ```
+
+`<installation path>` now contains ready-to-use binaries.

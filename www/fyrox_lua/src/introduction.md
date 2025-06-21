@@ -6,7 +6,9 @@ No dependencies
 
 * [Windows](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-win.zip)
 * [macOS](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-macos.zip)
+    * Binaries are not signed, so it requires to allow it running on your Mac in macOS settings.
 * [Linux](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-linux.zip)
+* [Install from sources](#install-from-sources)
 
 # How to use
 
@@ -59,3 +61,19 @@ same way.
 ## CLI
 
 The `fyroxed_lua.exe` can also be invoked via terminal with project path argument.
+
+# Install from sources
+
+That's optional, because prebuilt binaries [are available](#download).
+
+1. Install latest [Rust](https://rustup.rs/) toolchain.
+2. (Windows only) Install [Git Bash](https://git-scm.com/downloads/win). Other MSYS2 distribution haven't tested.
+3. Checkout sources and install using shell command (use Git Bash on windows)
+    ```shell 
+    git clone https://github.com/kkolyan/fyrox_lite.git \
+      && cd fyrox_lite \
+      && chmod +x **/*.sh \
+      && ./bash/lua_install_sdk.sh <installation path>
+   ```
+
+`<installation path>` now contains ready-to-use binaries.
