@@ -178,17 +178,24 @@ supported soon.</p>
 <h1 id="download"><a class="header" href="#download">Download</a></h1>
 <ul>
 <li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-win.zip">Windows</a></li>
-<li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-macos.zip">macOS</a></li>
+<li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-macos.zip">macOS</a>
+<ul>
+<li>Binaries are not signed, so it requires to allow it running on your Mac in macOS settings.</li>
+</ul>
+</li>
 <li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-linux.zip">Linux</a></li>
+<li><a href="#install-from-sources">Install from sources</a></li>
 </ul>
 <h1 id="how-to-use"><a class="header" href="#how-to-use">How to use</a></h1>
 <p>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet">.NET 9.0 SDK</a> if it's not installed yet.</p>
 <p>Select a project directory where you'll keep scripts and other resources.</p>
+<p>Run editor:</p>
 <ul>
-<li>(All OS) Specify that directory via command line argument <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe &lt;path&gt;</code></li>
-<li>(Windows only) Double-click on <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> icon and choose that directory in opened
+<li>(All OS) Specify project directory via command line argument <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe &lt;path&gt;</code></li>
+<li>(Windows only) Double-click on <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> icon and choose project directory in
+opened
 dialog window.</li>
-<li>(Windows only) Drop that directory on the <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> icon in file explorer.</li>
+<li>(Windows only) Drop project directory on the <code>C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe</code> icon in file explorer.</li>
 </ul>
 <p>Minimal C# project files will be created automatically and C# project will be automatically compiled.</p>
 <p>Game can be launched using Play button in editor. Also, game can be launched using IDE with debug support (run profile
@@ -217,6 +224,21 @@ value <a href="https://www.uuidgenerator.net/">using any online service like thi
 </ul>
 <h2 id="cli"><a class="header" href="#cli">CLI</a></h2>
 <p>The <code>fyroxed_cs_netcore.exe</code> can also be invoked via terminal with project path argument.</p>
+<h1 id="install-from-sources"><a class="header" href="#install-from-sources">Install from sources</a></h1>
+<p>That's optional, because prebuilt binaries <a href="#download">are available</a>.</p>
+<ol>
+<li>Install <a href="https://dotnet.microsoft.com/en-us/download/dotnet">.NET 9.0 SDK</a> if it's not installed yet.</li>
+<li>Install latest <a href="https://rustup.rs/">Rust</a> toolchain.</li>
+<li>(Windows only) Install <a href="https://git-scm.com/downloads/win">Git Bash</a>. Other MSYS2 distribution haven't tested.</li>
+<li>Checkout sources and install using shell command (use Git Bash on windows)
+<pre><code class="language-shell">git clone https://github.com/kkolyan/fyrox_lite.git \
+  &amp;&amp; cd fyrox_lite \
+  &amp;&amp; chmod +x **/*.sh \
+  &amp;&amp; ./bash/cs_install_sdk.sh &lt;installation path&gt;
+</code></pre>
+</li>
+</ol>
+<p><code>&lt;installation path&gt;</code> now contains ready-to-use binaries.</p>
 
                     </main>
 

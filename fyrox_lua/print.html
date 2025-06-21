@@ -177,8 +177,13 @@
 <h1 id="download"><a class="header" href="#download">Download</a></h1>
 <ul>
 <li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-win.zip">Windows</a></li>
-<li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-macos.zip">macOS</a></li>
+<li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-macos.zip">macOS</a>
+<ul>
+<li>Binaries are not signed, so it requires to allow it running on your Mac in macOS settings.</li>
+</ul>
+</li>
 <li><a href="https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-linux.zip">Linux</a></li>
+<li><a href="introduction.html#install-from-sources">Install from sources</a></li>
 </ul>
 <h1 id="how-to-use"><a class="header" href="#how-to-use">How to use</a></h1>
 <ul>
@@ -218,6 +223,20 @@ same way.</p>
 </ul>
 <h2 id="cli"><a class="header" href="#cli">CLI</a></h2>
 <p>The <code>fyroxed_lua.exe</code> can also be invoked via terminal with project path argument.</p>
+<h1 id="install-from-sources"><a class="header" href="#install-from-sources">Install from sources</a></h1>
+<p>That's optional, because prebuilt binaries <a href="introduction.html#download">are available</a>.</p>
+<ol>
+<li>Install latest <a href="https://rustup.rs/">Rust</a> toolchain.</li>
+<li>(Windows only) Install <a href="https://git-scm.com/downloads/win">Git Bash</a>. Other MSYS2 distribution haven't tested.</li>
+<li>Checkout sources and install using shell command (use Git Bash on windows)
+<pre><code class="language-shell">git clone https://github.com/kkolyan/fyrox_lite.git \
+  &amp;&amp; cd fyrox_lite \
+  &amp;&amp; chmod +x **/*.sh \
+  &amp;&amp; ./bash/lua_install_sdk.sh &lt;installation path&gt;
+</code></pre>
+</li>
+</ol>
+<p><code>&lt;installation path&gt;</code> now contains ready-to-use binaries.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="scripting-api-c"><a class="header" href="#scripting-api-c">Scripting API (C#)</a></h2>
 <ul>
 <li><a href="scripting_api/Input.html">Input</a></li>
