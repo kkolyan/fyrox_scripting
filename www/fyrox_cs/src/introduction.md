@@ -7,9 +7,9 @@ supported soon.
 
 # Download
 
-* [Windows](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_cs-0.1.0-win.zip)
-* [macOS](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_cs-0.1.0-macos.zip)
-* [Linux](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_cs-0.1.0-linux.zip)
+* [Windows](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-win.zip)
+* [macOS](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-macos.zip)
+* [Linux](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_csharp-0.1.0-linux.zip)
 
 # How to use
 
