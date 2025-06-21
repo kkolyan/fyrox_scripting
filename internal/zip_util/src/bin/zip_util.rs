@@ -2,7 +2,8 @@ use std::env;
 use std::fs::File;
 use std::path::PathBuf;
 use std::str::FromStr;
-use zip::ZipWriter;
+use zip::write::SimpleFileOptions;
+use zip::{CompressionMethod, ZipWriter};
 use zip_extensions::ZipWriterExtensions;
 
 fn main() {
@@ -11,6 +12,10 @@ fn main() {
     let dst = args.get(2).unwrap();
 
     let zip = ZipWriter::new(File::create_new(dst).unwrap());
-    zip.create_from_directory(&PathBuf::from_str(src.as_str()).unwrap())
+
+    let options = SimpleFileOptions::default()
+        .compression_method(CompressionMethod::Zstd)
+        .compression_level(Some(9));
+    zip.create_from_directory_with_options(&PathBuf::from_str(src.as_str()).unwrap(), |_| options)
         .unwrap();
 }
