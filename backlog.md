@@ -66,6 +66,7 @@
     * [x] readonly fields
 * [x] refine Lua script error handling
 * [x] make C# project compiled on editor start regardless of assembly presence
+* [ ] investigate Lua binary size. probably, mlua code style gives this. Use raw bindings?
 * [ ] allow user "retry" when opening project failed with script loading error
 * [ ] fix C# compilation warnings
 * [ ] Crosshair!

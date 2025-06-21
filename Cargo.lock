@@ -2808,6 +2808,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "lua2rs"
+version = "0.1.0"
+dependencies = [
+ "rslua",
+]
+
+[[package]]
+name = "lua2rs-runtime"
+version = "0.1.0"
+dependencies = [
+ "fyrox",
+]
+
+[[package]]
 name = "luagen-lib"
 version = "0.1.0"
 dependencies = [
@@ -4175,6 +4189,33 @@ dependencies = [
  "serde",
  "serde_derive",
 ]
+
+[[package]]
+name = "rslua"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0898707d3c4f5b8816fec25915cb07b2d525f0f2a5ceb4980743e18d4c57590e"
+dependencies = [
+ "num-traits",
+ "rslua_derive",
+ "rslua_traits",
+]
+
+[[package]]
+name = "rslua_derive"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d8f08cbfbd74c06932d5658bd35ca6d4abaa7eb85e14d1c555352e904a06c11"
+dependencies = [
+ "quote",
+ "syn 2.0.87",
+]
+
+[[package]]
+name = "rslua_traits"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "46b2076ac2f9d8a94ea3479aef145738fe749e2fe3c1c1168cc9537014c1f936"
 
 [[package]]
 name = "rstar"
