@@ -14,7 +14,7 @@ default-theme = "navy"
 preferred-dark-theme = "navy"
 git-repository-icon = "fa-github"
 site-url = "/kkolyan.github.io/"
-git-repository-url = "https://github.com/kkolyan/fyrox-lite"
+git-repository-url = "https://github.com/kkolyan/fyrox_lite"
 
 [output.html.fold]
 enable = true
