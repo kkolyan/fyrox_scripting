@@ -7,6 +7,7 @@ use convert_case::Casing;
 use fyrox::core::log::Log;
 use fyrox::core::pool::Handle;
 use fyrox::core::visitor::Visit;
+use fyrox::core::visitor::VisitError;
 use fyrox::core::visitor::VisitResult;
 use fyrox::core::visitor::Visitor;
 use fyrox::core::Uuid;
@@ -157,7 +158,9 @@ impl<T: Lang> Visit for ScriptObject<T> {
                 let mut s = $var.to_string();
                 let result = s.visit($field_name, &mut $guard);
                 if reading {
-                    *$var = s.parse::<$ty>()?;
+                    *$var = s
+                        .parse::<$ty>()
+                        .map_err(|_err| VisitError::FieldTypeDoesNotMatch)?;
                 }
                 result
             }};
