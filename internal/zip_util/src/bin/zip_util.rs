@@ -13,9 +13,7 @@ fn main() {
 
     let zip = ZipWriter::new(File::create_new(dst).unwrap());
 
-    let options = SimpleFileOptions::default()
-        .compression_method(CompressionMethod::Zstd)
-        .compression_level(Some(9));
+    let options = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
     zip.create_from_directory_with_options(&PathBuf::from_str(src.as_str()).unwrap(), |_| options)
         .unwrap();
 }

@@ -1,4 +1,4 @@
-# Backlog
+# Done
 
 * [x] editor can be launched with the project directory as argument
 * [x] project can be opened using UI dialog
@@ -66,6 +66,13 @@
     * [x] readonly fields
 * [x] refine Lua script error handling
 * [x] make C# project compiled on editor start regardless of assembly presence
+
+# 0.1.0
+
+* [ ] create build for Fyrox 0.36?
+
+# Backlog
+
 * [ ] allow user "retry" when opening project failed with script loading error
 * [ ] fix C# compilation warnings
 * [ ] Crosshair!

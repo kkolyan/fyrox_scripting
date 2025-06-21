@@ -43,3 +43,4 @@ fi
 do_publish ./bash/cs_install_sdk.sh fyrox_csharp-$VERSION-$OS_SUFFIX
 do_publish ./bash/lua_install_sdk.sh fyrox_lua-$VERSION-$OS_SUFFIX
 
+cp target/*.zip ../fyrox_lite_bin/
