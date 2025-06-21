@@ -1,38 +1,32 @@
 # Dependencies
 
-| Use case                              | .Net SDK 9.0 | Rust SDK |
-|---------------------------------------|--------------|----------|
-| Build Fyrox C# SDK from sources       | Required     | Required |
-| Develop scripts & scenes              | Required     | -        |
-| Quick Play                            | Required     | -        |
-| Standalone Play (not implemented yet) | -            | -        |
+.Net SDK 9.0 is required for development.
 
-# How to Install
+Currently, it's also required on player machine. That's temporary limitation, self-contained distribution will be
+supported soon.
 
-Currently, it needs to be built from sources. Examples are for Windows, for other platforms just skip ".exe" suffix and
-use OS-specific paths, and it will work.
+# Download
 
-1. Install [.Net SDK 9.0](https://dotnet.microsoft.com/en-us/download/dotnet)
-2. Install [Rust](https://rustup.rs/). It's needed only to build SDK.
-3. (skip for non-Windows OS-es) Install [Git for Windows](https://git-scm.com/downloads). This is needed for the
-   `Git Bash` terminal - required to build the SDK on Windows using shell scripts.
-4. Run `install_sdk_cs.sh /c/dev/fyrox_cs_sdk` in `Git Bash` terminal. Note: the path must not exist before
-   installation (to prevent mistakes).
+* [Windows](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_cs-0.1.0-win.zip)
+* [macOS](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_cs-0.1.0-macos.zip)
+* [Linux](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_cs-0.1.0-linux.zip)
 
 # How to use
 
-Get Fyrox C# SDK.
-
 Install [.NET 9.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet) if it's not installed yet.
 
-Select a project directory where you'll keep scripts and other resources. Double-click on
-`C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` and choose that directory.
+Select a project directory where you'll keep scripts and other resources.
+
+* (All OS) Specify that directory via command line argument `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe <path>`
+* (Windows only) Double-click on `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` icon and choose that directory in opened
+  dialog window.
+* (Windows only) Drop that directory on the `C:/dev/fyrox_cs_sdk/fyroxed_cs_netcore.exe` icon in file explorer.
 
 Minimal C# project files will be created automatically and C# project will be automatically compiled.
 
 Game can be launched using Play button in editor. Also, game can be launched using IDE with debug support (run profile
 for JB Rider generated, for other IDE note that working directory should be the project directory, not the build
-directory).
+directory). Also, game can be launched using `dotnet run` in the game directory.
 
 ## Scripts
 

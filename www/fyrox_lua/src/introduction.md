@@ -1,26 +1,19 @@
 # Dependencies
 
-| Use case                        | Rust SDK |
-|---------------------------------|----------|
-| Build Fyrox C# SDK from sources | Required |
-| Develop scripts & scenes        | -        |
-| Play                            | -        |
+No dependencies
 
-# How to Install
+# Download
 
-Currently, you need to build from source. Examples use .exe for Windows; on other platforms, remove the suffix and use
-platform-specific paths—it will work the same.
-
-1. Install [Rust](https://rustup.rs/). It's needed only to build SDK.
-2. (skip for non-Windows OS-es) Install [Git for Windows](https://git-scm.com/downloads). This is needed for the
-   `Git Bash` terminal - required to build the SDK on Windows using shell scripts.
-3. Run `install_sdk_lua.sh /c/dev/fyrox_lua_sdk` in `Git Bash` terminal. Note: the path must not exist before
-   installation (to prevent mistakes).
+* [Windows](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-win.zip)
+* [macOS](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-macos.zip)
+* [Linux](https://github.com/kkolyan/fyrox_lite_bin/raw/refs/heads/0.1.0/fyrox_lua-0.1.0-linux.zip)
 
 # How to use
 
-Select a project directory where you'll keep scripts and other resources. Double-click on
-`C:/dev/fyrox_lua_sdk/fyroxed_lua.exe` and choose that directory.
+* (All OS) Specify that directory via command line argument `C:/dev/fyrox_lua_sdk/fyroxed_lua.exe <path>`
+* (Windows only) Double-click on `C:/dev/fyrox_lua_sdk/fyroxed_lua.exe` icon and choose that directory in opened
+  dialog window.
+* (Windows only) Drop that directory on the `C:/dev/fyrox_lua_sdk/fyroxed_lua.exe` icon in file explorer.
 
 Game can be launched using Play button in editor. Also, game can be launched using
 `C:/dev/fyrox_lua_sdk/fyrox_lite_lua.exe c:/dev/my_lua_game` command.
