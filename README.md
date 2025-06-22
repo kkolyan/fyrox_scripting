@@ -37,13 +37,22 @@ with [Lua](https://learnxinyminutes.com/lua/) scripting support.
 * No additional SDKs required.
 * Run game from either Fyrox Editor or command line.
 
+## Examples
+
+There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently
+exposed to scripting languages.
+
+* [in Fyrox C#](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_cs)
+* [in Fyrox Lua](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_lua)
+* [in Fyrox / Rust (vanilla)](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_vanilla)
+
 ## Current state
 
 * It works (see [Examples](#examples))
 * The [subset of supported Fyrox API](https://kkolyan.github.io/fyrox_lite/fyrox_cs/scripting_api.html) is pretty
-  limited.
-* It probably lacks polishing
+  limited
 * Prebuilt binaries temporary unavailable (due to high pace of development)
+* [Backlog](backlog.md)
 
 ## Supported platforms
 
@@ -61,15 +70,6 @@ with [Lua](https://learnxinyminutes.com/lua/) scripting support.
 * 🟠 Feasible but more complex; likely if broadly requested
 * 🔴 Possible with significant effort; likely if widely requested
 * ❌ No plans to support
-
-## Examples
-
-There is a simple game that written in different scripting languages to demonstrate the part of Fyrox API currently
-exposed to scripting languages.
-
-* [in Fyrox C#](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_cs)
-* [in Fyrox Lua](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_lua)
-* [in Fyrox / Rust (vanilla)](https://github.com/kkolyan/fyrox_lite/blob/main/showcase/guards_vanilla)
 
 ## Credits
 
