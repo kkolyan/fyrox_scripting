@@ -15,7 +15,7 @@
 * [engine](engine): Fyrox engine as Git submodule. Probably, in future it will be removed in favor to referencing toi
   fyrox as a crate,
   but for now it's very useful to have its code at hand.
-* [internal](internal): generic internal things.
+* [internal](internal): internal things.
 * [langs](langs): scripting language specific internal things.
 * [showcase](showcase): projects with useful examples.
 * [tools](tools): programs for bindings generation.
@@ -57,12 +57,10 @@ Exposed API should comply with the rules. Following types allowed (owned only, n
   only clones the handle, not the underlying object. If underlying object has limited lifecycle, then it should provide
   the methods to deal with it.
 * predefined abstract types. That's a family of traits, expected to be implemented by every language provider. they are
-  not intended to be changed frequently. The central type is [UserScript](api/fyrox-lite/src/spi.rs).
+  not intended to be changed frequently. The central type is [UserScript](internal/lite-runtime/src/spi.rs).
 * `Vec<T>`, `Option<T>`, `Result<T>` where `T` is allowed type..
 
-Note that Vector3 and Quaternion for Lua are of an `engine type`, but for some languages (C# for instance) they probably
-would be a `data type`, because language-native implementation of vector arithmetics could be more efficient than `ffi`
-to `nalgebra`. That's why nalgebra-backed types are in [fyrox-lite-math](api/fyrox-lite-math)
+Note that Vector3 and Quaternion for Lua are of an `engine type`, but for C# they are a `data type`, because C# implementation of vector arithmetics could be more efficient than using `nalgebra` though `ffi`, (which is usually not true for dynamic languages). That's why nalgebra-backed types are in [fyrox-lite-math](api/fyrox-lite-math)
 and [fyrox-lite](api/fyrox-lite) exposes methods with shallow math structs instead of nalgebra-backed ones.
 
 `#[fyrox_lite]` attrubute is not just a marker - it provides almost complete realtime enforcement of these rules.
