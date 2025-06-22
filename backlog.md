@@ -70,8 +70,10 @@
 # 0.1.0
 
 * [ ] fix release packages compression
-* [ ] test each package
 * [ ] create build for Fyrox 0.36?
+* [ ] project metadata format (sdk version, hot-reload option)
+* [ ] hot-reload for C# (at least for public image)
+* [ ] smoke test packages
 
 # Backlog
 
