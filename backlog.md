@@ -72,8 +72,11 @@
 * [ ] fix release packages compression
 * [ ] create build for Fyrox 0.36?
 * [ ] project metadata format (sdk version, hot-reload option)
-* [ ] hot-reload for C# (at least for public image)
+* [ ] UI project selector for macOS and Linux
+* [ ] hot-reload for C# (mostly for public image and for fun)
 * [ ] smoke test packages
+* [ ] describe a case to create games without editor
+* [ ] compare performance of vanilla/c#/lua using guards example with hight params
 
 # Backlog
 
