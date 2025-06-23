@@ -24,7 +24,7 @@
     * [ ] Fyrox Lite as a crate for usual Fyrox project
     * [ ] Rust modules for usual Fyrox Lite project
 
-# Done
+# Archive
 
 * [x] editor can be launched with the project directory as argument
 * [x] project can be opened using UI dialog
