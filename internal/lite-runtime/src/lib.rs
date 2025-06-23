@@ -68,12 +68,8 @@ macro_rules! wrapper_reflect {
             self.$ident.fields_mut(func);
         }
 
-        // fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [FieldMut])) {
-        //     self.$ident.fields_mut(func)
-        // }
-
         fn into_any(self: Box<Self>) -> Box<dyn std::any::Any> {
-            self
+            fyrox::core::reflect::Reflect::into_any(self.$ident.into())
         }
 
         fn as_any(&self, func: &mut dyn FnMut(&dyn std::any::Any)) {

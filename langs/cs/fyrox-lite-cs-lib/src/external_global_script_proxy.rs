@@ -31,6 +31,14 @@ impl Reflect for ExternalGlobalScriptProxy {
         self.data.with_script_object(|it| it.fields_info(func))
     }
 
+    fn fields(&self, func: &mut dyn FnMut(&[&dyn Reflect])) {
+        self.data.with_script_object(|it| it.fields(func))
+    }
+
+    fn fields_mut(&mut self, func: &mut dyn FnMut(&mut [&mut dyn Reflect])) {
+        self.data.with_script_object_mut(|it| it.fields_mut(func))
+    }
+
     fn field(&self, name: &str, func: &mut dyn FnMut(Option<&dyn Reflect>)) {
         self.data.with_script_object(|it| it.field(name, func))
     }

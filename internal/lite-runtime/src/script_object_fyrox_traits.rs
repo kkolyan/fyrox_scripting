@@ -33,7 +33,8 @@ impl<T: Lang> Reflect for ScriptObject<T> {
             .enumerate()
             .filter(|(_i, it)| !it.private)
             .map(|(i, it)| FieldInfo {
-                owner_type_id: TypeId::of::<NodeScriptObject<T>>(),
+                owner_type_id: TypeId::of::<ScriptObject<T>>(),
+                // owner_type_id: TypeId::of::<NodeScriptObject<T>>(),
                 name: it.name.as_str(),
                 display_name: it.title.as_str(),
                 description: it.name.as_str(),
