@@ -1,3 +1,29 @@
+# 0.1.0
+
+* [ ] fix release packages compression
+* [ ] automate publish script more
+* [ ] create build for Fyrox 0.36?
+* [ ] compare performance of vanilla/c#/lua using guards example with hight params
+* [ ] project metadata format (sdk version, hot-reload option)
+* [ ] UI project selector for macOS and Linux
+* [ ] hot-reload for C# (mostly for public image and for fun)
+* [ ] smoke test packages
+* [ ] describe a case to create games without editor
+* [ ] support Option type
+* [ ] support Vec type
+
+# Backlog
+
+* [ ] allow user "retry" when opening project failed with script loading error
+* [ ] fix C# compilation warnings
+* [ ] Crosshair!
+* [ ] implement "Open in IDE" button
+* [ ] self-contained game export for
+* [ ] downloadable via GitHub releases
+* [ ] describe plans about custom rust code
+    * [ ] Fyrox Lite as a crate for usual Fyrox project
+    * [ ] Rust modules for usual Fyrox Lite project
+
 # Done
 
 * [x] editor can be launched with the project directory as argument
@@ -8,7 +34,7 @@
       be improved to not scare newcomers with non-typical look
     * Actually, there are crates for this. Done
 * [x] refresh of script metadata when DLL recompiled
-    * [x] fucking with watcher - it seems to lock assembly file (not certainly), and it doesn't detect changes
+    * [x] dealing with watcher - it seems to lock assembly file (not certainly), and it doesn't detect changes
     * [x] seems like it's C# who locked assembly (even after unloading). solved by loading assembly from text.
     * [x] UUID added to global scripts. Guards editor doesn't load scripts now
         * for C# they UUID for global scripts is not added. it's present in code, generated each time during scanning
@@ -66,29 +92,3 @@
     * [x] readonly fields
 * [x] refine Lua script error handling
 * [x] make C# project compiled on editor start regardless of assembly presence
-
-# 0.1.0
-
-* [ ] fix release packages compression
-* [ ] automate publish script more
-* [ ] create build for Fyrox 0.36?
-* [ ] compare performance of vanilla/c#/lua using guards example with hight params
-* [ ] project metadata format (sdk version, hot-reload option)
-* [ ] UI project selector for macOS and Linux
-* [ ] hot-reload for C# (mostly for public image and for fun)
-* [ ] smoke test packages
-* [ ] describe a case to create games without editor
-* [ ] support Option type
-* [ ] support Vec type
-
-# Backlog
-
-* [ ] allow user "retry" when opening project failed with script loading error
-* [ ] fix C# compilation warnings
-* [ ] Crosshair!
-* [ ] implement "Open in IDE" button
-* [ ] self-contained game export for
-* [ ] downloadable via GitHub releases
-* [ ] describe plans about custom rust code
-    * [ ] Fyrox Lite as a crate for usual Fyrox project
-    * [ ] Rust modules for usual Fyrox Lite project
