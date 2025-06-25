@@ -325,12 +325,11 @@ pub(crate) fn invoke_callback_internal<'a, 'b, 'c, 'lua, A: IntoLuaMulti<'lua>>(
             match callback.call::<_, ()>((script_object_ud, args)) {
                 Ok(_) => {}
                 Err(err) => {
-                    Log::err(format!(
+                    // exiting to prevent error spamming (change this behavior in future)
+                    panic!(
                         "callback \"{}:{}\" failed with Lua error:\n{}",
                         class_name, callback_name, err
-                    ));
-                    Log::warn("exiting to prevent error spamming (change this behavior in future)");
-                    exit(123);
+                    );
                 }
             };
         }

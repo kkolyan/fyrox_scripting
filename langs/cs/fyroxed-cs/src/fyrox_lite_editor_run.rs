@@ -74,11 +74,13 @@ fn ensure_cs_profiles(_working_dir: &Path) -> Settings {
             command: "dotnet".to_string(),
             args: vec!["build".to_string()],
             environment_variables: vec![],
+            skip_passthrough_marker: false,
         }],
         run_command: CommandDescriptor {
             command: "dotnet".to_string(),
             args: vec!["run".to_string()],
             environment_variables: vec![],
+            skip_passthrough_marker: false,
         },
     });
     if loaded {
