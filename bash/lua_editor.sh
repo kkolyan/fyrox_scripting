@@ -9,11 +9,11 @@ rm -rf target/fyrox_lua_sdk
 
 os=$(./bash/utils/os.sh)
 if [[ "$os" == "Windows" ]]; then
-    ./target/fyrox_lua_sdk/fyroxed_lua.exe $*
+    RUST_BACKTRACE=full ./target/fyrox_lua_sdk/fyroxed_lua.exe $*
 elif [[ "$os" == "Macos" ]]; then
-    ./target/fyrox_lua_sdk/fyroxed_lua $*
+    RUST_BACKTRACE=full ./target/fyrox_lua_sdk/fyroxed_lua $*
 elif [[ "$os" == "Linux" ]]; then
-    ./target/fyrox_lua_sdk/fyroxed_lua $*
+    RUST_BACKTRACE=full ./target/fyrox_lua_sdk/fyroxed_lua $*
 else
     echo "Unknown OS: $os"
     exit -1
