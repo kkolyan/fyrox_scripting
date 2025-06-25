@@ -1,0 +1,33 @@
+name: Publish (Linux only)
+
+on:
+  workflow_dispatch:
+  # This allows running it on any branch manually:
+  # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+
+  publish_linux:
+    name: Publish Linux
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get update && sudo apt-get install -y librust-alsa-sys-dev
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@nightly
+      # Caching must be after toolchain selection
+      - uses: Swatinem/rust-cache@v2
+      - name: Publish (C#)
+        run: |
+          chmod -R +x bash && ./bash/cs_publish.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish (Lua)
+        run: |
+          chmod -R +x bash && ./bash/lua_publish.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
