@@ -1,6 +1,7 @@
 # 0.1.0
 
 * [ ] fix release packages compression
+* [ ] fix the situation that by default no scene is loaded (the GlobalScript is responsible for it)
 * [ ] automate publish script more
 * [ ] create build for Fyrox 0.36?
 * [ ] compare performance of vanilla/c#/lua using guards example with hight params
