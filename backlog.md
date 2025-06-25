@@ -1,6 +1,7 @@
 # 0.1.0
 
 * [ ] fix release packages compression
+* [ ] add gitignore on project creation
 * [ ] fix the situation that by default no scene is loaded (the GlobalScript is responsible for it)
 * [ ] automate publish script more
 * [ ] create build for Fyrox 0.36?
