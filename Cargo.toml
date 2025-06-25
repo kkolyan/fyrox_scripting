@@ -24,7 +24,7 @@ members = [
     "showcase/guards_vanilla/game",
     "showcase/guards_vanilla/game-dylib",
     "tools",
-    "internal/to_ico", "internal/lite-runtime", "internal/zip_util",
+    "internal/to_ico", "internal/lite-runtime", "internal/zip_util", "langs/vs/hello_egui_snarl",
 ]
 resolver = "2"
 exclude = [

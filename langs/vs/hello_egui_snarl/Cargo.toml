@@ -1,0 +1,8 @@
+[package]
+name = "hello_egui_snarl"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+egui-snarl = "0.7.1"
+egui = "0.31.1"
