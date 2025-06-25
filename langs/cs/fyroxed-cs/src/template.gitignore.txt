@@ -1,0 +1,8 @@
+/.idea
+/obj
+/bin
+/settings.ron
+/*.sln.DotSettings.user
+/*.csproj
+/*.sln
+/.run

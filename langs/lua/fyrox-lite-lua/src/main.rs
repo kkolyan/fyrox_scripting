@@ -1,4 +1,5 @@
 //! Executor with your game connected to it as a plugin.
+
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
 use fyrox::dpi::LogicalSize;

@@ -1,0 +1,10 @@
+// ReSharper disable once UnusedType.Global
+public class Game : GlobalScript {
+    protected override void OnGlobalInit(string? initialSceneOverride)
+    {
+        if (initialSceneOverride == null) {
+            throw new Exception("Project template script only loads scene selected in editor. Change this script to load scene from file if needed.");
+        }
+        Scene.LoadAsync(initialSceneOverride!);
+    }
+}

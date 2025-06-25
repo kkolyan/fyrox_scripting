@@ -1,8 +1,9 @@
 # 0.1.0
 
-* [ ] fix release packages compression
-* [ ] add gitignore on project creation
-* [ ] fix the situation that by default no scene is loaded (the GlobalScript is responsible for it)
+* [x] fix release packages compression
+* [x] add gitignore on project creation
+* [x] fix the situation that by default no scene is loaded (the GlobalScript is responsible for it)
+* [x] delegate to Console game logs (i.e. stderr too)
 * [ ] automate publish script more
 * [ ] create build for Fyrox 0.36?
 * [ ] compare performance of vanilla/c#/lua using guards example with hight params

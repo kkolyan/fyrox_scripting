@@ -193,6 +193,18 @@ fn ensure_project_files(working_dir: &Path, is_cli: bool) -> bool {
     )
     .unwrap();
 
+    fs::write(
+        format!("{}/Game.cs", working_dir.to_str().unwrap()),
+        include_str!("Game.cs.txt"),
+    )
+    .unwrap();
+
+    fs::write(
+        format!("{}/.gitignore", working_dir.to_str().unwrap()),
+        include_str!("template.gitignore.txt"),
+    )
+    .unwrap();
+
     // open::that(&sln_path).unwrap();
     true
 }

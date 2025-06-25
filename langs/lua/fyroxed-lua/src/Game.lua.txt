@@ -1,0 +1,11 @@
+---@uuid ${SCRIPT_UUID}
+---@class Game : GlobalScript
+Game = script_class()
+
+---@param scene_path string
+function Game:init(scene_path)
+    if not scene_path then
+        error('Project template script only loads scene selected in editor. Change this script to load scene from file if needed.')
+    end
+	Scene:load_async(scene_path)
+end

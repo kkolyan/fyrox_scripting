@@ -2,6 +2,7 @@
 
 use fyrox::core::log::Log;
 use fyrox::core::log::MessageKind;
+use fyrox::core::Uuid;
 use fyrox_build_tools::{BuildProfile, CommandDescriptor};
 use fyroxed_base::fyrox::event_loop::EventLoop;
 use fyroxed_base::plugin::EditorPlugin;
@@ -40,6 +41,7 @@ fn main() {
             return;
         }
     };
+    let _ = fs::create_dir_all(&project_dir);
     let project_dir = dunce::canonicalize(project_dir).unwrap();
     env::set_current_dir(&project_dir).unwrap();
 
@@ -66,6 +68,20 @@ fn main() {
     editor.user_project_version = "/0.1".to_string();
 
     let scripts_dir = Path::join(&project_dir, "scripts");
+    if !fs::exists(&scripts_dir).unwrap() {
+        fs::create_dir(&scripts_dir).unwrap();
+        fs::write(
+            format!("{}/Game.lua", scripts_dir.display()),
+            include_str!("Game.lua.txt")
+                .replace("${SCRIPT_UUID}", Uuid::new_v4().to_string().as_str()),
+        )
+        .unwrap();
+        fs::write(
+            format!("{}/.gitignore", scripts_dir.display()),
+            include_str!("template.gitignore.txt"),
+        )
+        .unwrap();
+    }
     if let Err(err) = editor.add_dynamic_plugin_custom(fyrox_lite_lua_lib::LuaPlugin::new(
         scripts_dir,
         true,
@@ -123,6 +139,7 @@ fn ensure_lua_profiles(_working_dir: &Path) -> Settings {
         command: "cmd".to_string(),
         args: vec!["/C".to_string(), "echo".to_string()],
         environment_variables: vec![],
+        skip_passthrough_marker: true,
     };
 
     #[cfg(not(target_os = "windows"))]
@@ -130,6 +147,7 @@ fn ensure_lua_profiles(_working_dir: &Path) -> Settings {
         command: format!("sh"),
         args: vec!["-c".to_string(), "echo".to_string()],
         environment_variables: vec![],
+        skip_passthrough_marker: true,
     };
 
     settings.build.profiles.push(BuildProfile {
@@ -144,6 +162,7 @@ fn ensure_lua_profiles(_working_dir: &Path) -> Settings {
 
             args: vec![],
             environment_variables: vec![],
+            skip_passthrough_marker: true,
         },
     });
     if loaded {
