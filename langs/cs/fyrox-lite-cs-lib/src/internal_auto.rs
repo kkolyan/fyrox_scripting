@@ -7,6 +7,7 @@
 #![allow(clippy::let_unit_value)]
 #![allow(unused)]
 use crate::*;
+use lite_runtime::externalizable::Externalizable;
 
 #[repr(C)]
 #[derive(Clone, Copy)]
