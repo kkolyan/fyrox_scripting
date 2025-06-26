@@ -44,6 +44,17 @@ if [[ "$os" == "Linux" ]]; then
   fi
 fi
 
+if [[ "$os" == "Linux" ]]; then
+  if [[ "$S_LANG" == "Lua" ]]; then
+    LANG_TAG_SUFFIX=csharp
+  elif [[ "$S_LANG" == "C#" ]]; then
+    LANG_TAG_SUFFIX=lua
+  else
+    echo "Unknown S_LANG: $S_LANG"
+    exit -1
+  fi
+fi
+
 ARCH_DIR=$(mktemp -d)
 
 cp -r target/$FINAL_NAME $ARCH_DIR
@@ -51,4 +62,4 @@ cp -r target/$FINAL_NAME $ARCH_DIR
 cargo run --bin zip_util -- $ARCH_DIR target/$FINAL_NAME.zip
 rm -rf target/$FINAL_NAME
 
-gh release create nightly ./target/$FINAL_NAME.zip --title "$FINAL_NAME" --notes "Auto-upload"
+gh release create nightly-$LANG_TAG_SUFFIX-$OS_SUFFIX-$GIT_REVISION ./target/$FINAL_NAME.zip --title "$FINAL_NAME" --notes "Auto-upload"
