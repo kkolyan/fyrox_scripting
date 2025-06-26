@@ -17,6 +17,7 @@ jobs:
           submodules: recursive
 
       - name: Generate code
+        shell: bash
         run: RUST_BACKTRACE=1 cargo run --bin allgen
 
       - name: Check for unstaged changes
