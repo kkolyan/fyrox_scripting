@@ -1,0 +1,34 @@
+name: Debug 001
+
+on:
+  workflow_dispatch:
+  # This allows running it on any branch manually:
+  # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+
+  publish_linux:
+    name: Publish Linux
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - run: sudo apt-get update && sudo apt-get install -y librust-alsa-sys-dev libdbus-1-dev pkg-config
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@nightly
+      # Caching must be after toolchain selection
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: "true"
+      - name: Debug
+        run: |
+          cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//'
+          ls -laht engine
+          ls -laht engine/fyrox
+          cat engine/fyrox/Cargo.toml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
