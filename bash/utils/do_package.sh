@@ -50,7 +50,7 @@ if [[ "$os" == "Linux" ]]; then
   fi
 fi
 
-cargo generate-lockfile
+cargo generate-lockfile --manifest-path engine/fyrox/Cargo.toml
 VERSION=$(cargo pkgid --manifest-path api/fyrox-lite/Cargo.toml | sed 's/.*#//')
 ENGINE_VERSION=$(cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//')
 GIT_REVISION=$(git rev-parse --short HEAD)
