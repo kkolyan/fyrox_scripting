@@ -7,10 +7,6 @@ S_LANG=$1
 SCRIPT=$2
 NAME_BASE=$3
 
-VERSION=$(cargo pkgid --manifest-path api/fyrox-lite/Cargo.toml | sed 's/.*#//')
-ENGINE_VERSION=$(cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//')
-GIT_REVISION=$(git rev-parse --short HEAD)
-
 os=$(./bash/utils/os.sh)
 if [[ "$os" == "Windows" ]]; then
   OS_SUFFIX=win
@@ -23,21 +19,20 @@ else
     exit -1
 fi
 
-FINAL_NAME=$NAME_BASE-$ENGINE_VERSION-$VERSION-$GIT_REVISION-$OS_SUFFIX
+ARTIFACTS_DIR=$(mktemp -d)
 
 rm -rf target/$FINAL_NAME.zip
-rm -rf target/$FINAL_NAME
 
-$SCRIPT target/$FINAL_NAME
+$SCRIPT $ARTIFACTS_DIR
 
-rm -rf target/$FINAL_NAME/*.pdb
+rm -rf $ARTIFACTS_DIR/*.pdb
 if [[ "$os" == "Linux" ]]; then
   if [[ "$S_LANG" == "Lua" ]]; then
-    strip --strip-unneeded target/$FINAL_NAME/fyrox_lite_lua
-    strip --strip-unneeded target/$FINAL_NAME/fyroxed_lua
+    strip --strip-unneeded $ARTIFACTS_DIR/fyrox_lite_lua
+    strip --strip-unneeded $ARTIFACTS_DIR/fyroxed_lua
   elif [[ "$S_LANG" == "C#" ]]; then
-    strip --strip-unneeded target/$FINAL_NAME/libfyrox_lite_cs.so
-    strip --strip-unneeded target/$FINAL_NAME/libfyroxed_cs.so
+    strip --strip-unneeded $ARTIFACTS_DIR/libfyrox_lite_cs.so
+    strip --strip-unneeded $ARTIFACTS_DIR/libfyroxed_cs.so
   else
     echo "Unknown S_LANG: $S_LANG"
     exit -1
@@ -55,11 +50,16 @@ if [[ "$os" == "Linux" ]]; then
   fi
 fi
 
-ARCH_DIR=$(mktemp -d)
+VERSION=$(cargo pkgid --manifest-path api/fyrox-lite/Cargo.toml | sed 's/.*#//')
+ENGINE_VERSION=$(cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//')
+GIT_REVISION=$(git rev-parse --short HEAD)
+FINAL_NAME=$NAME_BASE-$ENGINE_VERSION-$VERSION-$GIT_REVISION-$OS_SUFFIX
 
-cp -r target/$FINAL_NAME $ARCH_DIR
+ARCH_DIR=$(mktemp -d)
+mkdir $ARCH_DIR/$FINAL_NAME
+
+cp -r $ARTIFACTS_DIR/* $ARCH_DIR/$FINAL_NAME
 
 cargo run --bin zip_util -- $ARCH_DIR target/$FINAL_NAME.zip
-rm -rf target/$FINAL_NAME
 
 gh release create nightly-$LANG_TAG_SUFFIX-$OS_SUFFIX-$GIT_REVISION ./target/$FINAL_NAME.zip --title "$FINAL_NAME" --notes "Auto-upload"
