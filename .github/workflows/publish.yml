@@ -113,6 +113,10 @@ jobs:
       - package_macos
       - package_windows
     steps:
+      # needed by gh release
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: actions/download-artifact@v4
         with:
           name: package-linux
