@@ -23,7 +23,7 @@ ARTIFACTS_DIR=$(mktemp -d)/wrapper
 
 rm -rf target/$FINAL_NAME.zip
 
-#$SCRIPT $ARTIFACTS_DIR
+$SCRIPT $ARTIFACTS_DIR
 
 rm -rf $ARTIFACTS_DIR/*.pdb
 if [[ "$os" == "Linux" ]]; then
@@ -50,14 +50,14 @@ if [[ "$os" == "Linux" ]]; then
   fi
 fi
 
+# project build doesn't generated it
 cargo generate-lockfile --manifest-path engine/fyrox/Cargo.toml
 VERSION=$(cargo pkgid --manifest-path api/fyrox-lite/Cargo.toml | sed 's/.*#//')
 ENGINE_VERSION=$(cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//')
 GIT_REVISION=$(git rev-parse --short HEAD)
 FINAL_NAME=$NAME_BASE-$ENGINE_VERSION-$VERSION-$GIT_REVISION-$OS_SUFFIX
 
-echo $FINAL_NAME
-exit 123
+echo FINAL_NAME: $FINAL_NAME
 
 ARCH_DIR=$(mktemp -d)
 mkdir $ARCH_DIR/$FINAL_NAME
