@@ -127,3 +127,5 @@ jobs:
           path: .
       - run: |
           gh release create nightly-$(date +%F)-$(echo "${{ github.sha }}" | cut -c1-7) *.zip
+        env:
+          GH_TOKEN: ${{ github.token }}
