@@ -13,6 +13,7 @@ jobs:
   publish_windows:
     name: Publish Windows
     runs-on: windows-latest
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,6 +21,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
       # Caching must be after toolchain selection
       - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
       - name: Publish (C#)
         run: |
           &"C:\Program Files\Git\bin\bash.exe" -c "./bash/cs_publish.sh"
@@ -34,6 +38,7 @@ jobs:
   publish_macos:
     name: Publish MacOS
     runs-on: macos-latest
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,6 +46,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
       # Caching must be after toolchain selection
       - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
       - name: Publish (C#)
         run: |
           chmod -R +x bash && ./bash/cs_publish.sh
@@ -55,6 +63,7 @@ jobs:
   publish_linux:
     name: Publish Linux
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - run: sudo apt-get update && sudo apt-get install -y librust-alsa-sys-dev
       - uses: actions/checkout@v4
@@ -63,6 +72,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
       # Caching must be after toolchain selection
       - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
       - name: Publish (C#)
         run: |
           chmod -R +x bash && ./bash/cs_publish.sh
