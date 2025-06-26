@@ -20,6 +20,7 @@ jobs:
         run: RUST_BACKTRACE=1 cargo run --bin allgen
 
       - name: Check for unstaged changes
+        shell: bash
         run: |
           git status --porcelain
           if [[ -n "$(git status --porcelain)" ]]; then
