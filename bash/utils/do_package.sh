@@ -18,8 +18,8 @@ else
     echo "Unknown OS: $os"
     exit -1
 fi
-
-ARTIFACTS_DIR=$(mktemp -d)
+// wrapper to workaround install script protection from existing directories
+ARTIFACTS_DIR=$(mktemp -d)/wrapper
 
 rm -rf target/$FINAL_NAME.zip
 
