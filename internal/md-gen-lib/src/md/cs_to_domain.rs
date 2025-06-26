@@ -82,10 +82,9 @@ impl CSharpDomain {
                         );
                     }
                     CSharpType::Enum(ty) => {
-                        package_mod.enums.insert(
-                            ty.name.clone(),
-                            enum_to_md(ty, package.name.as_str()),
-                        );
+                        package_mod
+                            .enums
+                            .insert(ty.name.clone(), enum_to_md(ty, package.name.as_str()));
                     }
                 };
             }
@@ -156,7 +155,14 @@ pub fn generate_cs_defined_domain() -> CSharpDomain {
 
 fn process_file(items: &mut HashMap<String, CSharpType>, path: PathBuf) {
     println!("processing file {}", path.to_string_lossy());
-    let output = Command::new("internal/cs_dumper_sln/bin/Debug/net8.0/cs_dumper.exe")
+
+    #[cfg(target_os = "windows")]
+    let program = "internal/cs_dumper_sln/bin/Debug/net8.0/cs_dumper.exe";
+
+    #[cfg(not(target_os = "windows"))]
+    let program = "internal/cs_dumper_sln/bin/Debug/net8.0/cs_dumper";
+
+    let output = Command::new(program)
         .args([
             path.as_os_str(),
             // format!("internal/md-gen-lib/{}.json", entry.file_name().display()).as_ref(),
@@ -484,10 +490,7 @@ fn type_cs_to_md(ty: &CsType, class_page_links: &HashMap<ClassName, String>) -> 
     )
 }
 
-fn enum_to_md(
-    class: &CsEnum,
-    package: &str
-) -> Module {
+fn enum_to_md(class: &CsEnum, package: &str) -> Module {
     let mut s = "".to_string();
     writelnu!(s, "# {}", &class.name);
     writelnu!(s, "enum in [{package}](../{package}.md)");
