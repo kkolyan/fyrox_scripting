@@ -23,7 +23,7 @@ ARTIFACTS_DIR=$(mktemp -d)/wrapper
 
 rm -rf target/$FINAL_NAME.zip
 
-$SCRIPT $ARTIFACTS_DIR
+#$SCRIPT $ARTIFACTS_DIR
 
 rm -rf $ARTIFACTS_DIR/*.pdb
 if [[ "$os" == "Linux" ]]; then
@@ -50,6 +50,7 @@ if [[ "$os" == "Linux" ]]; then
   fi
 fi
 
+cargo generate-lockfile
 VERSION=$(cargo pkgid --manifest-path api/fyrox-lite/Cargo.toml | sed 's/.*#//')
 ENGINE_VERSION=$(cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//')
 GIT_REVISION=$(git rev-parse --short HEAD)
