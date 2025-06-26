@@ -55,6 +55,9 @@ ENGINE_VERSION=$(cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*
 GIT_REVISION=$(git rev-parse --short HEAD)
 FINAL_NAME=$NAME_BASE-$ENGINE_VERSION-$VERSION-$GIT_REVISION-$OS_SUFFIX
 
+echo $FINAL_NAME
+exit 123
+
 ARCH_DIR=$(mktemp -d)
 mkdir $ARCH_DIR/$FINAL_NAME
 
