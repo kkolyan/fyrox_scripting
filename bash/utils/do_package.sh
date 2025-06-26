@@ -61,5 +61,3 @@ mkdir $ARCH_DIR/$FINAL_NAME
 cp -r $ARTIFACTS_DIR/* $ARCH_DIR/$FINAL_NAME
 
 cargo run --bin zip_util -- $ARCH_DIR target/$FINAL_NAME.zip
-
-gh release create nightly-$LANG_TAG_SUFFIX-$OS_SUFFIX-$GIT_REVISION ./target/$FINAL_NAME.zip --title "$FINAL_NAME" --notes "Auto-upload"
