@@ -11,7 +11,7 @@ env:
 jobs:
 
   publish_linux:
-    name: Publish Linux
+    name: Debug
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -25,9 +25,6 @@ jobs:
           cache-on-failure: "true"
       - name: Debug
         run: |
-          cargo pkgid --manifest-path engine/fyrox/Cargo.toml | sed 's/.*#//'
-          ls -laht engine
-          ls -laht engine/fyrox
-          cat engine/fyrox/Cargo.toml
+          echo nightly-$(date +%F)$(echo "${{ github.sha }}" | cut -c1-7)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
