@@ -1,0 +1,29 @@
+name: Check codegen
+
+env:
+  CARGO_TERM_COLOR: always
+
+on:
+  - push
+
+jobs:
+  check-vsc:
+    name: Check codegen
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Generate code
+        run: cargo run --bin allgen
+
+      - name: Check for unstaged changes
+        run: |
+          git status --porcelain
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Generated code differs from committed files. Please run `cargo run --bin allgen` locally before pushing"
+            git diff
+            exit 1
+          fi
