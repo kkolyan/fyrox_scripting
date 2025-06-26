@@ -21,6 +21,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
       # Caching must be after toolchain selection
       - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: "true"
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
@@ -46,6 +48,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
       # Caching must be after toolchain selection
       - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: "true"
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
@@ -72,6 +76,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
       # Caching must be after toolchain selection
       - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: "true"
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
