@@ -3,6 +3,7 @@ members = [
     "api/fyrox-lite",
     "api/fyrox-lite-math",
     "api/fyrox-lite-color",
+    "api/fyrox-lite-auto",
     "internal/lite-macro",
     "internal/lite-macro-lib",
     "internal/lite-model",
@@ -11,6 +12,10 @@ members = [
     "internal/gen-common",
     "internal/error",
     "internal/ask_user",
+    "internal/to_ico",
+    "internal/lite-runtime",
+    "internal/zip_util",
+    "internal/lite-auto-dsl",
     "langs/cs/csgen-lib",
     "langs/cs/fyrox-lite-cs",
     "langs/cs/fyrox-lite-cs-lib",
@@ -24,7 +29,6 @@ members = [
     "showcase/guards_vanilla/game",
     "showcase/guards_vanilla/game-dylib",
     "tools",
-    "internal/to_ico", "internal/lite-runtime", "internal/zip_util",
 ]
 resolver = "2"
 exclude = [
@@ -50,6 +54,8 @@ error = { path = "internal/error" }
 ask_user = { path = "internal/ask_user" }
 to_ico = { path = "internal/to_ico" }
 lite-runtime = { path = "internal/lite-runtime" }
+lite-auto-dsl = { path = "internal/lite-auto-dsl" }
+fyrox-lite-auto = { path = "api/fyrox-lite-auto" }
 
 #fyrox = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }
 #fyroxed_base = { git = "https://github.com/FyroxEngine/Fyrox", default-features = false }

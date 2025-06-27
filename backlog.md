@@ -4,7 +4,9 @@
 * [x] add gitignore on project creation
 * [x] fix the situation that by default no scene is loaded (the GlobalScript is responsible for it)
 * [x] delegate to Console game logs (i.e. stderr too)
-* [ ] automate publish script more
+* [x] automate publish script more
+* [ ] make C# `As*` methods return non-nullable structs and throw exceptions on mismatch and add `TryAs*` methods. Also,
+  consider add `As*OrNull` methods for cases when user prefer nullables.
 * [ ] create build for Fyrox 0.36?
 * [ ] compare performance of vanilla/c#/lua using guards example with hight params
 * [ ] project metadata format (sdk version, hot-reload option)

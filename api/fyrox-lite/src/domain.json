@@ -1374,6 +1374,22 @@
           },
           {
             "instance": true,
+            "method_name": "get_local_scale",
+            "signature": {
+              "params": [
+                {
+                  "name": "_stub",
+                  "ty": "UserScriptGenericStub",
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Object": "Vector3"
+              }
+            }
+          },
+          {
+            "instance": true,
             "method_name": "send_hierarchical",
             "signature": {
               "params": [
@@ -1427,6 +1443,31 @@
                   "name": "value",
                   "ty": {
                     "Object": "Quaternion"
+                  },
+                  "variadic": false
+                },
+                {
+                  "name": "_stub",
+                  "ty": "UserScriptGenericStub",
+                  "variadic": false
+                }
+              ],
+              "return_ty": {
+                "Result": {
+                  "ok": "Unit"
+                }
+              }
+            }
+          },
+          {
+            "instance": true,
+            "method_name": "set_local_scale",
+            "signature": {
+              "params": [
+                {
+                  "name": "value",
+                  "ty": {
+                    "Object": "Vector3"
                   },
                   "variadic": false
                 },
@@ -1928,6 +1969,21 @@
             "name": "font_size",
             "ty": {
               "Option": "F32"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Engine": {
+        "class_name": "Time",
+        "rust_struct_path": "fyrox_lite::lite_script::LiteTime",
+        "methods": [
+          {
+            "instance": false,
+            "method_name": "get_fps",
+            "signature": {
+              "return_ty": "F32"
             }
           }
         ]

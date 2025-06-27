@@ -23,6 +23,7 @@ public class Player : NodeScript
     {
         Window.CursorGrab = CursorGrabMode.Confined;
         _collider = Node.FindColliderInChildren() ?? throw new Exception("player collider missing");
+        Node.LocalScale = Vector3.One * 0.1f;
     }
 
     protected override void OnStart()

@@ -11,3 +11,5 @@ lite-model = { workspace = true }
 itertools = { workspace = true }
 csgen-lib = { workspace = true }
 md-gen-lib = { workspace = true }
+lite-auto-dsl = { workspace = true }
+fyrox-lite-auto = { workspace = true }

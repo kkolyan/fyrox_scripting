@@ -129,6 +129,29 @@ public partial struct Node : IEquatable<Node>
             #endregion
         }
     }
+    
+    public Vector3 LocalScale
+    {
+        get
+        {
+            #region native call
+            unsafe {
+                var __ret = fyrox_lite_lite_node_LiteNode_get_local_scale(this);
+                return NativeVector3.ToFacade(__ret);
+            }
+            #endregion
+        }
+        set
+        {
+            #region native call
+            unsafe {
+                var _value = NativeVector3.FromFacade(value);
+                var __ret = fyrox_lite_lite_node_LiteNode_set_local_scale(this, &_value);
+                void_result.ToFacade(__ret);
+            }
+            #endregion
+        }
+    }
 
     
     /// <para>Sends a hierarchical script message with the given payload.</para>
@@ -287,6 +310,9 @@ public partial struct Node : IEquatable<Node>
     private static unsafe partial NativeQuaternion fyrox_lite_lite_node_LiteNode_get_local_rotation(Node self);
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    private static unsafe partial NativeVector3 fyrox_lite_lite_node_LiteNode_get_local_scale(Node self);
+
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_node_LiteNode_send_hierarchical(Node self, RoutingStrategy routing, UserScriptMessage payload);
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
@@ -294,6 +320,9 @@ public partial struct Node : IEquatable<Node>
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void_result fyrox_lite_lite_node_LiteNode_set_local_rotation(Node self, NativeQuaternion* value);
+
+    [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
+    private static unsafe partial void_result fyrox_lite_lite_node_LiteNode_set_local_scale(Node self, NativeVector3* value);
 
     [LibraryImport(FyroxDll.Name, StringMarshalling = StringMarshalling.Utf8, SetLastError = true)]
     private static unsafe partial void fyrox_lite_lite_node_LiteNode_subscribe_to(Node self, NativeClassId class_id);

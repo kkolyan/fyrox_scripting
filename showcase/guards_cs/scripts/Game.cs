@@ -30,7 +30,8 @@ public class Game : GlobalScript
             Console.WriteLine("User requested exit");
             Environment.Exit(0);
         }
-        _hud.TextAsync = $"Wounds: {_wounds}\nKilled Guards: {_frags}";
+
+        _hud.TextAsync = $"Wounds: {_wounds}\nKilled Guards: {_frags}\nFPS:{Time.Fps}";
     }
 
     public void IncFrags()

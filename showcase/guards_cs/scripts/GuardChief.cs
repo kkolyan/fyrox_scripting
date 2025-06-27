@@ -13,6 +13,7 @@ public class GuardChief : NodeScript
 
     protected override void OnUpdate(float dt)
     {
+        _initialCount = 300f;
         if (!frame_skipped_for_beacons)
         {
             frame_skipped_for_beacons = true;

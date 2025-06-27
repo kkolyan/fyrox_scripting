@@ -140,6 +140,17 @@ impl LiteNode {
         })
     }
 
+    pub fn get_local_scale<T: UserScript>(&self, _stub: T::UserScriptGenericStub) -> PodVector3 {
+        with_script_context(|ctx| {
+            ctx.scene.as_ref().expect("scene unavailable").graph[self.handle]
+                .local_transform()
+                .scale()
+                .get_value_ref()
+                .to_owned()
+                .into()
+        })
+    }
+
     /// Sends a hierarchical script message with the given payload.
     pub fn send_hierarchical<T: UserScript>(
         &self,
@@ -176,6 +187,17 @@ impl LiteNode {
     ) -> Result<(), T::LangSpecificError> {
         self.with_node_mut::<T, _>(|node| {
             node.local_transform_mut().set_rotation(value.into());
+            Ok(())
+        })
+    }
+
+    pub fn set_local_scale<T: UserScript>(
+        &self,
+        value: PodVector3,
+        _stub: T::UserScriptGenericStub,
+    ) -> Result<(), T::LangSpecificError> {
+        self.with_node_mut::<T, _>(|node| {
+            node.local_transform_mut().set_scale(value.into());
             Ok(())
         })
     }

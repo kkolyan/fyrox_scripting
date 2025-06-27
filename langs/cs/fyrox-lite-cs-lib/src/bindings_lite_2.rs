@@ -1696,6 +1696,13 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_get_local_rotation(
 }
 
 #[no_mangle]
+pub extern "C" fn fyrox_lite_lite_node_LiteNode_get_local_scale(this: NativeNode) -> NativeVector3 {
+    let ret =
+        fyrox_lite::lite_node::LiteNode::from(this).get_local_scale::<crate::UserScriptImpl>(());
+    ret.into()
+}
+
+#[no_mangle]
 pub extern "C" fn fyrox_lite_lite_node_LiteNode_send_hierarchical(
     this: NativeNode,
     routing: NativeRoutingStrategy,
@@ -1727,6 +1734,17 @@ pub extern "C" fn fyrox_lite_lite_node_LiteNode_set_local_rotation(
     let value = unsafe { *value }.into();
     let ret = fyrox_lite::lite_node::LiteNode::from(this)
         .set_local_rotation::<crate::UserScriptImpl>(value, ());
+    ret.into()
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_lite_node_LiteNode_set_local_scale(
+    this: NativeNode,
+    value: *mut NativeVector3,
+) -> Unit_result {
+    let value = unsafe { *value }.into();
+    let ret = fyrox_lite::lite_node::LiteNode::from(this)
+        .set_local_scale::<crate::UserScriptImpl>(value, ());
     ret.into()
 }
 
@@ -3208,6 +3226,18 @@ pub extern "C" fn fyrox_lite_lite_script_LiteGlobalScript_get(
 ) -> NativeInstanceId_result {
     let class_id = class_id.into();
     let ret = fyrox_lite::lite_script::LiteGlobalScript::get::<crate::UserScriptImpl>(class_id, ());
+    ret.into()
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NativeTime {
+    pub handle: NativeHandle,
+}
+
+#[no_mangle]
+pub extern "C" fn fyrox_lite_lite_script_LiteTime_get_fps() -> f32 {
+    let ret = fyrox_lite::lite_script::LiteTime::get_fps();
     ret.into()
 }
 

@@ -22,6 +22,8 @@ public class Guard : NodeScript
     public void Init(int id)
     {
         this._id = id;
+        // _reloadDelaySec = 0.1f;
+        Node.LocalScale = Vector3.One * 0.1f;
     }
 
     private bool TryAttackPlayer()

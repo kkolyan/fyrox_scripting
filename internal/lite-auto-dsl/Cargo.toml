@@ -1,0 +1,7 @@
+[package]
+name = "lite-auto-dsl"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+syn = { workspace = true, features = ["full"] }

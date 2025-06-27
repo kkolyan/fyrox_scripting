@@ -27,6 +27,8 @@ pub fn register_classes(lua: &mlua::Lua) {
 
     fyrox_lite::lite_ui::LiteText::register_class(lua);
 
+    fyrox_lite::lite_script::LiteTime::register_class(lua);
+
     fyrox_lite::lite_ui::LiteUiNode::register_class(lua);
 
     fyrox_lite::lite_window::LiteWindow::register_class(lua);

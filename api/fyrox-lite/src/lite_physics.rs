@@ -271,3 +271,32 @@ impl Externalizable for LiteRigidBody {
         }
     }
 }
+
+// #[derive(Debug, Clone, Copy)]
+// pub struct LiteCollider {
+//     pub handle: Handle<Node>,
+// }
+//
+// impl Externalizable for LiteCollider {
+//     fn to_external(&self) -> u128 {
+//         self.handle.encode_to_u128()
+//     }
+//
+//     fn from_external(handle: u128) -> Self {
+//         Self {
+//             handle: Handle::decode_from_u128(handle),
+//         }
+//     }
+// }
+//
+// #[lite_api(class=Collider)]
+// impl LiteCollider {
+//     pub fn apply_force(&mut self, force: PodVector3) {
+//         with_script_context(|ctx| {
+//             ctx.scene.as_mut().expect("scene unavailable").graph[self.handle]
+//                 .as_collider()
+//                 .
+//                 .apply_force(force.into())
+//         })
+//     }
+// }
