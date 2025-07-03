@@ -2731,6 +2731,8 @@ checksum = "cd945864f07fe9f5371a27ad7b52a172b4b499999f1d97574c9fa68373937e12"
 name = "lite-auto-dsl"
 version = "0.1.0"
 dependencies = [
+ "lite-model",
+ "lite-parser",
  "syn 2.0.104",
 ]
 

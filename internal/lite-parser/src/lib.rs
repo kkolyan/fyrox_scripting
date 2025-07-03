@@ -10,3 +10,5 @@ pub mod resolve_classes;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct RustSymbol(pub String);
+
+pub use doc_attr::extract_doc;

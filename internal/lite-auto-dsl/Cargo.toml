@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 syn = { workspace = true, features = ["full"] }
+lite-model = { workspace = true }
+lite-parser = { workspace = true }
